@@ -1,0 +1,35 @@
+	<% include ./../_layout/_layout-view-header.html %>
+
+	<div class="tabbable">
+	
+        <ul id="myTab" class="nav nav-tabs">
+            <li><a href="#tab1" data-toggle="tab">Log In into Application</a></li>
+        </ul>
+	    
+	    <div class="tab-content">
+
+		<div class="tab-pane" id="tab1"><form class="form-horizontal" method="post" action="./login">
+	
+				<input type="hidden" value="14d0d42b9ffaa19a3797fc1760c4fdce" name="svc" />
+				
+				<div class="input-prepend control-group">
+					<label>Domain <abbr>*</abbr></label>
+					<span class="add-on">http://</span>
+					<input class="span2" type="text" name="domain" placeholder="yourdomain.com" style="width: 198px;" />
+				</div>
+
+				<div class="control-group">
+					<label>Password <abbr>*</abbr></label>
+					<input class="span2" type="password" name="password" style="width: 245px;" />
+				</div>
+				
+				<div style="margin-left:119px; padding-top:31px; padding-bottom: 31px;">
+					<button type="submit" class="btn btn-primary">Log in</button>
+					<button type="button" class="btn">Cancel</button>
+				</div>
+							
+		</form></div>
+	    
+	</div>
+	
+	<% include ./../_layout/_layout-view-footer.html %>

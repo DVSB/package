@@ -42,7 +42,7 @@
 		
 			// Request body parsing middleware supporting
 			app.use(express.bodyParser({ 
-				uploadDir: __dirname + '/tmp-upload' 
+				uploadDir: __dirname + '/temp/storage/' 
 			}));
 			
 			// To allow PUT, GET, DELETE and POST
@@ -56,7 +56,7 @@
 			app.use(app.router);	
 			
 			// All files from /PUBLIC folder can be browsed on /S url
-			app.use('/s', express.static(__dirname + '/global-public'));
+			app.use('/s', express.static(__dirname + '/views/_publics'));
 			
 			// Set default word 'views' for views folder
 			app.set('views', __dirname + '/views');
@@ -76,7 +76,7 @@
 			'use strict';
 		
 			// Internal u200API gets array of existing views in /VIEWS folder
-			var viewsArray = require('./global-api/global-object').ViewsList();
+			var viewsArray = require('./app-api').ViewsList();
 			
 			var isExistView = underscore.find(viewsArray, function(item){ 
 				return (item===req.params.page); 
@@ -84,7 +84,7 @@
 			
 			// Include controller, else, If browser requests non-exist view in /VIEWS folder send 404 else 
 			if (isExistView) {
-				require('./views/view-' + req.params.page +'/_controller.js').Init(app, req, res);
+				require('./views/' + req.params.page +'/_controller.js').Init(app, req, res);
 			} else {
 				res.send(404, 'you cannot do a get to unexist view!');
 			}		
@@ -97,7 +97,7 @@
 			'use strict';
 			
 			var currentView = underscore(req.headers.referer).strRightBack('/');
-			res.sendfile('./views/view-' + currentView + '/-styles.css');
+			res.sendfile('./views/' + currentView + '/-styles.css');
 			
 		});	
 
@@ -109,7 +109,7 @@
 			
 			if (req.headers.referer!==undefined) {
 				var currentView = underscore(req.headers.referer).strRightBack('/');	
-				res.sendfile('./views/view-' + currentView + '/-script.js');
+				res.sendfile('./views/' + currentView + '/-script.js');
 
 			}
 			
@@ -124,7 +124,7 @@
 			// Version is Incremented in deployment process
 			// More about versions read in README
 			var version = require('./package.json').version;
-			res.render('_layout-index.html', { version : version });		
+			res.render('_layout/_layout-index.html', { version : version });		
 			
 		});	
 	

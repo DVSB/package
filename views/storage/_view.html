@@ -1,0 +1,84 @@
+	
+	<% include ./../_layout/_layout-view-header.html %>
+
+	<div class="tabbable">
+	
+        <ul id="myTab" class="nav nav-tabs">
+        	<li><a href="#tab2" data-toggle="tab">Manage</a></li>
+            <li><a href="#tab1" data-toggle="tab">Upload</a></li>
+            <li><a href="#tab3" data-toggle="tab">Remove</a></li>
+            <li><a href="#tab4" data-toggle="tab">Permission</a></li>
+            <li><a href="#tab5" data-toggle="tab">Download</a></li>
+        </ul>
+	    
+	    <div class="tab-content">
+
+		<div class="tab-pane" id="tab1"><form class="form-horizontal" method="post" action="./storage" enctype="multipart/form-data">
+	
+			<input type="hidden" value="0d47a0d59d4675d7b0d0561c9a6c4d04" name="svc" />
+				
+		 	<span class="btn btn-file">
+		 		Upload
+		 		<input type="file" name="myfile" style="margin-left:27px; line-height:10px; margin-top:11px;" />
+		 		<button type="submit" class="btn btn-primary">Upload</button>
+		 	</span>
+		 		
+		</form></div>
+		
+		<div class="tab-pane" id="tab2">
+			
+			<h2>All Objects in bucket</h2>
+			
+			<div class="well well-small">
+				<input type="checkbox" name="selectme" /> Check all
+				and <a href="#">Share,</a> <a href="#">Download,</a> <a href="#">Delete,</a> <a href="#">Rename,</a>	<a href="#">Move,</a> <a href="#">Copy</a>
+			</div>
+			
+			<table class="table table-striped table-bordered">
+				<thead>
+					<tr>
+						<th>Select</th>
+						<th>Number</th>
+						<th>Name</th>
+						<th>Action</th>
+						<th>Kind</th>
+						<th>Modified</th>
+					</tr>
+				</thead>
+				<tbody>
+						
+					<% for(var i=0; i<hello.length; i++) {%>					   
+						<tr class="odd gradeX">
+							<td><input type="checkbox" name="selectme" /></td>
+							<td><%= i %></td>
+							<td><%= hello[i] %></td>
+							<td>
+								<a href="#">Share,</a> 
+								<a href="#">Download,</a>
+								<a href="#">Delete,</a> 
+								<a href="#">Rename,</a>
+								<a href="#">Move,</a> 
+								<a href="#">Copy</a>
+							</td>
+							<td class="center">Picture</td>
+							<td class="center">2013/11/30, 11:30AM</td>
+						</tr>
+					<% } %>
+					
+				</tbody>
+			</table>
+			
+			<div class="well well-small">
+				<input type="checkbox" name="selectme" /> Check all
+				and <a href="#">Share,</a> <a href="#">Download,</a> <a href="#">Delete,</a> <a href="#">Rename,</a>	<a href="#">Move,</a> <a href="#">Copy</a>
+			</div>
+			
+		</div>
+		<div class="tab-pane" id="tab3">a</div>
+		<div class="tab-pane" id="tab4">a</div>
+		<div class="tab-pane" id="tab5">a</div>
+		<div class="tab-pane" id="tab6">a</div>
+	    
+	</div>
+	
+	<% include ../_layout/_layout-view-footer.html %>

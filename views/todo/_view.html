@@ -1,0 +1,47 @@
+	<% include ./../_layout/_layout-view-header.html %>
+
+	<h1>My todo list - <span id="today"></span></h1>
+
+	<ul class="todos-list">
+
+	<% for(var i = 0; i < todos.length; i++) { %>					   
+		<li id="todo-<%= i %>">
+			<a href="#" id="todo-<%= i %>-markdone" class="mark markdone" title="Mark as done"><span>mark done</span>&nbsp;</a>
+			<a href="#" id="todo-<%= i %>-markdelete" class="mark markdelete" title="Delete"><span>delete</span>&nbsp;</a>
+			<%= todos[i].content %> 
+			(due in <a href="#" id="todo-<%= i %>-duedate" title="Change due date"> ... </a>)<span class="hideme"><%= todos[i].duedate %></span></li>
+	<% } %>
+		<li>Add new item:
+			<form>
+				<input placeHolder="not working yet">
+				<button type="submit" class="btn">Add</button>
+			</form>
+		</li>
+
+	</ul>
+	<!-- 
+	- add new item input
+	- possibility to set due date in task
+	- checkbox to mark task done (when checked - ajax ) - item stays in the list as done?
+	- remove item
+
+	- data: name (text)[, detail (text)], due date (date), complete (bool), assigned user (array)
+
+	http://www.amazedsaint.com/2011/09/creating-10-minute-todo-listing-app-on.html
+	http://lalexgraham.wordpress.com/2011/12/27/making-a-todo-list-with-node-js-express-mongodb-mongoose-mongohq-and-heroku/
+		https://github.com/lalexgraham/ToDoList
+	http://blog.jerodsanto.net/2010/12/minimally-awesome-todos/
+	https://github.com/vesln/todo
+
+
+
+	possible date libs>
+	http://tempus-js.com/
+	moment
+	 -->
+	
+	<script charset="utf-8" src="/s/js_moment.js"></script>
+	<script type="text/javascript">
+		doo(todos);
+	</script>
+	<% include ./../_layout/_layout-view-footer.html %>
