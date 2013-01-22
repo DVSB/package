@@ -1,0 +1,40 @@
+{
+	"name": "u200",
+	"subdomain": "u200",
+	"preferGlobal": "true",
+	"version": "0.1.2-16",
+	"author": "dev@u200.org",
+	"domains": [
+		"u200.org",
+		"www.u200.org"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/u200/Bee.git"
+	},
+	"keywords": [
+		"api",
+		"app",
+		"u200"
+	],
+	"dependencies": {
+		"express": "3.0.4",
+		"underscore": "1.4.3",
+		"underscore.string": "2.3.1",
+		"nodemon": "0.6.23",
+		"crypto": "0.0.3",
+		"ejs": "0.8.3",
+		"async": "0.1.22",
+		"validator": "0.4.19",
+		"awssum": "0.12.2",
+		"aws-sdk": "*"
+	},
+	"analyze": false,
+	"license": "MIT",
+	"engines": {
+		"node": "0.8.x"
+	},
+	"scripts": {
+		"start": "app.js"
+	}
+}
