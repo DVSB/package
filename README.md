@@ -1,6 +1,6 @@
-Bee
+Itt VERY APLHA VERSION
 =======
-Bee is an application like alternative to Google API (but better of course).
+Itt is an application like alternative to Google API (but better of course).
 
 1. Content
 -------
@@ -91,10 +91,10 @@ Boring part:
 ----------
 **Copyright 2012, All Rights Reserved**
 
-The website belongs to and is managed by the u200 (hereafter called "we").
+The website belongs to and is managed by the Mousepen (hereafter called "we").
 
-You are kindly requested to read the following conditions before using this website, software or parts of code. By using the website, software or parts of code you will automatically accept these conditions. If you do not approve of them then you are requested not to use the website, do not use the code of u200.
+You are kindly requested to read the following conditions before using this website, software or parts of code. By using the website, software or parts of code you will automatically accept these conditions. If you do not approve of them then you are requested not to use the website, do not use the code of Mousepen.
 
-It is forbidden to copy, reproduce, print, download, send, fork, transmit or distribute by any means, the material that comes from this or any other site that belongs to or is under the management, concession or control of u200.
+It is forbidden to copy, reproduce, print, download, send, fork, transmit or distribute by any means, the material that comes from this or any other site that belongs to or is under the management, concession or control of Mousepen.
 
-For more information contact we@u200.org. For a request to copy, for a download request, for a reuse request. Withuot this permission is not allowed to use any part of code. From original repository or from different repository.
+For more information contact we@mousepen.org. For a request to copy, for a download request, for a reuse request. Withuot this permission is not allowed to use any part of code. From original repository or from different repository.
