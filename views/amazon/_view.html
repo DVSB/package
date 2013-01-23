@@ -1,0 +1,28 @@
+	
+	<% include ./../_layout/_layout-view-header.html %>
+
+	<h2><%= hello %></h2>
+
+	<div class="tabbable">
+	
+        <ul id="myTab" class="nav nav-tabs">
+        	<li><a href="#tab1" data-toggle="tab">Upload</a></li>
+        </ul>
+	    
+	    <div class="tab-content">
+
+		<div class="tab-pane" id="tab1"><form class="form-horizontal" method="post" action="./amazon" enctype="multipart/form-data">
+	
+			<input type="hidden" value="as87a0d59d4675d7b0d0561c9acc4d04" name="svc" />
+				
+		 	<span class="btn btn-file">
+		 		Upload
+		 		<input type="file" name="myfile" style="margin-left:27px; line-height:10px; margin-top:11px;" />
+		 		<button type="submit" class="btn btn-primary">Upload</button>
+		 	</span>
+		 		
+		</form></div>
+	    
+	</div>
+	
+	<% include ../_layout/_layout-view-footer.html %>

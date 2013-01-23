@@ -42,7 +42,7 @@
 		
 			// Request body parsing middleware supporting
 			app.use(express.bodyParser({ 
-				uploadDir: __dirname + '/temp/storage/' 
+				uploadDir: __dirname + '/temp/upload/' 
 			}));
 			
 			// To allow PUT, GET, DELETE and POST
