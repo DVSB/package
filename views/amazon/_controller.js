@@ -27,7 +27,7 @@
 		var hash = underscore.join('qoindqowidnwquidnqwuidnqiwdqwd', underscore.random(10000, 90000), Date.now()); 
 
 		// Make SHA512 and trip to 80 chars
-		return require('crypto').createHash('sha512').update(hash).digest('hex').substr(0, 80);	
+		return require('crypto').createHash('sha512').update(hash).digest('hex').substr(0, 32);	
 
 	}
 
@@ -37,45 +37,63 @@
 
 	exports.Init = function(app, req, res) {
 
+		// File Upload
 		if (req.body.svc === 'as87a0d59d4675d7b0d0561c9acc4d04') {
 			
-			Upload(req, function(nice){
-				
-				console.log(nice);
-
-				res.render(__dirname + '/_view.html', {
-					hello : 'Uploadnuty subor uspesne!'
-				});
-
+			Upload(req, function(fileProperties){
+				AddFiletoDB(fileProperties);
+				res.render(__dirname + '/_view.html', {hello : fileProperties});
 			});
 
+		} else {
+
+			res.render(__dirname + '/_view.html', {hello : 'Uploadnuty subor uspesne!'});
+
 		}
+
+		
 		
 	};
 
 
-	function SaveToDb(fileProperties) {
+	function AddFiletoDB(fileProperties) {
 
 		// Connect to Admin Bucket
-		options.Bucket = 'fc9cca91802c2f3756a13a85b810e63f';
+		options.Bucket = '14d8caff43c9f5802b5d8b59f61218fd';
+		options.Key = RandomHash();
 
 		// User Key is generated from Email
 		// So we dont need to search AT all users because ID can be again regenerated
-		var user = {};
-		user.key = '99e94779a50efc35a91fee864ceac4c29550ee64bf2a7b57ca42e9bf44483df9d96bab0791f053bf';
-	
+		var item = {};
+		item.id = fileProperties.key;
+		item.name = fileProperties.name;
+		item.size = fileProperties.size;
+		item.lastModifiedDate = fileProperties.lastModifiedDate;
+		item.type = fileProperties.type;
+		item.tags = ['tag1', 'tag2', 'tag3', 'tag4'];
 
+		console.log(item);
+
+		s3.client.getObject(options, function(err, data) {
+
+			var files = JSON.parse(data.Body).result;
+
+			files[files.length+1] = item;
+
+			for (var i=0;i<files.length;i++) {
+				console.log(files[i]);
+			}
+			
+		});
 
 	}
-
-
 
 
 	// Take a file in TEMP folder, upload to Amazon S3 and Remove him from TEMP
 	function Upload (req, callback) {
 
 		// Name of file on S3 is random hash key
-		options.Key = '4d0e73aa16e764f1dee37a7f9334e9831048fddda32cdad03099a7723a09cfd8f005bb4488aa6c84/' + RandomHash();
+		options.Key = '7f33ac3c54c758f4144a3eaa6cd40e24/' + RandomHash();
 
 		// Buffer, file in TMP
 		options.Body = fs.readFileSync(req.files.myfile.path);
