@@ -1,2 +1,0 @@
-cd OpenWrap
-git pull 

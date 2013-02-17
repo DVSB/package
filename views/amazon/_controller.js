@@ -27,12 +27,9 @@
 		var hash = underscore.join('qoindqowidnwquidnqwuidnqiwdqwd', underscore.random(10000, 90000), Date.now()); 
 
 		// Make SHA512 and trip to 80 chars
-		return require('crypto').createHash('sha512').update(hash).digest('hex').substr(0, 32);	
+		return require('crypto').createHash('sha512').update(hash).digest('hex').substr(0, 10);	
 
 	}
-
-
-
 
 
 	exports.Init = function(app, req, res) {
@@ -50,8 +47,6 @@
 			res.render(__dirname + '/_view.html', {hello : 'Uploadnuty subor uspesne!'});
 
 		}
-
-		
 		
 	};
 
@@ -60,7 +55,7 @@
 
 		// Connect to Admin Bucket
 		options.Bucket = '14d8caff43c9f5802b5d8b59f61218fd';
-		options.Key = RandomHash();
+		options.Key = 'b487c29d06';
 
 		// User Key is generated from Email
 		// So we dont need to search AT all users because ID can be again regenerated
@@ -73,16 +68,27 @@
 		item.tags = ['tag1', 'tag2', 'tag3', 'tag4'];
 
 		console.log(item);
+		console.log('\n\n\n\n');
 
 		s3.client.getObject(options, function(err, data) {
 
-			var files = JSON.parse(data.Body).result;
+			var json = JSON.parse(data.Body);
+			var extendedJson = json.items[json.items.length] = item;
 
-			files[files.length+1] = item;
 
-			for (var i=0;i<files.length;i++) {
-				console.log(files[i]);
-			}
+			fs.writeFile('temp/newdb.json', JSON.stringify(extendedJson), function (err) {
+				if (err) throw err;
+			});
+
+			options.Body = fs.readFileSync('temp/newdb.json');
+
+			s3.client.putObject(options, function(err, data) {
+				console.log(err);
+				console.log(data);
+				console.log('upload complete');
+				fs.unlink('temp/newdb.json');
+				console.log('unlink complete');
+			});
 			
 		});
 
