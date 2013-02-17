@@ -3,6 +3,18 @@
 	var underscore = require('underscore');
 	underscore.mixin(require('underscore.string').exports());
 
+
+	// Return random string from Uniq date, Security string and Random number
+	function RandomHash() {
+	 	// hash is joined more strings: date, random and hash
+		var hash = underscore.join('qoindqowidnwquidnqwuidnqiwdqwd', underscore.random(10000, 90000), Date.now()); 
+		// Make SHA512 and trip to 80 chars
+		return require('crypto').createHash('sha512').update(hash).digest('hex').substr(0, 14);	
+	}
+
+
+	var user.id = '7f33ac3c54c758';
+
 	var AWS = require('aws-sdk');
 	var fs = require('fs');
 	
@@ -15,22 +27,9 @@
 	var s3 = new AWS.S3();
 	
 	var options = {};
-	options.Bucket = 'fc9cca91802c2f3756a13a85b810e63f';
 
-	
-
-
-	// Return random string from Uniq date, Security string and Random number
-	function RandomHash() {
-	 
-	 	// hash is joined more strings: date, random and hash
-		var hash = underscore.join('qoindqowidnwquidnqwuidnqiwdqwd', underscore.random(10000, 90000), Date.now()); 
-
-		// Make SHA512 and trip to 80 chars
-		return require('crypto').createHash('sha512').update(hash).digest('hex').substr(0, 10);	
-
-	}
-
+	// 4a3eaa6cd40e24 bucket for files
+	// a9c9c0b51a3ed1 bucket for administrators
 
 	exports.Init = function(app, req, res) {
 
@@ -54,8 +53,8 @@
 	function AddFiletoDB(fileProperties) {
 
 		// Connect to Admin Bucket
-		options.Bucket = '14d8caff43c9f5802b5d8b59f61218fd';
-		options.Key = 'b487c29d06';
+		options.Bucket = 'a9c9c0b51a3ed1'; // admin bucket
+		options.Key = '7f33ac3c54c758'; // default temp key
 
 		// User Key is generated from Email
 		// So we dont need to search AT all users because ID can be again regenerated
@@ -71,24 +70,28 @@
 		console.log('\n\n\n\n');
 
 		s3.client.getObject(options, function(err, data) {
+			if (err) throw err;
 
-			var json = JSON.parse(data.Body);
-			var extendedJson = json.items[json.items.length] = item;
+			var jsn = JSON.parse(data.Body);
+			jsn.items[jsn.items.length] = item;
 
-
-			fs.writeFile('temp/newdb.json', JSON.stringify(extendedJson), function (err) {
+			fs.writeFile('temp/newdb.json', JSON.stringify(jsn), function (err) {
 				if (err) throw err;
+
+				fs.readFile('temp/newdb.json', function(err, data) {
+					if (err) throw err;
+
+					options.Body = data;
+
+					s3.client.putObject(options, function(err, data) {
+						if (err) throw err;
+						//fs.unlink('temp/newdb.json');
+					});
+
+				});
+
 			});
 
-			options.Body = fs.readFileSync('temp/newdb.json');
-
-			s3.client.putObject(options, function(err, data) {
-				console.log(err);
-				console.log(data);
-				console.log('upload complete');
-				fs.unlink('temp/newdb.json');
-				console.log('unlink complete');
-			});
 			
 		});
 
@@ -98,8 +101,9 @@
 	// Take a file in TEMP folder, upload to Amazon S3 and Remove him from TEMP
 	function Upload (req, callback) {
 
+		options.Bucket = '4a3eaa6cd40e24';
 		// Name of file on S3 is random hash key
-		options.Key = '7f33ac3c54c758f4144a3eaa6cd40e24/' + RandomHash();
+		options.Key = user.id + '/' + RandomHash();
 
 		// Buffer, file in TMP
 		options.Body = fs.readFileSync(req.files.myfile.path);

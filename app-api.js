@@ -11,11 +11,6 @@
 		
 	};
 
-
-
-
-
-
 	// Hash your string with SHA512 sold 
 	exports.Hash = function (str) {
 
