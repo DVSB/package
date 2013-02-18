@@ -1,78 +1,39 @@
 
-	exports.ReadCookies = function(req, res) {
-	
-		// create global object
-		ulib = {};
-		
-		var underscore = require('underscore');
-		underscore.extend(ulib.cookies, req.cookies);
-		
-		return ulib;
-		
-	};
 
-	// Hash your string with SHA512 sold 
-	exports.Hash = function (str) {
-
-		var crypto = require('crypto');
-		var underscore = require('underscore');
-		var underscorestring = require('underscore.string');
-		
-		var salt1 = '_-:.****?,)!§%|@#$~^&*{}][;_***-:.?,)!§%|@#$~^&*{}][;_**-:.?,)!§%|@#$~^&*{}][;_-:.?,)!§'; 
-		var salt2 = 'qoindqowidnwquidnqwuidnqiwdqwduinqwdiqndnaasdkfasjkfnaskfjdnskfnaskfjdnaskfnskfdnafsjkd';
-		
-		var salt3 = '';
-		for (var i=0; i<10; i++) { 
-			salt3 = underscorestring.join('', salt3, underscore.random(1000000, 9000000));
-		}
-		
-		// connect strings to one long
-		var hash = underscorestring.join('', salt1, salt2, salt3, str);
-		
-		if (str) {
-			hash = crypto.createHash('sha512').update(str).digest('hex').substr(50, 50);
-		} else {
-			hash = crypto.createHash('sha512').update(hash).digest('hex').substr(50, 50);
-		}
-		 		 
-		// trim to 50 chars
-		return hash;
-		
-	};
-
-	
-
-
-
-
-	var underscore = require('underscore');
-	underscore.mixin(require('underscore.string').exports());
-		
-
+	// Return all folders in views folder
+	// Used in routing for check if really exist before run
 	exports.ViewsList = function() {
-	
+
 		// Get all files from /views folder
 		var files = require('fs').readdirSync(__dirname + '/views');
-		
+
+		// Array
 		return files;
-		
+
 	};
 	
-	exports.AllBuckets = function() {
-	
-		// Get all files from /storage folder
-		var files = require('fs').readdirSync(__dirname + '/tmp-storage');
-				
-		// Filter to only folders which starst with "view-"
-		var filtered = underscore.filter(files, function(item) {
-			return underscore(item).startsWith("bucket-"); 
+
+	// Get a random number
+	// Return random string from Uniq date, Security string and Random number
+	function RandomHash(str) {
+
+		var underscore = require('underscore');
+		underscore.mixin(require('underscore.string').exports());
+		var fs = require('fs');
+
+		fs.readFile('./configuration.json', function(err, data) {
+			
+			if (err) { throw err; }
+
+			// Join more strings: (1) Salt from Configuration file, (2) Random number and (3) Date
+			var hash = underscore.join(JSON.parse(data).Security.Salt, underscore.random(10000, 90000), Date.now()); 
+
+			// Make SHA512 and trip to 80 chars
+			return require('crypto').createHash('sha512').update(hash).digest('hex').substr(0, 14);
+
+
 		});
-		
-		for (var i=0; i<filtered.length; i++) {
-			filtered[i] = underscore(filtered[i].toString()).splice(0, 7);
-		}
-		
-		return filtered;
-		
+
 	};
 
+	RandomHash();

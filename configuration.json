@@ -1,0 +1,19 @@
+{
+   "Amazon":{
+      "Credentials":{
+         "AccessID":"AKIAJQTLD2TZ2VZ4SVHA",
+         "AccessKey":"L55oK03vKJuV6YhnzFoFRoX6/H1saxAf7hjEeRT7"
+      },
+      "Buckets":{
+         "AdminBuckets":"4a3eaa6cd40e24",
+         "StorageBucket":"a9c9c0b51a3ed1"
+      },
+      "Settings":{
+         "Cypher":"AES-512",
+         "StorageType":"ReducedRedundancy"
+      }
+   },
+   "Security":{
+      "Salt":"f28140b1659a74f89933b70a0140317b"
+   }
+}
