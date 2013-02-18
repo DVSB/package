@@ -1,19 +1,11 @@
 	
 
-	var underscore = require('underscore');
-	underscore.mixin(require('underscore.string').exports());
+	var underscore = require('underscore').mixin(require('underscore.string').exports());
 
 
-	// Return random string from Uniq date, Security string and Random number
-	function RandomHash() {
-	 	// hash is joined more strings: date, random and hash
-		var hash = underscore.join('qoindqowidnwquidnqwuidnqiwdqwd', underscore.random(10000, 90000), Date.now()); 
-		// Make SHA512 and trip to 80 chars
-		return require('crypto').createHash('sha512').update(hash).digest('hex').substr(0, 14);	
-	}
 
-
-	var user.id = '7f33ac3c54c758';
+	var user = {};
+	user.id = '7f33ac3c54c758';
 
 	var AWS = require('aws-sdk');
 	var fs = require('fs');
@@ -103,7 +95,7 @@
 
 		options.Bucket = '4a3eaa6cd40e24';
 		// Name of file on S3 is random hash key
-		options.Key = user.id + '/' + RandomHash();
+		options.Key = user.id + '/' + require('./app-api').RandomHash();
 
 		// Buffer, file in TMP
 		options.Body = fs.readFileSync(req.files.myfile.path);

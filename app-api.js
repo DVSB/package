@@ -15,25 +15,20 @@
 
 	// Get a random number
 	// Return random string from Uniq date, Security string and Random number
-	function RandomHash(str) {
+	exports.RandomHash = function() {
 
-		var underscore = require('underscore');
-		underscore.mixin(require('underscore.string').exports());
 		var fs = require('fs');
+		var underscore = require('underscore');
 
-		fs.readFile('./configuration.json', function(err, data) {
-			
-			if (err) { throw err; }
+		underscore.mixin(require('underscore.string').exports());
 
-			// Join more strings: (1) Salt from Configuration file, (2) Random number and (3) Date
-			var hash = underscore.join(JSON.parse(data).Security.Salt, underscore.random(10000, 90000), Date.now()); 
+		// Join two strings into one where (1) is Date and (2) is Number
+		var random = underscore.join( 
+			Date.now(),
+			underscore.random(10000, 90000)
+		);
 
-			// Make SHA512 and trip to 80 chars
-			return require('crypto').createHash('sha512').update(hash).digest('hex').substr(0, 14);
-
-
-		});
+		// (1) Use hash SHA512, (2) Use hex format, (3) Trim to 14 characters
+		return require('crypto').createHash('sha512').update(random).digest('hex').substr(0, 14); 
 
 	};
-
-	RandomHash();
