@@ -1,7 +1,7 @@
 	
 
-	var underscore = require('underscore').mixin(require('underscore.string').exports());
-
+	var underscore = require('underscore');
+	require('underscore').mixin(require('underscore.string').exports());
 
 
 	var user = {};
@@ -67,17 +67,17 @@
 			var jsn = JSON.parse(data.Body);
 			jsn.items[jsn.items.length] = item;
 
-			fs.writeFile('temp/newdb.json', JSON.stringify(jsn), function (err) {
+			fs.writeFile('temp/database/newdb.json', JSON.stringify(jsn), function (err) {
 				if (err) throw err;
 
-				fs.readFile('temp/newdb.json', function(err, data) {
+				fs.readFile('temp/database/newdb.json', function(err, data) {
 					if (err) throw err;
 
 					options.Body = data;
 
 					s3.client.putObject(options, function(err, data) {
 						if (err) throw err;
-						//fs.unlink('temp/newdb.json');
+						fs.unlink('temp/database/newdb.json');
 					});
 
 				});
@@ -95,7 +95,7 @@
 
 		options.Bucket = '4a3eaa6cd40e24';
 		// Name of file on S3 is random hash key
-		options.Key = user.id + '/' + require('./app-api').RandomHash();
+		options.Key = user.id + '/' + require('../../app-api').RandomHash();
 
 		// Buffer, file in TMP
 		options.Body = fs.readFileSync(req.files.myfile.path);
