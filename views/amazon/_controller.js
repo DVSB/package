@@ -112,40 +112,22 @@
 		// Name of file is user ID 
 		options.Key = rootConf.User.ID;
 
-		console.log(options);
-
 		// Get User Database of all files
 		s3.client.getObject(options, function(err, data) {
 			if (err) { console.log(err); }			
 
-			var item = {};
-			item.id = fileProperties.key;
-			item.name = fileProperties.name;
-			item.size = fileProperties.size;
-			item.lastModifiedDate = fileProperties.lastModifiedDate;
-			item.type = fileProperties.type;
-			item.tags = ['tag1', 'tag2', 'tag3', 'tag4'];
+			// Add to fileProperties random tags only for structure
+			fileProperties.tags = ['tag1', 'tag2', 'tag3', 'tag4'];
 
+			// Add to original json from s3 Admin bucket next item
 			var jsn = JSON.parse(data.Body);
-			jsn.items[jsn.items.length] = item;
+			jsn.items[jsn.items.length] = fileProperties;
 
-			fs.writeFile('temp/database/newdb.json', JSON.stringify(jsn), function (err) {
+			// Upload new bigger Json string directly to Amazon
+			options.Body = JSON.stringify(jsn);
+			s3.client.putObject(options, function(err,data){
 				if (err) { console.log(err); }
-
-				fs.readFile('temp/database/newdb.json', function(err, data) {
-					if (err) { console.log(err); }
-
-					options.Body = data;
-
-					s3.client.putObject(options, function(err) {
-						if (err) { console.log(err); }
-						fs.unlink('temp/database/newdb.json');
-					});
-
-				});
-
 			});
-
 			
 		});
 
