@@ -81,10 +81,9 @@
 		// Buffer, file in TMP
 		options.Body = fs.readFileSync(req.files.myfile.path);
 
-
 		// Sent buffer with options to S3 storage
 		s3.client.putObject(options, function(err) { 
-			if (err) { throw err; }
+			if (err) { console.log(err); }
 
 			// Remove uploaded file from /temp
 			fs.unlink(req.files.myfile.path);
@@ -113,14 +112,11 @@
 		// Name of file is user ID 
 		options.Key = rootConf.User.ID;
 
-		console.log('kokot');
+		console.log(options);
 
 		// Get User Database of all files
 		s3.client.getObject(options, function(err, data) {
-			if (err) { throw err; }
-
-			console.log('kokot');
-			
+			if (err) { console.log(err); }			
 
 			var item = {};
 			item.id = fileProperties.key;
@@ -134,15 +130,15 @@
 			jsn.items[jsn.items.length] = item;
 
 			fs.writeFile('temp/database/newdb.json', JSON.stringify(jsn), function (err) {
-				if (err) { throw err; }
+				if (err) { console.log(err); }
 
 				fs.readFile('temp/database/newdb.json', function(err, data) {
-					if (err) { throw err; }
+					if (err) { console.log(err); }
 
 					options.Body = data;
 
 					s3.client.putObject(options, function(err) {
-						if (err) { throw err; }
+						if (err) { console.log(err); }
 						fs.unlink('temp/database/newdb.json');
 					});
 
