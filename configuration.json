@@ -6,7 +6,8 @@
       },
       "Buckets":{
          "AdminBuckets":"4a3eaa6cd40e24",
-         "StorageBucket":"a9c9c0b51a3ed1"
+         "StorageBucket":"a9c9c0b51a3ed1",
+         "Region":"us-east-1"
       },
       "Settings":{
          "Cypher":"AES-512",

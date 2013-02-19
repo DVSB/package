@@ -1,82 +1,148 @@
-	
 
+	/*	
+
+	We have two buckets: 
+		Admin Bucket
+		Storage Bucket
+
+	Admin Bucket contains file per user
+		Name of file in Admin Bucket is standard Uniq ID of User
+		File is array of all items with details: real name, hash, path, tags, size..
+
+	Storage Bucket contains folders per user like STORAGEBUCKET/C8373990/* 
+		C8373990 is uniqid of user and 
+		* is unlimited number of files
+	
+	In file upload:
+		Put file to /temp and change name to random hash
+		Admin Bucket file: Download, Parse, Add new item, Upload
+		Remove file from /tmp
+
+	In file download:
+		Check in ABF position of file
+		Redirect there
+
+	*/
+
+
+
+	// Common libs
 	var underscore = require('underscore');
 	require('underscore').mixin(require('underscore.string').exports());
-
-
-	var user = {};
-	user.id = '7f33ac3c54c758';
-
-	var AWS = require('aws-sdk');
 	var fs = require('fs');
 	
+
+	// File configuration.json from root with all settings 
+	var rootConf = JSON.parse(fs.readFileSync('configuration.json'));
+
+
+	// Amazon SDK API setup
+	var AWS = require('aws-sdk');
 	AWS.config.update({
-		accessKeyId : 'AKIAIOUHQOMOBQZP7RAQ',
-		secretAccessKey : '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',
-		region : 'us-east-1'
+		accessKeyId : rootConf.Amazon.Credentials.AccessID,
+		secretAccessKey : rootConf.Amazon.Credentials.AccessKey,
+		region : rootConf.Amazon.Buckets.Region
 	});
-	
 	var s3 = new AWS.S3();
-	
-	var options = {};
 
-	// 4a3eaa6cd40e24 bucket for files
-	// a9c9c0b51a3ed1 bucket for administrators
 
+
+	// Runned from app.js
 	exports.Init = function(app, req, res) {
 
-		// File Upload
+		// If sent via POST protocol Form with hidden input 
 		if (req.body.svc === 'as87a0d59d4675d7b0d0561c9acc4d04') {
 			
-			Upload(req, function(fileProperties){
-				AddFiletoDB(fileProperties);
+			UploadAndUnlink(req, function(fileProperties){
+				AddDatabaseItem(fileProperties);
 				res.render(__dirname + '/_view.html', {hello : fileProperties});
 			});
 
 		} else {
-
 			res.render(__dirname + '/_view.html', {hello : 'Uploadnuty subor uspesne!'});
-
 		}
 		
 	};
 
 
-	function AddFiletoDB(fileProperties) {
+	// Get a file from /temp folder and upload to S3, after unline file
+	// Remark: node server saves all files to /temp folder
+	function UploadAndUnlink (req, callback) {
 
-		// Connect to Admin Bucket
-		options.Bucket = 'a9c9c0b51a3ed1'; // admin bucket
-		options.Key = '7f33ac3c54c758'; // default temp key
+		// PUT and GET on S3 requires (1) key, (2) body, (3) bucket
+		var options = {};
 
-		// User Key is generated from Email
-		// So we dont need to search AT all users because ID can be again regenerated
-		var item = {};
-		item.id = fileProperties.key;
-		item.name = fileProperties.name;
-		item.size = fileProperties.size;
-		item.lastModifiedDate = fileProperties.lastModifiedDate;
-		item.type = fileProperties.type;
-		item.tags = ['tag1', 'tag2', 'tag3', 'tag4'];
+		// Upload to Storage Bucket
+		options.Bucket = rootConf.Amazon.Buckets.StorageBucket;
 
-		console.log(item);
-		console.log('\n\n\n\n');
+		// Every user has own folder with flat all files, Key is: folderOfUser/file
+		options.Key = rootConf.User.ID + '/' + require('../../app-api').RandomHash();
 
+		// Buffer, file in TMP
+		options.Body = fs.readFileSync(req.files.myfile.path);
+
+
+		// Sent buffer with options to S3 storage
+		s3.client.putObject(options, function(err) { 
+			if (err) { throw err; }
+
+			// Remove uploaded file from /temp
+			fs.unlink(req.files.myfile.path);
+
+			// Filtered object with 4 original properties and used uniq hash name
+			var fileProperties = underscore.pick(req.files.myfile, 'name', 'type', 'size', 'lastModifiedDate');
+			fileProperties.key = options.Key;
+
+			// fileProperties is object with file name, type, size ...
+			callback(fileProperties);
+
+		});
+		
+	}
+
+	// In fileProperties: original name, type, size, lastmodified, key
+	// Get database of user from Admin database and add new item
+	function AddDatabaseItem(fileProperties) {
+
+		// PUT and GET on S3 requires (1) key, (2) body, (3) bucket
+		var options = {};
+
+		// Save database of all files in Admin bucket
+		options.Bucket = rootConf.Amazon.Buckets.AdminBucket;
+
+		// Name of file is user ID 
+		options.Key = rootConf.User.ID;
+
+		console.log('kokot');
+
+		// Get User Database of all files
 		s3.client.getObject(options, function(err, data) {
-			if (err) throw err;
+			if (err) { throw err; }
+
+			console.log('kokot');
+			
+
+			var item = {};
+			item.id = fileProperties.key;
+			item.name = fileProperties.name;
+			item.size = fileProperties.size;
+			item.lastModifiedDate = fileProperties.lastModifiedDate;
+			item.type = fileProperties.type;
+			item.tags = ['tag1', 'tag2', 'tag3', 'tag4'];
 
 			var jsn = JSON.parse(data.Body);
 			jsn.items[jsn.items.length] = item;
 
 			fs.writeFile('temp/database/newdb.json', JSON.stringify(jsn), function (err) {
-				if (err) throw err;
+				if (err) { throw err; }
 
 				fs.readFile('temp/database/newdb.json', function(err, data) {
-					if (err) throw err;
+					if (err) { throw err; }
 
 					options.Body = data;
 
-					s3.client.putObject(options, function(err, data) {
-						if (err) throw err;
+					s3.client.putObject(options, function(err) {
+						if (err) { throw err; }
 						fs.unlink('temp/database/newdb.json');
 					});
 
@@ -88,47 +154,3 @@
 		});
 
 	}
-
-
-	// Take a file in TEMP folder, upload to Amazon S3 and Remove him from TEMP
-	function Upload (req, callback) {
-
-		options.Bucket = '4a3eaa6cd40e24';
-		// Name of file on S3 is random hash key
-		options.Key = user.id + '/' + require('../../app-api').RandomHash();
-
-		// Buffer, file in TMP
-		options.Body = fs.readFileSync(req.files.myfile.path);
-
-		// fileProperties (object) is filtered original request object width name, type, size ..
-		var fileProperties = underscore.pick(req.files.myfile, 'name', 'type', 'size', 'lastModifiedDate');
-
-		// add to fileProperties also key, what is random hash and real name on S3
-		fileProperties.key = options.Key;
-
-		// If input is empty, finish this function, if not go to next function
-		if ((req.files.myfile.name==='')&&(req.files.myfile.size===0)) {
-			console.log('Sorry, but File Input was empty');
-			return;
-		}
-
-		// Sent buffer with options to S3 storage
-		s3.client.putObject(options, function(err) {
-
-			// Check errors
-			if (err) { console.log(err); } else { console.log('Upload successful!'); }
-
-			// Remove tmp
-			fs.unlink(req.files.myfile.path);
-
-			// fileProperties is object with file name, type, size ...
-			callback(fileProperties);
-
-		});
-		
-	}
-
-
-
-
-
