@@ -73,8 +73,6 @@
 		// Browsed URL (localhost/pepek) is available in variable req.params.page
 		app.all('/:page', function(req, res) {
 		
-			'use strict';
-		
 			// Internal u200API gets array of existing views in /VIEWS folder
 			var viewsArray = require('./app-api').ViewsList();
 			
@@ -93,9 +91,7 @@
 		
 		// Allow with-dash-started file in view serve on /s/ path
 		app.get('/s/-styles.css', function(req, res) {
-		
-			'use strict';
-			
+					
 			var currentView = underscore(req.headers.referer).strRightBack('/');
 			res.sendfile('./views/' + currentView + '/-styles.css');
 			
@@ -104,9 +100,7 @@
 
 		// Allow with-dash-started file in view serve on /s/ path
 		app.get('/s/-script.js', function(req, res) {
-		
-			'use strict';
-			
+					
 			if (req.headers.referer!==undefined) {
 				var currentView = underscore(req.headers.referer).strRightBack('/');	
 				res.sendfile('./views/' + currentView + '/-script.js');
@@ -114,17 +108,11 @@
 			}
 			
 		});
-	
-		
-		// Routing of index locahost:port
-		app.get('/', function(req, res){
-		
-			'use strict';
-		
-			// Version is Incremented in deployment process
-			// More about versions read in README
-			var version = require('./package.json').version;
-			res.render('_layout/_layout-index.html', { version : version });		
+
+		// Redirect
+		app.get('/', function(req, res) {
+					
+			res.redirect(301, 'http://localhost:4000/amazon');
 			
 		});	
 	
