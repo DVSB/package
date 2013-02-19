@@ -1,28 +1,63 @@
 	
 	<% include ./../_layout/_layout-view-header.html %>
 
-	<h2><%= hello %></h2>
 
-	<div class="tabbable">
-	
-        <ul id="myTab" class="nav nav-tabs">
-        	<li><a href="#tab1" data-toggle="tab">Upload</a></li>
-        </ul>
-	    
-	    <div class="tab-content">
+    <ul id="myTab" class="nav nav-tabs" style="margin-top: 100px;">
+    	<li><a href="#tab1" data-toggle="tab">Browse</a></li>
+    	<li><a href="#tab2" data-toggle="tab">Upload</a></li>
+    	<li><a href="#tab3" data-toggle="tab">Permissions</a></li>
+    	<li><a href="#tab4" data-toggle="tab">Settings</a></li>
+    	<li><a href="#tab5" data-toggle="tab">Recepies</a></li>
+    	<li><a href="#tab6" data-toggle="tab">Gallery</a></li>
+    	<li><a href="#tab7" data-toggle="tab">Website</a></li>
+    </ul>
+    
+    <div class="tab-content">
 
-		<div class="tab-pane" id="tab1"><form class="form-horizontal" method="post" action="./amazon" enctype="multipart/form-data">
+		<div class="tab-pane" id="tab1">
 	
-			<input type="hidden" value="as87a0d59d4675d7b0d0561c9acc4d04" name="svc" />
+			<h3>Browse all files in your bucket</h3>
+
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<td>Name</td>
+						<td>Size</td>
+						<td>Permissions</td>
+						<td>Tag</td>
+						<td>Type</td>
+					</tr>
+				</thead>
+				<tbody>
+					<% for(var i=0; i<hello.length; i++) { %>
+					<tr>
+						<td><%= hello[i].name %></td>
+						<td><%= hello[i].size %></td>
+						<td><%= hello[i].type %></td>
+						<td><%= hello[i].lastModifiedDate %></td>
+						<td><%= hello[i].tags %></td>
+					</tr>
+					<% } %>
+				</tbody>
+			</table>    
+			
+		</div>
+
+		<div class="tab-pane" id="tab2"><form class="form-horizontal" method="post" action="./amazon" enctype="multipart/form-data">
+	
+			<h3>Upload a new file to bucket</h3>
+
+			<input type="hidden" value="as87a0d59d" name="svc" />
 				
 		 	<span class="btn btn-file">
 		 		Upload
 		 		<input type="file" name="myfile" style="margin-left:27px; line-height:10px; margin-top:11px;" />
 		 		<button type="submit" class="btn btn-primary">Upload</button>
 		 	</span>
-		 		
+		 	
 		</form></div>
-	    
+
 	</div>
+	    
 	
 	<% include ../_layout/_layout-view-footer.html %>
