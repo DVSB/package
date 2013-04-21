@@ -124,5 +124,6 @@
 					
 			app.listen(4000);
 			app.use(express.logger('dev')); // log to console all errors and requests
+			console.log('app lister on port 4000');
 			
 		}	
