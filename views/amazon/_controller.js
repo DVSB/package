@@ -47,11 +47,16 @@
 
 			tab.browse.DownloadDatabaseAndParse();
 
-		} 
+		} else if (req.body.svc === 'bb87a0da8a') {
+			
+			tab.browse.UnlinkFile(req.body.item);
+			
+		}
 
 		tab.browse.DownloadDatabaseAndParse(function(files){
 			res.render(__dirname + '/_view.html', {hello : files});
 		});
+		
 
 		
 	};

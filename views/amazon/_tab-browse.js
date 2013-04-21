@@ -39,6 +39,64 @@
 
 	}
 
-	exports.UnlinkFile = function(callback) {
+	exports.UnlinkFile = function(item) {
+		
+		var options = {};
+		
+		// Delete real file
+		
+		options.Bucket = rootConf.Amazon.Buckets.StorageBucket;
+		options.Key = item;
+		
+		s3.client.deleteObject(options, function(err){
+			
+			if (err) { 
+				console.log(err); 
+			} else { 
+				console.log('is unlinked: ' + item); 
+			}
+			
+		});
+		
+		// Delete from Database
+		
+		options.Bucket = rootConf.Amazon.Buckets.AdminBucket;
+		options.Key = rootConf.User.ID;
+		
+		s3.client.getObject(options, function(err, data) {
+			if (err) { console.log(err); }
+			
+			var database = JSON.parse(data.Body).items;	
+			
+			var databaseWithoutItem = underscore.reject(database, function(iterator){ 
+				return iterator.key == item; 
+			});
+			
+			// TODO remove
+			console.log('----');
+			console.log(databaseWithoutItem);
+			
+			var jsn = JSON.parse(data.Body.databaseWithoutItem);
+			console.log('----');
+			console.log(jsn);
+						
+			options.Body = jsn;
+			options.Bucket = rootConf.Amazon.Buckets.AdminBucket;
+			options.Key = rootConf.User.ID;
+			
+			//s3.client.putObject(options, function(err,data){
+			//	if (err) { console.log(err); }
+			//});
+						
+		});
 		
 	}
+
+
+
+
+
+
+
+
+
