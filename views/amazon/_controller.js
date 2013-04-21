@@ -30,12 +30,13 @@
 	var tab = {};
 	tab.upload = require('./_tab-upload');
 	tab.browse = require('./_tab-browse');
+	
+	
 
 	// Runned from app.js
 	exports.Init = function(app, req, res) {
 
-		// If sent via POST protocol Form with hidden input 
-		if (req.body.svc === 'as87a0d59d') {
+		if (req.body.svc === 'as87a0d59d') { // If file is uploaded
 			
 			tab.upload.UploadAndUnlink(req, function(fileProperties){
 				tab.upload.AddDatabaseItem(fileProperties);

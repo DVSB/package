@@ -26,6 +26,7 @@
 						<td>Permissions</td>
 						<td>Tag</td>
 						<td>Type</td>
+						<td>Options</td>
 					</tr>
 				</thead>
 				<tbody>
@@ -36,6 +37,13 @@
 						<td><%= hello[i].type %></td>
 						<td><%= hello[i].lastModifiedDate %></td>
 						<td><%= hello[i].tags %></td>
+						<td>
+							<form method="post" action="./amazon">
+								<input type="hidden" value="<%= hello[i].key %>" name="item" />
+								<input type="hidden" value="bb87a0da8a" name="svc" />
+								<button type="submit" class="btn btn-primary">Unlink</button>
+							</form>
+						</td>
 					</tr>
 					<% } %>
 				</tbody>

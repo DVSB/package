@@ -38,3 +38,7 @@
 		});
 
 	}
+
+	exports.UnlinkFile = function(callback) {
+		
+	}

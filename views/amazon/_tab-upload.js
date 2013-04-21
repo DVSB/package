@@ -35,7 +35,7 @@
 
 		// Buffer, file in TMP
 		options.Body = fs.readFileSync(req.files.myfile.path);
-
+		
 		// Sent buffer with options to S3 storage
 		s3.client.putObject(options, function(err) { 
 			if (err) { console.log(err); }
