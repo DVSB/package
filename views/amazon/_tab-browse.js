@@ -52,7 +52,8 @@
 			
 			if (err) { 
 				console.log(err); 
-			} else { 
+			} else {
+				console.log('----');
 				console.log('is unlinked: ' + item); 
 			}
 			
@@ -63,30 +64,32 @@
 		options.Bucket = rootConf.Amazon.Buckets.AdminBucket;
 		options.Key = rootConf.User.ID;
 		
+		// Get database from admin bucket
 		s3.client.getObject(options, function(err, data) {
 			if (err) { console.log(err); }
 			
+			// Parse to JSON and select array Items
 			var database = JSON.parse(data.Body).items;	
 			
+			// Remove from array one element
 			var databaseWithoutItem = underscore.reject(database, function(iterator){ 
 				return iterator.key == item; 
 			});
 			
-			// TODO remove
-			console.log('----');
-			console.log(databaseWithoutItem);
 			
-			var jsn = JSON.parse(data.Body.databaseWithoutItem);
-			console.log('----');
-			console.log(jsn);
-						
-			options.Body = jsn;
+			var pepek = JSON.parse(data.Body);			
+			pepek.items = databaseWithoutItem;
+				
+			options.Body = JSON.stringify(pepek);
 			options.Bucket = rootConf.Amazon.Buckets.AdminBucket;
 			options.Key = rootConf.User.ID;
 			
-			//s3.client.putObject(options, function(err,data){
-			//	if (err) { console.log(err); }
-			//});
+			console.log(pepek);
+			
+			s3.client.putObject(options, function(err,data){
+				if (err) { console.log(err); }
+				console.log(data);
+			});
 						
 		});
 		
