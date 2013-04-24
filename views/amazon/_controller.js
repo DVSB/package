@@ -21,17 +21,27 @@
 
 		if (req.body.svc === 'as87a0d59d') { // If file is uploaded
 			
-			tab.upload.Upload(s3, settings, fs, req);
+			tab.upload.Upload(s3, settings, fs, req, function(){
+				tab.browse.ListObjects(s3, settings, function(files) {
+					res.render(__dirname + '/_view.html', {myfiles : files});
+				});
+			});
 			
 		} else if (req.body.svc === 'bb87a0da8a') {
 			
-			tab.browse.UnlinkObject(s3, settings, req.body.item);
+			tab.browse.UnlinkObject(s3, settings, req.body.item, function(){
+				tab.browse.ListObjects(s3, settings, function(files) {
+					res.render(__dirname + '/_view.html', {myfiles : files});
+				});
+			});
+			
+		} else {
+			
+			tab.browse.ListObjects(s3, settings, function(files) {
+				res.render(__dirname + '/_view.html', {myfiles : files});
+			});			
 			
 		}
-
-		tab.browse.ListObjects(s3, settings, function(files) {
-			res.render(__dirname + '/_view.html', {myfiles : files});
-		});
 
 		
 	};

@@ -14,7 +14,7 @@
 	}
 
 
-	exports.UnlinkObject = function(s3, settings, item) {
+	exports.UnlinkObject = function(s3, settings, item, callback) {
 
 		var params = {
 			Bucket : settings.amazon.bucket,
@@ -23,6 +23,7 @@
 		
 		s3.client.deleteObject(params, function(err){
 			if (err) { console.log(err); }
+			callback();
 		});
 
 	}

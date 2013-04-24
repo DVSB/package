@@ -1,7 +1,7 @@
 
 
-	exports.Upload = function(s3, settings, fs, req) {
-				
+	exports.Upload = function(s3, settings, fs, req) {	
+		
 		for (var i=0; i<=req.files.myfile.length-1; i++) {
 			
 			var params = {
