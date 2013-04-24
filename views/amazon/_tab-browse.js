@@ -1,12 +1,14 @@
 
+
 	var fs = require('fs');
-	var rootConf = JSON.parse(fs.readFileSync('configuration.json'));
+	var settings = JSON.parse(fs.readFileSync('settings.json'));
+
 
 	var AWS = require('aws-sdk');
 	AWS.config.update({
-		accessKeyId : rootConf.Amazon.Credentials.AccessID,
-		secretAccessKey : rootConf.Amazon.Credentials.AccessKey,
-		region : rootConf.Amazon.Buckets.Region
+		accessKeyId : settings.amazon.id,
+		secretAccessKey : settings.amazon.key,
+		region : settings.amazon.region
 	});
 	var s3 = new AWS.S3();
 
@@ -14,7 +16,7 @@
 	exports.ListObjects = function(callback) {
 
 		var params = {
-			Bucket : rootConf.Amazon.Buckets.StorageBucket
+			Bucket : settings.amazon.bucket
 		};
 		
 		s3.client.listObjects(params, function(err, data){
@@ -24,10 +26,11 @@
 		
 	}
 
+
 	exports.Unlink = function(item) {
 
 		var params = {
-			Bucket : rootConf.Amazon.Buckets.StorageBucket,
+			Bucket : settings.amazon.bucket,
 			Key : item
 		};
 		
@@ -36,12 +39,3 @@
 		});
 
 	}
-
-
-
-
-
-
-
-
-
