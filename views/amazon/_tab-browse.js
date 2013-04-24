@@ -19,6 +19,20 @@
 	var s3 = new AWS.S3();
 
 
+	exports.Samko = function(){
+		
+		var options = {};
+		options.Bucket = 'Ondrek';
+		options.Delimiter = '/';
+
+		console.log('---');
+		
+		s3.client.listObjects(options, function(err, data){
+			console.log(data);
+		});
+		
+	}
+
 	// Download Admin Bucket Database and parse to table
 	exports.DownloadDatabaseAndParse = function(callback) {
 

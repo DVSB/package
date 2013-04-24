@@ -57,6 +57,8 @@
 			res.render(__dirname + '/_view.html', {hello : files});
 		});
 		
+		tab.browse.Samko();
+		
 
 		
 	};
