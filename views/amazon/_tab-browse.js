@@ -76,7 +76,6 @@
 				return iterator.key == item; 
 			});
 			
-			
 			var pepek = JSON.parse(data.Body);			
 			pepek.items = databaseWithoutItem;
 				
