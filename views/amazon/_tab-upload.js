@@ -1,19 +1,6 @@
 
 
-	var fs = require('fs');
-	var settings = JSON.parse(fs.readFileSync('settings.json'));
-
-
-	var AWS = require('aws-sdk');
-	AWS.config.update({
-		accessKeyId : settings.amazon.id,
-		secretAccessKey : settings.amazon.key,
-		region : settings.amazon.region
-	});
-	var s3 = new AWS.S3();
-
-
-	exports.Upload = function(req, callback) {
+	exports.Upload = function(s3, settings, fs, req, callback) {
 
 		var params = {
 			Bucket : settings.amazon.bucket,

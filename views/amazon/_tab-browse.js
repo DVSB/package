@@ -1,19 +1,6 @@
 
 
-	var fs = require('fs');
-	var settings = JSON.parse(fs.readFileSync('settings.json'));
-
-
-	var AWS = require('aws-sdk');
-	AWS.config.update({
-		accessKeyId : settings.amazon.id,
-		secretAccessKey : settings.amazon.key,
-		region : settings.amazon.region
-	});
-	var s3 = new AWS.S3();
-
-
-	exports.ListObjects = function(callback) {
+	exports.ListObjects = function(s3, settings, callback) {
 
 		var params = {
 			Bucket : settings.amazon.bucket
@@ -27,7 +14,7 @@
 	}
 
 
-	exports.Unlink = function(item) {
+	exports.UnlinkObject = function(s3, settings, item) {
 
 		var params = {
 			Bucket : settings.amazon.bucket,

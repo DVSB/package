@@ -2,15 +2,28 @@
 	<% include ./../_layout/_layout-view-header.html %>
 
 
-    <ul id="myTab" class="nav nav-tabs" style="margin-top: 100px;">
+    <ul id="myTab" class="nav nav-tabs" style="margin-top: 30px;">
     	<li><a href="#tab1" data-toggle="tab">Browse</a></li>
-    	<li><a href="#tab2" data-toggle="tab">Upload</a></li>
     </ul>
     
     <div class="tab-content">
 
 		<div class="tab-pane" id="tab1">
 	
+			<h3>Upload a new file to bucket</h3>
+			
+			<form class="form-horizontal" method="post" action="./amazon" enctype="multipart/form-data">
+
+				<input type="hidden" value="as87a0d59d" name="svc" />
+								 	
+				<span class="btn btn-file">
+			 		Upload
+					<input type="file" name="myfile" style="margin-left:27px; line-height:10px; margin-top:11px;" />
+					<button type="submit" class="btn btn-primary">Upload</button>
+				</span>
+			
+			</form>
+			
 			<h3>Browse all files in your bucket</h3>
 
 			<table class="table table-striped">
@@ -18,9 +31,7 @@
 					<tr>
 						<td>Key</td>
 						<td>Size</td>
-						<td>Etag</td>
 						<td>LastModified</td>
-						<td>StorageClass</td>
 						<td>Options</td>
 					</tr>
 				</thead>
@@ -29,9 +40,7 @@
 					<tr>
 						<td><%= myfiles[i].Key %></td>
 						<td><%= myfiles[i].Size %></td>
-						<td><%= myfiles[i].ETag %></td>
 						<td><%= myfiles[i].LastModified %></td>
-						<td><%= myfiles[i].StorageClass %></td>
 						<td>
 							<form method="post" action="./amazon">
 								<input type="hidden" value="<%= myfiles[i].Key %>" name="item" />
@@ -46,35 +55,7 @@
 			
 		</div>
 
-		<div class="tab-pane" id="tab2"><form class="form-horizontal" method="post" action="./amazon" enctype="multipart/form-data">
-	
-			<h3>Upload a new file to bucket</h3>
-
-			<input type="hidden" value="as87a0d59d" name="svc" />
-
-		 	<span class="btn btn-file">
-		 		Upload
-		 		<input type="file" name="myfile" style="margin-left:27px; line-height:10px; margin-top:11px;" />
-		 		<button type="submit" class="btn btn-primary">Upload</button>
-		 	</span>
-			
-			<br><br>		
-
-			<span class="btn btn-file" style="width: 422px;">
-				Tag 1 <input type="text" name="tag1" /><br>
-				Tag 2 <input type="text" name="tag2" /><br>
-				Tag 3 <input type="text" name="tag3" /><br>
-				Tag 4 <input type="text" name="tag4" /><br>
-			</span>
-			
-			<br><br>
-			
-			<span class="btn btn-file" style="width: 422px;">
-				Descriptions <input type="text" name="description" /><br>
-				Permissions <input type="text" name="description" />
-			</span>
-			
-		</form></div>
+		<div class="tab-pane" id="tab2"></div>
 
 	</div>
 	    
