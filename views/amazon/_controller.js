@@ -21,9 +21,7 @@
 
 		if (req.body.svc === 'as87a0d59d') { // If file is uploaded
 			
-			tab.upload.Upload(s3, settings, fs, req, function(fileProperties){
-				res.render(__dirname + '/_view.html', {hello : fileProperties});
-			});
+			tab.upload.Upload(s3, settings, fs, req);
 			
 		} else if (req.body.svc === 'bb87a0da8a') {
 			
