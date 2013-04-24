@@ -21,25 +21,25 @@
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<td>Name</td>
+						<td>Key</td>
 						<td>Size</td>
-						<td>Permissions</td>
-						<td>Tag</td>
-						<td>Type</td>
+						<td>Etag</td>
+						<td>LastModified</td>
+						<td>StorageClass</td>
 						<td>Options</td>
 					</tr>
 				</thead>
 				<tbody>
-					<% for(var i=0; i<hello.length; i++) { %>
+					<% for(var i=0; i<myfiles.length; i++) { %>
 					<tr>
-						<td><%= hello[i].name %></td>
-						<td><%= hello[i].size %></td>
-						<td><%= hello[i].type %></td>
-						<td><%= hello[i].lastModifiedDate %></td>
-						<td><%= hello[i].tags %></td>
+						<td><%= myfiles[i].Key %></td>
+						<td><%= myfiles[i].Size %></td>
+						<td><%= myfiles[i].ETag %></td>
+						<td><%= myfiles[i].LastModified %></td>
+						<td><%= myfiles[i].StorageClass %></td>
 						<td>
 							<form method="post" action="./amazon">
-								<input type="hidden" value="<%= hello[i].key %>" name="item" />
+								<input type="hidden" value="<%= myfiles[i].Key %>" name="item" />
 								<input type="hidden" value="bb87a0da8a" name="svc" />
 								<button type="submit" class="btn btn-primary">Unlink</button>
 							</form>
