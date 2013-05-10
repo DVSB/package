@@ -3,8 +3,8 @@
 
 
     <ul id="myTab" class="nav nav-tabs" style="margin-top: 30px;">
-		<li><a href="#tab2" data-toggle="tab">Settings</a></li>
 		<li><a href="#tab3" data-toggle="tab">About</a></li>
+		<li><a href="#tab2" data-toggle="tab">Settings</a></li>
     	<li><a href="#tab1" data-toggle="tab">Browse</a></li>
     </ul>
     
@@ -62,7 +62,7 @@
 			<section class="row-fluid">
 				
 				<div class="span12">
-					<h3>Admin settings</h3>
+					<h3 style="margin-bottom: 22px;">Admin settings</h3>
 				</div>
 							
 				<section class="row-fluid">
@@ -90,6 +90,8 @@
 
 						<label>Password again</label>
 						<input type="text" name="item" placeholder="******************" style="width: 30em;" />
+						
+						<button type="submit" class="btn btn-primary">Save</button>
 	
 					</fieldset>
 	
@@ -205,41 +207,19 @@
 									
 					<fieldset class="span6">
 		
-						<legend>Amazon Credentials</legend>
+						<legend>User settings</legend>
 		
-						<label>Access Key ID</label>
-						<input type="text" name="item" placeholder="AKIAJQTLD2TZ2VZ4SVHB" style="width: 30em;" />
+						<label>Quick find a user</label>
+						<input type="text" data-provide="typeahead" placeholder="AKIAJQTLD2TZ2VZ4SVHB" style="width: 26em;" />
+						<button type="submit" class="btn btn-primary" style="margin-top: -11px;">Find</button>
 		
-						<label>Secret Access Key</label>
-						<input type="text" name="item" placeholder="L55oK03vKJuV6YhnzFoFRoX6/H1saxAf7hjEeRT8" style="width: 30em;" />
-		
-						<label>Bucket for Storage</label>
-						<select style="width: 23.4em;">
-							<option>My photos bucket</option>
-							<option>All my music</option>
-							<option>Backup of my photos</option>
-						</select>
-					
-						<button type="submit" class="btn btn-primary" style="margin-top: -11px;">New Bucket</button>
-					
-		
-						<label>Default Upload Region</label>
-						<select style="width: 31em;">
-							<option>US Standard</option>
-							<option>US West (Oregon) - [us-west-2]</option>
-							<option>US West (Northern California) - [us-west-1]</option>
-							<option>EU (Ireland) - [EU]</option>
-							<option>Asia Pacific (Singapore) - [ap-southeast-1]</option>
-							<option>Asia Pacific (Sydney) - [ap-southeast-2]</option>
-							<option>Asia Pacific (Tokyo) - [ap-northeast-1]</option>
-							<option>South America (Sao Paulo) - [sa-east-1]</option>
-						</select>
-		
-						<label>Default upload StorageClass</label>
-						<select style="width: 31em;">
-							<option>Standard - 99.999999999% durability</option>
-							<option>Reduced Redundancy - 99.99% durability</option>
-						</select>
+						<label>Max registred users / Max online users</label>
+						<input type="text" name="item" placeholder="100" style="width: 14.4em;" />
+						<input type="text" name="item" placeholder="100" style="width: 14.4em;" />
+						
+						<label>Password expiration / lenght</label>
+						<input type="text" name="item" placeholder="10 months" style="width: 14.4em;" />
+						<input type="text" name="item" placeholder="10 characters" style="width: 14.4em;" />
 		
 						<button type="submit" class="btn btn-primary">Save</button>
 					
@@ -247,31 +227,19 @@
 			
 					<div class="span6" style="margin-top: 79px;">
 						<div class="well info">
-							Your AWS access key ID from <a href="#">Security Credentials</a>.
+							Find user and edit permissions, folders, passwords..
 						</div>
 					</div>
 				
 					<div class="span6" style="margin-top: 27px;">
 						<div class="well info">
-							Your AWS secret access key.
+							Smaller is cheaper.
 						</div>
 					</div>
 				
 					<div class="span6" style="margin-top: 27px;">
 						<div class="well info">
-							Choose existing bucket or create a new one.
-						</div>
-					</div>
-				
-					<div class="span6" style="margin-top: 27px;">
-						<div class="well info">
-							Closer to your home is better. Check also <a href="#">amazon prices</a>.
-						</div>
-					</div>
-				
-					<div class="span6" style="margin-top: 27px;">
-						<div class="well info">
-							Available Standard (9.5$/100GB) and Reduced (7.6$/100GB).
+							Security settings for improving user passwords.
 						</div>
 					</div>
 			
