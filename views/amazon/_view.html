@@ -3,12 +3,12 @@
 
 
     <ul id="myTab" class="nav nav-tabs" style="margin-top: 30px;">
-		<li><a href="#tab3" data-toggle="tab">About</a></li>
 		<li><a href="#tab2" data-toggle="tab">Settings</a></li>
+		<li><a href="#tab3" data-toggle="tab">About</a></li>
     	<li><a href="#tab1" data-toggle="tab">Browse</a></li>
     </ul>
     
-    <div class="tab-content">
+    <section class="tab-content">
 
 		<div class="tab-pane" id="tab1">
 	
@@ -59,72 +59,225 @@
 
 		<div class="tab-pane" id="tab2">
 			
-			<h3>Admin settings</h3>
+			<section class="row-fluid">
+				
+				<div class="span12">
+					<h3>Admin settings</h3>
+				</div>
+							
+				<section class="row-fluid">
+						
+					<fieldset class="span6">
+
+						<legend>Personal Credentials</legend>
+
+						<label>Email</label>
+						<input type="text" name="item" placeholder="samuel@ondrek.com" style="width: 30em;" />
+
+						<label>Password Hash Technique</label>
+						<select style="width: 31em;">
+							<option>SHA3-512 + Secret String + BLAKE</option>
+							<option>SHA3-512 + Secret String + Grøstl</option>
+							<option>SHA3-512 + Secret String + JH</option>
+							<option>SHA3-512 + Secret String + Skein</option>
+						</select>
+
+						<label>Secret String for hash</label>
+						<input type="text" name="item" placeholder="miomionn93J98H2FIUF3UIFnjkanajksndkaj" style="width: 30em;" />
+
+						<label>Password</label>
+						<input type="text" name="item" placeholder="******************" style="width: 30em;" />
+
+						<label>Password again</label>
+						<input type="text" name="item" placeholder="******************" style="width: 30em;" />
+	
+					</fieldset>
+	
+					<div class="span6" style="margin-top: 79px;">
+						<div class="well info">
+							In case of lost passworf for password recovery.
+						</div>
+					</div>
+				
+					<div class="span6" style="margin-top: 27px;">
+						<div class="well info">
+							App uses only hashes of passwords in file. Without database.
+						</div>
+					</div>
+				
+					<div class="span6" style="margin-top: 27px;">
+						<div class="well info">
+							Salt for better password security. <a href="#">Random generate one</a>.
+						</div>
+					</div>
+				
+					<div class="span6" style="margin-top: 27px;">
+						<div class="well info">
+							Minimum 8 chars (hint: Use sentence with spaces).
+						</div>
+					</div>
+				
+					<div class="span6" style="margin-top: 27px;">
+						<div class="well info">
+							Your password is 292 days old. Expiration: 393 days.
+						</div>
+					</div>
 			
-			<form method="post" action="./amazon">
+				</section>
+			
+				<section class="row-fluid" style="margin-top: 35px;">
+									
+					<fieldset class="span6">
+		
+						<legend>Amazon Credentials</legend>
+		
+						<label>Access Key ID</label>
+						<input type="text" name="item" placeholder="AKIAJQTLD2TZ2VZ4SVHB" style="width: 30em;" />
+		
+						<label>Secret Access Key</label>
+						<input type="text" name="item" placeholder="L55oK03vKJuV6YhnzFoFRoX6/H1saxAf7hjEeRT8" style="width: 30em;" />
+		
+						<label>Bucket for Storage</label>
+						<select style="width: 23.4em;">
+							<option>My photos bucket</option>
+							<option>All my music</option>
+							<option>Backup of my photos</option>
+						</select>
+					
+						<button type="submit" class="btn btn-primary" style="margin-top: -11px;">New Bucket</button>
+					
+		
+						<label>Default Upload Region</label>
+						<select style="width: 31em;">
+							<option>US Standard</option>
+							<option>US West (Oregon) - [us-west-2]</option>
+							<option>US West (Northern California) - [us-west-1]</option>
+							<option>EU (Ireland) - [EU]</option>
+							<option>Asia Pacific (Singapore) - [ap-southeast-1]</option>
+							<option>Asia Pacific (Sydney) - [ap-southeast-2]</option>
+							<option>Asia Pacific (Tokyo) - [ap-northeast-1]</option>
+							<option>South America (Sao Paulo) - [sa-east-1]</option>
+						</select>
+		
+						<label>Default upload StorageClass</label>
+						<select style="width: 31em;">
+							<option>Standard - 99.999999999% durability</option>
+							<option>Reduced Redundancy - 99.99% durability</option>
+						</select>
+		
+						<button type="submit" class="btn btn-primary">Save</button>
+					
+					</fieldset>
+			
+					<div class="span6" style="margin-top: 79px;">
+						<div class="well info">
+							Your AWS access key ID from <a href="#">Security Credentials</a>.
+						</div>
+					</div>
 				
-				<fieldset style="width: 48%; float: left; margin-left: 2%;">
-					
-					<legend>Personal Credentials</legend>
-					
-					<label>Email</label>
-					<input type="text" name="item" placeholder="samuel@ondrek.com" style="width: 30em;" />
-
-					<label>Password Hash Technique</label>
-					<select style="width: 31em;">
-						<option>SHA3-512 + Secret String + BLAKE</option>
-						<option>SHA3-512 + Secret String + Grøstl</option>
-						<option>SHA3-512 + Secret String + JH</option>
-						<option>SHA3-512 + Secret String + Skein</option>
-					</select>
-					
-					<label>Secret String for hash</label>
-					<input type="text" name="item" placeholder="miomionn93J98H2FIUF3UIFnjkanajksndkaj" style="width: 30em;" />
-					
-					<label>Password</label>
-					<input type="text" name="item" placeholder="******************" style="width: 30em;" />
-					
-					<label>Password again</label>
-					<input type="text" name="item" placeholder="******************" style="width: 30em;" />
-					
-				</fieldset>
-
-				<fieldset style="width: 48%; float: left; margin-left: 2%;">
-					
-					<legend>Amazon Credentials</legend>
-					
-					<label>Access Key ID</label>
-					<input type="text" name="item" placeholder="AKIAJQTLD2TZ2VZ4SVHB" style="width: 30em;" />
-					
-					<label>Secret Access Key</label>
-					<input type="text" name="item" placeholder="L55oK03vKJuV6YhnzFoFRoX6/H1saxAf7hjEeRT8" style="width: 30em;" />
-					
-					<label>Bucket for Storage</label>
-					<input type="text" name="item" placeholder="My backup files" style="width: 30em;" />
-					
-					<label>Default Upload Region</label>
-					<select style="width: 31em;">
-						<option>US Standard</option>
-						<option>US West (Oregon) - [us-west-2]</option>
-						<option>US West (Northern California) - [us-west-1]</option>
-						<option>EU (Ireland) - [EU]</option>
-						<option>Asia Pacific (Singapore) - [ap-southeast-1]</option>
-						<option>Asia Pacific (Sydney) - [ap-southeast-2]</option>
-						<option>Asia Pacific (Tokyo) - [ap-northeast-1]</option>
-						<option>South America (Sao Paulo) - [sa-east-1]</option>
-					</select>
-					
-					<label>Default upload StorageClass</label>
-					<select style="width: 31em;">
-						<option>Standard - 99.999999999% durability</option>
-						<option>Reduced Redundancy - 99.99% durability</option>
-					</select>
-					
-				</fieldset>
-
-				<button type="submit" class="btn btn-primary">Save</button>
+					<div class="span6" style="margin-top: 27px;">
+						<div class="well info">
+							Your AWS secret access key.
+						</div>
+					</div>
 				
-			</form>
+					<div class="span6" style="margin-top: 27px;">
+						<div class="well info">
+							Choose existing bucket or create a new one.
+						</div>
+					</div>
+				
+					<div class="span6" style="margin-top: 27px;">
+						<div class="well info">
+							Closer to your home is better. Check also <a href="#">amazon prices</a>.
+						</div>
+					</div>
+				
+					<div class="span6" style="margin-top: 27px;">
+						<div class="well info">
+							Available Standard (9.5$/100GB) and Reduced (7.6$/100GB).
+						</div>
+					</div>
+			
+				</section>
+			
+				<section class="row-fluid" style="margin-top: 35px;">
+									
+					<fieldset class="span6">
+		
+						<legend>Amazon Credentials</legend>
+		
+						<label>Access Key ID</label>
+						<input type="text" name="item" placeholder="AKIAJQTLD2TZ2VZ4SVHB" style="width: 30em;" />
+		
+						<label>Secret Access Key</label>
+						<input type="text" name="item" placeholder="L55oK03vKJuV6YhnzFoFRoX6/H1saxAf7hjEeRT8" style="width: 30em;" />
+		
+						<label>Bucket for Storage</label>
+						<select style="width: 23.4em;">
+							<option>My photos bucket</option>
+							<option>All my music</option>
+							<option>Backup of my photos</option>
+						</select>
+					
+						<button type="submit" class="btn btn-primary" style="margin-top: -11px;">New Bucket</button>
+					
+		
+						<label>Default Upload Region</label>
+						<select style="width: 31em;">
+							<option>US Standard</option>
+							<option>US West (Oregon) - [us-west-2]</option>
+							<option>US West (Northern California) - [us-west-1]</option>
+							<option>EU (Ireland) - [EU]</option>
+							<option>Asia Pacific (Singapore) - [ap-southeast-1]</option>
+							<option>Asia Pacific (Sydney) - [ap-southeast-2]</option>
+							<option>Asia Pacific (Tokyo) - [ap-northeast-1]</option>
+							<option>South America (Sao Paulo) - [sa-east-1]</option>
+						</select>
+		
+						<label>Default upload StorageClass</label>
+						<select style="width: 31em;">
+							<option>Standard - 99.999999999% durability</option>
+							<option>Reduced Redundancy - 99.99% durability</option>
+						</select>
+		
+						<button type="submit" class="btn btn-primary">Save</button>
+					
+					</fieldset>
+			
+					<div class="span6" style="margin-top: 79px;">
+						<div class="well info">
+							Your AWS access key ID from <a href="#">Security Credentials</a>.
+						</div>
+					</div>
+				
+					<div class="span6" style="margin-top: 27px;">
+						<div class="well info">
+							Your AWS secret access key.
+						</div>
+					</div>
+				
+					<div class="span6" style="margin-top: 27px;">
+						<div class="well info">
+							Choose existing bucket or create a new one.
+						</div>
+					</div>
+				
+					<div class="span6" style="margin-top: 27px;">
+						<div class="well info">
+							Closer to your home is better. Check also <a href="#">amazon prices</a>.
+						</div>
+					</div>
+				
+					<div class="span6" style="margin-top: 27px;">
+						<div class="well info">
+							Available Standard (9.5$/100GB) and Reduced (7.6$/100GB).
+						</div>
+					</div>
+			
+				</section>
+				
+			</section>
 			
 		</div>
 		
@@ -132,7 +285,7 @@
 
 			<header style="margin-top: 37px;">
 		
-				<div class="row">
+				<section class="row">
 					
 					<div class="span6">
 						<h1>Samuel Cloud</h1>
@@ -140,7 +293,7 @@
 					</div>
 					
 					<div class="span6">
-						<div class="well">
+						<div class="well blue">
 							<span style="display: block; font-weight: bold; margin-bottom: 1em;">Secure. Fast. Free &amp; Own.</span>
 							Samuel Cloud is your own secure solution for scalable and fast cloud storage. Use inexpensive and unlimited file hosting on Amazon S3 with your own domain and yours users.
 						</div>
@@ -222,7 +375,7 @@
 						
 						<li class="well entypo box">
 							&#59177;
-							<span class="span">Oneclick drop account</span>
+							<span class="span">Easy-drop account</span>
 						</li>
 						
 						<li class="well entypo box">
@@ -236,55 +389,45 @@
 						
 						<h2 style="margin-top: 45px;">We are social</h2>
 						
-						<li class="well entypo box">
-							&#10002; 
-							<span class="span">Lightweight - 7kb</span>
+						<li class="well entyposocial box">
+							&#62208;
+							<span class="span">Github integration</span>
 						</li>
 						
-						<li class="well entypo box">
-							&#128101;
-							<span class="span">User management</span>
+						<li class="well entyposocial box">
+							&#62211;
+							<span class="span">Flick import</span>
 						</li>
 						
-						<li class="well entypo box">
-							&#128319;
-							<span class="span">Lightweight</span>
+						<li class="well entyposocial box">
+							&#62217;
+							<span class="span">Oneclick twitt file</span>
 						</li>
 						
-						<li class="well entypo box">
-							&#128101;
-							<span class="span">User management</span>
+						<li class="well entyposocial box">
+							&#62222;
+							<span class="span">Share files for friends</span>
 						</li>
 						
-						<li class="well entypo box">
-							&#128319;
-							<span class="span">Lightweight</span>
+						<li class="well entyposocial box">
+							&#62235;
+							<span class="span">High-resolution shots</span>
 						</li>
 						
-						<li class="well entypo box">
-							&#128101;
-							<span class="span">User management</span>
+						<li class="well entyposocial box">
+							&#62286;
+							<span class="span">Backup your designs</span>
 						</li>
 						
-						<li class="well entypo box">
-							&#128319;
-							<span class="span">Lightweight</span>
-						</li>
-						
-						<li class="well entypo box">
-							&#128101;
-							<span class="span">User management</span>
-						</li>
-						
-						<li class="well entypo box">
-							&#128319;
-							<span class="span">Lightweight</span>
+						<li class="well entyposocial box">
+							&#62253;
+							<span class="span">Instagram full-res.</span>
 						</li>
 						
 					</ul>
 					
 					<div class="span12">
-						<div class="well" style="margin: 73px 0 40px;">
+						<div class="well blue" style="margin: 73px 0 40px;">
 							<span style="display: block; font-weight: bold; margin-bottom: 1em;">What if ..</span>
 							.. all your music, books, photos are under your domain? <br />
 							.. 30GB costs 2$ with 99.99% durability? <br />
@@ -293,13 +436,13 @@
 						</div>
 					</div>
 					
-				</div>
+				</section>
 		
 			</header>
 
 		</div>
 
-	</div>
+	</section> <!-- end of tabcontainer -->
 	    
 	
 	<% include ../_layout/_layout-view-footer.html %>

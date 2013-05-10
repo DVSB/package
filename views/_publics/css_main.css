@@ -4,6 +4,16 @@
 		margin: 0 auto;
 	}
 	
+	::selection {
+		background: #fff8ab; 
+		color: #000
+	}
+	
+	::-moz-selection {
+		background: #fff8ab; 
+		color: #000
+	}
+	
 	button.aslink {
 		padding: 0;
 		background: transparent;
@@ -102,3 +112,6 @@
 		padding-right: 7px;
 	}
 	
+	td form {
+		margin: 0;
+	}
