@@ -3,7 +3,9 @@
 
 
     <ul id="myTab" class="nav nav-tabs" style="margin-top: 30px;">
+		<li><a href="#tab2" data-toggle="tab">Settings</a></li>
     	<li><a href="#tab1" data-toggle="tab">Browse</a></li>
+		
     </ul>
     
     <div class="tab-content">
@@ -55,7 +57,76 @@
 			
 		</div>
 
-		<div class="tab-pane" id="tab2"></div>
+		<div class="tab-pane" id="tab2">
+			
+			<h3>Admin settings</h3>
+			
+			<form method="post" action="./amazon">
+				
+				<fieldset style="width: 48%; float: left; margin-left: 2%;">
+					
+					<legend>Personal Credentials</legend>
+					
+					<label>Email</label>
+					<input type="text" name="item" placeholder="samuel@ondrek.com" style="width: 30em;" />
+
+					<label>Password Hash Technique</label>
+					<select style="width: 31em;">
+						<option>SHA3-512 + Secret String + BLAKE</option>
+						<option>SHA3-512 + Secret String + Grøstl</option>
+						<option>SHA3-512 + Secret String + JH</option>
+						<option>SHA3-512 + Secret String + Skein</option>
+					</select>
+					
+					<label>Secret String for hash</label>
+					<input type="text" name="item" placeholder="miomionn93J98H2FIUF3UIFnjkanajksndkaj" style="width: 30em;" />
+					
+					<label>Password</label>
+					<input type="text" name="item" placeholder="******************" style="width: 30em;" />
+					
+					<label>Password again</label>
+					<input type="text" name="item" placeholder="******************" style="width: 30em;" />
+					
+				</fieldset>
+
+				<fieldset style="width: 48%; float: left; margin-left: 2%;">
+					
+					<legend>Amazon Credentials</legend>
+					
+					<label>Access Key ID</label>
+					<input type="text" name="item" placeholder="AKIAJQTLD2TZ2VZ4SVHB" style="width: 30em;" />
+					
+					<label>Secret Access Key</label>
+					<input type="text" name="item" placeholder="L55oK03vKJuV6YhnzFoFRoX6/H1saxAf7hjEeRT8" style="width: 30em;" />
+					
+					<label>Bucket for Storage</label>
+					<input type="text" name="item" placeholder="My backup files" style="width: 30em;" />
+					
+					<label>Default Upload Region</label>
+					<select style="width: 31em;">
+						<option>US Standard</option>
+						<option>US West (Oregon) - [us-west-2]</option>
+						<option>US West (Northern California) - [us-west-1]</option>
+						<option>EU (Ireland) - [EU]</option>
+						<option>Asia Pacific (Singapore) - [ap-southeast-1]</option>
+						<option>Asia Pacific (Sydney) - [ap-southeast-2]</option>
+						<option>Asia Pacific (Tokyo) - [ap-northeast-1]</option>
+						<option>South America (Sao Paulo) - [sa-east-1]</option>
+					</select>
+					
+					<label>Default upload StorageClass</label>
+					<select style="width: 31em;">
+						<option>Standard - 99.999999999% durability</option>
+						<option>Reduced Redundancy - 99.99% durability</option>
+					</select>
+					
+				</fieldset>
+
+				<button type="submit" class="btn btn-primary">Save</button>
+				
+			</form>
+			
+		</div>
 
 	</div>
 	    
