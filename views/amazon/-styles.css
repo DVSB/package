@@ -94,6 +94,10 @@
 		background-color: #FFF8AB !important;
 		cursor: pointer;
 	}
+	
+	.inline-form {
+		display: inline-block;
+	}
 
 
 

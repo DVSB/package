@@ -14,11 +14,11 @@
 	}
 
 
-	exports.UnlinkObject = function(s3, settings, item, callback) {
+	exports.UnlinkObject = function(s3, settings, items, callback) {
 
 		var params = {
 			Bucket : settings.amazon.bucket,
-			Key : item
+			Key : items
 		};
 		
 		s3.client.deleteObject(params, function(err){

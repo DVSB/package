@@ -26,21 +26,25 @@
 					res.render(__dirname + '/_view.html', {myfiles : files});
 				});
 			});
-			
-		} else if (req.body.svc === 'bb87a0da8a') {
-			
-			tab.browse.UnlinkObject(s3, settings, req.body.item, function(){
-				tab.browse.ListObjects(s3, settings, function(files) {
-					res.render(__dirname + '/_view.html', {myfiles : files});
-				});
-			});
-			
+
 		} else {
 			
 			tab.browse.ListObjects(s3, settings, function(files) {
 				res.render(__dirname + '/_view.html', {myfiles : files});
 			});			
 			
+		}
+		
+		console.log('tuna: ' + req.body.kokot);
+		
+		if (req.body.action === 'unlink'){
+			console.log('unlink');
+			console.log(req.body.kokot);
+			tab.browse.UnlinkObject(s3, settings, req.body.item, function(){
+				tab.browse.ListObjects(s3, settings, function(files) {
+					res.render(__dirname + '/_view.html', {myfiles : files});
+				});
+			});
 		}
 
 		
