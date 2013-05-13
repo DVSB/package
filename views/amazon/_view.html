@@ -3,9 +3,9 @@
 
 
     <ul id="myTab" class="nav nav-tabs" style="margin-top: 30px;">
+    	<li><a href="#tab1" data-toggle="tab">Browse</a></li>
 		<li><a href="#tab3" data-toggle="tab">About</a></li>
 		<li><a href="#tab2" data-toggle="tab">Settings</a></li>
-    	<li><a href="#tab1" data-toggle="tab">Browse</a></li>
     </ul>
     
     <section class="tab-content">
@@ -31,29 +31,64 @@
 			<table class="table table-striped">
 				<thead>
 					<tr>
+						<td></td>
 						<td>Key</td>
 						<td>Size</td>
 						<td>LastModified</td>
-						<td>Options</td>
 					</tr>
 				</thead>
 				<tbody>
 					<% for(var i=0; i<myfiles.length; i++) { %>
 					<tr>
+						<td><input type="checkbox" /></td>
 						<td><%= myfiles[i].Key %></td>
 						<td><%= myfiles[i].Size %></td>
 						<td><%= myfiles[i].LastModified %></td>
-						<td>
+						<!--<td>
 							<form method="post" action="./amazon">
 								<input type="hidden" value="<%= myfiles[i].Key %>" name="item" />
 								<input type="hidden" value="bb87a0da8a" name="svc" />
 								<button type="submit" class="btn btn-primary">Unlink</button>
 							</form>
-						</td>
+							<form method="post" action="./amazon">
+								<input type="hidden" value="<%= myfiles[i].Key %>" name="item" />
+								<input type="hidden" value="bb87a0da8a" name="svc" />
+								<button type="submit" class="btn btn-primary">Rename</button>
+							</form>
+							<form method="post" action="./amazon">
+								<input type="hidden" value="<%= myfiles[i].Key %>" name="item" />
+								<input type="hidden" value="bb87a0da8a" name="svc" />
+								<button type="submit" class="btn btn-primary">Move</button>
+							</form>
+							<form method="post" action="./amazon">
+								<input type="hidden" value="<%= myfiles[i].Key %>" name="item" />
+								<input type="hidden" value="bb87a0da8a" name="svc" />
+								<button type="submit" class="btn btn-primary">Share</button>
+							</form>
+							<form method="post" action="./amazon">
+								<input type="hidden" value="<%= myfiles[i].Key %>" name="item" />
+								<input type="hidden" value="bb87a0da8a" name="svc" />
+								<button type="submit" class="btn btn-primary">Download</button>
+							</form>
+							<form method="post" action="./amazon">
+								<input type="hidden" value="<%= myfiles[i].Key %>" name="item" />
+								<input type="hidden" value="bb87a0da8a" name="svc" />
+								<button type="submit" class="btn btn-primary">Copy</button>
+							</form>
+						</td>-->
 					</tr>
 					<% } %>
 				</tbody>
-			</table>    
+			</table>
+			
+			<input type="checkbox" class="checkall" /> 
+			<span>Check all and</span>
+			<button type="submit" class="btn btn-primary">Unlink</button>
+			<button type="submit" class="btn btn-primary">Rename</button>
+			<button type="submit" class="btn btn-primary">Move</button>
+			<button type="submit" class="btn btn-primary">Share</button>
+			<button type="submit" class="btn btn-primary">Download</button>
+			<button type="submit" class="btn btn-primary">Copy</button>
 			
 		</div>
 
