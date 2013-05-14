@@ -27,33 +27,6 @@
 			</form>
 			
 			<h3>Browse all files in your bucket</h3>
-			
-			<input type="checkbox" class="checkall" /> 
-			<span>Check all and</span>
-			<form method="post" action="./amazon" class="inline-form">
-				<input type="hidden" value="unlinka" name="action" />
-				<button type="submit" class="btn btn-primary" value="unlink" name="kokot">Unlink</button>
-			</form>
-			<form method="post" action="./amazon" class="inline-form">
-				<input type="hidden" value="rename" name="action" />
-				<button type="submit" class="btn btn-primary">Rename</button>
-			</form>
-			<form method="post" action="./amazon" class="inline-form">
-				<input type="hidden" value="move" name="action" />
-				<button type="submit" class="btn btn-primary">Move</button>
-			</form>
-			<form method="post" action="./amazon" class="inline-form">
-				<input type="hidden" value="share" name="action" />
-				<button type="submit" class="btn btn-primary">Share</button>
-			</form>
-			<form method="post" action="./amazon" class="inline-form">
-				<input type="hidden" value="download" name="action" />
-				<button type="submit" class="btn btn-primary">Download</button>
-			</form>
-			<form method="post" action="./amazon" class="inline-form">
-				<input type="hidden" value="copy" name="action" />
-				<button type="submit" class="btn btn-primary">Copy</button>
-			</form>
 
 			<table class="table table-striped">
 				<thead>
@@ -79,32 +52,15 @@
 			<input type="checkbox" class="checkall" /> 
 			<span>Check all and</span>
 			<form method="post" action="./amazon" class="inline-form">
-				<input type="hidden" value="unlink" name="action" />
-				<button type="submit" class="btn btn-primary">Unlink</button>
-			</form>
-			<form method="post" action="./amazon" class="inline-form">
-				<input type="hidden" value="rename" name="action" />
-				<button type="submit" class="btn btn-primary">Rename</button>
-			</form>
-			<form method="post" action="./amazon" class="inline-form">
-				<input type="hidden" value="move" name="action" />
-				<button type="submit" class="btn btn-primary">Move</button>
-			</form>
-			<form method="post" action="./amazon" class="inline-form">
-				<input type="hidden" value="share" name="action" />
-				<button type="submit" class="btn btn-primary">Share</button>
-			</form>
-			<form method="post" action="./amazon" class="inline-form">
-				<input type="hidden" value="download" name="action" />
-				<button type="submit" class="btn btn-primary">Download</button>
-			</form>
-			<form method="post" action="./amazon" class="inline-form">
-				<input type="hidden" value="copy" name="action" />
-				<button type="submit" class="btn btn-primary">Copy</button>
+				<input type="hidden" name="selected" value="null" />
+				<button type="submit" class="btn btn-primary" name="button" value="unlink">Unlink</button>
+				<button type="submit" class="btn btn-primary" name="button" value="rename">Rename</button>
+				<button type="submit" class="btn btn-primary" name="button" value="move">Move</button>
+				<button type="submit" class="btn btn-primary" name="button" value="share">Share</button>
+				<button type="submit" class="btn btn-primary" name="button" value="download">Download</button>
+				<button type="submit" class="btn btn-primary" name="button" value="copy">Copy</button>
 			</form>
 
-
-			
 		</div>
 
 		<div class="tab-pane" id="tab2">

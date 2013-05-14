@@ -35,16 +35,30 @@
 			
 		}
 		
-		console.log('tuna: ' + req.body.kokot);
-		
-		if (req.body.action === 'unlink'){
-			console.log('unlink');
-			console.log(req.body.kokot);
+		if (req.body.button==='unlink') {
+			
 			tab.browse.UnlinkObject(s3, settings, req.body.item, function(){
 				tab.browse.ListObjects(s3, settings, function(files) {
 					res.render(__dirname + '/_view.html', {myfiles : files});
 				});
 			});
+			
+		}
+		
+		if (req.body.button==='rename') {
+			console.log('rename');
+		}
+		if (req.body.button==='move') {
+			console.log('move');
+		}
+		if (req.body.button==='share') {
+			console.log('share');
+		}
+		if (req.body.button==='download') {
+			console.log('download');
+		}
+		if (req.body.button==='copy') {
+			console.log('copy');
 		}
 
 		
