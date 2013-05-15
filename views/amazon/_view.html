@@ -33,6 +33,7 @@
 					<tr>
 						<td></td>
 						<td>Key</td>
+						<td>Hash</td>
 						<td>Size</td>
 						<td>LastModified</td>
 					</tr>
@@ -41,6 +42,7 @@
 					<% for(var i=0; i<myfiles.length; i++) { %>
 					<tr>
 						<td><input type="checkbox" /></td>
+						<td><%= myfiles[i].ETag %></td>
 						<td><%= myfiles[i].Key %></td>
 						<td><%= myfiles[i].Size %></td>
 						<td><%= myfiles[i].LastModified %></td>

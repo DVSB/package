@@ -8,6 +8,16 @@
 		
 		s3.client.listObjects(params, function(err, data){
 			if (err) { console.log(err); }
+			
+			// convert date to 2013/12/5
+			for (var i=0; i<=data.Contents.length-1; i++) {
+				console.log(data.Contents[i].LastModified);
+				var mydate = new Date(data.Contents[i].LastModified);
+				data.Contents[i].LastModified = mydate.getFullYear() + '/' + mydate.getMonth() + '/' + mydate.getDay();
+			}
+			
+			console.log(data.Contents);
+
 			callback(data.Contents);
 		});
 		
