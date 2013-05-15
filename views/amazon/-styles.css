@@ -14,15 +14,16 @@
 	
 	.entypo {
 		display: inline-block;
-		width: 119px;
-		margin: 13px;
+		width: 137px;
+		margin: 5px 4px;
 		padding-top: 0;
+		padding-bottom: 0;
 	}
 
 	.entypo {
 		font-family: "entypo";
 		font-size: 6em;
-		line-height: 1;
+		line-height: 68px;
 		color: #333;
 		text-align: center;	
 	}
