@@ -29,9 +29,23 @@
 
 		} else {
 			
-			tab.browse.ListObjects(s3, settings, function(files) {
-				res.render(__dirname + '/_view.html', {myfiles : files});
-			});			
+			tab.browse.GetFiles(s3, settings, function(listOfFiles) {
+				tab.browse.GetFolders(s3, settings, function(listOfFolders) {
+
+					// add listOfFolders to listOfFoldersAndFiles (now its only listOfFiles copy)
+					var listOfFoldersAndFiles = listOfFiles;
+					for (var i=0; i<=listOfFolders.length-1; i++) {
+						listOfFoldersAndFiles.push({
+							'Key' : listOfFolders[i],
+							'LastModified' : '',
+							'Size' : ''
+						});
+					}
+										
+					res.render(__dirname + '/_view.html', {myfiles : listOfFoldersAndFiles});
+					
+				});
+			});	
 			
 		}
 		

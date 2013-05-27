@@ -124,6 +124,6 @@
 					
 			app.listen(4000);
 			app.use(express.logger('dev')); // log to console all errors and requests
-			console.log('For live app run localhost:4000');
+			console.log('Browse localhost:4000 for run your application in browser.');
 			
 		}	
