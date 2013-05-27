@@ -59,6 +59,14 @@
 			for (var i=0; i<=listOfFiles.length-1; i++) {
 				listOfFiles[i] = underscore.omit(listOfFiles[i], 'Owner', 'ETag', 'StorageClass');
 			}
+
+			// omit in Key string path and return only Key without "/"
+			for (var i=0; i<=listOfFiles.length-1; i++) {				
+				listOfFiles[i].Key = underscore(listOfFiles[i].Key).strRight('/');
+			}
+			
+			// remove self-folder submited by amazon
+			listOfFiles = underscore.rest(listOfFiles);
 			
 			callback(listOfFiles);
 		});

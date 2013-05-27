@@ -32,7 +32,7 @@
 			tab.browse.GetFiles(s3, settings, function(listOfFiles) {
 				tab.browse.GetFolders(s3, settings, function(listOfFolders) {
 
-					// add listOfFolders to listOfFoldersAndFiles (now its only listOfFiles copy)
+					/* add listOfFolders to listOfFoldersAndFiles (now its only listOfFiles copy)
 					var listOfFoldersAndFiles = listOfFiles;
 					for (var i=0; i<=listOfFolders.length-1; i++) {
 						listOfFoldersAndFiles.push({
@@ -40,8 +40,21 @@
 							'LastModified' : '',
 							'Size' : ''
 						});
+					}*/
+					
+					// Create nice folders
+					for (var i=0; i<=listOfFolders.length-1; i++) {
+						listOfFolders[i] = {
+							'Key' : listOfFolders[i],
+							'LastModified' : '',
+							'Size' : ''
+						};
 					}
-										
+					
+					// Connect folders and files
+					var listOfFoldersAndFiles = listOfFolders.concat(listOfFiles);
+					console.log(listOfFoldersAndFiles);
+					
 					res.render(__dirname + '/_view.html', {myfiles : listOfFoldersAndFiles});
 					
 				});
