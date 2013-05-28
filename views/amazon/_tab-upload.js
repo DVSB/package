@@ -2,17 +2,15 @@
 	// upload one file
 	exports.Upload = function(s3, settings, file) {
 
-		console.log('spusteny upload jedneho file');
-	
-		var params = {
+		s3.client.putObject({
 			Bucket : settings.amazon.bucket,
 			Key : settings.user.userId + '/' + file.name,
 			Body : fs.readFileSync(file.path)
-		};
-
-		s3.client.putObject(params, function(err, data) {
-			if (err) { console.log(err); } else { console.log(data); }
-			fs.unlink(file.path);
+		}, function(err, data) {
+			if (err) { console.log(err); } else { 
+				fs.unlink(file.path);
+			}
+			
 		});
 
 	};
@@ -20,7 +18,33 @@
 	// multiupload
 	exports.Multiupload = function(s3, settings, files) {
 
-		var params = {
+		for (var i=0; i<=files.length-1; i++) {
+			
+			var file = files[i];
+			
+			s3.client.putObject({
+				Bucket : settings.amazon.bucket,
+				Key : settings.user.userId + '/' + file.name,
+				Body : fs.readFileSync(file.path)
+			}, function(err, data){
+				if (err) { console.log(err); } else { 
+					fs.unlink(file.path);
+				}
+			});
+			
+		}
+
+	};
+	
+	/* todo:
+	we needs to add multipart upload
+	this uploads file 5mb parts up to
+	http://aws.amazon.com/about-aws/whats-new/2010/11/10/Amazon-S3-Introducing-Multipart-Upload/
+	you can controll pause, abort, complete
+	its better version for simple uplodate
+	IT IS NOT MULTIFILE UPLOAD
+	
+	var params = {
 			Bucket : settings.amazon.bucket,
 			Key : settings.user.userId + '/' + 'nannananana'
 		};
@@ -47,23 +71,6 @@
 									
 					if (err) { console.log('1212: ' + err); } 
 					
-					/*					
-					if (err) {
-						
-						var params = {
-							Bucket : settings.amazon.bucket,
-							Key : settings.user.userId + '/' + 'nannananana',
-							UploadId : data.UploadId
-						};
-						s3.client.abortMultipartUpload(params, function(err, data){
-							if (err) { console.log(err); } else { console.log(data); }
-							console.log('aborted');
-						});
-					
-					} else {
-					*/
-						//if (i===files.length-1) {
-					
 					console.log('myUploadId: ' + myUploadId);
 					
 					s3.client.completeMultipartUpload({
@@ -76,14 +83,10 @@
 						console.log('*****');
 					});
 					
-						//}
-						
-					//}
-					
 				});
 					
 			};
 
 		});
-
-	};
+		
+	*/
