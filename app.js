@@ -27,11 +27,11 @@
 		var express = require('express');
 		var app = module.exports = express();
 		
-		// Very Very important and usefull lib, more on bit.ly/wC89vt
-		// Extension for string staff for underscore, more on bit.ly/r1Mkch
-		var underscore = require('underscore');
+		// todo: yes, its global for now.. desperate times desperate measures
+		underscore = require('underscore');
 		underscore.mixin(require('underscore.string').exports());
-			
+		
+		fs = require('fs');
 		
 		
 	// CONFIGURATION

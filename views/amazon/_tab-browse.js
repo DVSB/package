@@ -8,9 +8,6 @@
 			Prefix : settings.user.userId + '/'
 		};
 
-		var underscore = require('underscore');
-		underscore.mixin(require('underscore.string').exports());
-
 		s3.client.listObjects(params, function(err, data){
 		
 			if (err) { console.log(err); }
@@ -40,9 +37,6 @@
 			Delimiter : '/',
 			Prefix : settings.user.userId + '/'
 		};
-
-		var underscore = require('underscore');
-		underscore.mixin(require('underscore.string').exports());
 
 		s3.client.listObjects(params, function(err, data){
 		

@@ -27,6 +27,18 @@
 			</form>
 			
 			<h3>Browse all files in your bucket</h3>
+			
+			<input type="checkbox" class="checkall" /> 
+			<span>Check all and</span>
+			<form method="post" action="./amazon" class="inline-form">
+				<input type="hidden" name="selected" value="null" />
+				<button type="submit" class="btn btn-primary" name="button" value="unlink">Unlink</button>
+				<button type="submit" class="btn btn-primary" name="button" value="rename">Rename</button>
+				<button type="submit" class="btn btn-primary" name="button" value="move">Move</button>
+				<button type="submit" class="btn btn-primary" name="button" value="share">Share</button>
+				<button type="submit" class="btn btn-primary" name="button" value="download">Download</button>
+				<button type="submit" class="btn btn-primary" name="button" value="copy">Copy</button>
+			</form>
 
 			<table class="table table-striped">
 				<thead>
@@ -41,7 +53,13 @@
 					<% for(var i=0; i<myfiles.length; i++) { %>
 					<tr>
 						<td><input type="checkbox" /></td>
-						<td><%= myfiles[i].Key %></td>
+						
+						<% if (myfiles[i].Size=="") { %>
+							<td class="folder"><a href="#"><%= myfiles[i].Key %></a></td>
+						<% } else { %>
+							<td class="file"><%= myfiles[i].Key %></td>
+						<% } %>
+						
 						<td><%= myfiles[i].Size %></td>
 						<td><%= myfiles[i].LastModified %></td>
 					</tr>
@@ -49,18 +67,6 @@
 				</tbody>		
 			</table>
 			
-			<input type="checkbox" class="checkall" /> 
-			<span>Check all and</span>
-			<form method="post" action="./amazon" class="inline-form">
-				<input type="hidden" name="selected" value="null" />
-				<button type="submit" class="btn btn-primary" name="button" value="unlink">Unlink</button>
-				<button type="submit" class="btn btn-primary" name="button" value="rename">Rename</button>
-				<button type="submit" class="btn btn-primary" name="button" value="move">Move</button>
-				<button type="submit" class="btn btn-primary" name="button" value="share">Share</button>
-				<button type="submit" class="btn btn-primary" name="button" value="download">Download</button>
-				<button type="submit" class="btn btn-primary" name="button" value="copy">Copy</button>
-			</form>
-
 		</div>
 
 		<div class="tab-pane" id="tab2">

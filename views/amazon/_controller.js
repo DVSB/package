@@ -1,6 +1,4 @@
 
-
-	var fs = require('fs');
 	var settings = JSON.parse(fs.readFileSync('settings.json'));
 	
 	var AWS = require('aws-sdk');
@@ -21,26 +19,19 @@
 
 		if (req.body.svc === 'as87a0d59d') { // If file is uploaded
 			
-			tab.upload.Upload(s3, settings, fs, req, function(){
-				tab.browse.ListObjects(s3, settings, function(files) {
-					res.render(__dirname + '/_view.html', {myfiles : files});
-				});
-			});
+			// in javascript is array object, so this construction of conditional :)
+			if (underscore.isArray(req.files.myfile)) {
+				// multiupload
+				tab.upload.Multiupload(s3, settings, req.files.myfile);
+			} else {
+				// upload
+				tab.upload.Upload(s3, settings, req.files.myfile);
+			}
 
 		} else {
 			
 			tab.browse.GetFiles(s3, settings, function(listOfFiles) {
 				tab.browse.GetFolders(s3, settings, function(listOfFolders) {
-
-					/* add listOfFolders to listOfFoldersAndFiles (now its only listOfFiles copy)
-					var listOfFoldersAndFiles = listOfFiles;
-					for (var i=0; i<=listOfFolders.length-1; i++) {
-						listOfFoldersAndFiles.push({
-							'Key' : listOfFolders[i],
-							'LastModified' : '',
-							'Size' : ''
-						});
-					}*/
 					
 					// Create nice folders
 					for (var i=0; i<=listOfFolders.length-1; i++) {
@@ -53,7 +44,11 @@
 					
 					// Connect folders and files
 					var listOfFoldersAndFiles = listOfFolders.concat(listOfFiles);
-					console.log(listOfFoldersAndFiles);
+					
+					// Add Kind of file (folder/pdf/png/..)
+					for (var i=0; i<=listOfFoldersAndFiles.length-1; i++) {
+						underscore.extend(listOfFoldersAndFiles[i], {Kind : ''});
+					}
 					
 					res.render(__dirname + '/_view.html', {myfiles : listOfFoldersAndFiles});
 					
