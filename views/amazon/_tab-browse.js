@@ -2,16 +2,14 @@
 
 	exports.GetFolders = function(s3, settings, callback) {
 
-		var params = {
+		s3.client.listObjects({
 			Bucket : settings.amazon.bucket,
 			Delimiter : '/',
 			Prefix : settings.user.userId + '/'
-		};
-
-		s3.client.listObjects(params, function(err, data){
+		}, function(err, data){
 		
 			if (err) { console.log(err); }
-	
+			
 			// convert amazon object to simple array for files
 			var listOfFolders = [];
 			for (var i=0; i<=data.CommonPrefixes.length-1; i++) {
@@ -32,13 +30,11 @@
 	
 	exports.GetFiles = function(s3, settings, callback) {
 
-		var params = {
+		s3.client.listObjects({
 			Bucket : settings.amazon.bucket,
 			Delimiter : '/',
 			Prefix : settings.user.userId + '/'
-		};
-
-		s3.client.listObjects(params, function(err, data){
+		}, function(err, data){
 		
 			if (err) { console.log(err); }
 			

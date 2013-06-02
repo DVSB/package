@@ -17,8 +17,6 @@
 
 	exports.Init = function(app, req, res) {
 		
-		//console.log(res);
-
 		if (req.body.svc === 'as87a0d59d') { // If file is uploaded
 			
 			// in javascript is array object, so this construction of conditional :)
@@ -35,22 +33,23 @@
 			tab.browse.GetFiles(s3, settings, function(listOfFiles) {
 				tab.browse.GetFolders(s3, settings, function(listOfFolders) {
 					
+					var crypto = require('crypto');					
 					// Create nice folders
 					for (var i=0; i<=listOfFolders.length-1; i++) {
+
+						var hexFromFolderKey = crypto.createHash('sha512').update(listOfFolders[i]).digest('hex').substr(0, 14);
+	
 						listOfFolders[i] = {
 							'Key' : listOfFolders[i],
-							'LastModified' : '',
-							'Size' : ''
+							'Hash' : hexFromFolderKey
 						};
+
 					}
 					
 					// Connect folders and files
 					var listOfFoldersAndFiles = listOfFolders.concat(listOfFiles);
 					
-					// Add Kind of file (folder/pdf/png/..)
-					for (var i=0; i<=listOfFoldersAndFiles.length-1; i++) {
-						underscore.extend(listOfFoldersAndFiles[i], {Kind : ''});
-					}
+					console.log(listOfFoldersAndFiles);
 					
 					res.render(__dirname + '/_view.html', {myfiles : listOfFoldersAndFiles});
 					
