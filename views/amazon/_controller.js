@@ -32,48 +32,60 @@
 			
 			var crypto = require('crypto');
 			
+			var browsingUrlFolder = underscore.trim(req.url, '/');
+			browsingUrlFolder = underscore(browsingUrlFolder).strRightBack('/');
+		
 			s3.client.listObjects({
 				Bucket : settings.amazon.bucket,
 				Delimiter : '/',
 				Prefix : settings.user.userId + '/'
 			}, function(err, data){
-						
+				
+				function jumpHere(browsingUrlFolder) {
+				
+					settings.amazon.currentFolder = browsingUrlFolder;
+
+					tab.browse.GetFiles(s3, settings, function(listOfFiles) {
+						tab.browse.GetFolders(s3, settings, function(listOfFolders) {
+	
+							// Create nice folders
+							for (var i=0; i<=listOfFolders.length-1; i++) {
+			
+								var hexFromFolderKey = crypto.createHash('sha512').update(listOfFolders[i]).digest('hex').substr(0, 8);
+
+								listOfFolders[i] = {
+									'Key' : listOfFolders[i],
+									'Hash' : hexFromFolderKey
+								};
+
+							}
+	
+							// Connect folders and files
+							var listOfFoldersAndFiles = listOfFolders.concat(listOfFiles);
+	
+							res.render(__dirname + '/_view.html', {myfiles : listOfFoldersAndFiles});
+	
+						});
+					});				
+				} // end of function
+					
 				var folderInHash = [];
 				for (var i=0; i<=data.CommonPrefixes.length; i++) {
-					folderInHash[i] = crypto.createHash('sha512').update(data.CommonPrefixes[i].Prefix).digest('hex').substr(0, 8);
-					console.log(i + ' ' + folderInHash[i] + ' ' + data.CommonPrefixes[i].Prefix);
-				}
 				
-				console.log(folderInHash);
+					folderInHash[i] = data.CommonPrefixes[i].Prefix;
+					folderInHash[i] = underscore.rtrim(folderInHash[i], '/');
+					folderInHash[i] = underscore(folderInHash[i]).strRightBack('/');
+					var folderName = folderInHash[i];				
+					folderInHash[i] = crypto.createHash('sha512').update(folderInHash[i]).digest('hex').substr(0, 8);
 				
-				var urlFolders = underscore.words(req.url, "/");
-				console.log(urlFolders);
+					// when browsed folder is find
+					if (browsingUrlFolder===folderInHash[i]) {
+						jumpHere(folderName);
+					} // end of if
 				
+				} // end of for
+
 			});
-			
-			tab.browse.GetFiles(s3, settings, function(listOfFiles) {
-				tab.browse.GetFolders(s3, settings, function(listOfFolders) {
-					
-					// Create nice folders
-					for (var i=0; i<=listOfFolders.length-1; i++) {
-
-						var hexFromFolderKey = crypto.createHash('sha512').update(listOfFolders[i]).digest('hex').substr(0, 8);
-	
-						listOfFolders[i] = {
-							'Key' : listOfFolders[i],
-							'Hash' : hexFromFolderKey
-						};
-
-					}
-					
-					// Connect folders and files
-					var listOfFoldersAndFiles = listOfFolders.concat(listOfFiles);
-					
-					
-					res.render(__dirname + '/_view.html', {myfiles : listOfFoldersAndFiles});
-					
-				});
-			});	
 			
 		}
 		

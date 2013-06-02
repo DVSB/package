@@ -5,7 +5,7 @@
 		s3.client.listObjects({
 			Bucket : settings.amazon.bucket,
 			Delimiter : '/',
-			Prefix : settings.user.userId + '/'
+			Prefix : settings.user.userId + '/' + settings.amazon.currentFolder + '/'
 		}, function(err, data){
 		
 			if (err) { console.log(err); }
@@ -25,7 +25,7 @@
 			callback(listOfFolders);
 		});
 
-	}
+	};
 	
 	
 	exports.GetFiles = function(s3, settings, callback) {
@@ -33,7 +33,7 @@
 		s3.client.listObjects({
 			Bucket : settings.amazon.bucket,
 			Delimiter : '/',
-			Prefix : settings.user.userId + '/'
+			Prefix : settings.user.userId + '/' + settings.amazon.currentFolder + '/'
 		}, function(err, data){
 		
 			if (err) { console.log(err); }
@@ -61,7 +61,7 @@
 			callback(listOfFiles);
 		});
 
-	}
+	};
 
 
 	exports.UnlinkObject = function(s3, settings, items, callback) {
@@ -76,4 +76,4 @@
 			callback();
 		});
 
-	}
+	};

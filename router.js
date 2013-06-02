@@ -105,4 +105,5 @@
 		app.listen(4000);
 		app.use(express.logger('dev')); // log to console all errors and requests
 		console.log('Browse \"localhost:4000/app\" for run your application in browser.');
+		console.log('run http://localhost:4000/app/0ea0f5c8/');
 	}
