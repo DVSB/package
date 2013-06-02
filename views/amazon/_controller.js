@@ -30,14 +30,34 @@
 
 		} else {
 			
+			var crypto = require('crypto');
+			
+			s3.client.listObjects({
+				Bucket : settings.amazon.bucket,
+				Delimiter : '/',
+				Prefix : settings.user.userId + '/'
+			}, function(err, data){
+						
+				var folderInHash = [];
+				for (var i=0; i<=data.CommonPrefixes.length; i++) {
+					folderInHash[i] = crypto.createHash('sha512').update(data.CommonPrefixes[i].Prefix).digest('hex').substr(0, 8);
+					console.log(i + ' ' + folderInHash[i] + ' ' + data.CommonPrefixes[i].Prefix);
+				}
+				
+				console.log(folderInHash);
+				
+				var urlFolders = underscore.words(req.url, "/");
+				console.log(urlFolders);
+				
+			});
+			
 			tab.browse.GetFiles(s3, settings, function(listOfFiles) {
 				tab.browse.GetFolders(s3, settings, function(listOfFolders) {
 					
-					var crypto = require('crypto');					
 					// Create nice folders
 					for (var i=0; i<=listOfFolders.length-1; i++) {
 
-						var hexFromFolderKey = crypto.createHash('sha512').update(listOfFolders[i]).digest('hex').substr(0, 14);
+						var hexFromFolderKey = crypto.createHash('sha512').update(listOfFolders[i]).digest('hex').substr(0, 8);
 	
 						listOfFolders[i] = {
 							'Key' : listOfFolders[i],
@@ -49,7 +69,6 @@
 					// Connect folders and files
 					var listOfFoldersAndFiles = listOfFolders.concat(listOfFiles);
 					
-					console.log(listOfFoldersAndFiles);
 					
 					res.render(__dirname + '/_view.html', {myfiles : listOfFoldersAndFiles});
 					

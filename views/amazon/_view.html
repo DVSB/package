@@ -55,7 +55,7 @@
 						<td><input type="checkbox" /></td>
 						
 						<% if (myfiles[i].Hash!==undefined) { %>
-							<td class="folder"><a href="<%= myfiles[i].Hash %>"><%= myfiles[i].Key %></a></td>
+							<td class="folder"><a href="./<%= myfiles[i].Hash %>/"><%= myfiles[i].Key %></a></td>
 						<% } else { %>
 							<td class="file"><%= myfiles[i].Key %></td>
 						<% } %>
