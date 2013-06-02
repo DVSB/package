@@ -13,17 +13,17 @@
 
 // CONFIGURATION
 
-	var handle404 = function(err, req, res, next) {
+	function handleme(err, req, res, next) {
 		
 		console.log('aas');
 
+		/*
 		fs.readdir(__dirname + '/views', function(err, data){
 			console.log('req: ' + req.headers.referer);
 			console.log('data: ' + data);
-			console.log('err: ' + err
-		)
+			console.log('err: ' + err);
 		    next();
-		});
+		});*/
 		
 	};
 		
@@ -49,9 +49,8 @@
 		// All files from /PUBLIC folder can be browsed on /S url
 		app.use('/s', express.static(__dirname + '/views/_publics'));
 	
-		app.use(function(err, req, res, next){
-			console.log('a');
-		});
+		console.log('+');
+		app.use(handleme);
 	
 		// Set default word 'views' for views folder
 		app.set('views', __dirname + '/views');
@@ -67,9 +66,7 @@
 	// When browser sents any request (POST, GET..)
 	// Browsed URL (localhost/pepek) is available in variable req.params.page
 	app.all('/:page', function(req, res) {
-	
-		console.log(req.params.page);
-	
+		
 		// Internal u200API gets array of existing views in /VIEWS folder
 		var viewsArray = require('./app-api').ViewsList();
 	
