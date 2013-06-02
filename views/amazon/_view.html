@@ -60,8 +60,13 @@
 							<td class="file"><%= myfiles[i].Key %></td>
 						<% } %>
 						
-						<td><%= myfiles[i].Size %></td>
-						<td><%= myfiles[i].LastModified %></td>
+						<% if (myfiles[i].Hash!==undefined) { %>
+							<td></td>
+							<td></td>
+						<% } else { %>
+							<td><%= myfiles[i].Size %></td>
+							<td><%= myfiles[i].LastModified %></td>
+						<% } %>
 					</tr>
 					<% } %>
 				</tbody>		
