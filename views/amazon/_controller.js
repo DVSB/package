@@ -16,6 +16,8 @@
 
 
 	exports.Init = function(app, req, res) {
+		
+		//console.log(res);
 
 		if (req.body.svc === 'as87a0d59d') { // If file is uploaded
 			
