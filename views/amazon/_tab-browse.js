@@ -19,7 +19,7 @@
 			// remove prefix and preserve key names
 			for (var i=0; i<=listOfFolders.length-1; i++) {
 				listOfFolders[i] = underscore.words(listOfFolders[i], "/");
-				listOfFolders[i] = listOfFolders[i][1];
+				listOfFolders[i] = listOfFolders[i][listOfFolders[i].length-1];
 			}
 			
 			callback(listOfFolders);

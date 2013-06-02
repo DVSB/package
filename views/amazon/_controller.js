@@ -1,21 +1,22 @@
+var settings = JSON.parse(fs.readFileSync('settings.json'));
 
-	var settings = JSON.parse(fs.readFileSync('settings.json'));
-	
-	var AWS = require('aws-sdk');
-	AWS.config.update({
-		accessKeyId : settings.amazon.id,
-		secretAccessKey : settings.amazon.key,
-		region : settings.amazon.region
-	});
-	var s3 = new AWS.S3();
-	
-	var tab = {
-		upload : require('./_tab-upload'),
-		browse : require('./_tab-browse')
-	};
+var AWS = require('aws-sdk');
+AWS.config.update({
+	accessKeyId : settings.amazon.id,
+	secretAccessKey : settings.amazon.key,
+	region : settings.amazon.region
+});
+var s3 = new AWS.S3();
 
+var tab = {
+	upload : require('./_tab-upload'),
+	browse : require('./_tab-browse')
+};
+	
 
 	exports.Init = function(app, req, res) {
+		
+console.log(settings);
 		
 		if (req.body.svc === 'as87a0d59d') { // If file is uploaded
 			
