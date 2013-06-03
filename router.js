@@ -61,12 +61,12 @@
 	
 	app.get('/s/-styles.css', function(req, res) {
 		var currentView = underscore(req.headers.referer).strRightBack('/');
-		res.sendfile('./views/core/-styles.css');
+		res.sendfile('./views/-styles.css');
 	});
 	
 	app.get('/s/-script.js', function(req, res) {
 		var currentView = underscore(req.headers.referer).strRightBack('/');	
-		res.sendfile('./views/core/-script.js');
+		res.sendfile('./views/-script.js');
 	});		
 
 	app.get('/', function(req, res) {
