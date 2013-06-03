@@ -1,23 +1,23 @@
 
-	exports.Init = function(req, res) {
+	exports.init = function(req, res) {
 				
 		if (req.body.svc === 'as87a0d59d') { // If file is uploaded
 			
 			// in javascript is array object, so this construction of conditional :)
 			if (underscore.isArray(req.files.myfile)) {
 				// multiupload
-				//require('./_tab-upload').Multiupload(s3, settings, req.files.myfile);
+				//require('./upload').Multiupload(s3, settings, req.files.myfile);
 			} else {
 				// upload
-				//require('./_tab-upload').Upload(s3, settings, req.files.myfile);
+				//require('./upload').Upload(s3, settings, req.files.myfile);
 			}
 
 		} else {
 			
-			var common = require('./_tab-browse');
+			var browse = require('./browse');
 			
-			common.GetFiles(function(listOfFiles) {
-				common.GetFolders(function(listOfFolders) {
+			browse.GetFiles(function(listOfFiles) {
+				browse.GetFolders(function(listOfFolders) {
 					
 					console.log(listOfFolders);
 					
@@ -49,8 +49,8 @@
 		
 		if (req.body.button==='unlink') {
 			
-			//require('./_tab-browse').UnlinkObject(s3, settings, req.body.item, function(){
-			//	require('./_tab-browse').ListObjects(s3, settings, function(files) {
+			//require('./browse').UnlinkObject(s3, settings, req.body.item, function(){
+			//	require('./browse').ListObjects(s3, settings, function(files) {
 			//		res.render(__dirname + '/_view.html', {myfiles : files});
 			//	});
 			//});

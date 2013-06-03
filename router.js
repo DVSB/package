@@ -56,7 +56,7 @@
 // ROUTING
 
 	app.all('/app*', function(req, res) {
-		require('./views/core/_init.js').Init(req, res);
+		require('./views/core/_init.js').init(req, res);
 	});
 	
 	app.get('/s/-styles.css', function(req, res) {
