@@ -18,8 +18,6 @@
 		next();
 	}
 
-
-
 // CONFIGURATION
 
 	app.configure(function(){
@@ -57,33 +55,18 @@
 
 // ROUTING
 
-	// When browser sents any request (POST, GET..)
 	app.all('/app*', function(req, res) {
-		
-		// Internal u200API gets array of existing views in /VIEWS folder
-		var viewsArray = require('./app-api').ViewsList();
-	
-		var isExistView = underscore.find(viewsArray, function(item){ 
-			return (item===req.params.page); 
-		});
-	
-		// Include controller, else, If browser requests non-exist view in /VIEWS folder send 404 else 
-		//if (isExistView) {
-		require('./views/amazon/_controller.js').Init(app, req, res);
-		//} else {
-			//res.send(404, 'you cannot do a get to unexist view!');
-		//}			
-
+		require('./views/core/_init.js').Init(req, res);
 	});
 	
 	app.get('/s/-styles.css', function(req, res) {
 		var currentView = underscore(req.headers.referer).strRightBack('/');
-		res.sendfile('./views/amazon/-styles.css');
+		res.sendfile('./views/core/-styles.css');
 	});
 	
 	app.get('/s/-script.js', function(req, res) {
 		var currentView = underscore(req.headers.referer).strRightBack('/');	
-		res.sendfile('./views/amazon/-script.js');
+		res.sendfile('./views/core/-script.js');
 	});		
 
 	app.get('/', function(req, res) {
@@ -93,7 +76,7 @@
 // AUTH
 
 	var auth = express.basicAuth(function(user, pass) {     
-	   return (user == "super" && pass == "secret");
+	   //return (user == "super" && pass == "secret");
 	},'Super duper secret area');
 
 	//Password protected area
