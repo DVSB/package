@@ -52,7 +52,11 @@
 				<tbody>
 					<% for(var i=0; i<myfiles.length; i++) { %>
 					<tr>
-						<td><input type="checkbox" /></td>
+						<% if (i===0) { %>
+							<td></td>
+						<% } else { %>
+							<td><input type="checkbox" /></td>
+						<% } %>
 						
 						<% if (i===0) { %>
 							<td class="folder"><a href="./<%= myfiles[i].Hash %>/">...</a></td>
@@ -62,7 +66,7 @@
 							<td class="file"><%= myfiles[i].Key %></td>
 						<% } %>
 						
-						<% if (myfiles[i].Hash!==undefined) { %>
+						<% if (myfiles[i].Size==0) { %>
 							<td></td>
 							<td></td>
 						<% } else { %>
