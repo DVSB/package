@@ -1,11 +1,20 @@
 
 	exports.browse = function(req, res) {
 	
-		// Get array of Files and Folders sorted, with correct keys and dates
-		require('./GetFilesAndFolders').GetFilesAndFolders(function(filesAndFolders){
-			var renderedView = __dirname + '/../../views/_view.html';
-			res.render(renderedView, {myfiles : filesAndFolders});
+		// Get prefix of current folder based on url
+		require('./GetCurrentFolder').GetCurrentFolder(req.url, function(currentFolder){
+			
+			console.log('* Current folder was clicked on ' + currentFolder);
+			
+			// Get array of Files and Folders sorted, with correct keys and dates
+			require('./GetFilesAndFolders').GetFilesAndFolders(currentFolder, function(filesAndFolders){
+				var renderedView = __dirname + '/../../views/_view.html';
+				res.render(renderedView, {myfiles : filesAndFolders});
+			});
+			
 		});
+		
+
 		
 	};
 
@@ -28,5 +37,5 @@
 			//	res.render(__dirname + '/_view.html', {myfiles : files});
 			//});
 		});
-			
+
 	};

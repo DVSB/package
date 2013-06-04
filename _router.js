@@ -57,19 +57,19 @@
 
 // ROUTING OF CONTROLLERS
 
-	app.all('/storage*', function(req, res) {
+	app.all('/storage/*', function(req, res) {
 		require('./routers/_storage.js').init(req, res);
 	});
 	
-	app.all('/register*', function(req, res) {
+	app.all('/register/*', function(req, res) {
 		require('./routers/_register.js').init(req, res);
 	});
 	
-	app.all('/auth*', function(req, res) {
+	app.all('/auth/*', function(req, res) {
 		require('./routers/_auth.js').init(req, res);
 	});
 	
-	app.all('/settings*', function(req, res) {
+	app.all('/settings/*', function(req, res) {
 		require('./routers/_settings.js').init(req, res);
 	});
 
@@ -84,7 +84,7 @@
 	});		
 
 	app.get('/', function(req, res) {
-		res.redirect(301, 'http://localhost:4000/app');
+		res.redirect(301, 'http://localhost:4000/storage/');
 	});
 
 // PORT RUN !
@@ -92,5 +92,5 @@
 	if (!module.parent) {	
 		app.listen(4000);
 		app.use(express.logger('dev')); // log to console all errors and requests
-		console.log('* Browse localhost:4000/app for run your application in browser');
+		console.log('* Browse localhost:4000/storage/ for run your application in browser');
 	}

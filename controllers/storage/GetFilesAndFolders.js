@@ -1,11 +1,17 @@
 // Get files and folders
 
-	exports.GetFilesAndFolders = function(callback) {
+	exports.GetFilesAndFolders = function(myprefix, callback) {
 
+		console.log(settings.user.id + '/' + myprefix);
+		
+		if (!myprefix) {
+			myprefix = settings.user.id + '/';
+		}
+	
 		s3.client.listObjects({
 			Bucket : settings.amazon.bucket,
 			Delimiter : '/',
-			Prefix : settings.user.id + '/'
+			Prefix : myprefix
 		}, function(err, data){
 
 			if (err) { console.log(err); }
@@ -54,7 +60,6 @@
 				return key.Size;
 			});
 			
-			console.log(filesAndFolders);
 			callback(filesAndFolders);
 
 		});
