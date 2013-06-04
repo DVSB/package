@@ -1,6 +1,6 @@
 
 	// upload one file
-	exports.Upload = function(s3, settings, file) {
+	exports.Upload = function(file) {
 
 		s3.client.putObject({
 			Bucket : settings.amazon.bucket,
@@ -16,7 +16,7 @@
 	};
 
 	// multiupload
-	exports.Multiupload = function(s3, settings, files) {
+	exports.Multiupload = function(files) {
 
 		for (var i=0; i<=files.length-1; i++) {
 			

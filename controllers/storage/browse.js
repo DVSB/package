@@ -1,19 +1,8 @@
 
+// Get all folders (no files)
 
 	exports.GetFolders = function(callback) {
 		
-		var fs = require('fs');
-		
-		var settings = JSON.parse(fs.readFileSync('settings.json'));
-
-		var AWS = require('aws-sdk');
-		AWS.config.update({
-			accessKeyId : settings.amazon.id,
-			secretAccessKey : settings.amazon.key,
-			region : settings.amazon.region
-		});
-		var s3 = new AWS.S3();
-
 		s3.client.listObjects({
 			Bucket : settings.amazon.bucket,
 			Delimiter : '/',
@@ -39,23 +28,11 @@
 		});
 
 	};
-	
+
+// Get all files (no folders)	
 	
 	exports.GetFiles = function(callback) {
-		
-		var fs = require('fs');
-		
-		var settings = JSON.parse(fs.readFileSync('settings.json'));
-
-		var AWS = require('aws-sdk');
-		AWS.config.update({
-			accessKeyId : settings.amazon.id,
-			secretAccessKey : settings.amazon.key,
-			region : settings.amazon.region
-		});
-		var s3 = new AWS.S3();
-		
-
+	
 		//console.log(settings.user.userId + '/' + settings.amazon.currentFolder + '/');
 
 		s3.client.listObjects({
@@ -92,8 +69,9 @@
 
 	};
 
+// Unlink Objects
 
-	exports.UnlinkObject = function(s3, settings, items, callback) {
+	exports.UnlinkObject = function(items, callback) {
 
 		var params = {
 			Bucket : settings.amazon.bucket,
@@ -107,12 +85,10 @@
 
 	};
 	
+// Check current folder base on URL and after make listing
 	
-	
-	exports.CheckCurrentFolder = function(settings, req, callback){
-		
-		var crypto = require('crypto');
-		
+	exports.CheckCurrentFolder = function(req, callback){
+			
 		var browsingUrlFolder = underscore.trim(req.url, '/');
 		browsingUrlFolder = underscore(browsingUrlFolder).strRightBack('/');
 	

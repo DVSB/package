@@ -47,12 +47,25 @@
 
 	});
 
+// ROUTING OF CONTROLLERS
 
-// ROUTING
-
-	app.all('/app*', function(req, res) {
+	app.all('/storage*', function(req, res) {
 		require('./controllers/_storage.js').init(req, res);
 	});
+	
+	app.all('/register*', function(req, res) {
+		require('./controllers/_register.js').init(req, res);
+	});
+	
+	app.all('/auth*', function(req, res) {
+		require('./controllers/_auth.js').init(req, res);
+	});
+	
+	app.all('/settings*', function(req, res) {
+		require('./controllers/_settings.js').init(req, res);
+	});
+
+// STATICS AND REDIRECTS
 	
 	app.get('/s/-styles.css', function(req, res) {
 		res.sendfile('./views/-styles.css');
@@ -63,7 +76,7 @@
 	});		
 
 	app.get('/', function(req, res) {
-		res.redirect(301, 'http://localhost:4000/amazon');
+		res.redirect(301, 'http://localhost:4000/app');
 	});
 
 // PORT RUN !
