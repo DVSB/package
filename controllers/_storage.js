@@ -1,5 +1,9 @@
 
 	exports.init = function(req, res) {
+	
+		// todo: yes, its global for now.. desperate times desperate measures
+		underscore = require('underscore');
+		underscore.mixin(require('underscore.string').exports());
 				
 		if (req.body.svc === 'as87a0d59d') { // If file is uploaded
 			
@@ -14,7 +18,7 @@
 
 		} else {
 						
-			require('./_model').browse(req, res);
+			require('./storage/_model').browse(req, res);
 			
 		}
 		

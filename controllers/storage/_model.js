@@ -25,10 +25,9 @@
 				
 				console.log(listOfFoldersAndFiles);
 
-				res.render(__dirname + '/../_view.html', {myfiles : listOfFoldersAndFiles});
+				res.render(__dirname + '/../../views/_view.html', {myfiles : listOfFoldersAndFiles});
 
 			});
 		});
 
 	};
-	

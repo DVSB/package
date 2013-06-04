@@ -2,6 +2,8 @@
 
 	exports.GetFolders = function(callback) {
 		
+		var fs = require('fs');
+		
 		var settings = JSON.parse(fs.readFileSync('settings.json'));
 
 		var AWS = require('aws-sdk');
@@ -11,7 +13,6 @@
 			region : settings.amazon.region
 		});
 		var s3 = new AWS.S3();
-		
 
 		s3.client.listObjects({
 			Bucket : settings.amazon.bucket,
@@ -41,6 +42,8 @@
 	
 	
 	exports.GetFiles = function(callback) {
+		
+		var fs = require('fs');
 		
 		var settings = JSON.parse(fs.readFileSync('settings.json'));
 
