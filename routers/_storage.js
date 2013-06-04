@@ -21,11 +21,9 @@ exports.init = function(req, res) {
 		});
 		s3 = new AWS.S3();
 		
-		crypto = require('crypto');
-		
 	// ROUTING
 
-		var model = require('./storage/_model');
+		var model = require('./../controllers/storage/_model');
 		
 		if (req.body.svc === 'as87a0d59d') {
 			console.log('* Upload Model runned');

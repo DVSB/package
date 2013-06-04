@@ -58,19 +58,19 @@
 // ROUTING OF CONTROLLERS
 
 	app.all('/storage*', function(req, res) {
-		require('./controllers/_storage.js').init(req, res);
+		require('./routers/_storage.js').init(req, res);
 	});
 	
 	app.all('/register*', function(req, res) {
-		require('./controllers/_register.js').init(req, res);
+		require('./routers/_register.js').init(req, res);
 	});
 	
 	app.all('/auth*', function(req, res) {
-		require('./controllers/_auth.js').init(req, res);
+		require('./routers/_auth.js').init(req, res);
 	});
 	
 	app.all('/settings*', function(req, res) {
-		require('./controllers/_settings.js').init(req, res);
+		require('./routers/_settings.js').init(req, res);
 	});
 
 // STATICS AND REDIRECTS
