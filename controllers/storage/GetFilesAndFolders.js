@@ -5,22 +5,25 @@
 		s3.client.listObjects({
 			Bucket : settings.amazon.bucket,
 			Delimiter : '/',
-			Prefix : settings.user.userId + '/'
+			Prefix : settings.user.id + '/'
 		}, function(err, data){
 
 			if (err) { console.log(err); }
 			
-			var crypto = require('crypto');
-
-			var filesAndFolders = data.Contents.concat(data.CommonPrefixes);
+			var crypto = require('crypto'),
+				filesAndFolders = data.Contents.concat(data.CommonPrefixes),
+				hash = '',
+				willBeHash = '';
 			
 			// Concat correctlly objects and fill blank keys
 			for (var i=0; i<=filesAndFolders.length-1; i++) {
 				
 				if (filesAndFolders[i].Key) {
-					var hash = crypto.createHash('sha512').update(filesAndFolders[i].Key).digest('hex').substr(0, 10);
+					willBeHash = filesAndFolders[i].Key + settings.user.hash;
+					hash = crypto.createHash('sha512').update(willBeHash).digest('hex').substr(0, 10);
 				} else {
-					var hash = crypto.createHash('sha512').update(filesAndFolders[i].Prefix).digest('hex').substr(0, 10);
+					willBeHash = filesAndFolders[i].Prefix + settings.user.hash;
+					hash = crypto.createHash('sha512').update(willBeHash).digest('hex').substr(0, 10);
 				}
 				
 				// If Key, Size and LastModified don't exist add it

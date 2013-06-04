@@ -8,7 +8,7 @@
 		s3.client.listObjects({
 			Bucket : settings.amazon.bucket,
 			Delimiter : '/',
-			Prefix : settings.user.userId + '/'
+			Prefix : settings.user.id + '/'
 		}, function(err, data){
 							
 			function jumpHere(browsingUrlFolder) {

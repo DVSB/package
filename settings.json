@@ -7,7 +7,7 @@
 		"storage" : "ReducedRedundancy"
 	},
 	"user" : {
-		"userId" : "9933b70a0140317b",
-		"key" : "eaf32f424a53446"
+		"id" : "9933b70a0140317b",
+		"hash" : "aeaf32f424a53446eaf32f424a53446eaf32f424a53446eaf32f424a53446"
 	}
 }

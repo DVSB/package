@@ -8,7 +8,7 @@
 			
 			s3.client.putObject({
 				Bucket : settings.amazon.bucket,
-				Key : settings.user.userId + '/' + file.name,
+				Key : settings.user.id + '/' + file.name,
 				Body : fs.readFileSync(file.path)
 			}, function(err, data){
 				if (err) { console.log(err); } else { 
@@ -30,7 +30,7 @@
 	
 	var params = {
 			Bucket : settings.amazon.bucket,
-			Key : settings.user.userId + '/' + 'nannananana'
+			Key : settings.user.id + '/' + 'nannananana'
 		};
 		
 		s3.client.createMultipartUpload(params, function(err, data){
