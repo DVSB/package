@@ -1,66 +1,56 @@
 exports.init = function(req, res) {
 
-// IMPORTS
+	// IMPORTS * yes, its global for now.. desperate times desperate measures
 
-	// todo: yes, its global for now.. desperate times desperate measures
-	underscore = require('underscore');
-	underscore.mixin(require('underscore.string').exports());
-	
-	fs = require('fs');
-	
-	settings = JSON.parse(fs.readFileSync('settings.json'));
+		// underscore and underscore string
+		underscore = require('underscore');
+		underscore.mixin(require('underscore.string').exports());
+		
+		// file system
+		fs = require('fs');
+		
+		// settings
+		settings = JSON.parse(fs.readFileSync('settings.json'));
 
-	var AWS = require('aws-sdk');
-	AWS.config.update({
-		accessKeyId : settings.amazon.id,
-		secretAccessKey : settings.amazon.key,
-		region : settings.amazon.region
-	});
-	s3 = new AWS.S3();
-	
-	crypto = require('crypto');
-	
-// ROUTING
-	
-	if (req.body.svc === 'as87a0d59d') { // If file is uploaded
-		
-		// test isArray is correct because in js array is also object
-		if (underscore.isArray(req.files.myfile)) {
-			require('./upload').Multiupload(req.files.myfile);
-		} else {
-			require('./upload').Upload(req.files.myfile);
-		}
-
-	} else {
-					
-		require('./storage/_model').browse(req, res);
-		
-	}
-	
-	if (req.body.button==='unlink') {
-		
-		require('./browse').UnlinkObject(req.body.item, function(){
-			require('./browse').ListObjects(function(files) {
-				res.render(__dirname + '/_view.html', {myfiles : files});
-			});
+		// amazon
+		var AWS = require('aws-sdk');
+		AWS.config.update({
+			accessKeyId : settings.amazon.id,
+			secretAccessKey : settings.amazon.key,
+			region : settings.amazon.region
 		});
+		s3 = new AWS.S3();
 		
-	}
-	
-	if (req.body.button==='rename') {
-		console.log('rename');
-	}
-	if (req.body.button==='move') {
-		console.log('move');
-	}
-	if (req.body.button==='share') {
-		console.log('share');
-	}
-	if (req.body.button==='download') {
-		console.log('download');
-	}
-	if (req.body.button==='copy') {
-		console.log('copy');
-	}
+		crypto = require('crypto');
+		
+	// ROUTING
+
+		var model = require('./storage/_model');
+		
+		if (req.body.svc === 'as87a0d59d') {
+			console.log('* Upload Model runned');
+			//model.upload(req, res);
+		} else if (req.body.button==='unlink') {
+			console.log('* Unlink Model runned');
+			//model.unlink(req, res);
+		} else if (req.body.button==='rename') {
+			console.log('* Rename Model runned');
+			//model.rename(req, res);
+		} else if (req.body.button==='move') {
+			console.log('* Move Model runned');
+			//model.move(req, res);
+		} else if (req.body.button==='share') {
+			console.log('* Share Model runned');
+			//model.share(req, res);
+		} else if (req.body.button==='download') {
+			console.log('* Download Model runned');
+			//model.download(req, res);
+		} else if (req.body.button==='copy') {
+			console.log('* Copy Model runned');
+			//model.copy(req, res);
+		} else {
+			console.log('* Browse Model runned');
+			model.browse(req, res);
+		};
 
 };

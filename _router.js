@@ -10,6 +10,13 @@
 		//console.log('here should be auth');
 		next();
 	}
+	
+	// check internet connects
+	function connections(req, res, next){
+		require('dns').resolve4('www.google.com', function (err) {
+			if (err) { throw err; } else { next(); }
+		});
+	}
 
 // CONFIGURATION
 
@@ -25,6 +32,7 @@
 		// use in every call this function
 		// todo: should be later authe, cookies, sessions, url controll
 		app.use(authentification);
+		app.use(connections);
 	
 		// To allow PUT, GET, DELETE and POST
 		app.use(express.methodOverride()); 
@@ -84,5 +92,5 @@
 	if (!module.parent) {	
 		app.listen(4000);
 		app.use(express.logger('dev')); // log to console all errors and requests
-		console.log('Browse \"localhost:4000/app\" for run your application in browser.');
+		console.log('* Browse localhost:4000/app for run your application in browser');
 	}

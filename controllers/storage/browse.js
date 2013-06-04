@@ -1,73 +1,59 @@
+	// Get files and folders
 
-// Get all folders (no files)
-
-	exports.GetFolders = function(callback) {
-		
-		s3.client.listObjects({
-			Bucket : settings.amazon.bucket,
-			Delimiter : '/',
-			Prefix : settings.user.userId + '/'
-			//Prefix : settings.user.userId + '/' + settings.amazon.currentFolder + '/'
-		}, function(err, data){
-					
-			if (err) { console.log(err); }
-			
-			// convert amazon object to simple array for files
-			var listOfFolders = [];
-			for (var i=0; i<=data.CommonPrefixes.length-1; i++) {
-				listOfFolders[i] = data.CommonPrefixes[i].Prefix;
-			}
-			
-			// remove prefix and preserve key names
-			for (var i=0; i<=listOfFolders.length-1; i++) {
-				listOfFolders[i] = underscore.words(listOfFolders[i], "/");
-				listOfFolders[i] = listOfFolders[i][listOfFolders[i].length-1];
-			}
-			
-			callback(listOfFolders);
-		});
-
-	};
-
-// Get all files (no folders)	
-	
-	exports.GetFiles = function(callback) {
-	
-		//console.log(settings.user.userId + '/' + settings.amazon.currentFolder + '/');
+	exports.ListAll = function(callback) {
 
 		s3.client.listObjects({
 			Bucket : settings.amazon.bucket,
 			Delimiter : '/',
 			Prefix : settings.user.userId + '/'
-			//Prefix : settings.user.userId + '/' + settings.amazon.currentFolder + '/'
 		}, function(err, data){
-		
+
 			if (err) { console.log(err); }
-			
-			// convert date to 2013/12/5
-			var listOfFiles = data.Contents;
-			for (var i=0; i<=data.Contents.length-1; i++) {
-				var mydate = new Date(data.Contents[i].LastModified);
-				listOfFiles[i].LastModified = mydate.getFullYear() + '/' + mydate.getMonth() + '/' + mydate.getDay();
-			}
-			
-			// omit unnecessary amazon object's keys
-			for (var i=0; i<=listOfFiles.length-1; i++) {
-				listOfFiles[i] = underscore.omit(listOfFiles[i], 'Owner', 'ETag', 'StorageClass');
-			}
 
-			// omit in Key string path and return only Key without "/"
-			for (var i=0; i<=listOfFiles.length-1; i++) {				
-				listOfFiles[i].Key = underscore(listOfFiles[i].Key).strRight('/');
+			var filesAndFolders = data.Contents.concat(data.CommonPrefixes);
+			//var hash = 'i havent hash';
+			
+			// Concat correctlly objects and fill blank keys
+			for (var i=0; i<=filesAndFolders.length-1; i++) {
+
+				console.log(hash);
+				var hash = crypto.createHash('sha512').update(filesAndFolders[i].Key).digest('hex').substr(0, 8);
+				console.log(hash);
+			
+				// If Key, Size and LastModified don't exist add it
+				filesAndFolders[i] = underscore.defaults(filesAndFolders[i], {
+					'Key' : filesAndFolders[i].Prefix,
+					'Size' : 0,
+					'LastModified' : 0,
+					'Format' : '----------------------------------------------------',
+					'Hash' : 's'
+				});
+			
+				// If Owner, ETag, StorageClass, Prefix exist, remove it
+				filesAndFolders[i] = underscore.omit(filesAndFolders[i], [
+					'Owner', 
+					'ETag', 
+					'StorageClass', 
+					'Prefix'
+				]);
+				
+				// convert date to 2013/12/5
+				var mydate = new Date(filesAndFolders[i].LastModified);
+				filesAndFolders[i].LastModified = mydate.getTime();
+
 			}
-						
-			// remove self-folder submited by amazon
-			listOfFiles = underscore.rest(listOfFiles);
-						
-			callback(listOfFiles);
+			
+			// first current folder, second folders, third files
+			filesAndFolders = underscore.sortBy(filesAndFolders, function(key){ 
+				return key.Size;
+			});
+			
+			console.log(filesAndFolders);
+			callback(filesAndFolders);
+
 		});
-
-	};
+		
+	}
 
 // Unlink Objects
 

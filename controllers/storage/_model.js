@@ -1,32 +1,33 @@
-exports.browse = function(req, res) {
 
-	var browseme = require('./browse');
-	
-	browseme.GetFiles(function(listOfFiles) {
-		browseme.GetFolders(function(listOfFolders) {
-			
-			console.log(listOfFolders);
-			
-			/* Create nice folders
-			for (var i=0; i<=listOfFolders.length-1; i++) {
+	exports.browse = function(req, res) {
 
-				var hexFromFolderKey = 'a'; //crypto.createHash('sha512').update(listOfFolders[i]).digest('hex').substr(0, 8);
-
-				listOfFolders[i] = {
-					'Key' : listOfFolders[i],
-					'Hash' : hexFromFolderKey
-				};
-
-			}*/
-			
-			// Connect folders and files
-			var listOfFoldersAndFiles = listOfFolders.concat(listOfFiles);
-			
-			console.log(listOfFoldersAndFiles);
-
-			res.render(__dirname + '/../../views/_view.html', {myfiles : listOfFoldersAndFiles});
-
+		var browsetab = require('./browse');
+		
+		browsetab.ListAll(function(filesAndFolders){
+			var renderedView = __dirname + '/../../views/_view.html';
+			res.render(renderedView, {myfiles : filesAndFolders});
 		});
-	});
+		
+	};
 
-};
+	exports.upload = function(req, res) {
+
+		// test isArray is correct because in js array is also object
+		if (underscore.isArray(req.files.myfile)) {
+			require('./upload').Multiupload(req.files.myfile);
+		} else {
+			require('./upload').Upload(req.files.myfile);
+		}
+
+	};
+
+
+	exports.unlink = function(req, res) {
+
+		require('./browse').UnlinkObject(req.body.item, function(){
+			require('./browse').ListObjects(function(files) {
+				res.render(__dirname + '/_view.html', {myfiles : files});
+			});
+		});
+			
+	};
