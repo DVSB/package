@@ -1,6 +1,6 @@
 
 	exports.browse = function(req, res) {
-	
+			
 		// Get prefix of current folder based on url
 		require('./GetCurrentFolder').GetCurrentFolder(req.url, function(currentFolder){
 			
@@ -14,9 +14,8 @@
 			
 		});
 		
-
-		
 	};
+
 
 	exports.upload = function(req, res) {
 

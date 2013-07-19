@@ -1,8 +1,8 @@
 {
 	"amazon" : {
-		"id" : "AKIAJQTLD2TZ2VZ4SVHA",
-		"key": "L55oK03vKJuV6YhnzFoFRoX6/H1saxAf7hjEeRT7",
-		"bucket" : "a9c9c0b51a3ed1",
+		"id" : "AKIAJZHYWXMSMN7X2ITQ",
+		"key": "5PWHzystOfEP84Mu5NJPdLMuSqVDtdbG5PDuUk0r",
+		"bucket" : "6adfb183a4a2",
 		"region" : "us-east-1",
 		"storage" : "ReducedRedundancy"
 	},

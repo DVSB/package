@@ -7,4 +7,18 @@
 		// what happens before rendering 
 		// this file is runned with parameters req and res immediately after load
 		
+		var fs = require('fs');
+		settings = JSON.parse(fs.readFileSync('settings.json'));
+		
+		var model = require('./../controllers/auth/_model');
+		
+				
+		if (req.body.action === 'signin') {
+			model.signin(req, res);
+		} else if (req.body.action==='signup') {
+			model.signup(req, res);
+		} else {
+			model.render(req, res);
+		};
+		
 	};

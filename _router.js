@@ -46,7 +46,7 @@
 	
 		// All files from /PUBLIC folder can be browsed on /S url
 		app.use('/s', express.static(__dirname + '/views/_publics'));
-	
+
 		// Set default word 'views' for views folder
 		app.set('views', __dirname + '/views');
 	

@@ -1,7 +1,7 @@
 // Check current folder base on URL and after make listing
 	
 	exports.GetCurrentFolder = function(currentUrl, callback){
-	
+			
 		var browsingFolders = underscore.trim(currentUrl, '/');
 		browsingFolders = underscore.words(browsingFolders, '/');
 		browsingFolders = underscore.rest(browsingFolders);
@@ -27,7 +27,7 @@
 				if (hash===currentFolder) {
 					callback(folders[i].Prefix);
 				} else if ((!currentFolder)&&(i===folders.length-1)) {
-					callback(undefined);	
+					callback(undefined);
 				}
 
 			}
