@@ -1,7 +1,7 @@
 {
 	"name": "n200",
 	"preferGlobal": "true",
-	"version": "0.1.5",
+	"version": "0.1.6",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/mousepen/OpenWrap.git"
@@ -23,6 +23,7 @@
 		{"0.1.2" : "Added structure, uploading, download, settings"},
 		{"0.1.3" : "Added About and Settings tabs"},
 		{"0.1.4" : "Changed structure to controllers, models and views"},
-		{"0.1.5" : "Added login and users.json"}
+		{"0.1.5" : "Added login and users.json"},
+		{"0.1.6" : "Security, Sessions, Cookies, Refactoring"}
 	]
 }

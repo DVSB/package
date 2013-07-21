@@ -23,7 +23,7 @@ exports.init = function(req, res) {
 		
 	// ROUTING
 
-		var model = require('./../controllers/storage/_model');
+		var model = require('./storage/_model');
 		
 		if (req.body.svc === 'as87a0d59d') {
 			console.log('* Upload Model runned');

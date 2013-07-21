@@ -8,7 +8,7 @@
 			
 			// Get array of Files and Folders sorted, with correct keys and dates
 			require('./GetFilesAndFolders').GetFilesAndFolders(currentFolder, function(filesAndFolders){
-				var renderedView = __dirname + '/../../views/_view.html';
+				var renderedView = __dirname + '/../../views/view.html';
 				res.render(renderedView, {myfiles : filesAndFolders});
 			});
 			
@@ -33,7 +33,7 @@
 
 		require('./ObjectUnlink').Unlink(req.body.item, function(){
 			//require('./browse').ListObjects(function(files) {
-			//	res.render(__dirname + '/_view.html', {myfiles : files});
+			//	res.render(__dirname + '/viewhtml', {myfiles : files});
 			//});
 		});
 

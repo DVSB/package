@@ -1,11 +1,9 @@
 
-	exports.login = function(req, email) {
+	exports.login = function(req, res, email) {
 		
-		var settings = JSON.parse(require('fs').readFileSync('core/_settings.json'));
+		var core = res.locals.core;		
 		req.session.email = email;		
-		req.session.presence = settings.hash1.substr(0, 10);
-		
-		console.log('b');
+		req.session.presence = core.settings.hash1.substr(0, 10);
 		
 	};
 	
