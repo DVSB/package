@@ -1,4 +1,6 @@
 
+/* exports */
+
 
 	exports.render = function(req, res){
 		
@@ -13,24 +15,40 @@
 		var core = {};
 		core.hashing = require('../../core/hashing');
 		core.database = require('../../core/database');
-		core.cookies = require('../../core/cookies');
 		
-		var userEmail = req.body.email;		
+		var userEmail = req.body.email;
 		core.database.searchUser(userEmail, function(user) {
-			user ? loginCookies(user) : console.log('Sorry, user doesn\'t exists');
+			loginCookies(req, user);
 		});
-		
-		function loginCookies(user) {
-			var renderedView = __dirname + '/../../views/_auth.html';
-			res.render(renderedView);
-		}
 
 	};
 	
 	
 	exports.signup = function(req, res){
-	
 		console.log('registered');
-	
 	};
 
+
+/* functions */
+
+
+	function loginCookies(req, user) {
+		
+		if (user) {
+			
+			var core = {};
+			core.sessions = require('../../core/sessions');			
+			core.sessions.login(req, user.email);
+			
+			res.render('/views/_auth.html');
+			
+		} else {
+			
+			console.log('user doesnt exists');
+			var renderedView = __dirname + '/../../views/_auth.html';
+			res.render(renderedView);
+			
+		}
+		
+	}
+	

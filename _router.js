@@ -6,15 +6,16 @@
 
 // AUTH
 
-	function authentification(req, res, next){
-		//console.log('here should be auth');
+	function authentification(req, res, next) {
+		//var hash = JSON.parse(require('fs').readFileSync('core/_settings.json')).hash1.substr(0, 10);
+		//req.signedCookies.presence==hash ? console.log('correct') : console.log('uncorrect');
 		next();
 	}
 	
 	// check internet connects
-	function connections(req, res, next){
+	function connections(req, res, next) {
 		require('dns').resolve4('www.google.com', function (err) {
-			if (err) { throw err; } else { next(); }
+			err ? res.send('Internet Connection Lost') : next();
 		});
 	}
 
@@ -23,22 +24,27 @@
 	app.configure(function(){
 
 		'use strict';
+		
+		// Check internet connection
+		app.use(connections);
 
 		// Request body parsing middleware supporting
 		app.use(express.bodyParser({ 
 			uploadDir: __dirname + '/temp_upload/' 
 		}));
-		
-		// use in every call this function
-		// todo: should be later authe, cookies, sessions, url controll
-		app.use(authentification);
-		app.use(connections);
 	
 		// To allow PUT, GET, DELETE and POST
 		app.use(express.methodOverride()); 
 	
-		// To allow cookies
-		app.use(express.cookieParser()); 
+		// To allow cookies, crypted by _settings.json hash
+		var secretKey = JSON.parse(require('fs').readFileSync('core/_settings.json')).hash1;
+		app.use(express.cookieParser(secretKey)); 
+		app.use(express.session(secretKey));
+		
+		// use in every call this function
+		// todo: should be later authe, cookies, sessions, url controll
+		app.use(authentification);
+		
 	
 		// Allow middleware and have to be before Sessions 
 		// TODO: before cookies too?
@@ -52,7 +58,7 @@
 	
 		// Allow EJS engine more on bit.ly/fUkZ1b
 		app.engine('html', require('ejs').renderFile);
-
+		
 	});
 
 // ROUTING OF CONTROLLERS
@@ -83,6 +89,10 @@
 		res.sendfile('./views/-script.js');
 	});		
 
+	app.get('/', function(req, res) {
+		res.redirect(301, 'http://localhost:4000/storage/');
+	});
+	
 	app.get('/', function(req, res) {
 		res.redirect(301, 'http://localhost:4000/storage/');
 	});

@@ -26,7 +26,7 @@
 			var cryptedEmail = core.hashing.email(email);			
 			var allUsers = JSON.parse(data.Body);
 			var user = underscore.findWhere(allUsers, {'email':cryptedEmail});
-	
+			
 			callback(user);
 			
 		});

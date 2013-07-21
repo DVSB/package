@@ -38,7 +38,14 @@
 			<legend>Sign In</legend>
 	
 			<label>Your Email</label>
-			<input type="text" name="email" placeholder="jobs@apple.com" style="width: 30em;" />
+			<input type="text" class="autofill" name="email" placeholder="jobs@apple.com" style="width: 30em;" />
+			<span class="autofill" style="visibility:hidden">samuel@ondrek.com</span>
+			
+			<script>
+			$('input.autofill').on('click', function() {
+			    $(this).val($("span.autofill").text());
+			});
+			</script>
 
 			<label>Password</label>
 			<input type="password" name="password" placeholder="**************" style="width: 30em;" />

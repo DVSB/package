@@ -79,6 +79,9 @@
 		display: inline-block;
 	}
 
-
+	header {
+		margin-top: 10px;
+		color: #818181;
+	}
 
 
