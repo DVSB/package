@@ -1,10 +1,10 @@
-// IMPORTS
 
-	// Base or Core framework
+// imports
+
 	var express = require('express');
 	var app = module.exports = express();
 
-// AUTH
+// next functions
 
 	function authentification(req, res, next) {
 		//var hash = JSON.parse(require('fs').readFileSync('core/_settings.json')).hash1.substr(0, 10);
@@ -12,21 +12,19 @@
 		next();
 	}
 	
-	// check internet connects
-	function connections(req, res, next) {
+	function checkInternetConnections(req, res, next) {
 		require('dns').resolve4('www.google.com', function (err) {
 			err ? res.send('Internet Connection Lost') : next();
 		});
 	}
 
-// CONFIGURATION
+// config
 
 	app.configure(function(){
 
 		'use strict';
 		
-		// Check internet connection
-		app.use(connections);
+		app.use(checkInternetConnections);
 
 		// Request body parsing middleware supporting
 		app.use(express.bodyParser({ 
@@ -102,5 +100,4 @@
 	if (!module.parent) {	
 		app.listen(4000);
 		app.use(express.logger('dev')); // log to console all errors and requests
-		console.log('* Browse localhost:4000/storage/ for run your application in browser');
 	}

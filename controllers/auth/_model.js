@@ -45,7 +45,7 @@
 		} else {
 			
 			console.log('user doesnt exists');
-			res.render('/../views/_auth.html');
+			res.render('../views/_auth.html');
 			
 		}
 		
