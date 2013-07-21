@@ -18,7 +18,7 @@
 		
 		var userEmail = req.body.email;
 		core.database.searchUser(userEmail, function(user) {
-			loginCookies(req, user);
+			loginCookies(req, res, user);
 		});
 
 	};
@@ -32,7 +32,7 @@
 /* functions */
 
 
-	function loginCookies(req, user) {
+	function loginCookies(req, res, user) {
 		
 		if (user) {
 			
@@ -40,13 +40,12 @@
 			core.sessions = require('../../core/sessions');			
 			core.sessions.login(req, user.email);
 			
-			res.render('/views/_auth.html');
+			res.render('../views/_auth.html');
 			
 		} else {
 			
 			console.log('user doesnt exists');
-			var renderedView = __dirname + '/../../views/_auth.html';
-			res.render(renderedView);
+			res.render('/../views/_auth.html');
 			
 		}
 		
