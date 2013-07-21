@@ -1,6 +1,6 @@
 
 
-	exports.email = function (email) {
+	exports.email = function(email) {
 		
 		var crypto = require('crypto');
 		var core = {};
@@ -12,7 +12,7 @@
 	};
 	
 	
-	exports.password = function (email, password) {
+	exports.password = function(email, password) {
 		
 		var crypto = require('crypto');
 		var core = {};

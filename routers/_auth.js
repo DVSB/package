@@ -10,6 +10,9 @@
 		var fs = require('fs');
 		settings = JSON.parse(fs.readFileSync('settings.json'));
 		
+		underscore = require('underscore');
+		underscore.mixin(require('underscore.string').exports());
+		
 		var model = require('./../controllers/auth/_model');
 		
 				

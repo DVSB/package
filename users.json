@@ -1,45 +1,44 @@
-{
-
-	"ddb78505516c6dd1d3d1d0ea2c5f0e" : {
+[ 
+	{
 		"email"		: "ddb78505516c6dd1d3d1d0ea2c5f0e",
 		"name"		: "Samuel",
 		"password"	: "42152b819475e5f77f492117fbf77f",
 		"timestamp" : "827262928"
 	},
 	
-	"ijb78505516c6dd1d3d1d0ea2c5f0e" : {
-		"email"		: "ddb78505516c6dd1d3d1d0ea2c5f0e",
-		"name"		: "Milan",
+	{
+		"email"		: "35a065c2b39ec8be8a22e54a0cadc8",
+		"name"		: "Magdalena",
 		"password"	: "42152b819475e5f77f492117fbf77a",
 		"timestamp" : "827262928"
 	},
 	
-	"ghb78505516c6dd1d3d1d0ea2c5f0e" : {
-		"email"		: "ddb78505516c6dd1d3d1d0ea2c5f0e",
+	{
+		"email"		: "gih8505516c6dd1d3d1ad0ea2c5f0e",
 		"name"		: "Pepek",
 		"password"	: "42152b819475e5f77f492117fbf77b",
 		"timestamp" : "827262928"
 	},
 	
-	"efb78505516c6dd1d3d1d0ea2c5f0e" : {
-		"email"		: "ddb78505516c6dd1d3d1d0ea2c5f0e",
+	{
+		"email"		: "jkl85055a16c6dd1d3d1d0ea2c5f0e",
 		"name"		: "Megi",
 		"password"	: "42152b819475e5f77f492117fbf77c",
 		"timestamp" : "827262928"
 	},
 	
-	"cdb78505516c6dd1d3d1d0ea2c5f0e" : {
-		"email"		: "ddb78505516c6dd1d3d1d0ea2c5f0e",
+	{
+		"email"		: "mlk78505516c6dd1d3d1d0ea2c5f0e",
 		"name"		: "Ivan",
 		"password"	: "42152b819475e5f77f492117fbf77d",
 		"timestamp" : "827262928"
 	},
 	
-	"abb78505516c6dd1d3d1d0ea2c5f0e" : {
-		"email"		: "ddb78505516c6dd1d3d1d0ea2c5f0e",
+	{
+		"email"		: "qoi78505516c6dd1d3d1d0ea2c5f0e",
 		"name"		: "Dodo",
 		"password"	: "42152b819475e5f77f492117fbf77e",
 		"timestamp" : "827262928"
 	}
-
-}
+	
+]

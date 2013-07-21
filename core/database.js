@@ -1,6 +1,6 @@
 
 
-	exports.searchUser = function (email, callback) {
+	exports.searchUser = function(email, callback) {
 		
 		var crypto = require('crypto');
 		
@@ -22,11 +22,13 @@
 		}, function(err, data) {
 			
 			if (err) { console.log(err); }
-			
-			var cryptedEmail = core.hashing.email(email);
-			var existsUser = JSON.parse(data.Body)[cryptedEmail];				
-			callback(existsUser);
+						
+			var cryptedEmail = core.hashing.email(email);			
+			var allUsers = JSON.parse(data.Body);
+			var user = underscore.findWhere(allUsers, {'email':cryptedEmail});
 	
+			callback(user);
+			
 		});
 	
 	};
