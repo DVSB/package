@@ -5,12 +5,9 @@
 
 	var express = require('express');
 	var app = module.exports = express();
-	
-	underscore = require('underscore');
-	underscore.mixin(require('underscore.string').exports());
 
-	// next
 
+	// nexts
 
 	
 	function checkIfAuthentificated(req, res, next) {
@@ -61,20 +58,18 @@
 	// routing
 	
 	
-	underscore.each([
+	var screens = [
 		'storage', 
 		'register', 
 		'signin', 
 		'settings'
-	], function(mod){
+	].forEach(function(mod){
 		
 		app.all('/'  + mod +  '/*', function(req, res) {
 			var module = require('./modules/' + mod)(req, res);
 		});
 		
 	});
-	
-	
 	
 
 	// statics and redirects	
