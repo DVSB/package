@@ -8,7 +8,7 @@
 			
 			// Get array of Files and Folders sorted, with correct keys and dates
 			require('./GetFilesAndFolders').GetFilesAndFolders(currentFolder, function(filesAndFolders){
-				var renderedView = __dirname + '/../../views/view.html';
+				var renderedView = __dirname + '/../../views/storage.html';
 				res.render(renderedView, {myfiles : filesAndFolders});
 			});
 			
