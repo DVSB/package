@@ -1,6 +1,3 @@
-
-
-	'use strict';
 	
 
 	// express 
@@ -8,6 +5,8 @@
 
 	var express = require('express');
 	var app = module.exports = express();
+	
+	
 
 	// next
 
@@ -31,7 +30,7 @@
 
 
 	app.configure(function(){
-				
+						
 		app.use(express.compress());
 		app.use(express.methodOverride());
 		
@@ -39,9 +38,9 @@
 			uploadDir: __dirname+'/temp/' 
 		}));
 	
-		var hash = require('./core/_init').core().settings.hash1;
+		var hash = JSON.parse(require('fs').readFileSync('_settings.json')).settings.hash1;
 		app.use(express.cookieParser(hash));
-		app.use(express.cookieSession(hash));	
+		app.use(express.cookieSession(hash));
 	
 		app.use(app.router);
 		app.use('/statics', express.static(__dirname + '/views/statics'));
@@ -64,7 +63,7 @@
 	});
 	
 	app.all('/auth/*', function(req, res) {
-		require('./modules/auth.js').init(req, res);
+		require('./modules/auth.js').init();
 	});
 	
 	app.all('/settings/*', function(req, res) {

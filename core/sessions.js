@@ -1,18 +1,22 @@
 
-	exports.login = function(req, res, email) {
+	exports.init = function(){
 		
-		var core = res.locals.core;		
-		req.session.email = email;		
-		req.session.presence = core.settings.hash1.substr(0, 10);
-		
-	};
+		return {
+			
+			sessionLogin : function(req, res, email) {
+				var core = res.locals.core;		
+				req.session.email = email;		
+				req.session.presence = core.settings.hash1.substr(0, 10);
+			},
+			
+			sessionLogout : function(user) {
+				//console.log(user);
+			},
+			
+			sessionUpdate : function(user) {
+				//console.log(user);
+			}
+			
+		};
 	
-	
-	exports.logout = function(user) {
-		//console.log(user);
-	};
-	
-	
-	exports.update = function(user) {
-		//console.log(user);
 	};

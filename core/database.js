@@ -1,34 +1,40 @@
 
 
-	exports.searchUser = function(email, callback) {
+	exports.init = function(req, res){
 		
 		var crypto = require('crypto');
-		
-		var core = {};
-		core.hashing = require('./hashing');
-		core.settings = JSON.parse(require('fs').readFileSync('core/_settings.json'));
-		
 		var AWS = require('aws-sdk');
-		AWS.config.update({ 
-			accessKeyId : core.settings.awsId, 
-			secretAccessKey : core.settings.awsKey, 
-			region : core.settings.region
-		});
-		s3 = new AWS.S3();
+		var settings = JSON.parse(require('fs').readFileSync('_settings.json')).settings;
+
+		return {
 		
-		s3.client.getObject({
-			Bucket : core.settings.bucket,
-			Key : 'users.json'
-		}, function(err, data) {
+			databaseSearchUser : function(email, callback) {
+
+				AWS.config.update({ 
+					accessKeyId : settings.awsId, 
+					secretAccessKey : settings.awsKey, 
+					region : settings.region
+				});
+				s3 = new AWS.S3();
+		
+				s3.client.getObject({
+					Bucket : settings.bucket,
+					Key : '_users.json'
+				}, function(err, data) {
 			
-			if (err) { console.log(err); }
-						
-			var cryptedEmail = core.hashing.email(email);			
-			var allUsers = JSON.parse(data.Body);
-			var user = underscore.findWhere(allUsers, {'email':cryptedEmail});
+					if (err) { console.log(err); }
+					
+					var cryptedEmail = require('./hashing').hashingEmail(email);
+					var allUsers = JSON.parse(data.Body);
+					var user = underscore.findWhere(allUsers, {'email':cryptedEmail});
+					
+					callback(user);
 			
-			callback(user);
-			
-		});
+				});
 	
+			}
+		
+		};
+
 	};
+

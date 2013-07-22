@@ -4,18 +4,16 @@
 
 
 	exports.init = function(req, res) {
-
-		var fs = require('fs');
-		res.locals.core = require('../core/_init').core();
-
+		
+		var core = res.locals.core;
+		
 		var underscore = require('underscore');
 		underscore.mixin(require('underscore.string').exports());
 
 		switch(req.body.action) {
 		
 			case 'signin' :
-				var core = res.locals.core;
-				core.database.searchUser(req.body.email, function(user) {
+				core.databaseSearchUser(req.body.email, function(user) {
 					loginCookies(req, res, user);
 				});
 				break;
@@ -25,8 +23,7 @@
 				break;
 			
 			default :
-				var renderedView = __dirname + '/../views/auth.html';
-				res.render(renderedView);
+				res.render(__dirname+'/../views/auth.html');
 			
 		} 
 	
@@ -41,16 +38,14 @@
 		if (user) {
 	
 			var core = res.locals.core;
-			console.log('ss');
-			core.sessions.login(req, res, user.email);
-			res.render('/../views/auth.html');
+			core.sessionLogin(req, res, user.email);
+			res.render(__dirname+'/../views/auth.html');
 	
 		} else {
-		
 			res.send('wrong user');
 		
 		}
 
-	};
+	}
 	
 	
