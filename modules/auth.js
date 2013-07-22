@@ -1,51 +1,100 @@
 
 
-	// routing
-
-
-	exports.init = function(req, res) {
-		
-		var core = res.locals.core;
-		
-		var underscore = require('underscore');
-		underscore.mixin(require('underscore.string').exports());
-
-		switch(req.body.action) {
-		
-			case 'signin' :
-				core.databaseSearchUser(req.body.email, function(user) {
-					loginCookies(req, res, user);
-				});
-				break;
-				
-			case 'signup' :
-				console.log('registered');
-				break;
-			
-			default :
-				res.render(__dirname+'/../views/auth.html');
-			
-		} 
-	
-	};
+exports.init = function(req, res) {	
 	
 	
-	// functions
+// variables
 
 
-	function loginCookies(req, res, user) {
+	var crypto = require('crypto');
+	var AWS = require('aws-sdk');
+	var settings = JSON.parse(require('fs').readFileSync('_settings.json')).settings;	
+
+
+// functions
+
+
+	var loginCookies = function(user) {
 
 		if (user) {
-	
-			var core = res.locals.core;
-			core.sessionLogin(req, res, user.email);
-			res.render(__dirname+'/../views/auth.html');
-	
+			req.session.email = user.email;
+			req.session.presence = settings.hash1.substr(0, 10);
+			//res.render(__dirname+'/../views/auth.html');
+			res.send(req.session);
 		} else {
 			res.send('wrong user');
-		
-		}
+		} 
 
-	}
+	}; // loginCookies
+
+
+	var databaseSearchUser = function(callback){
+		
+		AWS.config.update({ 
+			accessKeyId : settings.awsId, 
+			secretAccessKey : settings.awsKey, 
+			region : settings.region
+		});
+		var s3 = new AWS.S3();
+
+		s3.client.getObject({
+			Bucket : settings.bucket,
+			Key : '_users.json'
+		}, function(err, data) {
+
+			if (err) { console.log(err); }
+				
+			var cryptedEmail = hashingEmail(req.body.email);
+			var allUsers = JSON.parse(data.Body);
+			var user = underscore.findWhere(allUsers, {'email':cryptedEmail});
+
+			callback(user);
+
+		});
+
+	}; // databaseSearchUser
 	
 	
+	var hashingEmail = function(email){
+				
+		email = crypto.createHash('sha512').update(email + settings.hash1 + settings.hash2).digest('hex');
+		return email.substr(0, 30);
+
+	}; // hashingEmail
+	
+	
+	var logout = function(){
+		
+		req.session = null;
+		
+	}; // logout
+	
+	
+// routing and variables
+
+
+	switch(req.body.action) {
+
+		case 'signin' :
+			databaseSearchUser(function(user) {
+				console.log(user);
+				loginCookies(user);
+			});
+			break;
+		
+		case 'signup' :
+			console.log('registered');
+			break;
+			
+		case 'signout' :
+			logout();
+			break;
+	
+		default :
+			res.render(__dirname+'/../views/auth.html');
+	
+	} // switch
+	
+
+}; // init
+

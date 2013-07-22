@@ -6,7 +6,8 @@
 	var express = require('express');
 	var app = module.exports = express();
 	
-	
+	underscore = require('underscore');
+	underscore.mixin(require('underscore.string').exports());
 
 	// next
 
@@ -18,14 +19,16 @@
 			next();
 		}
 	
-		function checkInternetConnections(req, res, next) {
-			require('dns').resolve4('www.google.com', function (err) {
-				err ? res.send('Internet Connection Lost') : next();
-			});
-		}
 	*/
-
-
+	
+	
+	function checkInternetConnections(req, res, next) {
+		require('dns').resolve4('www.google.com', function (err) {
+			err ? res.send('Internet Connection Lost') : next();
+		});
+	}
+	
+	
 	// config
 
 
@@ -33,6 +36,8 @@
 						
 		app.use(express.compress());
 		app.use(express.methodOverride());
+		
+		app.use(checkInternetConnections);
 		
 		app.use(express.bodyParser({ 
 			uploadDir: __dirname+'/temp/' 
@@ -52,24 +57,22 @@
 	
 	
 	// routing
-
-
-	app.all('/storage/*', function(req, res) {
-		require('./modules/storage.js').init(req, res);
+	
+		
+	underscore.each([
+		'storage', 
+		'register', 
+		'auth', 
+		'settings'
+	], function(mod){
+		
+		app.all('/'  + mod +  '/*', function(req, res) {
+			var module = require('./modules/' + mod + '.js');
+			module.init(req, res);
+		});
+		
 	});
 	
-	app.all('/register/*', function(req, res) {
-		require('./modules/register.js').init(req, res);
-	});
-	
-	app.all('/auth/*', function(req, res) {
-		require('./modules/auth.js').init();
-	});
-	
-	app.all('/settings/*', function(req, res) {
-		require('./modules/settings.js').init(req, res);
-	});
-
 
 	// statics and redirects	
 
