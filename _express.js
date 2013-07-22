@@ -58,12 +58,7 @@
 	// routing
 	
 	
-	var screens = [
-		'storage', 
-		'register', 
-		'signin', 
-		'settings'
-	].forEach(function(mod){
+	var screens = ['storage', /*'register', 'settings'*/ 'signin',].forEach(function(mod){
 		
 		app.all('/'  + mod +  '/*', function(req, res) {
 			var module = require('./modules/' + mod)(req, res);

@@ -1,9 +1,11 @@
 module.exports = function(req, res) {	
-	
+
+
 // variables
 
 
 	var crypto = require('crypto');
+	var fs = require('fs');
 	var AWS = require('aws-sdk');
 	var settings = JSON.parse(require('fs').readFileSync('_settings.json')).settings;	
 
