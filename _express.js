@@ -12,14 +12,14 @@
 	// next
 
 
-	/*
-		function authentification(req, res, next) {
-			var hash = JSON.parse(require('fs').readFileSync('core/_settings.json')).hash1.substr(0, 10);
-			req.signedCookies.presence==hash ? console.log('correct') : console.log('uncorrect');
-			next();
-		}
 	
-	*/
+	function checkIfAuthentificated(req, res, next) {
+		var settings = JSON.parse(require('fs').readFileSync('_settings.json')).settings;
+		var hash = settings.hash1.substr(0, 10);
+		console.log(req);
+		req.session.presence===hash ? next() : res.redirect(301, 'http://localhost:4000/signin/');
+		next();
+	}
 	
 	
 	function checkInternetConnections(req, res, next) {
@@ -46,6 +46,8 @@
 		var hash = JSON.parse(require('fs').readFileSync('_settings.json')).settings.hash1;
 		app.use(express.cookieParser(hash));
 		app.use(express.cookieSession(hash));
+		
+		//app.use(checkIfAuthentificated);
 	
 		app.use(app.router);
 		app.use('/statics', express.static(__dirname + '/views/statics'));
@@ -58,20 +60,21 @@
 	
 	// routing
 	
-		
+	
 	underscore.each([
 		'storage', 
 		'register', 
-		'auth', 
+		'signin', 
 		'settings'
 	], function(mod){
 		
 		app.all('/'  + mod +  '/*', function(req, res) {
-			var module = require('./modules/' + mod + '.js');
-			module.init(req, res);
+			var module = require('./modules/' + mod)(req, res);
 		});
 		
 	});
+	
+	
 	
 
 	// statics and redirects	
@@ -94,3 +97,4 @@
 	// good bye :)
 	
 	
+

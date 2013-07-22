@@ -1,7 +1,4 @@
-
-
-exports.init = function(req, res) {	
-	
+module.exports = function(req, res) {	
 	
 // variables
 
@@ -19,17 +16,17 @@ exports.init = function(req, res) {
 		if (user) {
 			req.session.email = user.email;
 			req.session.presence = settings.hash1.substr(0, 10);
-			//res.render(__dirname+'/../views/auth.html');
-			res.send(req.session);
+			res.render(__dirname+'/../views/signin.html');
 		} else {
-			res.send('wrong user');
+			logout();
+			res.render(__dirname+'/../views/signin.html');
 		} 
 
 	}; // loginCookies
 
 
 	var databaseSearchUser = function(callback){
-		
+
 		AWS.config.update({ 
 			accessKeyId : settings.awsId, 
 			secretAccessKey : settings.awsKey, 
@@ -43,7 +40,7 @@ exports.init = function(req, res) {
 		}, function(err, data) {
 
 			if (err) { console.log(err); }
-				
+		
 			var cryptedEmail = hashingEmail(req.body.email);
 			var allUsers = JSON.parse(data.Body);
 			var user = underscore.findWhere(allUsers, {'email':cryptedEmail});
@@ -53,23 +50,24 @@ exports.init = function(req, res) {
 		});
 
 	}; // databaseSearchUser
-	
-	
+
+
 	var hashingEmail = function(email){
-				
+		
 		email = crypto.createHash('sha512').update(email + settings.hash1 + settings.hash2).digest('hex');
 		return email.substr(0, 30);
 
 	}; // hashingEmail
-	
-	
+
+
 	var logout = function(){
-		
+
 		req.session = null;
-		
+		return;
+
 	}; // logout
-	
-	
+
+
 // routing and variables
 
 
@@ -77,24 +75,22 @@ exports.init = function(req, res) {
 
 		case 'signin' :
 			databaseSearchUser(function(user) {
-				console.log(user);
 				loginCookies(user);
 			});
 			break;
-		
+
 		case 'signup' :
 			console.log('registered');
 			break;
-			
-		case 'signout' :
+	
+		case 'logout' :
 			logout();
+			res.render(__dirname+'/../views/signin.html');
 			break;
-	
+
 		default :
-			res.render(__dirname+'/../views/auth.html');
-	
+			res.render(__dirname+'/../views/signin.html');
+
 	} // switch
-	
 
-}; // init
-
+};

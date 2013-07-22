@@ -1,54 +1,62 @@
-exports.init = function(req, res) {
+module.exports = function(req, res) {
 
-	// IMPORTS * yes, its global for now.. desperate times desperate measures
+	
+// variables
 
-		// underscore and underscore string
-		underscore = require('underscore');
-		underscore.mixin(require('underscore.string').exports());
+
+	var crypto = require('crypto');
+	var fs = require('fs');
+	var AWS = require('aws-sdk');
+	var settings = JSON.parse(require('fs').readFileSync('_settings.json')).settings;	
+
+	AWS.config.update({
+		accessKeyId : settings.amazon.id,
+		secretAccessKey : settings.amazon.key,
+		region : settings.amazon.region
+	});
+	s3 = new AWS.S3();
+	
+	
+// functions
+
+
+	var browse = function() {
 		
-		// file system
-		fs = require('fs');
 		
-		// settings
-		settings = JSON.parse(fs.readFileSync('settings.json'));
 
-		// amazon
-		var AWS = require('aws-sdk');
-		AWS.config.update({
-			accessKeyId : settings.amazon.id,
-			secretAccessKey : settings.amazon.key,
-			region : settings.amazon.region
+		// Get prefix of current folder based on url
+		require('./GetCurrentFolder').GetCurrentFolder(req.url, function(currentFolder){
+			
+			console.log('* Current folder was clicked on ' + currentFolder);
+			
+			// Get array of Files and Folders sorted, with correct keys and dates
+			require('./GetFilesAndFolders').GetFilesAndFolders(currentFolder, function(filesAndFolders){
+				var renderedView = __dirname + '/../../views/storage.html';
+				res.render(renderedView, {myfiles : filesAndFolders});
+			});
+			
 		});
-		s3 = new AWS.S3();
 		
-	// ROUTING
 
-		var model = require('./storage/_model');
+	}; // loginCookies	
+
+
+// routing and variables
+
+
+	switch(req.body.action) {
 		
-		if (req.body.svc === 'as87a0d59d') {
+		case 'as87a0d59d' :
 			console.log('* Upload Model runned');
-			//model.upload(req, res);
-		} else if (req.body.button==='unlink') {
-			console.log('* Unlink Model runned');
-			//model.unlink(req, res);
-		} else if (req.body.button==='rename') {
-			console.log('* Rename Model runned');
-			//model.rename(req, res);
-		} else if (req.body.button==='move') {
-			console.log('* Move Model runned');
-			//model.move(req, res);
-		} else if (req.body.button==='share') {
-			console.log('* Share Model runned');
-			//model.share(req, res);
-		} else if (req.body.button==='download') {
-			console.log('* Download Model runned');
-			//model.download(req, res);
-		} else if (req.body.button==='copy') {
-			console.log('* Copy Model runned');
-			//model.copy(req, res);
-		} else {
-			console.log('* Browse Model runned');
+			
+		case 'as87a0d5ad' :
+			console.log('* Upload Model runned');
+
+		default :
+			var model = require('./storage/_model');
 			model.browse(req, res);
-		};
+
+	} // switch
+
 
 };
