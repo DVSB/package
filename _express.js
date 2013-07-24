@@ -12,7 +12,7 @@
 	
 	function checkIfAuthentificated(req, res, next) {
 		var settings = JSON.parse(require('fs').readFileSync('_settings.json')).settings;
-		var hash = settings.hash1.substr(0, 10);
+		var hash = settings.hash.substr(0, 10);
 		console.log(req);
 		req.session.presence===hash ? next() : res.redirect(301, 'http://localhost:4000/signin/');
 		next();
@@ -40,7 +40,7 @@
 			uploadDir: __dirname+'/temp/' 
 		}));
 	
-		var hash = JSON.parse(require('fs').readFileSync('_settings.json')).settings.hash1;
+		var hash = JSON.parse(require('fs').readFileSync('_settings.json')).settings.hash;
 		app.use(express.cookieParser(hash));
 		app.use(express.cookieSession(hash));
 		

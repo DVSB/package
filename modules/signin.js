@@ -17,7 +17,7 @@ module.exports = function(req, res) {
 
 		if (user) {
 			req.session.email = user.email;
-			req.session.presence = settings.hash1.substr(0, 10);
+			req.session.presence = settings.hash.substr(0, 10);
 			res.render(__dirname+'/../views/signin.html');
 		} else {
 			logout();
@@ -56,7 +56,7 @@ module.exports = function(req, res) {
 
 	var hashingEmail = function(email){
 		
-		email = crypto.createHash('sha512').update(email + settings.hash1 + settings.hash2).digest('hex');
+		email = crypto.createHash('sha512').update(email + settings.hash).digest('hex');
 		return email.substr(0, 30);
 
 	}; // hashingEmail

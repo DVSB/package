@@ -7,8 +7,19 @@ module.exports = function(req, res) {
 	var crypto = require('crypto');
 	var fs = require('fs');
 	var AWS = require('aws-sdk');
-	var settings = JSON.parse(require('fs').readFileSync('_settings.json'));	
+	var settings = JSON.parse(require('fs').readFileSync('_settings.json')).settings;
 	
+	var underscore = require('underscore');
+	underscore.mixin(require('underscore.string').exports());
+		
+	AWS.config.update({ 
+		accessKeyId : settings.awsId, 
+		secretAccessKey : settings.awsKey, 
+		region : settings.region,
+		bucket : settings.bucket
+	});
+	var s3 = new AWS.S3();
+
 	
 // functions
 
@@ -20,7 +31,6 @@ module.exports = function(req, res) {
 			var file = files[i];
 		
 			s3.client.putObject({
-				Bucket : settings.amazon.bucket,
 				Key : settings.user.id + '/' + file.name,
 				Body : fs.readFileSync(file.path)
 			}, function(err, data){
@@ -37,7 +47,6 @@ module.exports = function(req, res) {
 	var Unlink = function(items, callback) {
 
 		var params = {
-			Bucket : settings.amazon.bucket,
 			Key : items
 		};
 		
@@ -52,7 +61,6 @@ module.exports = function(req, res) {
 	var Upload = function(file) {
 
 		s3.client.putObject({
-			Bucket : settings.amazon.bucket,
 			Key : settings.user.id + '/' + file.name,
 			Body : fs.readFileSync(file.path)
 		}, function(err, data) {
@@ -74,7 +82,6 @@ module.exports = function(req, res) {
 		}
 
 		s3.client.listObjects({
-			Bucket : settings.amazon.bucket,
 			Delimiter : '/',
 			Prefix : myprefix
 		}, function(err, data){
@@ -130,43 +137,6 @@ module.exports = function(req, res) {
 		});
 	
 	}; // GetFilesAndFolders
-
-
-	var GetCurrentFolder = function(currentUrl, callback){
-			
-		var browsingFolders = underscore.trim(currentUrl, '/');
-		browsingFolders = underscore.words(browsingFolders, '/');
-		browsingFolders = underscore.rest(browsingFolders);
-		
-		var currentFolder = underscore.last(browsingFolders);
-		
-		s3.client.listObjects({
-			Bucket : settings.amazon.bucket,
-			Prefix : settings.user.id + '/',
-			Delimiter : '/'
-		}, function(err, data){
-										
-			var folders = data.CommonPrefixes;
-			var hash = '';
-			var willBeHash = '';
-			
-			for (var i=0; i<=folders.length-1; i++) {
-				
-				willBeHash = folders[i].Prefix + settings.user.hash;
-				hash = require('crypto').createHash('sha512').update(willBeHash).digest('hex').substr(0, 10);
-				
-				// if exists currentFolder return it, if not return return blank
-				if (hash===currentFolder) {
-					callback(folders[i].Prefix);
-				} else if ((!currentFolder)&&(i===folders.length-1)) {
-					callback(undefined);
-				}
-
-			}
-
-		});
-
-	}; // GetCurrentFolder
 	
 	
 	var FindFolderBasedOnHash = function(req, callback){
@@ -175,7 +145,6 @@ module.exports = function(req, res) {
 		browsingUrlFolder = underscore(browsingUrlFolder).strRightBack('/');
 			
 		s3.client.listObjects({
-			Bucket : settings.amazon.bucket,
 			Delimiter : '/',
 			Prefix : settings.user.id + '/' + browsingUrlFolder + '/'
 		}, function(err, data){
@@ -200,7 +169,7 @@ module.exports = function(req, res) {
 	}; // FindFolderBasedOnHash
 
 
-	var browse = function(req, res) {
+	var browse = function() {
 		
 		// Get prefix of current folder based on url
 		GetCurrentFolder(req.url, function(currentFolder){
@@ -239,6 +208,116 @@ module.exports = function(req, res) {
 		});
 
 	}; // unlink2
+	
+	
+	var GetCurrentFolder = function(currentUrl, callback) {
+			
+		var browsingFolders = underscore.trim(currentUrl, '/');
+		browsingFolders = underscore.words(browsingFolders, '/');
+		browsingFolders = underscore.rest(browsingFolders);
+		
+		var currentFolder = underscore.last(browsingFolders);
+		
+		AWS.config.update({ 
+			accessKeyId : settings.awsId, 
+			secretAccessKey : settings.awsKey, 
+			region : settings.region,
+			bucket : settings.bucket
+		});
+		var s3 = new AWS.S3();
+		
+		s3.client.listObjects({
+			Bucket : settings.bucket,
+			Delimiter : '/'
+		}, function(err, data){
+			
+			if (err) { console.log(err); }
+			console.log(data);
+										
+			var folders = data.CommonPrefixes;
+			var hash = '';
+			var willBeHash = '';
+			
+			
+			for (var i=0; i<=folders.length-1; i++) {
+				
+				willBeHash = folders[i].Prefix + settings.user.hash;
+				hash = require('crypto').createHash('sha512').update(willBeHash).digest('hex').substr(0, 10);
+				
+				// if exists currentFolder return it, if not return return blank
+				if (hash===currentFolder) {
+					callback(folders[i].Prefix);
+				} else if ((!currentFolder)&&(i===folders.length-1)) {
+					callback(undefined);
+				}
+
+			}
+
+		});
+
+	}; // GetCurrentFolder
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	var browseFolder = function(urlFolders, iterator, callback){
+		
+		var isRoot = urlFolders.length===0 ? true : false;
+		var currentFolder = urlFolders[iterator];
+
+		s3.client.listObjects({
+			Bucket : settings.bucket,
+			Delimiter : '/',
+			//Prefix : 
+			Prefix : isRoot ? settings.home+'/' : settings.home+'/'+'path'+'/'
+		}, function(err, data){
+		
+			if (err) { console.log(err); }
+		
+			var allFolders = data.CommonPrefixes;
+			allFolders.forEach(function(element, index) {
+				allFolders[index] = crypto.createHash('sha512').update(element.Prefix + settings.hash).digest('hex').substr(0, 10);
+			});
+		
+			var allFiles = data.Contents;
+			allFiles.forEach(function(element, index){
+				element = underscore.pick(element, 'Key').Key;
+				allFiles[index] = crypto.createHash('sha512').update(element).digest('hex').substr(0, 10);
+			});
+			
+			/*				
+			callback({
+				files : underscore.rest(allFiles),
+				folders : allFolders
+			});
+			*/
+			
+			res.send({
+				files : underscore.rest(allFiles),
+				folders : allFolders
+			});
+		
+		}); // s3
+	
+	} // browseFolder
+	
+	
+	var findCurrentFolder = function(callback){
+
+		var urlFolders = underscore.trim(req.url, '/');
+		urlFolders = underscore.words(urlFolders, '/');
+		urlFolders = underscore.rest(urlFolders);
+		
+		browseFolder(urlFolders, 0);
+		
+	} // findCurrentFolder
 
 
 // routing and variables
@@ -253,8 +332,8 @@ module.exports = function(req, res) {
 			console.log('* Upload Model runned');
 
 		default :
-			var model = require('./storage/_model');
-			browse(req, res);
+			findCurrentFolder();
+			
 
 	} // switch
 

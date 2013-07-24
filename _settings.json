@@ -1,17 +1,16 @@
 {
 	"settings" : {
 
-		"awsId" 		: "AKIAJZHYWXMSMN7X2ITQ",
-		"awsKey" 		: "5PWHzystOfEP84Mu5NJPdLMuSqVDtdbG5PDuUk0r",
-		"bucket" 		: "6adfb183a4a2",
-		"region" 		: "us-east-1",
-		"storage" 		: "ReducedRedundancy",
+		"awsId" 	: "AKIAJZHYWXMSMN7X2ITQ",
+		"awsKey"	: "5PWHzystOfEP84Mu5NJPdLMuSqVDtdbG5PDuUk0r",
+		"bucket" 	: "6adfb183a4a2",
+		"region" 	: "us-east-1",
+		"storage" 	: "ReducedRedundancy",
 	
-		"hash1" 		: "2c6eb16bdc7694b2b5f2caddadfc42d46c5d83a29",
-		"hash2"			: "a7b773e3d0014dfb49dbe36a77d0c9c995a20c475",
-	
-		"adminName"	: "Samuel Ondrek",
-		"adminEmail" 	: "samuel@ondrek.com"
+		"hash" 		: "2c6eb16bdc7694b2b5f2caddadfc42d46c5d83a29",
+		"name"		: "Samuel Ondrek",
+		"email" 	: "samuel@ondrek.com",
+		"home" 		: "9933b70a0140317b"
 		
 	}
 
