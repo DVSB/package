@@ -267,38 +267,40 @@ module.exports = function(req, res) {
 	
 	
 	
-	var browseFolder = function(urlFolders, iterator, callback){
-		
-		var isRoot = urlFolders.length===0 ? true : false;
-		var currentFolder = urlFolders[iterator];
+	
+	
+	
+	
+	
+	
+	
+	
 
+	
+	
+	var browseFolder = function(prefix, callback){
+				
 		s3.client.listObjects({
 			Bucket : settings.bucket,
 			Delimiter : '/',
-			//Prefix : 
-			Prefix : isRoot ? settings.home+'/' : settings.home+'/'+'path'+'/'
+			Prefix : prefix
 		}, function(err, data){
 		
 			if (err) { console.log(err); }
-		
-			var allFolders = data.CommonPrefixes;
-			allFolders.forEach(function(element, index) {
+						
+			// Make Array of Folders
+			var allFolders = [];
+			data.CommonPrefixes.forEach(function(element, index) {
 				allFolders[index] = crypto.createHash('sha512').update(element.Prefix + settings.hash).digest('hex').substr(0, 10);
 			});
-		
-			var allFiles = data.Contents;
-			allFiles.forEach(function(element, index){
+			
+			// Make Array of Files
+			var allFiles = [];
+			data.Contents.forEach(function(element, index){
 				element = underscore.pick(element, 'Key').Key;
-				allFiles[index] = crypto.createHash('sha512').update(element).digest('hex').substr(0, 10);
+				allFiles[index] = crypto.createHash('sha512').update(element + settings.hash).digest('hex').substr(0, 10);
 			});
-			
-			/*				
-			callback({
-				files : underscore.rest(allFiles),
-				folders : allFolders
-			});
-			*/
-			
+							
 			res.send({
 				files : underscore.rest(allFiles),
 				folders : allFolders
@@ -308,16 +310,49 @@ module.exports = function(req, res) {
 	
 	} // browseFolder
 	
+		
+	var findFolder = function(callback){
+		
+		var prefix = '';
+		
+		var foldersFromUrl = underscore.trim(req.url, '/');
+		foldersFromUrl = underscore.words(foldersFromUrl, '/');
+		foldersFromUrl = underscore.rest(foldersFromUrl);
+		
+		var getCurrentFolder = function(iterator, prefix, callback){
+									
+			var iteratingFolder = foldersFromUrl[iterator];
+			
+			// isLast
+			if (foldersFromUrl.length==iterator){
+				browseFolder(prefix, 0);
+				return;
+			}
+				
+			s3.client.listObjects({
+				Bucket : settings.bucket,
+				Delimiter : '/',
+				Prefix : prefix ? prefix : settings.home+'/'
+			}, function(err, data){
+		
+				if (err) { console.log(err); }
+					
+				var hashedElement;
+				var unhashedFolder;
+				data.CommonPrefixes.forEach(function(element, index){
+					unhashedFolder = element.Prefix;
+					hashedFolder = crypto.createHash('sha512').update(unhashedFolder + settings.hash).digest('hex').substr(0, 10);
+					var isEql = hashedFolder===iteratingFolder;
+					isEql ? getCurrentFolder(++iterator, element.Prefix) : false;
+				});
+		
+			}); // s3
 	
-	var findCurrentFolder = function(callback){
-
-		var urlFolders = underscore.trim(req.url, '/');
-		urlFolders = underscore.words(urlFolders, '/');
-		urlFolders = underscore.rest(urlFolders);
+		} // getChildren
 		
-		browseFolder(urlFolders, 0);
+		getCurrentFolder(0);
 		
-	} // findCurrentFolder
+	} // findFolder
 
 
 // routing and variables
@@ -332,7 +367,7 @@ module.exports = function(req, res) {
 			console.log('* Upload Model runned');
 
 		default :
-			findCurrentFolder();
+			findFolder();
 			
 
 	} // switch
