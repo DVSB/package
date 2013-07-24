@@ -16,32 +16,14 @@ module.exports = function(req, res) {
 		accessKeyId : settings.awsId, 
 		secretAccessKey : settings.awsKey, 
 		region : settings.region,
-		bucket : settings.bucket
+		bucket : settings.bucket,
+		storage : settings.storage,
+		ServerSideEncryption : settings.encrypt
 	});
 	var s3 = new AWS.S3();
 
 	
 // functions
-
-
-	var Multiupload = function(files) {
-
-		for (var i=0; i<=files.length-1; i++) {
-		
-			var file = files[i];
-		
-			s3.client.putObject({
-				Key : settings.user.id + '/' + file.name,
-				Body : fs.readFileSync(file.path)
-			}, function(err, data){
-				if (err) { console.log(err); } else { 
-					fs.unlink(file.path);
-				}
-			});
-		
-		}
-
-	}; // Multiupload
 
 
 	var Unlink = function(items, callback) {
@@ -58,57 +40,8 @@ module.exports = function(req, res) {
 	}; // Unlink
 	
 
-	var Upload = function(file) {
-
-		s3.client.putObject({
-			Key : settings.user.id + '/' + file.name,
-			Body : fs.readFileSync(file.path)
-		}, function(err, data) {
-			if (err) { console.log(err); } else { 
-				fs.unlink(file.path);
-			}
-			
-		});
-
-	}; // Upload
-
-
-	var DefaultUpload = function(req, res) {
-
-		// test isArray is correct because in js array is also object
-		if (underscore.isArray(req.files.myfile)) {
-			require('./ObjectMultiupload').Multiupload(req.files.myfile);
-		} else {
-			require('./ObjectUpload').Upload(req.files.myfile);
-		}
-
-	}; // DefaultUpload
-
 
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 	
 	
 	var browseFolder = function(prefix, callback){
@@ -138,7 +71,7 @@ module.exports = function(req, res) {
 				files[index] = underscore.extend(files[index], {'Hash' : hash});
 			});
 						
-			res.render(__dirname+'/../views/storage.html', {myfiles: {
+			res.render(__dirname+'/../views/storage', {myfiles: {
 				folders : folders,
 				files : underscore.rest(files)
 			}});
