@@ -17,8 +17,8 @@
 		req.session.presence===hash ? next() : res.redirect(301, 'http://localhost:4000/signin/');
 		next();
 	}
-	
-	
+
+
 	function checkInternetConnections(req, res, next) {
 		require('dns').resolve4('www.google.com', function (err) {
 			err ? res.send('Internet Connection Lost') : next();
@@ -58,7 +58,12 @@
 	// routing
 	
 	
-	var screens = ['storage', /*'register', 'settings'*/ 'signin',].forEach(function(mod){
+	var screens = [
+	'storage', 
+	//'register', 
+	//'settings',
+	'signin'
+	].forEach(function(mod){
 		
 		app.all('/'  + mod +  '/*', function(req, res) {
 			var module = require('./modules/' + mod)(req, res);
@@ -80,7 +85,7 @@
 
 	if (!module.parent) {
 		app.use(express.logger('dev'));
-		app.listen(4000);
+		app.listen(4080);
 	}
 
 

@@ -203,7 +203,6 @@ module.exports = function(req, res) {
 		default :
 			findFolderBasedOnPrefix();
 			break;
-			
 
 	} // switch
 
