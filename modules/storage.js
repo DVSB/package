@@ -111,7 +111,7 @@ module.exports = function(req, res) {
 
 	
 	
-	var browseFolder = function(prefix){
+	var browseFolder = function(prefix, callback){
 						
 		s3.client.listObjects({
 			Bucket : settings.bucket,
@@ -121,23 +121,27 @@ module.exports = function(req, res) {
 		
 			if (err) { res.send(err); }
 						
-			// Make Array of Folders
-			var allFolders = [];
+			// Make Array of Hashed and Unhashed Folders
+			var hash, folders=[];
 			data.CommonPrefixes.forEach(function(element, index) {
-				allFolders[index] = crypto.createHash('sha512').update(element.Prefix + settings.hash).digest('hex').substr(0, 10);
+				folders[index] = {
+					Key : element.Prefix,
+					Hash : crypto.createHash('sha512').update(element.Prefix + settings.hash).digest('hex').substr(0, 10)
+				}
 			});
-			
-			// Make Array of Files
-			var allFiles = [];
+						
+			// Make Array of Hashed and Unhashed Files
+			var hash, files=[];
 			data.Contents.forEach(function(element, index){
-				element = underscore.pick(element, 'Key').Key;
-				allFiles[index] = crypto.createHash('sha512').update(element + settings.hash).digest('hex').substr(0, 10);
+				files[index] = underscore.pick(data.Contents[index], 'Key', 'LastModified', 'Size');
+				hash = crypto.createHash('sha512').update(element.Key + settings.hash).digest('hex').substr(0, 10);
+				files[index] = underscore.extend(files[index], {'Hash' : hash});
 			});
-							
-			res.send({
-				files : underscore.rest(allFiles),
-				folders : allFolders
-			});
+						
+			res.render(__dirname+'/../views/storage.html', {myfiles: {
+				folders : folders,
+				files : underscore.rest(files)
+			}});
 		
 		}); // s3
 	
@@ -159,7 +163,6 @@ module.exports = function(req, res) {
 				browseFolder(prefix);
 				return;
 			}
-			
 				
 			s3.client.listObjects({
 				Bucket : settings.bucket,

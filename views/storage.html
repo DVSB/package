@@ -1,5 +1,10 @@
 	
 	<% include _header.html %>
+	
+	<% 
+		var files = myfiles.files;
+		var folders = myfiles.folders;
+	%>
 
 
     <ul id="myTab" class="nav nav-tabs" style="margin-top: 30px;">
@@ -33,12 +38,12 @@
 			<form method="post" action="./amazon" class="inline-form">
 				<input type="hidden" name="selected" value="null" />
 				<button type="submit" class="btn btn-primary" name="action" value="unlink">Unlink</button>
-				<button type="submit" class="btn btn-primary" name="action" value="rename">Rename</button>
-				<button type="submit" class="btn btn-primary" name="action" value="move">Move</button>
-				<button type="submit" class="btn btn-primary" name="action" value="share">Share</button>
-				<button type="submit" class="btn btn-primary" name="action" value="download">Download</button>
-				<button type="submit" class="btn btn-primary" name="action" value="copy">Copy</button>
-			</form>
+				<button type="submit" class="btn btn-primary" name="action" value="rename" disabled="disabled">Rename</button>
+				<button type="submit" class="btn btn-primary" name="action" value="move" disabled="disabled">Move</button>
+				<button type="submit" class="btn btn-primary" name="action" value="share" disabled="disabled">Share</button>
+				<button type="submit" class="btn btn-primary" name="action" value="download" disabled="disabled">Download</button>
+				<button type="submit" class="btn btn-primary" name="action" value="copy" disabled="disabled">Copy</button>
+			</form>			
 
 			<table class="table table-striped">
 				<thead>
@@ -50,31 +55,31 @@
 					</tr>
 				</thead>
 				<tbody>
-					<% for(var i=0; i<myfiles.length; i++) { %>
 					<tr>
-						<% if (i===0) { %>
-							<td></td>
-						<% } else { %>
-							<td><input type="checkbox" /></td>
-						<% } %>
-						
-						<% if (i===0) { %>
-							<td class="folder"><a href="./<%= myfiles[i].Hash %>/">...</a></td>
-						<% } else if (myfiles[i].Size==0) { %>
-							<td class="folder"><a href="./<%= myfiles[i].Hash %>/"><%= myfiles[i].Key %></a></td>
-						<% } else { %>
-							<td class="file"><%= myfiles[i].Key %></td>
-						<% } %>
-						
-						<% if (myfiles[i].Size==0) { %>
-							<td></td>
-							<td></td>
-						<% } else { %>
-							<td><%= myfiles[i].Size %></td>
-							<td><%= myfiles[i].LastModified %></td>
-						<% } %>
+						<td></td>
+						<td><a href="../">...</a></td>
+						<td></td>
+						<td></td>
 					</tr>
+					
+					<% for(var i=0; i<folders.length; i++) { %>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td><a href="./<%= folders[i].Hash %>/"><%= folders[i].Key %></a></td>
+							<td></td>
+							<td></td>
+						</tr>
 					<% } %>
+					
+					<% for(var i=0; i<files.length; i++) { %>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td><a href="./<%= files[i].Hash %>/"><%= files[i].Key %></a></td>
+							<td><%= files[i].Size %></td>
+							<td><%= files[i].LastModified %></td>
+						</tr>
+					<% } %>
+					
 				</tbody>		
 			</table>
 			
