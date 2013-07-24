@@ -41,7 +41,7 @@ module.exports = function(req, res) {
 			Key : '_users.json'
 		}, function(err, data) {
 
-			if (err) { console.log(err); }
+			if (err) { res.send(err); }
 		
 			var cryptedEmail = hashingEmail(req.body.email);
 			var allUsers = JSON.parse(data.Body);
