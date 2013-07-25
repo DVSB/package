@@ -63,7 +63,7 @@
 	//'register', 
 	//'settings',
 	'signin',
-	'upload'
+	'upload'	
 	].forEach(function(mod){
 		
 		app.all('/'  + mod +  '/*', function(req, res) {
@@ -72,21 +72,18 @@
 		
 	});
 	
-
-	// statics and redirects	
-
-
+	
 	app.get('/', function(req, res) {
-		res.redirect(301, 'http://localhost:4000/storage/');
-	});
-
+		var module = require('./modules/index')(req, res);
+	});	
+	
 
 	// run
 	
 
 	if (!module.parent) {
 		app.use(express.logger('dev'));
-		app.listen(4080);
+		app.listen(4090);
 	}
 
 

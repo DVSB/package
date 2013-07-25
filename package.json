@@ -1,10 +1,10 @@
 {
 	"name": "n200",
 	"preferGlobal": "true",
-	"version": "0.1.6",
+	"version": "0.1.7-1",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/mousepen/OpenWrap.git"
+		"url": "https://github.com/n200/open-storage.git"
 	},
 	"dependencies": {
 		"express": "3.3.4",
@@ -12,18 +12,37 @@
 		"underscore.string": "2.3.3",
 		"ejs": "0.8.4",
 		"aws-sdk": "1.4.0",
-		"connect" : "2.8.4"
+		"connect": "2.8.4"
 	},
 	"scripts": {
 		"start": "_express.js"
 	},
 	"history": [
-		{"0.1.1" : "Idea of connecting to AmazonS3"},
-		{"0.1.2" : "Added structure, uploading, download, settings"},
-		{"0.1.3" : "Added About and Settings tabs"},
-		{"0.1.4" : "Changed structure to controllers, models and views"},
-		{"0.1.5" : "Added login and users.json"},
-		{"0.1.6" : "Security, Sessions, Cookies, Refactoring"},
-		{"0.1.7" : "Browsing plugin"}
-	]
+		{
+			"0.1.1": "Idea of connecting to AmazonS3"
+		},
+		{
+			"0.1.2": "Added structure, uploading, download, settings"
+		},
+		{
+			"0.1.3": "Added About and Settings tabs"
+		},
+		{
+			"0.1.4": "Changed structure to controllers, models and views"
+		},
+		{
+			"0.1.5": "Added login and users.json"
+		},
+		{
+			"0.1.6": "Security, Sessions, Cookies, Refactoring"
+		},
+		{
+			"0.1.7": "Browsing plugin"
+		}
+	],
+	"license": "MIT",
+	"engines": {
+		"node": ">=0.8"
+	},
+	"subdomain": "n200"
 }
