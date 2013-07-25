@@ -18,14 +18,12 @@
 		margin: 5px 4px;
 		padding-top: 0;
 		padding-bottom: 0;
-	}
-
-	.entypo {
 		font-family: "entypo";
-		font-size: 6em;
-		line-height: 68px;
+		font-size: 7em;
+		line-height: 50px;
 		color: #333;
-		text-align: center;	
+		padding-top: 22px;
+		text-align: center;
 	}
 	
 	.span {

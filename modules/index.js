@@ -11,16 +11,6 @@ module.exports = function(req, res) {
 
 	var underscore = require('underscore');
 	underscore.mixin(require('underscore.string').exports());
-	
-	AWS.config.update({ 
-		accessKeyId : settings.awsId, 
-		secretAccessKey : settings.awsKey, 
-		region : settings.region,
-		bucket : settings.bucket,
-		storage : settings.storage,
-		ServerSideEncryption : settings.encrypt
-	});
-	var s3 = new AWS.S3();
 
 
 // functions

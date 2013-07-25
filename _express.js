@@ -34,7 +34,7 @@
 		app.use(express.compress());
 		app.use(express.methodOverride());
 		
-		app.use(checkInternetConnections);
+		//app.use(checkInternetConnections);
 		
 		app.use(express.bodyParser({ 
 			uploadDir: __dirname+'/temp/' 
