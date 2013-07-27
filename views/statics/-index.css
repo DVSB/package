@@ -17,7 +17,7 @@
 	body {
 		max-width: 1300px;
 		margin: 0 auto;
-		font-size: 12px;
+		font-size: 13px;
 		color: #031620;
 		font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 		font-weight: normal;
@@ -42,17 +42,12 @@
 		display: none;
 	}
 	
-	h1, h2, h3 {
+	h1, h2, h3, h4 {
 		font-size: 22px;
 		color: #003594;
 		letter-spacing: .02em;
 		line-height: 22px;
 		font-weight: 300;
-		margin-left: 5px;
-	}
-	
-	footer {
-		margin-top: 140px;
 		margin-left: 5px;
 	}
 	
@@ -146,16 +141,49 @@
 		margin: 5px;
 		padding: 20px 8px 20px 12px;
 		text-align: center;
-		border: 1px solid #E7E7E7;
+		border: 1px solid #F7F7F7;
+		background: #FCFCFC;
 	}
 	
 	.pricing ul ul {
 		margin-left: 5px;
 	}
-
-	.pricing h3 {
-		text-align: left;
+	
+	.pricing h4 {
+		text-align: center;
 		margin-top: 0;
+		font-size: 16px;
+		color: #31644A;
+	}
+	
+	/*
+	.pricing ul ul li:before {
+		content: '\E762';
+		display: block;
+		margin-left: 12px;
+		font-family: "entypo";
+	}
+	*/
+
+/* footer */
+	
+	footer {
+		overflow: hidden;
+		margin: 70px 10px 10px 5px;
+		color: #B9B9B9;
+	}
+	
+	footer a {
+		color: inherit;
+	}
+	
+	footer span {
+		float: left;
+	}
+	
+	footer aside {
+		display: inline-block;
+		float: right;
 	}
 
 
