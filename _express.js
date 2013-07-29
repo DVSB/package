@@ -73,7 +73,7 @@
 	});
 	
 	
-	app.get('/', function(req, res) {
+	app.all('/', function(req, res) {
 		var module = require('./modules/index')(req, res);
 	});	
 	

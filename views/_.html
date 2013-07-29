@@ -181,13 +181,13 @@
 			<h3>.. and who you are?<br>.. in n200 we don't store your data, that's you.</h3>
 
 			<form method="post" action="./" enctype="multipart/form-data">
-				<input type="text" placeholder="Choose your product" disabled="disabled" />
-				<input type="text" placeholder="Name" class="name" />
-				<input type="text" placeholder="Surname" class="name" />
-				<input type="text" placeholder="Your email adress will be never stored" />
-				<input type="password" placeholder="Your password" />
+				<input type="text" name="product" placeholder="Choose your product" disabled="disabled" />
+				<input type="text" name="name" placeholder="Name" class="name" />
+				<input type="text" name="surname" placeholder="Surname" class="name" />
+				<input type="text" name="email" placeholder="Your email adress will be never stored" />
+				<input type="password" name="password" placeholder="Your password" />
 				<input type="password" placeholder="Password again" />
-				<input type="submit" value="Register me!" />
+				<button type="submit" class="btn btn-primary" name="action" value="signup">Register me!</button>
 			</form>
 				
 		</section>
@@ -206,6 +206,8 @@
 		
 	</footer>
 	
+	<div class="blured"></div>
+	
 	<script src="/statics/js_jquery-2.0.0.js"></script>
 	
 	<script>
@@ -217,9 +219,18 @@
 			$(this).addClass('selected');
 			
 			var samko = $(this).find('h4').text();
+			$('body').addClass('blur');
 			$('.customer input:nth-child(1)').attr('value', samko);
 			$('.customer input:nth-child(1)').addClass('selected');
 			$('.customer input:nth-child(2)').focus();
+			
+		
+		});
+		
+		$('body').on('click', function(){
+			
+			//$(this).removeClass('blur');
+			
 		});
 		
 	</script>
