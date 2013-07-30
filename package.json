@@ -1,7 +1,7 @@
 {
 	"name": "n200",
 	"preferGlobal": "true",
-	"version": "0.1.7-2",
+	"version": "0.1.7-4",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/n200/open-storage.git"
@@ -11,7 +11,7 @@
 		"underscore": "1.5.1",
 		"underscore.string": "2.3.3",
 		"ejs": "0.8.4",
-		"aws-sdk": "1.4.1"	
+		"aws-sdk": "1.4.1"
 	},
 	"scripts": {
 		"start": "_express.js"
@@ -43,5 +43,9 @@
 	"engines": {
 		"node": ">=0.8"
 	},
-	"subdomain": "n200"
+	"subdomain": "n200",
+	"domains": [
+		"n200.org",
+		"www.n200.org"
+	]
 }
