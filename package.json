@@ -11,7 +11,8 @@
 		"underscore": "1.5.1",
 		"underscore.string": "2.3.3",
 		"ejs": "0.8.4",
-		"aws-sdk": "1.4.1"
+		"aws-sdk": "1.4.1",
+		"nodemailer" : "0.5.2"
 	},
 	"scripts": {
 		"start": "_express.js"

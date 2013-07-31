@@ -17,8 +17,7 @@ module.exports = function(req, res) {
 		secretAccessKey : settings.awsKey, 
 		region : settings.region,
 		bucket : settings.bucket,
-		storage : settings.storage,
-		ServerSideEncryption : settings.encrypt
+		storage : settings.storage
 	});
 	var s3 = new AWS.S3();
 
