@@ -63,7 +63,9 @@
 	//'register', 
 	//'settings',
 	'signin',
-	'upload'	
+	'upload',
+	'account',
+	'admin'
 	].forEach(function(mod){
 		
 		app.all('/'  + mod +  '/*', function(req, res) {
