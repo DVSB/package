@@ -27,7 +27,7 @@ module.exports = function(req, res) {
 	mongoclient.connect(mongoDb, function(err, db) {
 		
 		var collection = db.collection('users');
-		
+				
 		/*
 		collection.insert(user, function(err, data) {  
 			err ? res.send(err) : res.send(data);
@@ -49,7 +49,7 @@ module.exports = function(req, res) {
 	var validation = function(callback){
 	
 		var password = req.body.password;
-		password.length<=6 ? res.send('ERR: Your password is short, please you longer than 6 characters.') : false;
+		//password.length<=6 ? res.send('ERR: Your password is short, please you longer than 6 characters.') : false;
 
 		callback();
 	
@@ -74,6 +74,9 @@ module.exports = function(req, res) {
 		newUser.password = crypto.createHash('sha512').update(req.body.password + settings.hash).digest('hex');
 		newUser.password = newUser.password.substr(0, 30);
 		
+		newUser.product = req.body.product;
+		newUser.key = newUser.email.substr(0, 10);
+		
 		saveOnS3ifNotExists(newUser);
 	
 	};
@@ -87,8 +90,9 @@ module.exports = function(req, res) {
 			
 			var createNewOne = function(){
 				collection.insert(newUser, function(err, data) {  
-					err ? res.send(err) : res.send(data);
+					err ? res.send(err) : false;
 					db.close();
+					sendEmail(data);
 				});
 			};
 	
@@ -113,17 +117,15 @@ module.exports = function(req, res) {
 		    auth: { user: "support@n200.org", pass: "testtesttest..." }
 		});
 		
-		var verifyLink = crypto.createHash('sha512').update(req.body.email + user.regtime + settings.hash).digest('hex');
-		verifyLink = verifyLink.substr(0, 8);
-		verifyLink = 'http://n200.org/security/#verify/' + verifyLink;
-		
-		res.send(verifyLink);
+				
+		var verifyLink = user[0].key;
+		verifyLink = 'http://n200.org/account/verify/' + verifyLink;
 		
 		nodemailer.sendMail({
 		    from: "Support n200 <support@n200.org>", 
 		    to: req.body.email,
 		    subject: "Activate n200 Account!",
-		    text: 'Hello ' + req.body.name + '! \n\nYour registration was successfull! \nPlease click on link to verify, that this is really your\'s email! \n\n >> ' + verifyLink + '\n\nThank you! \nn200 Team.'
+		    text: 'Hello ' + user[0].name + '! \n\nYour registration was successfull! \nPlease click on link to verify, that this is really your\'s email! \n\n >> ' + verifyLink + '\n\nThank you! \nn200 Team.'
 		}, function(err, response){
 			err ? res.send(err) : false;
 			res.send("Please check your email and click to activation link .. to verify account.");

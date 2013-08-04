@@ -28,33 +28,35 @@ module.exports = function(req, res) {
 // functions
 	
 	var verifyEmail = function(){
-				
-		var verifyIdFromUrl = req.url;
-		verifyIdFromUrl = underscore.words(verifyIdFromUrl, '/');
-		//res.send(verifyIdFromUrl[2]);
 		
 		mongoclient.connect(mongoDb, function(err, db) {
-			
+		
 			err ? res.send(err) : false;
+		
+			var keyFromUrl = req.url;
+			keyFromUrl = underscore.words(keyFromUrl, '/');
+			keyFromUrl = keyFromUrl[2];
 			
-			var user = {'name':'Samuel', 'surname':'Snopko'};
 			var collection = db.collection('users');
 			
-			collection.insert(user, function(err, data) {
-
-				console.log(data);
-				
-				collection.find().toArray(function(err, results) {
-					res.send(results);
+			var markVerified = function(){
+				collection.update({ key : keyFromUrl }, { verify : true }, function(err, data){
+					err ? res.send(err) : res.send(data);
 					db.close();
-				});   
-				
+				}); 
+			};
+
+			collection.find({
+				key : keyFromUrl
+			}).toArray(function(err, results) {
+				err ? res.send(err) : false;
+				markVerified();
 			}); 
 			
 		}); // mongoclient
-		
+	
 	}; // verifyEmail
-
+		
 
 
 // routing and variables

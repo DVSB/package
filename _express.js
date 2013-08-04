@@ -61,7 +61,6 @@
 	var screens = [
 	'storage', 
 	//'register', 
-	//'settings',
 	'signin',
 	'upload',
 	'account',
