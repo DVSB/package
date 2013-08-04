@@ -144,43 +144,44 @@
 	<article class="pricing">
 		
 		<h3>Hey! Which one do you want?!</h3>
-				
-		<ul>
-	
-			<li>
-				<h4>Free for Open Source</h4>
-				<span><a href="#">Contact Us</a></span>
-				<br/><br/>
-				Suspendisse eleifend, arcu eu interdum posuere, urna leo pellentesque risus, mollis mollis quam risus at odio. Vestibulum scelerisque mauris vitae turpis auctor bibendum. Donec enim metus, ornare non laoreet at, malesuada quis risus. <br/><br/>Curabitur venenatis sed dolor ullamcorper viverra. Proin sit amet fringilla lorem. Vestibulum congue pellentesque dui vitae laoreet. <br/><br/>Duis in volutpat leo. Vestibulum sit amet dui fermentum, fringilla libero vitae, fermentum elit. Nunc rhoncus vulputa.
-				<br/><br/>
-				<input type="radio" name="product" />
-			</li>
-	
-			<li>
-				<h4>Cheap for Individuals</h4>
-				<span>10€ / Month</span>
-				<br/><br/>
-				Suspendisse eleifend, arcu eu interdum posuere, urna leo pellentesque risus, mollis mollis quam risus at odio. Vestibulum scelerisque mauris vitae turpis auctor bibendum. Donec enim metus, ornare non laoreet at, malesuada quis risus. <br/><br/>Curabitur venenatis sed dolor ullamcorper viverra. Proin sit amet fringilla lorem. Vestibulum congue pellentesque dui vitae laoreet. <br/><br/>Duis in volutpat leo. Vestibulum sit amet dui fermentum, fringilla libero vitae, fermentum elit. Nunc rhoncus vulputa.
-				<br/><br/>
-				<input type="radio" name="product" />
-			</li>
-	
-			<li>
-				<h4>Unlimited for Professionals</h4>
-				<span>20€ / Month</span>
-				<br/><br/>
-				Suspendisse eleifend, arcu eu interdum posuere, urna leo pellentesque risus, mollis mollis quam risus at odio. Vestibulum scelerisque mauris vitae turpis auctor bibendum. Donec enim metus, ornare non laoreet at, malesuada quis risus. <br/><br/>Curabitur venenatis sed dolor ullamcorper viverra. Proin sit amet fringilla lorem. Vestibulum congue pellentesque dui vitae laoreet. <br/><br/>Duis in volutpat leo. Vestibulum sit amet dui fermentum, fringilla libero vitae, fermentum elit. Nunc rhoncus vulputa.
-				<br/><br/>
-				<input type="radio" name="product" />
-			</li>
 		
-		</ul>
-	
-		<section class="customer">
+		<form method="post" action="./" enctype="multipart/form-data">
 			
-			<h3>.. and who you are?<br>.. in n200 we don't store your data, that's you.</h3>
+			<ul>
 
-			<form method="post" action="./" enctype="multipart/form-data">
+				<li>
+					<h4>Free for Open Source</h4>
+					<span><a href="#">Contact Us</a></span>
+					<br/><br/>
+					Suspendisse eleifend, arcu eu interdum posuere, urna leo pellentesque risus, mollis mollis quam risus at odio. Vestibulum scelerisque mauris vitae turpis auctor bibendum. Donec enim metus, ornare non laoreet at, malesuada quis risus. <br/><br/>Curabitur venenatis sed dolor ullamcorper viverra. Proin sit amet fringilla lorem. Vestibulum congue pellentesque dui vitae laoreet. <br/><br/>Duis in volutpat leo. Vestibulum sit amet dui fermentum, fringilla libero vitae, fermentum elit. Nunc rhoncus vulputa.
+					<br/><br/>
+					<input type="radio" name="product" value="100" />
+				</li>
+
+				<li>
+					<h4>Cheap for Individuals</h4>
+					<span>10€ / Month</span>
+					<br/><br/>
+					Suspendisse eleifend, arcu eu interdum posuere, urna leo pellentesque risus, mollis mollis quam risus at odio. Vestibulum scelerisque mauris vitae turpis auctor bibendum. Donec enim metus, ornare non laoreet at, malesuada quis risus. <br/><br/>Curabitur venenatis sed dolor ullamcorper viverra. Proin sit amet fringilla lorem. Vestibulum congue pellentesque dui vitae laoreet. <br/><br/>Duis in volutpat leo. Vestibulum sit amet dui fermentum, fringilla libero vitae, fermentum elit. Nunc rhoncus vulputa.
+					<br/><br/>
+					<input type="radio" name="product" value="200" />
+				</li>
+
+				<li>
+					<h4>Unlimited for Professionals</h4>
+					<span>20€ / Month</span>
+					<br/><br/>
+					Suspendisse eleifend, arcu eu interdum posuere, urna leo pellentesque risus, mollis mollis quam risus at odio. Vestibulum scelerisque mauris vitae turpis auctor bibendum. Donec enim metus, ornare non laoreet at, malesuada quis risus. <br/><br/>Curabitur venenatis sed dolor ullamcorper viverra. Proin sit amet fringilla lorem. Vestibulum congue pellentesque dui vitae laoreet. <br/><br/>Duis in volutpat leo. Vestibulum sit amet dui fermentum, fringilla libero vitae, fermentum elit. Nunc rhoncus vulputa.
+					<br/><br/>
+					<input type="radio" name="product" value="300" />
+				</li>
+	
+			</ul>
+
+			<section class="customer">
+		
+				<h3>.. and who you are?<br>.. in n200 we don't store your data, that's you.</h3>
+
 				<input type="text" name="product" placeholder="Choose your product" disabled="disabled" />
 				<input type="text" name="name" placeholder="Name" class="name" />
 				<input type="text" name="surname" placeholder="Surname" class="name" />
@@ -188,9 +189,10 @@
 				<input type="password" name="password" placeholder="Your password" />
 				<input type="password" placeholder="Password again" />
 				<button type="submit" class="btn btn-primary" name="action" value="signup">Register me!</button>
-			</form>
-				
-		</section>
+		
+			</section>
+		
+		</form>
 			
 	</article>
 
@@ -219,11 +221,11 @@
 			$(this).addClass('selected');
 			
 			var samko = $(this).find('h4').text();
-			$('.customer input:nth-child(1)').attr('value', samko);
+			$('.customer input:nth-child(2)').attr('value', samko);
 			//$('body').addClass('blur');
 			
-			$('.customer input:nth-child(1)').addClass('selected');
-			$('.customer input:nth-child(2)').focus();
+			$('.customer input:nth-child(2)').addClass('selected');
+			$('.customer input:nth-child(3)').focus();
 			
 		
 		});

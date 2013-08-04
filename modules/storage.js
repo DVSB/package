@@ -80,7 +80,7 @@ module.exports = function(req, res) {
 	}; // browseFolder
 	
 		
-	var findFolderBasedOnPrefix= function(){
+	var findFolderBasedOnPrefix = function(){
 		
 		var prefix = '';
 		

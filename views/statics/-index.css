@@ -243,10 +243,10 @@
 		text-transform: uppercase;
 	}
 	
-	.customer input:nth-child(2),
 	.customer input:nth-child(3),
-	.customer input:nth-child(5),
-	.customer input:nth-child(6) {
+	.customer input:nth-child(4),
+	.customer input:nth-child(6),
+	.customer input:nth-child(7) {
 		display: inline-block;
 		width: 198px;
 	}
