@@ -60,7 +60,6 @@
 	
 	var screens = [
 	'storage', 
-	//'register', 
 	'signin',
 	'upload',
 	'account',
