@@ -27,6 +27,8 @@ module.exports = function(req, res) {
 	mongoclient.connect(mongoDb, function(err, db) {
 		
 		var collection = db.collection('users');
+		
+		//collection.drop();
 				
 		/*
 		collection.insert(user, function(err, data) {  
@@ -75,7 +77,7 @@ module.exports = function(req, res) {
 		newUser.password = newUser.password.substr(0, 30);
 		
 		newUser.product = req.body.product;
-		newUser.key = newUser.email.substr(0, 10);
+		newUser.key = newUser.email.substr(0, 14);
 		
 		saveOnS3ifNotExists(newUser);
 	

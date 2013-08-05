@@ -155,7 +155,7 @@
 					<br/><br/>
 					Suspendisse eleifend, arcu eu interdum posuere, urna leo pellentesque risus, mollis mollis quam risus at odio. Vestibulum scelerisque mauris vitae turpis auctor bibendum. Donec enim metus, ornare non laoreet at, malesuada quis risus. <br/><br/>Curabitur venenatis sed dolor ullamcorper viverra. Proin sit amet fringilla lorem. Vestibulum congue pellentesque dui vitae laoreet. <br/><br/>Duis in volutpat leo. Vestibulum sit amet dui fermentum, fringilla libero vitae, fermentum elit. Nunc rhoncus vulputa.
 					<br/><br/>
-					<input type="radio" name="product" value="100" />
+					<input type="radio" name="whichproduct" value="100" />
 				</li>
 
 				<li>
@@ -164,7 +164,7 @@
 					<br/><br/>
 					Suspendisse eleifend, arcu eu interdum posuere, urna leo pellentesque risus, mollis mollis quam risus at odio. Vestibulum scelerisque mauris vitae turpis auctor bibendum. Donec enim metus, ornare non laoreet at, malesuada quis risus. <br/><br/>Curabitur venenatis sed dolor ullamcorper viverra. Proin sit amet fringilla lorem. Vestibulum congue pellentesque dui vitae laoreet. <br/><br/>Duis in volutpat leo. Vestibulum sit amet dui fermentum, fringilla libero vitae, fermentum elit. Nunc rhoncus vulputa.
 					<br/><br/>
-					<input type="radio" name="product" value="200" />
+					<input type="radio" name="whichproduct" value="200" />
 				</li>
 
 				<li>
@@ -173,7 +173,7 @@
 					<br/><br/>
 					Suspendisse eleifend, arcu eu interdum posuere, urna leo pellentesque risus, mollis mollis quam risus at odio. Vestibulum scelerisque mauris vitae turpis auctor bibendum. Donec enim metus, ornare non laoreet at, malesuada quis risus. <br/><br/>Curabitur venenatis sed dolor ullamcorper viverra. Proin sit amet fringilla lorem. Vestibulum congue pellentesque dui vitae laoreet. <br/><br/>Duis in volutpat leo. Vestibulum sit amet dui fermentum, fringilla libero vitae, fermentum elit. Nunc rhoncus vulputa.
 					<br/><br/>
-					<input type="radio" name="product" value="300" />
+					<input type="radio" name="whichproduct" value="300" />
 				</li>
 	
 			</ul>
@@ -187,7 +187,8 @@
 				<input type="text" name="surname" placeholder="Surname" class="name" />
 				<input type="text" name="email" placeholder="Your email adress will be never stored" />
 				<input type="password" name="password" placeholder="Your password" />
-				<input type="password" placeholder="Password again" />
+				<input type="password" name="password2" placeholder="Password again" />
+				<span class="errors"></span>
 				<button type="submit" class="btn btn-primary" name="action" value="signup">Register me!</button>
 		
 			</section>
@@ -226,13 +227,31 @@
 			
 			$('.customer input:nth-child(2)').addClass('selected');
 			$('.customer input:nth-child(3)').focus();
-			
 		
 		});
 		
-		$('body').on('click', function(){
+		$('form').submit(function() {
 			
-			//$(this).removeClass('blur');
+			// match passwords
+			var password1 = $('.customer input[name=password]').val();
+			var password2 = $('.customer input[name=password2]').val();
+			if (password1===password2){
+				return false;
+			} else {
+				$('.customer input[name=password]').val('');
+				$('.customer input[name=password2]').val('');
+				$('.errors').text('Passwords are not same!');
+				return false;
+			}
+			
+			// required product
+			var product = $('.customer input[name=product]').val();
+			if (product===''){
+				return false;
+			} else {
+				$('.errors').append('You have choose Product!');
+				return false;
+			}
 			
 		});
 		

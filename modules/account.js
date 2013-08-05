@@ -11,15 +11,6 @@ module.exports = function(req, res) {
 	
 	var underscore = require('underscore');
 	underscore.mixin(require('underscore.string').exports());
-		
-	AWS.config.update({ 
-		accessKeyId : settings.awsId, 
-		secretAccessKey : settings.awsKey, 
-		region : settings.region,
-		bucket : settings.bucket,
-		storage : settings.storage
-	});
-	var s3 = new AWS.S3();
 	
 	var mongoclient = require('mongodb').MongoClient;
 	var mongoDb = 'mongodb://nodejitsu:c73928b8cc2e315b339c263e5f6c95a1@dharma.mongohq.com:10066/nodejitsudb2231254279';
@@ -27,36 +18,31 @@ module.exports = function(req, res) {
 	
 // functions
 	
+	
 	var verifyEmail = function(){
-		
+				
 		mongoclient.connect(mongoDb, function(err, db) {
 		
 			err ? res.send(err) : false;
-		
-			var keyFromUrl = req.url;
-			keyFromUrl = underscore.words(keyFromUrl, '/');
-			keyFromUrl = keyFromUrl[2];
-			
-			var collection = db.collection('users');
-			
-			var markVerified = function(){
-				collection.update({ key : keyFromUrl }, { verify : true }, function(err, data){
-					err ? res.send(err) : res.send(data);
-					db.close();
-				}); 
-			};
 
-			collection.find({
+			var keyFromUrl = underscore.words(req.url, '/')[2];
+						
+			var collection = db.collection('users');
+			collection.findOne({
 				key : keyFromUrl
-			}).toArray(function(err, results) {
-				err ? res.send(err) : false;
-				markVerified();
+			}, function(err, result) {
+				
+				err ? res.send(err) : result.verified = true;
+				
+				collection.update({ key : keyFromUrl }, result, function(err, data){
+					err ? res.send(err) : db.close();
+				});
+				
 			}); 
 			
 		}); // mongoclient
 	
 	}; // verifyEmail
-		
 
 
 // routing and variables
@@ -66,8 +52,6 @@ module.exports = function(req, res) {
 	urlMethod = underscore.rest(urlMethod);
 	urlMethod = underscore.first(urlMethod);
 	
-	console.log(urlMethod);
-
 	switch(urlMethod) {
 	
 		case 'verify' :
