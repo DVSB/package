@@ -14,7 +14,6 @@ module.exports = function(req, res) {
 	
 	var mongoclient = require('mongodb').MongoClient;
 	var mongoDb = 'mongodb://nodejitsu:c73928b8cc2e315b339c263e5f6c95a1@dharma.mongohq.com:10066/nodejitsudb2231254279';
-
 	
 // functions
 	
@@ -23,7 +22,7 @@ module.exports = function(req, res) {
 				
 		mongoclient.connect(mongoDb, function(err, db) {
 		
-			err ? res.send(err) : false;
+			err ? res.redirect('/error/e001') : false;
 
 			var keyFromUrl = underscore.words(req.url, '/')[2];
 						
@@ -31,7 +30,7 @@ module.exports = function(req, res) {
 			collection.findOne({
 				key : keyFromUrl
 			}, function(err, result) {
-				
+								
 				err ? res.send(err) : result.verified = true;
 				
 				collection.update({ key : keyFromUrl }, result, function(err, data){

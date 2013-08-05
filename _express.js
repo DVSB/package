@@ -63,7 +63,8 @@
 	'signin',
 	'upload',
 	'account',
-	'admin'
+	'admin',
+	'error'
 	].forEach(function(mod){
 		
 		app.all('/'  + mod +  '/*', function(req, res) {
