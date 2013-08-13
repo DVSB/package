@@ -42,8 +42,6 @@ module.exports = function(req, res) {
 	urlMethod = underscore.rest(urlMethod);
 	urlMethod = underscore.first(urlMethod);
 
-	console.log(urlMethod);
-
 	switch(urlMethod) {
 
 		case 'browseusers' :

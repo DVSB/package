@@ -7,6 +7,8 @@ module.exports = function(req, res) {
 	var errorDirName = __dirname+'/../views/error/error.html';
 	
 	switch(error) {
+		
+		// connection
 	
 		case 'e001' :
 			res.render(errorDirName, {error : {
@@ -15,9 +17,37 @@ module.exports = function(req, res) {
 			}});
 			break;
 		
-		case 'as87a0d5ad' :
-			console.log('*');
+			// registration
+		
+		case 'r001' :
+			res.render(errorDirName, {error : {
+				name : 'Name is missing',
+				message : 'In registration process is missing Name input filled.'
+			}});
 			break;
+			
+		case 'r002' :
+			res.render(errorDirName, {error : {
+				name : 'Surname is missing',
+				message : 'In registration process is missing Surname input filled.'
+			}});
+			break;
+			
+		case 'r003' :
+			res.render(errorDirName, {error : {
+				name : 'Product is missing',
+				message : 'In registration process is missing Product input filled.'
+			}});
+			break;
+			
+		case 'r004' :
+			res.render(errorDirName, {error : {
+				name : 'Password is short',
+				message : 'Password needs to be longer than 6 chars.'
+			}});
+			break;
+			
+			// default
 
 		default :
 			res.render(errorDirName, {error:{

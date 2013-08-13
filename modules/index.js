@@ -26,8 +26,10 @@ module.exports = function(req, res) {
 		
 	mongoclient.connect(mongoDb, function(err, db) {
 		
-		var collection = db.collection('users');
+		console.log(err);
+		console.log(db);
 		
+		//var collection = db.collection('users');
 		//collection.drop();
 				
 		/*
@@ -50,8 +52,17 @@ module.exports = function(req, res) {
 
 	var validation = function(callback){
 	
-		var password = req.body.password;
-		//password.length<=6 ? res.send('ERR: Your password is short, please you longer than 6 characters.') : false;
+		// if password is short
+		req.body.password.length<=6 ? res.redirect('/error/r004') : false;
+		
+		// if product is missing
+		!req.body.product ? res.redirect('/error/r003') : false;
+		
+		// if name is short
+		!req.body.name ? res.redirect('/error/r001') : false;
+		
+		// if surname is short
+		!req.body.surname ? res.redirect('/error/r002') : false;
 
 		callback();
 	
@@ -85,9 +96,11 @@ module.exports = function(req, res) {
 	
 	
 	var saveOnS3ifNotExists = function(newUser){
-				
-		mongoclient.connect(mongoDb, function(err, db) {
 		
+		mongoclient.connect(mongoDb, function(err, db) {
+			
+			err ? res.send(err) : false;
+			
 			var collection = db.collection('users');
 			
 			var createNewOne = function(){
@@ -143,9 +156,9 @@ module.exports = function(req, res) {
 	switch(req.body.action) {
 		
 		case 'signup' :
-			validation(function(){
+			//validation(function(){
 				signup();
-			});
+			//});
 			break;
 			
 		case 'as87a0d5ad' :
