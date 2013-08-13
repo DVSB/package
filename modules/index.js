@@ -143,7 +143,8 @@ module.exports = function(req, res) {
 		    text: 'Hello ' + user[0].name + '! \n\nYour registration was successfull! \nPlease click on link to verify, that this is really your\'s email! \n\n >> ' + verifyLink + '\n\nThank you! \nn200 Team.'
 		}, function(err, response){
 			err ? res.send(err) : false;
-			res.send("Please check your email and click to activation link .. to verify account.");
+			//res.send("Please check your email and click to activation link .. to verify account.");
+			res.redirect('/error/e?r0001');
 		    nodemailer.close();
 		});
 	

@@ -4,43 +4,59 @@ module.exports = function(req, res) {
 	underscore.mixin(require('underscore.string').exports());
 
 	var error = underscore.words(req.url, '?')[1];
-	var errorDirName = __dirname+'/../views/error/error.html';
+	var errorDirName = __dirname+'/../views/error.html';
 	
 	
 	switch(error) {
 		
-		// connection
+		// new error api
+		
+			// verify account 
 	
-		case 'e0001' :
+			case 'e0001' :
 			res.render(errorDirName, {
-				error : { name: 'Verification key is invalid', message: 'You probably edited URL from email' }
+				error : { name: 'Verification key is invalid', message: 'You probably edited URL from email!' }
 			});
 			break;
 		
-			// registration
+			case 'd0001' :
+			res.render(errorDirName, {
+				error : { name : 'Unknow database error', message : 'Unknow database error, TODO.' }
+			});
+			break;
+			
+			// registration proccess
+			
+			case 'r0001' :
+			res.render(errorDirName, {
+				error : { name : 'Your registration was successfull', message : 'Please check your email box and click to verification link.' }
+			});
+			break;
 		
-		case 'r001' :
+		// old error api
+		
+			case 'r001' :
 			res.render(errorDirName, {error : {
 				name : 'Name is missing',
 				message : 'In registration process is missing Name input filled.'
 			}});
 			break;
 			
-		case 'r002' :
+			case 'r002' :
 			res.render(errorDirName, {error : {
 				name : 'Surname is missing',
 				message : 'In registration process is missing Surname input filled.'
 			}});
 			break;
 			
-		case 'r003' :
+			case 'r003' :
 			res.render(errorDirName, {error : {
 				name : 'Product is missing',
 				message : 'In registration process is missing Product input filled.'
 			}});
 			break;
 			
-		case 'r004' :
+			case 'r004' :
 			res.render(errorDirName, {error : {
 				name : 'Password is short',
 				message : 'Password needs to be longer than 6 chars.'
@@ -49,7 +65,7 @@ module.exports = function(req, res) {
 			
 			// default
 
-		default :
+			default :
 			res.render(errorDirName, {error:{
 				name : 'unknown',
 				message : 'unknown'
