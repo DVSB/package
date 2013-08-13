@@ -19,23 +19,40 @@ module.exports = function(req, res) {
 	
 	
 	var verifyEmail = function(){
+		
+		var onSuccess = function(result){
+			result.verified = true;
+			collection.update({ key : keyFromUrl }, result, function(err, data){
+				err ? res.send(err) : false;
+				db.close();
+				res.redirect('/');
+			});
+		};
 				
 		mongoclient.connect(mongoDb, function(err, db) {
 		
 			err ? res.redirect('/error/e001') : false;
-
+			
 			var keyFromUrl = underscore.words(req.url, '/')[2];
-						
+			
 			var collection = db.collection('users');
 			collection.findOne({
 				key : keyFromUrl
 			}, function(err, result) {
-								
-				err ? res.send(err) : result.verified = true;
 				
-				collection.update({ key : keyFromUrl }, result, function(err, data){
-					err ? res.send(err) : db.close();
-				});
+				console.log(result);
+				
+				if (err) {
+					res.redirect('/error/e', {
+						name: '???', 
+						message: '???'
+					});
+				} else if (!result){
+					res.redirect('/error/e?e0001');
+					
+				} else {
+					onSuccess(result);
+				}
 				
 			}); 
 			

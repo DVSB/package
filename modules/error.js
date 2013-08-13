@@ -3,18 +3,18 @@ module.exports = function(req, res) {
 	var underscore = require('underscore');
 	underscore.mixin(require('underscore.string').exports());
 
-	var error = underscore.words(req.url, '/')[1];	
+	var error = underscore.words(req.url, '?')[1];
 	var errorDirName = __dirname+'/../views/error/error.html';
+	
 	
 	switch(error) {
 		
 		// connection
 	
-		case 'e001' :
-			res.render(errorDirName, {error : {
-				name : 'name',
-				message : 'message'
-			}});
+		case 'e0001' :
+			res.render(errorDirName, {
+				error : { name: 'Verification key is invalid', message: 'You probably edited URL from email' }
+			});
 			break;
 		
 			// registration

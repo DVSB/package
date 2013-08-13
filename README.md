@@ -12,3 +12,27 @@ saved in database:
 
 user public key:
 78a0c26b5aed1d2
+
+## User generating
+
+	http://www.json-generator.com/
+	[
+	    '{{repeat(5, 7)}}',
+	    {
+	        name: '{{firstName}}',
+	        surname : '{{surname}}',
+	        regtime: '{{numeric(1376427638531,1976427638531)}}',
+	        card: {
+				name : '', 
+	            number : '', 
+	            expiration : '', 
+	            ccv : ''
+			},
+	        verified: '{{bool}}',
+	        email: '{{guid}}',
+	        password: '{{guid}}',
+	        product : null,
+	        key: '{{guid}}', 
+	        _id: '{{guid}}'
+	    }
+	]
