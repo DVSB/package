@@ -30,7 +30,7 @@
 		font-weight: 400;
 		font-size: 12px;
 		color: black;
-		margin-bottom: 100px;
+		margin-bottom: 50px;
 	}
 	
 	header {
@@ -84,5 +84,19 @@
 		font-size: 12px;
 	}
 	
+	article {
+		width: 1000px;
+		float: left;
+	}
+	
+	aside {
+		width: 230px;
+		float: right;
+		margin-top: 49px;
+		margin-left: 20px;
+		border-top: 1px dashed #C9C9C9;
+		padding-top: 31px;
+		text-align: right;
+	}
 	
 	

@@ -1,7 +1,7 @@
 {
 	"name": "n200",
 	"preferGlobal": "true",
-	"version": "0.1.7-7",
+	"version": "0.1.7-8",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/n200/open-storage.git"
@@ -42,6 +42,9 @@
 		},
 		{
 			"0.1.8": "Verify email, Admin section, Account section, MongoDb"
+		},
+		{
+			"0.1.9": "Home added with all subhome categories"
 		}
 	],
 	"license": "MIT",

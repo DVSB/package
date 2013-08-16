@@ -2,7 +2,7 @@
 
 	<meta charset="utf-8"/>
   	<meta name="viewport" content="width=device-width, initial-scale=1"/>
-  	<title>openwrap</title>
+  	<title>n200/storage</title>
 	<meta name="robots" content="noindex, nofollow" />
 	
 	<link rel="shortcut icon" href="/statics/favicon.ico" />
@@ -16,82 +16,97 @@
 		var folders = myfiles.folders;
 	%>
 	
-	<header>
-		<form method="post" action="./" style="margin:0">
-			<button type="submit" class="btn-link primary" name="action" value="rename">Rename</button>
-			<button type="submit" class="btn-link primary" name="action" value="edit">Edit</button>
-			<button type="submit" class="btn-link primary" name="action" value="download">Download</button>
-			<button type="submit" class="btn-link primary" name="action" value="cut">Cut</button>
-			<button type="submit" class="btn-link primary" name="action" value="copy">Copy</button>
-			<button type="submit" class="btn-link primary" name="action" value="paste">Paste</button>
-			<button type="submit" class="btn-link primary" name="action" value="delete">Delete</button>
-			<button type="submit" class="btn-link primary" name="action" value="share">Share</button>
-		</form>
-	</header>
+	<aside>
+		Copyright 2013 n200
+	</aside>
 
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<td></td>
-				<td>Key</td>
-				<td>Size</td>
-				<td>LastModified</td>
-				<td>Details</td>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td></td>
-				<td><a href="../">...</a></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-			
-			<% for(var i=0; i<folders.length; i++) { %>
+	<article>
+	
+		<header>
+			<form method="post" action="./" style="margin:0">
+				<span>
+					<button type="submit" class="btn-link primary" name="action" value="rename">Rename</button>
+					<button type="submit" class="btn-link primary" name="action" value="edit">Edit</button>
+					<button type="submit" class="btn-link primary" name="action" value="download">Download</button>
+					<button type="submit" class="btn-link primary" name="action" value="cut">Cut</button>
+					<button type="submit" class="btn-link primary" name="action" value="copy">Copy</button>
+					<button type="submit" class="btn-link primary" name="action" value="paste">Paste</button>
+					<button type="submit" class="btn-link primary" name="action" value="delete">Delete</button>
+					<button type="submit" class="btn-link primary" name="action" value="share">Share</button>
+				</span>
+				<span style="float: right;">
+					<button type="submit" class="btn-link primary" name="action" value="share">User</button>
+					<button type="submit" class="btn-link primary" name="action" value="share">Options</button>
+					<button type="submit" class="btn-link primary" name="action" value="share">Log Out</button>
+				</span>
+			</form>
+		</header>
+
+		<table class="table table-striped">
+			<thead>
 				<tr>
-					<td><input type="checkbox" /></td>
-					<td><a href="./<%= folders[i].Hash %>/"><%= folders[i].Key %></a></td>
+					<td></td>
+					<td>Key</td>
+					<td>Size</td>
+					<td>LastModified</td>
+					<td>Details</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td></td>
+					<td><a href="../">...</a></td>
 					<td></td>
 					<td></td>
-					<td class="links">
-						<form method="post" action="./" style="margin:0">
-							<button type="submit" class="btn-link primary" name="action" value="rename">Rename</button>
-							<button type="submit" class="btn-link primary" name="action" value="edit">Edit</button>
-							<button type="submit" class="btn-link primary" name="action" value="download">Download</button>
-							<button type="submit" class="btn-link primary" name="action" value="cut">Cut</button>
-							<button type="submit" class="btn-link primary" name="action" value="copy">Copy</button>
-							<button type="submit" class="btn-link primary" name="action" value="paste">Paste</button>
-							<button type="submit" class="btn-link primary" name="action" value="delete">Delete</button>
-							<button type="submit" class="btn-link primary" name="action" value="share">Share</button>
-						</form>
-					</td>
+					<td></td>
 				</tr>
-			<% } %>
 			
-			<% for(var i=0; i<files.length; i++) { %>
-				<tr>
-					<td><input type="checkbox" /></td>
-					<td><a href="./<%= files[i].Hash %>/"><%= files[i].Key %></a></td>
-					<td><%= files[i].Size %></td>
-					<td><%= files[i].LastModified %></td>
-					<td class="links">
-						<form method="post" action="./" style="margin:0">
-							<button type="submit" class="btn-link primary" name="action" value="rename">Rename</button>
-							<button type="submit" class="btn-link primary" name="action" value="edit">Edit</button>
-							<button type="submit" class="btn-link primary" name="action" value="download">Download</button>
-							<button type="submit" class="btn-link primary" name="action" value="cut">Cut</button>
-							<button type="submit" class="btn-link primary" name="action" value="copy">Copy</button>
-							<button type="submit" class="btn-link primary" name="action" value="paste">Paste</button>
-							<button type="submit" class="btn-link primary" name="action" value="delete">Delete</button>
-							<button type="submit" class="btn-link primary" name="action" value="share">Share</button>
-						</form>
-					</td>
-				</tr>
-			<% } %>
+				<% for(var i=0; i<folders.length; i++) { %>
+					<tr>
+						<td><input type="checkbox" /></td>
+						<td><a href="./<%= folders[i].Hash %>/"><%= folders[i].Key %></a></td>
+						<td></td>
+						<td></td>
+						<td class="links">
+							<form method="post" action="./" style="margin:0">
+								<button type="submit" class="btn-link primary" name="action" value="rename">Rename</button>
+								<button type="submit" class="btn-link primary" name="action" value="edit">Edit</button>
+								<button type="submit" class="btn-link primary" name="action" value="download">Download</button>
+								<button type="submit" class="btn-link primary" name="action" value="cut">Cut</button>
+								<button type="submit" class="btn-link primary" name="action" value="copy">Copy</button>
+								<button type="submit" class="btn-link primary" name="action" value="paste">Paste</button>
+								<button type="submit" class="btn-link primary" name="action" value="delete">Delete</button>
+								<button type="submit" class="btn-link primary" name="action" value="share">Share</button>
+							</form>
+						</td>
+					</tr>
+				<% } %>
 			
-		</tbody>		
-	</table>
+				<% for(var i=0; i<files.length; i++) { %>
+					<tr>
+						<td><input type="checkbox" /></td>
+						<td><a href="./<%= files[i].Hash %>/"><%= files[i].Key %></a></td>
+						<td><%= files[i].Size %></td>
+						<td><%= files[i].LastModified %></td>
+						<td class="links">
+							<form method="post" action="./" style="margin:0">
+								<button type="submit" class="btn-link primary" name="action" value="rename">Rename</button>
+								<button type="submit" class="btn-link primary" name="action" value="edit">Edit</button>
+								<button type="submit" class="btn-link primary" name="action" value="download">Download</button>
+								<button type="submit" class="btn-link primary" name="action" value="cut">Cut</button>
+								<button type="submit" class="btn-link primary" name="action" value="copy">Copy</button>
+								<button type="submit" class="btn-link primary" name="action" value="paste">Paste</button>
+								<button type="submit" class="btn-link primary" name="action" value="delete">Delete</button>
+								<button type="submit" class="btn-link primary" name="action" value="share">Share</button>
+							</form>
+						</td>
+					</tr>
+				<% } %>
+			
+			</tbody>		
+		</table>
+	
+	</article>
 
 	
 </body></html>
