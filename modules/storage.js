@@ -44,7 +44,7 @@ module.exports = function(req, res) {
 	
 	
 	var browseFolder = function(prefix, callback){
-						
+								
 		s3.client.listObjects({
 			Bucket : settings.bucket,
 			Delimiter : '/',
@@ -69,12 +69,14 @@ module.exports = function(req, res) {
 				hash = crypto.createHash('sha512').update(element.Key + settings.hash).digest('hex').substr(0, 10);
 				files[index] = underscore.extend(files[index], {'Hash' : hash});
 			});
-						
-			res.render(__dirname+'/../views/storage', {myfiles: {
+
+									
+			res.render(__dirname+'/../views/storage.html', {myfiles: {
 				folders : folders,
 				files : underscore.rest(files)
 			}});
-		
+			
+			
 		}); // s3
 	
 	}; // browseFolder

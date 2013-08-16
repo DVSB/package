@@ -48,6 +48,8 @@
 	
 		app.use(app.router);
 		app.use('/statics', express.static(__dirname + '/views/statics'));
+		app.use('/css', express.static(__dirname + '/views')); /* todo allow only css - now it's browsable view also */
+		app.use('/css', express.static(__dirname + '/views/fonts')); /* todo allow only css - now it's browsable view also */
 
 		app.set('views', __dirname + '/views');
 		app.engine('html', require('ejs').renderFile);

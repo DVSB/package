@@ -1,0 +1,61 @@
+	
+	<% include ./_header.html %>
+	
+	<form method="post" action="./" style="margin-top:100px;">
+		
+		<style>
+		fieldset{
+			width: 48%;
+			float: left;
+			margin-right: 2%;
+		}
+		</style>
+		
+		<fieldset>
+			
+			<legend>Sign Up</legend>
+	
+			<label>Your Email</label>
+			<input type="text" name="email" placeholder="jobs@apple.com" style="width: 30em;" />
+
+			<label>Password</label>
+			<input type="password" name="password" placeholder="**************" style="width: 30em;" />
+
+			<label>Password again</label>
+			<input type="password" name="password2" placeholder="**************" style="width: 30em;" />
+			
+			<br/><br/>
+			<button type="submit" class="btn btn-primary" name="action" value="signup">Sign Up</button>
+			
+		</fieldset>
+		
+	</form>
+	
+	<form method="post" action="./" style="margin-top:100px;">
+		
+		<fieldset>
+			
+			<legend>Sign In</legend>
+	
+			<label>Your Email</label>
+			<input type="text" class="autofill" name="email" placeholder="jobs@apple.com" style="width: 30em;" />
+			<span class="autofill" style="visibility:hidden">samuel@ondrek.com</span>
+			
+			<script>
+			$('input.autofill').on('click', function() {
+			    $(this).val($("span.autofill").text());
+			});
+			</script>
+
+			<label>Password</label>
+			<input type="password" name="password" placeholder="**************" style="width: 30em;" />
+			
+			<label style="color:#D3D3D3;">Did you forgot your password? Your email:</label>
+			<input style="border-color:#E9E9E9;" type="text" name="forgot" placeholder="jobs@apple.com" style="width: 30em;" />
+			
+			<br/><br/>
+			<button type="submit" class="btn btn-primary" name="action" value="signin">Sign In</button>
+			
+		</fieldset>
+	
+	</form>
