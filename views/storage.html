@@ -17,20 +17,16 @@
 	%>
 	
 	<header>
-		
-		<a href="#">Rename</a>
-		<a href="#">Edit</a>
-		<a href="#">Download</a>
-		<a href="#">Cut</a>
-		<a href="#">Copy</a>
-		<a href="#">Paste</a>
-		<a href="#">Delete</a>
-		<a href="#">Undo Delete</a>
-		<a href="#">Reorder</a>
-		<a href="#">Share</a>
-		<a href="#">Album</a>
-		<a href="#">Playlist</a>
-		
+		<form method="post" action="./" style="margin:0">
+			<button type="submit" class="btn-link primary" name="action" value="rename">Rename</button>
+			<button type="submit" class="btn-link primary" name="action" value="edit">Edit</button>
+			<button type="submit" class="btn-link primary" name="action" value="download">Download</button>
+			<button type="submit" class="btn-link primary" name="action" value="cut">Cut</button>
+			<button type="submit" class="btn-link primary" name="action" value="copy">Copy</button>
+			<button type="submit" class="btn-link primary" name="action" value="paste">Paste</button>
+			<button type="submit" class="btn-link primary" name="action" value="delete">Delete</button>
+			<button type="submit" class="btn-link primary" name="action" value="share">Share</button>
+		</form>
 	</header>
 
 	<table class="table table-striped">
@@ -59,14 +55,16 @@
 					<td></td>
 					<td></td>
 					<td class="links">
-						<a href="#">Rename</a>
-						<a href="#">Edit</a>
-						<a href="#">Download</a>
-						<a href="#">Cut</a>
-						<a href="#">Copy</a>
-						<a href="#">Paste</a>
-						<a href="#">Delete</a>
-						<a href="#">Share</a>
+						<form method="post" action="./" style="margin:0">
+							<button type="submit" class="btn-link primary" name="action" value="rename">Rename</button>
+							<button type="submit" class="btn-link primary" name="action" value="edit">Edit</button>
+							<button type="submit" class="btn-link primary" name="action" value="download">Download</button>
+							<button type="submit" class="btn-link primary" name="action" value="cut">Cut</button>
+							<button type="submit" class="btn-link primary" name="action" value="copy">Copy</button>
+							<button type="submit" class="btn-link primary" name="action" value="paste">Paste</button>
+							<button type="submit" class="btn-link primary" name="action" value="delete">Delete</button>
+							<button type="submit" class="btn-link primary" name="action" value="share">Share</button>
+						</form>
 					</td>
 				</tr>
 			<% } %>
@@ -78,16 +76,17 @@
 					<td><%= files[i].Size %></td>
 					<td><%= files[i].LastModified %></td>
 					<td class="links">
-						<a href="#">Rename</a>
-						<a href="#">Edit</a>
-						<a href="#">Download</a>
-						<a href="#">Cut</a>
-						<a href="#">Copy</a>
-						<a href="#">Paste</a>
-						<a href="#">Delete</a>
-						<a href="#">Share</a>
+						<form method="post" action="./" style="margin:0">
+							<button type="submit" class="btn-link primary" name="action" value="rename">Rename</button>
+							<button type="submit" class="btn-link primary" name="action" value="edit">Edit</button>
+							<button type="submit" class="btn-link primary" name="action" value="download">Download</button>
+							<button type="submit" class="btn-link primary" name="action" value="cut">Cut</button>
+							<button type="submit" class="btn-link primary" name="action" value="copy">Copy</button>
+							<button type="submit" class="btn-link primary" name="action" value="paste">Paste</button>
+							<button type="submit" class="btn-link primary" name="action" value="delete">Delete</button>
+							<button type="submit" class="btn-link primary" name="action" value="share">Share</button>
+						</form>
 					</td>
-					
 				</tr>
 			<% } %>
 			

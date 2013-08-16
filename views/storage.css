@@ -44,26 +44,37 @@
 		cursor: pointer;
 	}
 	
-	.links a {
+	.table th, 
+	.table td {
+		padding: 7px 8px;
+	}
+	
+	.links button,
+	.primary {
+		font-family: 'Open Sans';
+		font-weight: 400;
+		font-size: 12px;
+		padding: 0;
+	}
+	
+	.links button {
 		visibility: hidden;
 	}
 	
-	tr:hover .links a {
+	tr:hover .links button {
 		visibility: visible;
-	}
+	}	
 	
-	
-	header a:before,
-	.links a:before {
+	.primary:after,
+	.links button:after {
 		content: ',';
 		display: inline-block;
 		width: 7px;
 	}
 	
-	header a:first-child:before, 
-	.links a:first-child:before {
+	.primary:last-child:after, 
+	.links button:last-child:after {
 		content: '';
-		width: 0;
 	}
 
 	select, input[type="file"] {

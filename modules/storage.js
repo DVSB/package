@@ -129,12 +129,36 @@ module.exports = function(req, res) {
 
 	switch(req.body.action) {
 		
-		case 'as87a0d59d' :
-			console.log('* Upload Model runned');
+		case 'rename' :
+			res.send('rename');
 			break;
 			
-		case 'as87a0d5ad' :
-			console.log('* Upload Model runned');
+		case 'edit' :
+			res.send('edit');
+			break;
+		
+		case 'download' :
+			res.send('download');
+			break;
+			
+		case 'cut' :
+			res.send('cut');
+			break;
+		
+		case 'copy' :
+			res.send('copy');
+			break;
+			
+		case 'paste' :
+			res.send('paste');
+			break;
+			
+		case 'delete' :
+			res.send('delete');
+			break;
+			
+		case 'share' :
+			res.send('share');
 			break;
 
 		default :
