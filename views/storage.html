@@ -64,7 +64,7 @@
 				<% for(var i=0; i<folders.length; i++) { %>
 					<tr>
 						<td><input type="checkbox" /></td>
-						<td><a href="./<%= folders[i].Hash %>/"><%= folders[i].Key %></a></td>
+						<td><a class="title" href="./<%= folders[i].Hash %>/"><%= folders[i].Key %></a></td>
 						<td></td>
 						<td></td>
 						<td class="links">
@@ -85,14 +85,18 @@
 				<% for(var i=0; i<files.length; i++) { %>
 					<tr>
 						<td><input type="checkbox" /></td>
-						<td><a href="./<%= files[i].Hash %>/"><%= files[i].Key %></a></td>
+						<td>
+							<form method="post" action="./" style="margin:0">
+								<input type="hidden" name="file" value="<%= files[i].Hash %>">
+								<button type="submit" class="btn-link primary title" name="action" value="download"><%= files[i].Key %></button>
+							</form>
+						</td>
 						<td><%= files[i].Size %></td>
 						<td><%= files[i].LastModified %></td>
 						<td class="links">
 							<form method="post" action="./" style="margin:0">
 								<button type="submit" class="btn-link primary" name="action" value="rename">Rename</button>
 								<button type="submit" class="btn-link primary" name="action" value="edit">Edit</button>
-								<button type="submit" class="btn-link primary" name="action" value="download">Download</button>
 								<button type="submit" class="btn-link primary" name="action" value="cut">Cut</button>
 								<button type="submit" class="btn-link primary" name="action" value="copy">Copy</button>
 								<button type="submit" class="btn-link primary" name="action" value="paste">Paste</button>

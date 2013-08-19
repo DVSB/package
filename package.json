@@ -1,7 +1,7 @@
 {
 	"name": "n200",
 	"preferGlobal": "true",
-	"version": "0.1.7-8",
+	"version": "0.1.7-9",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/n200/open-storage.git"

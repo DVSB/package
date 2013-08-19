@@ -85,12 +85,12 @@
 	}
 	
 	article {
-		width: 1000px;
+		width: 800px;
 		float: left;
 	}
 	
 	aside {
-		width: 230px;
+		width: 430px;
 		float: right;
 		margin-top: 49px;
 		margin-left: 20px;
@@ -99,4 +99,12 @@
 		text-align: right;
 	}
 	
+	.title {
+		width: 225px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		text-align: left;
+		display: inline-block;
+	}
 	
