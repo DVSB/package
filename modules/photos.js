@@ -36,25 +36,31 @@ module.exports = function(req, res) {
 
 
 	var browse = function(){
+		
 		mongoclient.connect(database, function(err, db) {
-			
 			if(err) throw err;
-			
 			var collection = db.collection('folders');
 			collection.find().toArray(function(err, results) {
 				console.dir(results);
 				db.close();
 			});   
-			
 		});	
 		
-	}();
+	}; // browse
 
 
-	var getAlbums = function(callback){
+	var getAlbums = function(){
 								
+		mongoclient.connect(database, function(err, db){
+			if(err) throw err;
+			var collection = db.collection('folders');
+			collection.find().toArray(function(err, results) {
+				res.render(__dirname+'/../views/photos.html', {albums:results, view:'albums'});
+				console.log(results);
+				db.close();
+			});
+		});
 		
-	
 	}; // getAlbums
 
 
@@ -63,8 +69,8 @@ module.exports = function(req, res) {
 
 	switch(req.body.action) {
 		
-		case 'rename' :
-			res.send('rename');
+		case 'createNewAlbum' :
+			res.render(__dirname+'/../views/photos.html', {albums:results, view:'createNewAlbum'});
 			break;
 			
 		case 'edit' :

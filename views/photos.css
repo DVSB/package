@@ -85,12 +85,12 @@
 	}
 	
 	article {
-		width: 800px;
+		width: 900px;
 		float: left;
 	}
 	
 	aside {
-		width: 430px;
+		width: 330px;
 		float: right;
 		margin-top: 49px;
 		margin-left: 20px;
@@ -105,6 +105,20 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		text-align: left;
+		display: inline-block;
+	}
+	
+	.albums {
+		width: 1200px;
+		padding: 80px 0;
+	}
+	
+	.albums section {
+		border: 1px solid #F8F8F8;
+		margin: 10px;
+		width: 155px;
+		height: 200px;
+		padding: 20px 30px;
 		display: inline-block;
 	}
 	
