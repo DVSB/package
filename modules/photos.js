@@ -56,22 +56,46 @@ module.exports = function(req, res) {
 			var collection = db.collection('folders');
 			collection.find().toArray(function(err, results) {
 				res.render(__dirname+'/../views/photos.html', {albums:results, view:'albums'});
-				console.log(results);
 				db.close();
 			});
 		});
 		
 	}; // getAlbums
+	
+	
+	var upload = function(){
+								
+		console.log(req.body.images);
+		
+	}; // upload
 
 
 // routing and variables
 
 
-	switch(req.body.action) {
-		
-		case 'createNewAlbum' :
-			res.render(__dirname+'/../views/photos.html', {albums:results, view:'createNewAlbum'});
+	var urlMethod = underscore.trim(req.url, '/');
+	urlMethod = underscore.words(urlMethod, '/');
+	urlMethod = underscore.rest(urlMethod);
+	urlMethod = underscore.first(urlMethod);
+	
+	
+	switch(urlMethod) {
+			
+		case 'new' :
+			res.render(__dirname+'/../views/photos.html', {view:'createNewAlbum'});
 			break;
+			
+		case 'upload' :
+			upload();
+			break;
+			
+		case 'share' :
+			res.send('share');
+			break;
+
+	} // switch
+
+	switch(req.body.action) {
 			
 		case 'edit' :
 			res.send('edit');

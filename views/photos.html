@@ -13,10 +13,11 @@
 	
 	<% if (view=='albums') { %>
 		
+		
 		<header>
 			<form method="post" action="./" style="margin:0">
 				<span>
-					<button type="submit" class="btn-link primary" name="action" value="createNewAlbum">Create new album</button>
+					<a href="./new">Create new album</a>
 				</span>
 				<span style="float: right;">
 					<button type="submit" class="btn-link primary" name="action" value="share">User</button>
@@ -43,12 +44,14 @@
 		
 		</article>
 		
-	<% if (view=='createNewAlbum') { %>
+		
+	<% } else if (view=='createNewAlbum') { %>
+		
 		
 		<header>
-			<form method="post" action="./" style="margin:0">
+			<form method="post" action="./" style="margin:0" enctype="multipart/form-data">
 				<span>
-					<button type="submit" class="btn-link primary" name="action" value="createNewAlbum">Create new album</button>
+					<button type="submit" class="btn-link primary" name="action" value="">Browse all albums</button>
 				</span>
 				<span style="float: right;">
 					<button type="submit" class="btn-link primary" name="action" value="share">User</button>
@@ -59,12 +62,40 @@
 		</header>
 		
 		<article class="albums">
-	
-			<input>
-		
+			
+			<form method="post" action="./upload" style="margin:0">	
+				<input type="file" name="images" multiple="" />
+				<button type="submit" class="btn btn-primary">Upload</button>
+			</form>
+			
 		</article>
 		
+		
+	<% } else if (view=='uploading') { %>
+		
+		
+		<header>
+			<form method="post" action="./" style="margin:0" enctype="multipart/form-data">
+				<span>
+					<button type="submit" class="btn-link primary" name="action" value="">Browse all albums</button>
+				</span>
+				<span style="float: right;">
+					<button type="submit" class="btn-link primary" name="action" value="share">User</button>
+					<button type="submit" class="btn-link primary" name="action" value="share">Options</button>
+					<button type="submit" class="btn-link primary" name="action" value="share">Log Out</button>
+				</span>
+			</form>
+		</header>
+		
+		<article class="albums">
+			
+			uploading ... 
+			
+		</article>		
+		
+		
 	<% } else { %>
+		
 		
 		<article>
 		
@@ -139,6 +170,7 @@
 		</table>
 		
 		</article>
+	
 	
 	<% } %>
 	
