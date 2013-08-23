@@ -9,24 +9,38 @@ module.exports = function(req, res) {
 	
 	var mongoclient = require('mongodb').MongoClient;
 	var ObjectId = require('mongodb').ObjectID;
-	var mongoDb = 'mongodb://nodejitsu:c73928b8cc2e315b339c263e5f6c95a1@dharma.mongohq.com:10066/nodejitsudb2231254279';
-	var crypto = require('crypto');
+	var database = 'mongodb://127.0.0.1:27017';
+
 
 // functions
+
+	var browse = function(){
+		mongoclient.connect(database, function(err, db) {
+			if(err) throw err;
+			var collection = db.collection('folders');
+			collection.find().toArray(function(err, results) {
+				console.dir(results);
+				db.close();
+			});   
+		});	
+	};
 
 
 	var consoles = function(){
 	
-		mongoclient.connect(mongoDb, function(err, db) {
-
-			err ? res.send(err) : false;
-		
-			var collection = db.collection('users');
+		mongoclient.connect(database, function(err, db) {
 			
-			collection.find().toArray(function(err, results) {
-				err ? res.send(err) : false;
-				
-			}); 
+			if(err) throw err;
+			var collection = db.collection('folders');
+						
+			collection.insert({
+				name : 'Volleyball WWC in Seoul, Korea 3',
+				time : '2011-03',
+				hash : 'c89b2395'
+			}, function(err, results) {
+				db.close();
+				browse();
+			});
 				
 		}); // mongoclient
 
@@ -35,7 +49,7 @@ module.exports = function(req, res) {
 
 	var browseusers = function(){
 		
-		mongoclient.connect(mongoDb, function(err, db) {
+		mongoclient.connect(database, function(err, db) {
 	
 			err ? res.send(err) : false;
 			
