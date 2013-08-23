@@ -35,7 +35,6 @@
 				<%= albums[i].time %> 
 				<img src="data:image/png;base64,<%= albums[i].thumbnail %>" />
 				<div>
-					
 					<a class="title" href="./<%= albums[i].hash %>/"><%= albums[i].name %></a>
 				</div>
 			</section>
@@ -51,7 +50,7 @@
 		<header>
 			<form method="post" action="./" style="margin:0" enctype="multipart/form-data">
 				<span>
-					<button type="submit" class="btn-link primary" name="action" value="">Browse all albums</button>
+					<a href="./browse">Browse all albums</a>
 				</span>
 				<span style="float: right;">
 					<button type="submit" class="btn-link primary" name="action" value="share">User</button>
@@ -63,8 +62,9 @@
 		
 		<article class="albums">
 			
-			<form method="post" action="./upload" style="margin:0">	
-				<input type="file" name="images" multiple="" />
+			<form method="post" action="./upload" style="margin:0" enctype="multipart/form-data">
+				<label>Name of album</label><input type="text" name="albumName" />
+				<label>Select your photos</label><input type="file" name="images" multiple="" />
 				<button type="submit" class="btn btn-primary">Upload</button>
 			</form>
 			
@@ -75,7 +75,7 @@
 		
 		
 		<header>
-			<form method="post" action="./" style="margin:0" enctype="multipart/form-data">
+			<form method="post" action="./" style="margin:0">
 				<span>
 					<button type="submit" class="btn-link primary" name="action" value="">Browse all albums</button>
 				</span>

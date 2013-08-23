@@ -64,8 +64,38 @@ module.exports = function(req, res) {
 	
 	
 	var upload = function(){
-								
-		console.log(req.body.images);
+		
+		var album = req.body.albumName;
+		var files = req.files.images;
+		
+		if (files.size===0){
+			res.send('You didnt upload any photo');
+		}
+		
+		// if one file, make array with one object
+		if (!(files instanceof Array)){
+			var onefile = files;
+			var files = [];
+			files[0] = onefile;
+		}
+		
+		for (var i=0; i<=files.length-1; i++) {
+		
+			var file = files[i];
+			
+			s3.client.putObject({
+				Bucket : settings.bucket,
+				Key : settings.home + '/Photos/' + album + '/' + file.name,
+				Body : fs.readFileSync(file.path)
+			}, function(err, data){
+				if (err) throw err;
+				fs.unlinkSync(file.path);
+				if (i===files.length) {
+					res.redirect('/photos/browse');
+				}
+			});
+		
+		}
 		
 	}; // upload
 
@@ -89,8 +119,8 @@ module.exports = function(req, res) {
 			upload();
 			break;
 			
-		case 'share' :
-			res.send('share');
+		case 'browse' :
+			getAlbums();
 			break;
 
 	} // switch
@@ -123,10 +153,6 @@ module.exports = function(req, res) {
 			
 		case 'share' :
 			res.send('share');
-			break;
-
-		default :
-			getAlbums();
 			break;
 
 	} // switch
