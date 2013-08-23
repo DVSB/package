@@ -61,12 +61,7 @@
 	
 	
 	var screens = [
-	'storage', 
-	'signin',
-	'upload',
-	'account',
-	'admin',
-	'error'
+	'home', 'storage', 'signin', 'upload', 'account', 'admin', 'error'
 	].forEach(function(mod){
 		
 		app.all('/'  + mod +  '/*', function(req, res) {
