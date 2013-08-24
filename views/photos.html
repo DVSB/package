@@ -4,16 +4,16 @@
   	<meta name="viewport" content="width=device-width, initial-scale=1"/>
   	<title>n200/storage</title>
 	<meta name="robots" content="noindex, nofollow" />
-	
+
 	<link rel="shortcut icon" href="/statics/favicon.ico" />
 	<link rel="stylesheet" href="/statics/css_bootstrap.css" />
 	<link rel="stylesheet" href="/css/photos.css" />
-	
+
 </head><body class="container" lang="en" style="width:1250px;">
-	
+
 	<% if (view=='albums') { %>
-		
-		
+
+
 		<header>
 			<form method="post" action="./" style="margin:0">
 				<span>
@@ -26,11 +26,11 @@
 				</span>
 			</form>
 		</header>
-		
+
 		<article class="albums">
-	
+
 		<% for(var i=0; i<albums.length; i++) { %>
-			
+
 			<section>
 				<%= albums[i].time %> 
 				<img src="data:image/png;base64,<%= albums[i].thumbnail %>" />
@@ -38,15 +38,15 @@
 					<a class="title" href="./<%= albums[i].hash %>/"><%= albums[i].name %></a>
 				</div>
 			</section>
-		
+
 		<% } %>
-		
+
 		</article>
-		
-		
+
+
 	<% } else if (view=='createNewAlbum') { %>
-		
-		
+
+
 		<header>
 			<form method="post" action="./" style="margin:0" enctype="multipart/form-data">
 				<span>
@@ -59,21 +59,21 @@
 				</span>
 			</form>
 		</header>
-		
+
 		<article class="albums">
-			
+
 			<form method="post" action="./upload" style="margin:0" enctype="multipart/form-data">
 				<label>Name of album</label><input type="text" name="albumName" />
 				<label>Select your photos</label><input type="file" name="images" multiple="" />
 				<button type="submit" class="btn btn-primary">Upload</button>
 			</form>
-			
+
 		</article>
-		
-		
+
+
 	<% } else if (view=='uploading') { %>
-		
-		
+
+
 		<header>
 			<form method="post" action="./" style="margin:0">
 				<span>
@@ -86,23 +86,23 @@
 				</span>
 			</form>
 		</header>
-		
+
 		<article class="albums">
-			
+
 			uploading ... 
-			
+
 		</article>		
-		
-		
+
+
 	<% } else { %>
-		
-		
+
+
 		<article>
-		
+
 		<aside>
 			Copyright 2013 n200
 		</aside>
-		
+
 		<header>
 			<form method="post" action="./" style="margin:0">
 				<span>
@@ -122,7 +122,7 @@
 				</span>
 			</form>
 		</header>
-		
+
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -139,8 +139,8 @@
 					<td><a href="../">...</a></td>
 					<td></td>
 				</tr>
-							
-			
+
+
 				<% for(var i=0; i<albums.length; i++) { %>
 					<tr>
 						<td><input type="checkbox" /></td>
@@ -163,15 +163,15 @@
 						</td>
 					</tr>
 				<% } %>
-		
-	
-		
+
+
+
 			</tbody>		
 		</table>
-		
+
 		</article>
-	
-	
+
+
 	<% } %>
-	
+
 </body></html>

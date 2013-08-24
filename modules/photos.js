@@ -55,7 +55,7 @@ module.exports = function(req, res) {
 			if(err) throw err;
 			var collection = db.collection('folders');
 			collection.find().toArray(function(err, results) {
-				res.render(__dirname+'/../views/photos.html', {albums:results, view:'albums'});
+				res.render(__dirname+'/../views/photos', {albums:results, view:'browse'});
 				db.close();
 			});
 		});
@@ -112,7 +112,7 @@ module.exports = function(req, res) {
 	switch(urlMethod) {
 			
 		case 'new' :
-			res.render(__dirname+'/../views/photos.html', {view:'createNewAlbum'});
+			res.render(__dirname+'/../views/photos', {view:'new'});
 			break;
 			
 		case 'upload' :

@@ -5,7 +5,7 @@
 
 	var express = require('express');
 	var app = module.exports = express();
-
+	var engines = require('consolidate');
 
 	// nexts
 
@@ -38,26 +38,32 @@
 		
 		app.use(express.bodyParser({ 
 			uploadDir: __dirname+'/temp/' 
-		}));
+		}));	
 	
-		var hash = JSON.parse(require('fs').readFileSync('_settings.json')).settings.hash;
-		app.use(express.cookieParser(hash));
-		app.use(express.cookieSession(hash));
+		//var hash = JSON.parse(require('fs').readFileSync('_settings.json')).settings.hash;
+		//app.use(express.cookieParser(hash));
+		//app.use(express.cookieSession(hash));
 		
 		//app.use(checkIfAuthentificated);
 	
 		app.use(app.router);
+		
 		app.use('/statics', express.static(__dirname + '/views/statics'));
 		app.use('/css', express.static(__dirname + '/views')); /* todo allow only css - now it's browsable view also */
 		app.use('/css', express.static(__dirname + '/views/fonts')); /* todo allow only css - now it's browsable view also */
 
 		app.set('views', __dirname + '/views');
-		app.engine('html', require('ejs').renderFile);
+		app.engine('jade', engines.jade);
+		app.set('view engine', 'jade');		
 		
 	});
 	
 	
 	// routing
+	
+	app.get('/pepek/', function(req, res){
+	    res.render('photos.haml', {locals: {title: 'Hello, Node!' }});
+	});
 	
 	
 	var screens = [
