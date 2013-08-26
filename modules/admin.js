@@ -57,7 +57,7 @@ module.exports = function(req, res) {
 			var collection = db.collection('users');
 			collection.find().toArray(function(err, results) {
 				err ? res.send(err) : false;
-				res.render(__dirname+'/../views/admin.html', { users: results });
+				res.render(__dirname+'/../views/admin', { users: results });
 				db.close();
 			}); 
 			

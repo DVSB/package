@@ -1,0 +1,60 @@
+!!! 5
+html.no-js
+
+	head
+	
+		meta(charset='utf-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1')
+		title openwrap
+		link(rel='shortcut icon', href='/statics/favicon.ico')
+		link(rel='stylesheet', href='/statics/css_bootstrap.css')
+
+body.container(lang='en', style='width: 1250px;')
+
+	h1
+		Users list:
+	
+	table
+		
+		thead
+			tr
+				td
+					= Name
+				td
+					= Surname
+				td
+					= RegTime
+				td
+					= Card
+				td
+					= Verified
+				td
+					= Email
+				td
+					= Password
+				td
+					= Product
+				td
+					= Key
+		
+		tbody
+			- for(var i=0; i<users.length; i++)
+				tr
+					td
+						= users[i].name 
+					td
+						= users[i].surname 
+					td
+						= users[i].regtime 
+					td
+						= users[i].card 
+					td
+						= users[i].verified 
+					td
+						= users[i].email 
+					td
+						= users[i].password 
+					td
+						= users[i].product 
+					td
+						= users[i].key 
