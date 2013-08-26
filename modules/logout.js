@@ -1,5 +1,6 @@
 module.exports = function(req, res) {
 
-	// hello
+	// here should be in future logout(){}();
+	res.redirect('/');
 
 };

@@ -108,25 +108,33 @@ module.exports = function(req, res) {
 		
 		}; // addToDatabase
 		
-		for (var i=0; i<=files.length-1; i++) {
-		
-			var file = files[i];
+		var uploadFile = function(i){
 			
+			var file = files[i];
+
 			s3.client.putObject({
 				Bucket : settings.bucket,
 				Key : settings.home + '/Photos/' + album + '/' + file.name,
 				Body : fs.readFileSync(file.path)
 			}, function(err, data){
+				
 				if (err) throw err;
-				console.log(data);
 				fs.unlinkSync(file.path);
-				//(i===files.length) ? addToDatabase(files) : console.log('smola');
-				(i===files.length) ? res.redirect('/photos/browse') : false;
+				
+				if (i==files.length-1) {
+					res.redirect('/photos/browse');
+				} else {
+					uploadFile(++i);
+				}
+				
 			});
-			
-		}
+				
+		}; // uploadFile
 		
-
+		uploadFile(0);
+		
+		
+		
 		
 	}; // upload
 
