@@ -25,11 +25,11 @@ html.no-js
 					a(href='./new') Create new album
 
 				span(style='float: right;')
-
-					form(method='post', action='./', style='margin: 0;')
-						button.btn-link.primary(type='submit', name='action', value='share') User
-						button.btn-link.primary(type='submit', name='action', value='share') Options
-						button.btn-link.primary(type='submit', name='action', value='share') Log Out
+					a(href='/admin/') Administrator
+					| , 
+					a(href='/options/') Options
+					| , 
+					a(href='/logout/') Log Out
 
 			article.albums
 			

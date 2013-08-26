@@ -17,8 +17,8 @@ module.exports = function(req, res) {
 	// amazon
 	
 	AWS.config.update({ 
-		accessKeyId : settings.awsId, 
-		secretAccessKey : settings.awsKey, 
+		accessKeyId : settings.awsId,
+		secretAccessKey : settings.awsKey,
 		region : settings.region,
 		bucket : settings.bucket,
 		storage : settings.storage
@@ -34,6 +34,18 @@ module.exports = function(req, res) {
 	
 // functions
 
+
+	var redirectIfUrlRoot = function(){
+	
+		var url = underscore.trim(req.url, '/');
+		url = underscore.words(url, '/');
+		
+		if (url[0]==='photos' && url.length===1){
+			res.redirect('/photos/browse');
+		}
+	
+	}(); // redirectIfUrlRoot
+	
 
 	var browse = function(){
 		
@@ -79,6 +91,23 @@ module.exports = function(req, res) {
 			files[0] = onefile;
 		}
 		
+		var addToDatabase = function(files){
+			
+			console.log('i am in addToDatabase!');
+			
+			mongoclient.connect(database, function(err, db){
+				var grid = new Grid(db, 'fs');
+				var originalData = new Buffer('Hello world');
+				var id = 123;
+				grid.put(originalData, {_id: id}, function(err, result) {
+					console.log(result);
+					console.log(err);
+					db.close();
+				});
+			}); // mongoclient
+		
+		}; // addToDatabase
+		
 		for (var i=0; i<=files.length-1; i++) {
 		
 			var file = files[i];
@@ -89,13 +118,15 @@ module.exports = function(req, res) {
 				Body : fs.readFileSync(file.path)
 			}, function(err, data){
 				if (err) throw err;
+				console.log(data);
 				fs.unlinkSync(file.path);
-				if (i===files.length) {
-					res.redirect('/photos/browse');
-				}
+				//(i===files.length) ? addToDatabase(files) : console.log('smola');
+				(i===files.length) ? res.redirect('/photos/browse') : false;
 			});
-		
+			
 		}
+		
+
 		
 	}; // upload
 
