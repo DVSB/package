@@ -1,0 +1,27 @@
+!!! 5
+html.no-js
+
+	head
+
+		meta(charset='utf-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1')
+		
+		title Error
+		
+		link(rel='shortcut icon', href='/statics/favicon.ico')
+		link(rel='stylesheet', href='/statics/css_bootstrap.css')
+		
+		style
+			html { margin: 200px; }
+			body { font-family:Helvetica; color:#D8394C; margin:auto; width:600px; }
+			h1, h2 { font-size: 21px; line-height: 17px; text-align: center }
+			h2 { font-size: 17px }
+			
+
+	body(lang='en')
+
+		h1 
+			= error.name
+		
+		h2 
+			= error.message

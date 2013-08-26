@@ -4,7 +4,7 @@ module.exports = function(req, res) {
 	underscore.mixin(require('underscore.string').exports());
 
 	var error = underscore.words(req.url, '?')[1];
-	var errorDirName = __dirname+'/../views/error.html';
+	var errorDirName = __dirname+'/../views/error';
 	
 	
 	switch(error) {
