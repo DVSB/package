@@ -77,7 +77,8 @@ module.exports = function(req, res) {
 	
 	var upload = function(){
 		
-		var album = req.body.albumName;
+		var albumName = req.body.albumName;
+		var albumDate = req.body.albumDate;
 		var files = req.files.images;
 		
 		if (files.size===0){
@@ -91,22 +92,27 @@ module.exports = function(req, res) {
 			files[0] = onefile;
 		}
 		
+		
 		var addToDatabase = function(files){
 			
-			console.log('i am in addToDatabase!');
-			
 			mongoclient.connect(database, function(err, db){
-				var grid = new Grid(db, 'fs');
-				var originalData = new Buffer('Hello world');
-				var id = 123;
-				grid.put(originalData, {_id: id}, function(err, result) {
-					console.log(result);
-					console.log(err);
+				
+				if(err) throw err;
+				var collection = db.collection('folders');
+			
+				collection.insert({
+					name : albumName,
+					time : albumDate,
+					hash : 'c89b2396'
+				}, function(err, results) {
 					db.close();
-				});
+					res.redirect('/photos/browse');
+				}); // insert
+			
 			}); // mongoclient
 		
 		}; // addToDatabase
+		
 		
 		var uploadFile = function(i){
 			
@@ -114,7 +120,7 @@ module.exports = function(req, res) {
 
 			s3.client.putObject({
 				Bucket : settings.bucket,
-				Key : settings.home + '/Photos/' + album + '/' + file.name,
+				Key : settings.home + '/Photos/' + albumName + '/' + file.name,
 				Body : fs.readFileSync(file.path)
 			}, function(err, data){
 				
@@ -122,7 +128,7 @@ module.exports = function(req, res) {
 				fs.unlinkSync(file.path);
 				
 				if (i==files.length-1) {
-					res.redirect('/photos/browse');
+					addToDatabase(files);
 				} else {
 					uploadFile(++i);
 				}
@@ -131,10 +137,8 @@ module.exports = function(req, res) {
 				
 		}; // uploadFile
 		
+		
 		uploadFile(0);
-		
-		
-		
 		
 	}; // upload
 
@@ -198,116 +202,3 @@ module.exports = function(req, res) {
 
 
 };
-
-
-
-
-/*
-
-	ex-upload.js
-	============
-
-
-
-
-	module.exports = function(req, res) {
-
-
-	// variables
-
-
-		var crypto = require('crypto');
-		var fs = require('fs');
-		var AWS = require('aws-sdk');
-		var settings = JSON.parse(require('fs').readFileSync('_settings.json')).settings;
-	
-		var underscore = require('underscore');
-		underscore.mixin(require('underscore.string').exports());
-		
-		AWS.config.update({ 
-			accessKeyId : settings.awsId, 
-			secretAccessKey : settings.awsKey, 
-			region : settings.region,
-			bucket : settings.bucket,
-			storage : settings.storage,
-			ServerSideEncryption : settings.encrypt
-		});
-		var s3 = new AWS.S3();
-
-	
-	// functions
-
-
-		var Multiupload = function(files) {
-
-			for (var i=0; i<=files.length-1; i++) {
-		
-				var file = files[i];
-		
-				s3.client.putObject({
-					Key : settings.user.id + '/' + file.name,
-					Body : fs.readFileSync(file.path)
-				}, function(err, data){
-					if (err) { console.log(err); } else { 
-						fs.unlink(file.path);
-					}
-				});
-		
-			}
-
-		}; // Multiupload
-	
-
-		var Upload = function(file) {
-
-			s3.client.putObject({
-				Key : settings.user.id + '/' + file.name,
-				Body : fs.readFileSync(file.path)
-			}, function(err, data) {
-				if (err) { console.log(err); } else { 
-					fs.unlink(file.path);
-				}
-			
-			});
-
-		}; // Upload
-
-
-		var DefaultUpload = function(req, res) {
-
-			// test isArray is correct because in js array is also object
-			if (underscore.isArray(req.files.myfile)) {
-				require('./ObjectMultiupload').Multiupload(req.files.myfile);
-			} else {
-				require('./ObjectUpload').Upload(req.files.myfile);
-			}
-
-		}; // DefaultUpload
-
-
-
-
-	// routing and variables
-
-
-		switch(req.body.action) {
-		
-			case 'as87a0d59d' :
-				console.log('* Upload Model runned');
-				break;
-			
-			case 'as87a0d5ad' :
-				console.log('* Upload Model runned');
-				break;
-
-			default :
-				//DefaultUpload();
-				res.render(__dirname+'/../views/upload.html');
-				break;
-
-		} // switch
-
-
-	};
-
-*/

@@ -37,10 +37,9 @@ html.no-js
 
 					section
 					
-						= albums[i].time
-						img(src='data:image/png;base64,'+albums[i].thumbnail, alt='thumbnail')
+						= albums[i].time + ' _ '
 
-						a(class='title', href='./'+albums[i].hash)
+						a(href='./'+albums[i].hash)
 							= albums[i].name
 
 
@@ -62,6 +61,8 @@ html.no-js
 
 				form(method='post', action='./upload', style='margin: 0;', enctype='multipart/form-data')
 
+					label Month and Year of Album
+					input(type='month', name='albumDate')
 					label Name of album
 					input(type='text', name='albumName')
 					label Select your photos

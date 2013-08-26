@@ -116,9 +116,6 @@
 	.albums section {
 		border: 1px solid #F8F8F8;
 		margin: 10px;
-		width: 155px;
-		height: 200px;
-		padding: 20px 30px;
-		display: inline-block;
+		padding: 9px 13px;
 	}
 	
