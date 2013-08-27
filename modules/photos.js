@@ -30,6 +30,7 @@ module.exports = function(req, res) {
 	var mongoclient = require('mongodb').MongoClient;
 	var ObjectId = require('mongodb').ObjectID;
 	var database = 'mongodb://127.0.0.1:27017';
+	//var database = 'mongodb://n200:pepeknamornik@paulo.mongohq.com:10071/users-albums';
 	
 	
 // functions
@@ -51,7 +52,7 @@ module.exports = function(req, res) {
 		
 		mongoclient.connect(database, function(err, db) {
 			if(err) throw err;
-			var collection = db.collection('folders');
+			var collection = db.collection('albums');
 			collection.find().toArray(function(err, results) {
 				console.dir(results);
 				db.close();
@@ -65,7 +66,7 @@ module.exports = function(req, res) {
 								
 		mongoclient.connect(database, function(err, db){
 			if(err) throw err;
-			var collection = db.collection('folders');
+			var collection = db.collection('albums');
 			collection.find().toArray(function(err, results) {
 				res.render(__dirname+'/../views/photos', {albums:results, view:'browse'});
 				db.close();
@@ -73,6 +74,16 @@ module.exports = function(req, res) {
 		});
 		
 	}; // getAlbums
+	
+	
+	// get album photos and display
+	var browseAlbum = function(album){
+								
+		res.send('hello: ' + album);
+		
+		
+		
+	}; // browseAlbum
 	
 	
 	var upload = function(){
@@ -92,18 +103,27 @@ module.exports = function(req, res) {
 			files[0] = onefile;
 		}
 		
+		// create list of photos for saving to collection
+		var photos = [];
+		files.forEach(function(element, index){
+			photos[index] = underscore.pick(element, 'name', 'lastModifiedDate', 'type', 'size');
+			photos[index].hash = crypto.createHash('sha512').update(photos[index].name + settings.hash).digest('hex').substr(0, 12);
+		});
 		
-		var addToDatabase = function(files){
+		
+		// add to mongo database of album details and photo details
+		var addToDatabase = function(){
 			
 			mongoclient.connect(database, function(err, db){
 				
 				if(err) throw err;
-				var collection = db.collection('folders');
-			
+				var collection = db.collection('albums');
+				
 				collection.insert({
 					name : albumName,
 					time : albumDate,
-					hash : 'c89b2396'
+					hash : crypto.createHash('sha512').update(albumName + settings.hash).digest('hex').substr(0, 12),
+					files : photos
 				}, function(err, results) {
 					db.close();
 					res.redirect('/photos/browse');
@@ -114,6 +134,7 @@ module.exports = function(req, res) {
 		}; // addToDatabase
 		
 		
+		// upload file to S3
 		var uploadFile = function(i){
 			
 			var file = files[i];
@@ -128,7 +149,7 @@ module.exports = function(req, res) {
 				fs.unlinkSync(file.path);
 				
 				if (i==files.length-1) {
-					addToDatabase(files);
+					addToDatabase();
 				} else {
 					uploadFile(++i);
 				}
@@ -137,7 +158,6 @@ module.exports = function(req, res) {
 				
 		}; // uploadFile
 		
-		
 		uploadFile(0);
 		
 	}; // upload
@@ -145,14 +165,22 @@ module.exports = function(req, res) {
 
 // routing and variables
 
-
-	var urlMethod = underscore.trim(req.url, '/');
-	urlMethod = underscore.words(urlMethod, '/');
-	urlMethod = underscore.rest(urlMethod);
-	urlMethod = underscore.first(urlMethod);
+	var urlModule, urlAlbum; 
 	
+	// cut module
+	urlModule = underscore.trim(req.url, '/');
+	urlModule = underscore.words(urlModule, '/');
+	urlModule = underscore.rest(urlModule);
+	urlAlbum = urlModule = underscore.first(urlModule);
+	urlModule = underscore.words(urlModule, '?');
+	urlModule = underscore.first(urlModule);
+		
+	// cut album
+	urlAlbum = underscore.words(urlAlbum, '?');
+	urlAlbum = underscore.rest(urlAlbum);
+	urlAlbum = underscore.first(urlAlbum);	
 	
-	switch(urlMethod) {
+	switch(urlModule) {
 			
 		case 'new' :
 			res.render(__dirname+'/../views/photos', {view:'new'});
@@ -164,6 +192,10 @@ module.exports = function(req, res) {
 			
 		case 'browse' :
 			getAlbums();
+			break;
+			
+		case 'album' :
+			browseAlbum(urlAlbum);
 			break;
 
 	} // switch
