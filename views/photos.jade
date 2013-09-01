@@ -6,7 +6,7 @@ html.no-js
 		meta(charset='utf-8')
 		meta(name='viewport', content='width=device-width, initial-scale=1')
 	
-		title n200/storage
+		title n200/photos
 	
 		meta(name='robots', content='noindex, nofollow')
 	
@@ -68,7 +68,43 @@ html.no-js
 					label Select your photos
 					input(type='file', name='images', multiple='')
 					button.btn.btn-primary(type='submit') Upload
+
+		- else if (view==='album')
+
+			header
+
+				span
+					a(href='./browse') Browse all albums
+
+				span(style='float: right;')
+					
+					form(method='post', action='./', style='margin: 0;', enctype='multipart/form-data')
+						button.btn-link.primary(type='submit', name='action', value='share') User
+						button.btn-link.primary(type='submit', name='action', value='share') Options
+						button.btn-link.primary(type='submit', name='action', value='share') Log Out
 		
+			article.albums
+
+				- for (var i=0; i<albums.files.length; i++)
+
+					section
+			
+						= albums.files[i].name
+						span(style='display:inline-block; width:30px')
+						= albums.files[i].lastModifiedDate 
+						span(style='display:inline-block; width:30px')
+						= albums.files[i].type
+						span(style='display:inline-block; width:30px')
+						= albums.files[i].size 
+						span(style='display:inline-block; width:30px')
+						= albums.files[i].hash 
+						span(style='display:inline-block; width:30px')
+						a(href='./removep?'+albums.hash+'/'+albums.files[i].hash) Remove
+						span(style='display:inline-block; width:30px')
+						a(href='./download?'+albums.hash+'/'+albums.files[i].hash) Download
+						span(style='display:inline-block; width:30px')
+						a(href='./rename?'+albums.hash+'/'+albums.files[i].hash) Rename
+
 		- else
 
 			wtf? .. you should't be here

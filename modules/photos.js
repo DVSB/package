@@ -77,11 +77,26 @@ module.exports = function(req, res) {
 	
 	
 	// get album photos and display
-	var browseAlbum = function(album){
-								
-		res.send('hello: ' + album);
+	var browseAlbum = function(){
 		
+		var urlAlbum = underscore.trim(req.url, '/');
+		urlAlbum = underscore.words(urlAlbum, '/');
+		urlAlbum = underscore.rest(urlAlbum);
+		urlAlbum = underscore.first(urlAlbum);
+		urlAlbum = underscore.words(urlAlbum, '?');
+		urlAlbum = underscore.rest(urlAlbum);
+		urlAlbum = underscore.first(urlAlbum);	
 		
+		mongoclient.connect(database, function(err, db){
+			if(err) throw err;
+			var collection = db.collection('albums');
+			collection.findOne({hash:urlAlbum}, function(err, results) {
+				if(err) throw err;
+				res.render(__dirname+'/../views/photos', {albums:results, view:'album'});
+				//res.send(results);
+				db.close();
+			});
+		}); // mongoclient
 		
 	}; // browseAlbum
 	
@@ -161,24 +176,84 @@ module.exports = function(req, res) {
 		uploadFile(0);
 		
 	}; // upload
+	
+	
+	var removePhoto = function(){
+		mongoclient.connect(database, function(err, db) {
+			
+			if (err) throw err;
+			var collection = db.collection('albums');
+			
+			var url, album, photo;
+				
+			url = require('url').parse(req.url);
+			url = underscore.words(url.query, '/');
+	
+			album = url[0];
+			photo = url[1];
+			
+			function manipulateAlbum(album){
+				var photos = album.files;
+				photos.forEach(function(element, index){
+					if (element.hash===query.photo) res.send(element.name);
+				});
+			}
+								
+			collection.findOne({hash:album}, function(err, result) {
+				if (err) throw err;
+				console.log(result);
+				//manipulateAlbum(result);
+			});
+			
+			
+			
+			
+			
+/*
+var remoteThisOne = function(album, photo){
+
+	mongoclient.connect(database, function(err, db) {
+
+		if (err) throw err;
+
+		// remove from s3 and from database
+		s3.client.deleteObject({
+			Bucket : settings.bucket,
+			Key : settings.home + '/Photos/' + album + '/' + photo
+		}, function(err, data){
+			if(err) throw err;
+			var collection = db.collection('albums');
+			album.file
+			collection.update({name:album}, {name:album}, function(err, done) {
+				if (err) throw err;
+				res.send('hotovo');
+				db.close();
+			});
+		});
+
+	});
+
+} // removeThisOne
+
+});
+*/
+			
+			db.close();
+		});	
+	}; // removePhoto
 
 
 // routing and variables
 
-	var urlModule, urlAlbum; 
+	var urlModule; 
 	
 	// cut module
 	urlModule = underscore.trim(req.url, '/');
 	urlModule = underscore.words(urlModule, '/');
 	urlModule = underscore.rest(urlModule);
-	urlAlbum = urlModule = underscore.first(urlModule);
+	urlModule = underscore.first(urlModule);
 	urlModule = underscore.words(urlModule, '?');
 	urlModule = underscore.first(urlModule);
-		
-	// cut album
-	urlAlbum = underscore.words(urlAlbum, '?');
-	urlAlbum = underscore.rest(urlAlbum);
-	urlAlbum = underscore.first(urlAlbum);	
 	
 	switch(urlModule) {
 			
@@ -195,7 +270,11 @@ module.exports = function(req, res) {
 			break;
 			
 		case 'album' :
-			browseAlbum(urlAlbum);
+			browseAlbum();
+			break;
+			
+		case 'removep' :
+			removePhoto();
 			break;
 
 	} // switch
