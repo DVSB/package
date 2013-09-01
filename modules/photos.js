@@ -178,6 +178,7 @@ module.exports = function(req, res) {
 	}; // upload
 	
 	
+	/* from photo mongo and s3 */
 	var removePhoto = function(){
 		mongoclient.connect(database, function(err, db) {
 			
@@ -192,53 +193,50 @@ module.exports = function(req, res) {
 			album = url[0];
 			photo = url[1];
 			
-			function manipulateAlbum(album){
-				var photos = album.files;
-				photos.forEach(function(element, index){
-					if (element.hash===query.photo) res.send(element.name);
+			findAlbumByHashInUrl();
+			
+			function findAlbumByHashInUrl(){
+				collection.findOne({hash:album}, function(err, album) {
+					if (err) throw err;
+					findPhotoInAlbum(album);
 				});
 			}
-								
-			collection.findOne({hash:album}, function(err, result) {
-				if (err) throw err;
-				console.log(result);
-				//manipulateAlbum(result);
-			});
 			
+			function findPhotoInAlbum(album) {
+				var photos = album.files;
+				photos.forEach(function(element, index){
+					if (element.hash===photo) {
+						// var realPhotoName = element.name;
+						// var realAlbumName = album.name;
+						var realNames = {
+							photo : element.name,
+							album : album.name
+						};
+						removePhotoFromS3(realNames, removePhotoFromDB);
+					}
+				});
+			}
 			
+			function removePhotoFromS3(realNames, callback){
+				console.log(settings.home + '/Photos/' + realNames.album + '/' + realNames.photo);
+				s3.client.deleteObject({
+					Bucket : settings.bucket,
+					Key : settings.home + '/Photos/' + realNames.album + '/' + realNames.photo
+				}, function(err, data){
+					if(err) throw err;
+					callback(realNames.photo);
+				});
+			}
 			
+			function removePhotoFromDB(photoName){
+				/* remove item in array files where name=title parameter */
+				collection.update({hash:album}, {$pull:{files:{name:photoName}}}, function(err, done) {
+					if (err) throw err;
+					res.redirect('/photos/album?'+album);
+					db.close();
+				});
+			}
 			
-			
-/*
-var remoteThisOne = function(album, photo){
-
-	mongoclient.connect(database, function(err, db) {
-
-		if (err) throw err;
-
-		// remove from s3 and from database
-		s3.client.deleteObject({
-			Bucket : settings.bucket,
-			Key : settings.home + '/Photos/' + album + '/' + photo
-		}, function(err, data){
-			if(err) throw err;
-			var collection = db.collection('albums');
-			album.file
-			collection.update({name:album}, {name:album}, function(err, done) {
-				if (err) throw err;
-				res.send('hotovo');
-				db.close();
-			});
-		});
-
-	});
-
-} // removeThisOne
-
-});
-*/
-			
-			db.close();
 		});	
 	}; // removePhoto
 
