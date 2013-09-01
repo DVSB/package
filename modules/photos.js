@@ -178,24 +178,21 @@ module.exports = function(req, res) {
 	}; // upload
 	
 	
-	/* from photo mongo and s3 */
+	/* from photo mongo database and s3 */
 	var removePhoto = function(){
 		mongoclient.connect(database, function(err, db) {
-			
+
 			if (err) throw err;
-			var collection = db.collection('albums');
 			
-			var url, album, photo;
-				
-			url = require('url').parse(req.url);
-			url = underscore.words(url.query, '/');
-	
-			album = url[0];
-			photo = url[1];
+			/* url../remove?98c582c7d329/3b1fa423d917 - album:98c582c7d329 photo:3b1fa423d917 */
+			var url = require('url').parse(req.url).query;
+			var album = underscore.words(url, '/')[0];
+			var photo = underscore.words(url, '/')[1];
 			
-			findAlbumByHashInUrl();
+			findAlbumByUrlHashInDB();
 			
-			function findAlbumByHashInUrl(){
+			function findAlbumByUrlHashInDB(){
+				var collection = db.collection('albums');
 				collection.findOne({hash:album}, function(err, album) {
 					if (err) throw err;
 					findPhotoInAlbum(album);
@@ -203,26 +200,22 @@ module.exports = function(req, res) {
 			}
 			
 			function findPhotoInAlbum(album) {
+				var realNames = {};
 				var photos = album.files;
-				photos.forEach(function(element, index){
+				photos.forEach(function(element){
 					if (element.hash===photo) {
-						// var realPhotoName = element.name;
-						// var realAlbumName = album.name;
-						var realNames = {
-							photo : element.name,
-							album : album.name
-						};
+						realNames.photo = element.name;
+						realNames.album = album.name;
 						removePhotoFromS3(realNames, removePhotoFromDB);
 					}
 				});
 			}
 			
 			function removePhotoFromS3(realNames, callback){
-				console.log(settings.home + '/Photos/' + realNames.album + '/' + realNames.photo);
 				s3.client.deleteObject({
 					Bucket : settings.bucket,
 					Key : settings.home + '/Photos/' + realNames.album + '/' + realNames.photo
-				}, function(err, data){
+				}, function(err){
 					if(err) throw err;
 					callback(realNames.photo);
 				});
@@ -230,7 +223,8 @@ module.exports = function(req, res) {
 			
 			function removePhotoFromDB(photoName){
 				/* remove item in array files where name=title parameter */
-				collection.update({hash:album}, {$pull:{files:{name:photoName}}}, function(err, done) {
+				var collection = db.collection('albums');
+				collection.update({hash:album}, {$pull:{files:{name:photoName}}}, function(err) {
 					if (err) throw err;
 					res.redirect('/photos/album?'+album);
 					db.close();
@@ -240,6 +234,58 @@ module.exports = function(req, res) {
 		});	
 	}; // removePhoto
 
+	
+	/* from photo mongo database and s3 */
+	var downloadPhoto = function(){
+		mongoclient.connect(database, function(err, db) {
+		
+			if (err) throw err;
+			
+			/* url../download?98c582c7d329/3b1fa423d917 - album:98c582c7d329 photo:3b1fa423d917 */
+			var url = require('url').parse(req.url).query;
+			var album = underscore.words(url, '/')[0];
+			var photo = underscore.words(url, '/')[1];
+			
+			findAlbumByUrlHashInDB();
+			
+			function findAlbumByUrlHashInDB(){
+				var collection = db.collection('albums');
+				collection.findOne({hash:album}, function(err, album) {
+					if (err) throw err;
+					findPhotoInAlbum(album);
+				});
+			}
+			
+			function findPhotoInAlbum(album) {
+				var realNames = {};
+				var photos = album.files;
+				photos.forEach(function(element){
+					if (element.hash===photo) {
+						realNames.photo = element.name;
+						realNames.album = album.name;
+						downloadPhotoFromS3(realNames);
+					}
+				});
+			}
+			
+			function downloadPhotoFromS3(realNames, callback){
+				s3.client.getObject({
+					Bucket : settings.bucket,
+					Key : settings.home + '/Photos/' + realNames.album + '/' + realNames.photo
+				}, function(err, data){
+					if(err) throw err;
+					var buf = new Buffer(data.Body, 'binary');
+					res.set('Content-Type', 'binary/octet-stream');
+					res.send(200, buf);
+					res.redirect('/photos/album?'+album);
+					db.close();
+				});
+			}
+			
+		
+		});
+	}; // downloadPhoto
+	
 
 // routing and variables
 
@@ -269,6 +315,10 @@ module.exports = function(req, res) {
 			
 		case 'album' :
 			browseAlbum();
+			break;
+			
+		case 'download' :
+			downloadPhoto();
 			break;
 			
 		case 'removep' :
