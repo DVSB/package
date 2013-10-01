@@ -1,9 +1,11 @@
 
+	var express, app, screens;
+		
+
 	// express 
 
-	var express = require('express');
-	var app = module.exports = express();
-
+	express = require('express');
+	app = module.exports = express();
 
 	// config
 
@@ -14,26 +16,21 @@
 	
 		app.use(express.bodyParser({ 
 			uploadDir: __dirname+'/temp/' 
-		}));	
-
-		app.use(app.router);
-
-		app.use('/statics', express.static(__dirname + '/views/statics'));
-		app.set('views', __dirname + '/views');	
+		}));
 	
 	});
 
 
 	// routing
-
-	var screens = [
-		'home', 'storage', 'signin', 'upload', 'account', 'admin', 'error', 'photos', 'logout'
-	].forEach(function(mod){
 	
-		app.all('/'  + mod +  '/*', function(req, res) {
+	// var module = require('./modules/index')();
+
+	screens = [
+		'w', 'list', 'signin', 'upload', 'account', 'admin', 'error', 'photos', 'logout'
+	].forEach(function(mod){
+		app.all('/'  + mod +  ';*', function(req, res) {
 			var module = require('./modules/' + mod)(req, res);
 		});
-	
 	});
 
 	app.all('/', function(req, res) {
@@ -47,3 +44,5 @@
 		app.use(express.logger('dev'));
 		app.listen(4090);
 	}
+
+	
