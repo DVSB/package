@@ -14,9 +14,9 @@
 		app.use(express.compress());
 		app.use(express.methodOverride());
 	
-		app.use(express.bodyParser({ 
-			uploadDir: __dirname+'/temp/' 
-		}));
+		app.use(express.bodyParser());
+		
+		app.use('/s', express.static(__dirname+'/statics'));
 
 		app.set('views', __dirname + '/views');
 		app.engine('html', require('ejs').renderFile);
@@ -27,9 +27,9 @@
 	// routing
 
 	screens = [
-		'w', 'list', 'auth', 'md'
+		'preview'
 	].forEach(function(mod){
-		app.all('/'  + mod +  ';*', function(req, res) {
+		app.all('/'  + mod +  '/*', function(req, res) {
 			var module = require('./modules/' + mod)(req, res);
 		});
 	});

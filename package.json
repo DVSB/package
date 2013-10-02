@@ -5,6 +5,8 @@
 		"haml": "0.4.3",
 		"ejs" : "*",
 		"nodemailer" : "*",
-		"markdown" : "*"
+		"markdown" : "*",
+		"underscore": "*",
+		"underscore.string": "*"
 	}
 }

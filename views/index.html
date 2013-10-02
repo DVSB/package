@@ -7,27 +7,37 @@
 	
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0-rc2/css/bootstrap.css" />
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0-rc2/js/bootstrap.js"></script>
 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css" />
 	
 	<style>
-	body, button, input, label { font-family: 'Open Sans'; font-weight: 300 !important;	}
-	form { width:30%; position:absolute; top:40%; left:35%; }
-	input { padding: 4px; }
-	label { cursor: pointer; padding-right: 10px; }
-	button { margin-top: -3px; }
-	div { color:#bbb; font-size:12px; margin-top:10px }
-	section {margin-bottom: 46px; font-size: 16px; color: #3276B1; }
+	body, button, input, label, textarea, select { font-family: 'Open Sans'; font-weight: 300 !important;	}
+	textarea { margin: 30px auto; width: 80%; display: block; padding: 10px; min-height: 500px; border: 1px solid #CCC; }
+	section { margin: 70px auto 0; width: 80%; display: block; }
+	input { padding: 10px; }
+	select { height: 44px; width: 142px; border: 1px solid #CCC; }
 	</style>
 
 </head><body lang="en">
 	
-	<form method="post" action="./auth;">
-		<section>One email. Write markdown. See website.</section>
-		<label type="text" for="email">Your Email</label>
-		<input type="text" id="email" name="email" />
-		<button type="submit" class="btn btn-primary">Sign Up or Sign In</button>
-		<div>* you can anytime remove whole account with all data with one click</div>
-	</form>	
+	<form method="post" action="./preview/">
+		
+		<section>
+			
+			<input name="title" type="text" value="Title of Markdown Document" style="width:500px; margin-right: 30px" />
+			
+			<button style="float: right; padding: 12px;" type="submit" class="btn btn-primary">Preview</button>
+		
+		</section>
+
+		<textarea name="markdown"># Hello world ..
+			
+You can write here in Markdown syntax.
+
+- This service is absolutelly free
+- Click on Preview and see awesome!
+
+</textarea>
+		
+	</form>
 
 </body></html>
