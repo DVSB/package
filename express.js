@@ -17,16 +17,17 @@
 		app.use(express.bodyParser({ 
 			uploadDir: __dirname+'/temp/' 
 		}));
+
+		app.set('views', __dirname + '/views');
+		app.engine('html', require('ejs').renderFile);
 	
 	});
 
 
 	// routing
-	
-	// var module = require('./modules/index')();
 
 	screens = [
-		'w', 'list', 'signin', 'upload', 'account', 'admin', 'error', 'photos', 'logout'
+		'w', 'list', 'auth', 'md'
 	].forEach(function(mod){
 		app.all('/'  + mod +  ';*', function(req, res) {
 			var module = require('./modules/' + mod)(req, res);

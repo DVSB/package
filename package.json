@@ -2,6 +2,9 @@
 	"dependencies": {
 		"express": "3.3.5",
 		"aws-sdk": "1.5.0",
-		"haml": "0.4.3"
+		"haml": "0.4.3",
+		"ejs" : "*",
+		"nodemailer" : "*",
+		"markdown" : "*"
 	}
 }

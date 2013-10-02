@@ -1,0 +1,33 @@
+<!DOCTYPE html><html><head>
+
+	<meta charset="utf-8" />
+  	<meta name="viewport" content="width=device-width, initial-scale=1" />
+  	
+	<title>Hello</title>
+	
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0-rc2/css/bootstrap.css" />
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0-rc2/js/bootstrap.js"></script>
+	<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css" />
+	
+	<style>
+	body, button, input, label { font-family: 'Open Sans'; font-weight: 300 !important;	}
+	form { width:30%; position:absolute; top:40%; left:35%; }
+	input { padding: 4px; }
+	label { cursor: pointer; padding-right: 10px; }
+	button { margin-top: -3px; }
+	div { color:#bbb; font-size:12px; margin-top:10px }
+	section {margin-bottom: 46px; font-size: 16px; color: #3276B1; }
+	</style>
+
+</head><body lang="en">
+	
+	<form method="post" action="./auth;">
+		<section>One email. Write markdown. See website.</section>
+		<label type="text" for="email">Your Email</label>
+		<input type="text" id="email" name="email" />
+		<button type="submit" class="btn btn-primary">Sign Up or Sign In</button>
+		<div>* you can anytime remove whole account with all data with one click</div>
+	</form>	
+
+</body></html>
