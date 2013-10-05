@@ -3,41 +3,90 @@
 	<meta charset="utf-8" />
   	<meta name="viewport" content="width=device-width, initial-scale=1" />
   	
-	<title>Hello</title>
+	<title>MarkdownBin</title>
 	
-	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.0-rc2/css/bootstrap.css" />
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
-	<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css" />
-	
-	<style>
-	body, button, input, label, textarea, select { font-family: 'Open Sans'; font-weight: 300 !important;	}
-	textarea { margin: 30px auto; width: 80%; display: block; padding: 10px; min-height: 500px; border: 1px solid #CCC; }
-	section { margin: 70px auto 0; width: 80%; display: block; }
-	input { padding: 10px; }
-	select { height: 44px; width: 142px; border: 1px solid #CCC; }
-	</style>
+	<link rel="stylesheet" href="./s/bootstrap.css" type="text/css" />
+	<link rel="stylesheet" href="./s/stylesheets.css" type="text/css" />
 
 </head><body lang="en">
 	
-	<form method="post" action="./preview/">
-		
-		<section>
-			
-			<input name="title" type="text" value="Title of Markdown Document" style="width:500px; margin-right: 30px" />
-			
-			<button style="float: right; padding: 12px;" type="submit" class="btn btn-primary">Preview</button>
-		
-		</section>
+	<header>
+		Markdown Editor, CSS Theme
+	</header>
+	
+<textarea id="input" oninput="this.editor.update()" rows="6" cols="60">
+# Welcome
 
-		<textarea name="markdown"># Hello world ..
-			
-You can write here in Markdown syntax.
+## Suspendisse potenti
 
-- This service is absolutelly free
-- Click on Preview and see awesome!
+### Maecenas vitae
 
+In hac habitasse platea dictumst. Morbi auctor dictum scelerisque. Donec quis 
+augue sed nulla ornare condimentum non sodales massa. Maecenas vitae tempor ante. 
+Aenean dolor elit, venenatis non adipiscing eu, lobortis at est. In velit felis, 
+iaculis vel dapibus eget, varius ac diam. Aliquam eu tortor nec sem auctor porta. 
+Suspendisse potenti. Sed quis erat a ligula interdum placerat.
+
+### Maecenas vitae
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eros est, venenatis 
+nec malesuada quis, sodales id lacus. Curabitur sit amet auctor nulla. Curabitur 
+volutpat nibh nulla, semper blandit ligula convallis eget. 
+
+### Quisque lorem magna
+
+Curabitur ornare sollicitudin mi, et consequat nisi. Etiam non elit et neque dignissim 
+dapibus sed facilisis lorem. Nunc sed felis neque. Ut non nisl scelerisque, venenatis 
+ligula at, malesuada ligula. Donec sit amet mattis mi. In vehicula non erat non porta. 
+Nulla facilisi. Quisque lorem magna, interdum sit amet lorem eu, dapibus sollicitudin mi.
+
+## Ut non nisl scelerisque
+
+Ut non nisl scelerisque, venenatis ligula at, malesuada ligula. Donec sit amet mattis 
+mi. In vehicula non erat non porta. Nulla facilisi. Quisque lorem magna, interdum sit 
+amet lorem eu, dapibus sollicitudin mi.
+
+    function markdownup(){
+      git helloWorld();
+    }
+
+    function markupdown(){
+      github = new clone();
+    }
+
+Curabitur volutpat nibh nulla, **semper blandit ligula convallis** eget. 
+
+---
+
+Nunc sed felis neque.  
+Ut non nisl scelerisque, venenatis ligula at, malesuada ligula.  
+Donec sit amet mattis mi. In vehicula non erat non porta.
 </textarea>
+
+  	<section id="preview"></section>
+	
+	<script src="s/jquery.js"></script>
+   <script src="s/markdown.js"></script>
+   
+	<script>
+	
+		$(function() {
+			$('textarea').scroll(function() {
+				$('section').scrollTop($('textarea').scrollTop());
+			});
+		});
+	
+		function Editor(input, preview) {
+			this.update = function () {
+				preview.innerHTML = markdown.toHTML(input.value);
+			};
+			input.editor = this;
+			this.update();
+		}
+		var $c = function(id) { return document.getElementById(id); };
+		new Editor($c("input"), $c("preview"));
 		
-	</form>
+		
+   </script>
 
 </body></html>

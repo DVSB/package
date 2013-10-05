@@ -4,14 +4,21 @@ module.exports = function(req, res) {
 	var preview, save, 
 	markdown=require('markdown').markdown,
 	string = require('underscore.string');
-
+	
+	(function isEmpty(){
+		if (!(req.body.title&&req.body.markdown)) {
+			res.redirect('/');
+		}
+	})();
 
 	preview = function() {
 		
 		var title, article, slug;
 		
-		article = req.body.markdown ? markdown.toHTML(req.body.markdown) : 'empty-markdown';
-		title = req.body.title ? req.body.title : 'empty-title';
+		md = req.body.markdown;
+		title = req.body.title;
+		article =  md ? markdown.toHTML(md) : 'empty-markdown';
+		title =  title ? title : 'empty-title';
 		slug = string.slugify(title);
 		
 		res.render('preview.html', { param:{

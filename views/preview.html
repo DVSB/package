@@ -18,6 +18,8 @@
 	article { margin: 20px auto 0; width: 80%; display: block; padding: 10px; border: 1px solid #CCC; }
 	input { padding: 10px; }
 	select { height: 44px; width: 142px; border: 1px solid #CCC; }
+	h2 { width: 500px; margin-right: 30px; display: inline-block; border: 1px solid #ECECEC; margin-bottom: 0;
+	font-weight: 300;	font-size: 15px; padding: 12px; margin-top: 0; }
 	</style>
 
 </head><body lang="en">
@@ -25,7 +27,7 @@
 	<form method="post" action="./md;create;">
 		
 		<section>
-			<input name="title" type="text" value="<%= param.title %>" style="width:500px; margin-right: 30px" />
+			<h2 style="width:500px; margin-right: 30px"><%= param.title %></h2>
 			<select>
 				<option value="volvo">Keep 1 hour</option>
 				<option value="saab">Keep 1 day</option>
