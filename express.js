@@ -7,16 +7,20 @@
 	express = require('express');
 	app = module.exports = express();
 
+
 	// config
 
 	app.configure(function(){
+		
+		var statics;
 					
 		app.use(express.compress());
 		app.use(express.methodOverride());
 	
 		app.use(express.bodyParser());
 		
-		app.use('/s', express.static(__dirname+'/statics'));
+		statics = express.static(__dirname+'/statics');
+		app.use('/s', statics);
 
 		app.set('views', __dirname + '/views');
 		app.engine('html', require('ejs').renderFile);
@@ -35,8 +39,8 @@
 	});
 
 	app.all('/', function(req, res) {
-		var module = require('./modules/index')(req, res);
-	});	
+		res.render('index.html');
+	});
 
 
 	// run
