@@ -36,6 +36,12 @@
 		line-height: 20px;
 	}
 	
+	header h1 {
+		font-size: 13px;
+		display: inline;
+		margin: 0;
+	}
+	
 	h2 {
 		font-size: 16px;
 		line-height: 16px;
@@ -53,6 +59,10 @@
 	
 	hr {
 		border-top: 1px solid #DFDFDF;
+	}
+	
+	form {
+		height: 100%;
 	}
 	
 	header {
@@ -91,7 +101,12 @@
 	}
 
 
-
+	button.btn-link {
+		font: 13px/23px "Lucida Grande", verdana, sans-serif;
+		font-weight: 300;
+		padding: 0;
+		margin-top: -2px;
+	}
 
 
 

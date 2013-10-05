@@ -27,9 +27,9 @@
 	// routing
 
 	screens = [
-		'preview'
+		'preview', 'md'
 	].forEach(function(mod){
-		app.all('/'  + mod +  '/*', function(req, res) {
+		app.all('/'  + mod +  ';*', function(req, res) {
 			var module = require('./modules/' + mod)(req, res);
 		});
 	});

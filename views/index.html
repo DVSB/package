@@ -3,18 +3,27 @@
 	<meta charset="utf-8" />
   	<meta name="viewport" content="width=device-width, initial-scale=1" />
   	
-	<title>MarkdownBin</title>
+	<title>mdown - markdown online editor</title>
 	
 	<link rel="stylesheet" href="./s/bootstrap.css" type="text/css" />
 	<link rel="stylesheet" href="./s/stylesheets.css" type="text/css" />
 
 </head><body lang="en">
 	
-	<header>
-		Markdown Editor, CSS Theme
-	</header>
+	<form method="post" action="./md;create;">
 	
-<textarea id="input" oninput="this.editor.update()" rows="6" cols="60">
+		<header>
+			<h1>mdown - markdown online editor</h1>
+			<div style="float: right">
+				<select name="expiration" style="margin-right: 15px">
+					<option value="day">Keep 1 day</option><option value="month">Keep 1 month</option><option value="year">Keep 1 year</option>
+				</select>
+				<button type="submit" class="btn btn-link">Save</button>
+			</div>
+		</header>
+	
+		<textarea id="input" oninput="this.editor.update()" rows="6" cols="60" name="markdown">
+
 # Welcome
 
 ## Suspendisse potenti
@@ -61,9 +70,12 @@ Curabitur volutpat nibh nulla, **semper blandit ligula convallis** eget.
 Nunc sed felis neque.  
 Ut non nisl scelerisque, venenatis ligula at, malesuada ligula.  
 Donec sit amet mattis mi. In vehicula non erat non porta.
-</textarea>
 
-  	<section id="preview"></section>
+		</textarea>
+		
+		<section id="preview"></section>
+
+	</form>
 	
 	<script src="s/jquery.js"></script>
    <script src="s/markdown.js"></script>
