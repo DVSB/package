@@ -14,11 +14,11 @@
 	"scripts": {
 		"start": "express.js"
 	},
-   "domains": [
-      "mdown.co",
-      "www.mdown.co"
-    ],
-	"version": "0.1.0",
+	"domains": [
+		"mdown.co",
+		"www.mdown.co"
+	],
+	"version": "0.1.0-1",
 	"engines": {
 		"node": "0.8.x"
 	}
