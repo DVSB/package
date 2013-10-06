@@ -1,0 +1,63 @@
+<!DOCTYPE><html class="index"><head>
+
+	<meta charset="utf-8" />
+  	<meta name="viewport" content="width=device-width, initial-scale=1" />
+  	
+	<title>mdown - markdown online editor</title>
+	
+	<link rel="stylesheet" href="./s/bootstrap.css" type="text/css" />
+	<link rel="stylesheet" href="./s/stylesheets.css" type="text/css" />
+
+</head><body lang="en">
+	
+	<form method="post" action="./storage;create;">
+	
+		<header>
+			
+			<h1><a href="/">mdown</a> - markdown online editor (ALPHA VERSION)</h1>
+			
+			<div style="float: right">
+				
+				<select name="expiration" style="margin-right: 15px">
+					<option value="day">Keep 1 day</option>
+					<option value="week">Keep 1 week</option>
+					<option value="month">Keep 1 month</option>
+					<!--<option value="year">Keep 1 year</option>-->
+				</select>
+				
+				<button type="submit" class="btn btn-link">Save</button>
+				
+			</div>
+			
+		</header>
+	
+		<textarea id="input" oninput="this.editor.update()" rows="6" cols="60" name="markdown"></textarea>
+		<section id="preview" class="mdsyntax"></section>
+
+	</form>
+	
+	<script src="s/jquery.js"></script>
+   <script src="s/markdown.js"></script>
+   
+	<script>
+	
+		$(function() {
+			$('textarea').scroll(function() {
+				$('section').scrollTop($('textarea').scrollTop());
+			});
+		});
+	
+		function Editor(input, preview) {
+			this.update = function () {
+				preview.innerHTML = markdown.toHTML(input.value);
+			};
+			input.editor = this;
+			this.update();
+		}
+		var $c = function(id) { return document.getElementById(id); };
+		new Editor($c("input"), $c("preview"));
+		
+		
+   </script>
+
+</body></html>

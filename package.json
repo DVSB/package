@@ -3,10 +3,23 @@
 		"express": "3.3.5",
 		"aws-sdk": "1.5.0",
 		"haml": "0.4.3",
-		"ejs" : "*",
-		"nodemailer" : "*",
-		"markdown" : "*",
+		"ejs": "*",
+		"nodemailer": "*",
+		"markdown": "*",
 		"underscore": "*",
 		"underscore.string": "*"
+	},
+	"name": "mdown",
+	"subdomain": "mdown",
+	"scripts": {
+		"start": "express.js"
+	},
+   "domains": [
+      "mdown.co",
+      "www.mdown.co"
+    ],
+	"version": "0.1.0",
+	"engines": {
+		"node": "0.8.x"
 	}
 }
