@@ -81,6 +81,22 @@ module.exports = function(req, res) {
 	}
 	
 	
+	unlink = function(){
+		
+		var date, random;
+		
+		module = require('url').parse(req.url);
+		module = module.pathname.split(';')[2];
+		
+		s3.client.deleteObject({
+			Bucket : bucket,
+			Key : module
+		}, function(err, data){
+			if (err) throw err;
+			res.redirect('/');
+		});
+		
+	};	
 	
 	
 	getRandom = function(){
@@ -107,6 +123,10 @@ module.exports = function(req, res) {
 		
 		case 'create': 
 		create();
+		break;
+		
+		case 'unlink': 
+		unlink();
 		break;
 		
 		default:
