@@ -1,20 +1,18 @@
 module.exports = function(req, res) {
 	
 	
-	var render, create, getRandom, updateLifeCycle,
-	markdown=require('markdown').markdown;
+	var create, getRandom, updateLifeCycle, getLifeCycle, 
+	markdown=require('markdown').markdown, s3, sdk = require('aws-sdk');
 
+	s3 = new sdk.S3({ 
+		accessKeyId : 'AKIAI5KY54XEDOMGQSCQ', 
+		secretAccessKey : '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',
+		s3: '2006-03-01'
+	});
 
 	create = function() {
 		
-		var s3, article, key,
-		sdk = require('aws-sdk');
-
-		s3 = new sdk.S3({ 
-			accessKeyId : 'AKIAI5KY54XEDOMGQSCQ', 
-			secretAccessKey : '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',
-			s3: '2006-03-01'
-		});
+		var article, key;
 
 		key = getRandom();
 		article = req.body.markdown ? req.body.markdown : 'empty';
@@ -25,7 +23,11 @@ module.exports = function(req, res) {
 			Body : article,
 			StorageClass : 'REDUCED_REDUNDANCY',
 			ServerSideEncryption : 'AES256',
-			ContentType : 'text/x-markdown'
+			ContentType : 'text/x-markdown',
+			Metadata : {
+				'email' : 'none',
+				'public' : 'true',
+			}
 		}, function(err, data){
 			if (err) throw err;
 			getLifeCycle(key);
@@ -35,14 +37,6 @@ module.exports = function(req, res) {
 	
 	
 	getLifeCycle = function(key) {
-		
-		var s3, sdk = require('aws-sdk');
-		
-		s3 = new sdk.S3({ 
-			accessKeyId : 'AKIAI5KY54XEDOMGQSCQ', 
-			secretAccessKey : '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',
-			s3: '2006-03-01'
-		});
 		
 		s3.client.getBucketLifecycle({
 			Bucket : 'd41d8cd98f00'
@@ -56,14 +50,7 @@ module.exports = function(req, res) {
 	
 	updateLifeCycle = function(data, key) {
 		
-		var s3, expires, newRules=[],
-		sdk = require('aws-sdk');
-		
-		s3 = new sdk.S3({ 
-			accessKeyId : 'AKIAI5KY54XEDOMGQSCQ', 
-			secretAccessKey : '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',
-			s3: '2006-03-01'
-		});
+		var expires, newRules=[];
 		
 		expires = req.body.expiration;
 		switch(expires) {
@@ -100,19 +87,12 @@ module.exports = function(req, res) {
 		var date, random;
 				
 		date = new Date().getTime();
-		date = date.toString(36) + '';
-
 		random = Math.floor((Math.random()*800)+100);
-		random = random.toString(36) + '';
 		
-		return date + random;
+		random = date + random;
+		random = random.toString(36);
 		
-	};	
-	
-	
-	render = function(){
-		
-		res.send('hello');
+		return random;
 		
 	};	
 
@@ -128,12 +108,8 @@ module.exports = function(req, res) {
 		create();
 		break;
 		
-		case 'verify': 
-		//verifyEmail();
-		break;
-		
 		default:
-		render();
+		res.redirect('/');
 		break;
 		
 	};
