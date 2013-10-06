@@ -1,7 +1,7 @@
 module.exports = function(req, res) {
 	
 	
-	var create, getRandom, updateLifeCycle, getLifeCycle, 
+	var create, getRandom, updateLifeCycle, getLifeCycle, bucket = 'mdown',
 	markdown=require('markdown').markdown, s3, sdk = require('aws-sdk');
 
 	s3 = new sdk.S3({ 
@@ -18,7 +18,7 @@ module.exports = function(req, res) {
 		article = req.body.markdown ? req.body.markdown : 'empty';
 		
 		s3.client.putObject({
-			Bucket : 'd41d8cd98f00',
+			Bucket : bucket,
 			Key : key,
 			Body : article,
 			StorageClass : 'REDUCED_REDUNDANCY',
@@ -39,7 +39,7 @@ module.exports = function(req, res) {
 	getLifeCycle = function(key) {
 		
 		s3.client.getBucketLifecycle({
-			Bucket : 'd41d8cd98f00'
+			Bucket : bucket
 		}, function(err, data){
 			if (err) throw err;
 			updateLifeCycle(data, key);
@@ -55,6 +55,7 @@ module.exports = function(req, res) {
 		expires = req.body.expiration;
 		switch(expires) {
 			case 'day' : expires = 1; break;
+			case 'week' : expires = 7; break;
 			case 'month' : expires = 31; break;
 			case 'year' : expires = 365; break;
 		};
@@ -68,7 +69,7 @@ module.exports = function(req, res) {
 		});
 		
 		s3.client.putBucketLifecycle({
-			Bucket : 'd41d8cd98f00',
+			Bucket : bucket,
 			LifecycleConfiguration : {
 				Rules : newRules
 			}

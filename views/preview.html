@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head>
+<!DOCTYPE><html class="preview"><head>
 
 	<meta charset="utf-8" />
   	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,25 +9,42 @@
 	<link rel="stylesheet" href="./s/stylesheets.css" type="text/css" />
 
 </head><body lang="en">
-	
-	<form method="post" action="./aws;create;">
-	
-		<header>
-			
-			<h1><a href="/">mdown</a> - markdown online editor</h1>
-			
-			<div style="float: right">
-				<select name="expiration" style="margin-right: 15px">
-					<option value="day">Keep 1 day</option><option value="month">Keep 1 month</option><option value="year">Keep 1 year</option>
-				</select>
-				<button type="submit" class="btn btn-link">Save</button>
-			</div>
-			
-		</header>
-	
-		<textarea id="input" oninput="this.editor.update()" rows="6" cols="60" name="markdown"></textarea>
 		
-	</form>
+	<header>
+		
+		<h1><a href="/">mdown</a> - markdown online editor</h1>
+		
+		<div style="float: right">
+			
+			<button type="submit" class="btn btn-link">Edit</button>
+			
+		</div>
+		
+	</header>
+
+	<article class="mdsyntax">
+
+		<%- markdown  %>
+	
+	</article>
+	
+	<aside>
+		
+		<strong>Author:</strong>
+		<span>Samuel Ondrek</span><br>
+		
+		<strong>Size:</strong>
+		<span>893893b</span><br>
+		
+		<strong>Type:</strong>
+		<span><strong>Public</strong> / Private</span><br><br>
+		
+		<strong>Settings:</strong><br>
+		<span>Change URL</span><br>
+		<span>Delete Markdown</span><br>
+		
+	</aside>
+		
 	
 	<script src="s/jquery.js"></script>
 

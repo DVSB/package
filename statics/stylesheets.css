@@ -1,3 +1,5 @@
+
+	/* general */
 		
 	::selection {
 		background: #429279;
@@ -8,9 +10,7 @@
 		background: #429279;
 		color: #FFF;
 	}
-	
-	/* general */
-	
+		
 	html {
 		height: 100%;
 	}
@@ -18,31 +18,29 @@
 	body {
 		font: 13px/23px "Lucida Grande", verdana, sans-serif;
 		width: 100%;
-		padding: 40px 20px 20px 20px;
 		font-weight: 300;
-		height: 100%;
-		background: #F8F8F8;
 		color: #444;
 	}
+
+	/* md syntax only on markdown text typography */
 	
-	h1, h2, h3, h4 {
+	.mdsyntax h1, 
+	.mdsyntax h2, 
+	.mdsyntax h3, 
+	.mdsyntax h4,
+	.mdsyntax h5,
+	.mdsyntax h6 {
 		font: 13px/23px "Lucida Grande", verdana, sans-serif;
 		font-weight: 300;
 	}
 	
-	h1 {
+	.mdsyntax h1 {
 		font-size: 20px;
 		margin: 0 0 24px -10px;
 		line-height: 20px;
 	}
 	
-	header h1 {
-		font-size: 13px;
-		display: inline;
-		margin: 0;
-	}
-	
-	h2 {
+	.mdsyntax h2 {
 		font-size: 16px;
 		line-height: 16px;
 		background: #D7E6E1;
@@ -50,22 +48,45 @@
 		padding: 10px;
 	}
 	
-	h3, h4, h5, h6 {
+	.mdsyntax h3 {
 		font-size: 13px;
 		margin: 30px 0 12px;
 		line-height: 14px;
 		font-weight: 600;
 	}
 	
-	hr {
+	.mdsyntax h4 {
+		font-size: 13px;
+		margin: 30px 0 12px;
+		line-height: 14px;
+		font-weight: 600;
+	}
+	
+	.mdsyntax h5 {
+		font-size: 13px;
+		margin: 30px 0 12px;
+		line-height: 14px;
+		font-weight: 600;
+	}
+	
+	.mdsyntax h6 {
+		font-size: 13px;
+		margin: 30px 0 12px;
+		line-height: 14px;
+		font-weight: 600;
+	}
+	
+	.mdsyntax hr {
 		border-top: 1px solid #DFDFDF;
 	}
+
+	/* index */
 	
-	form {
-		height: 100%;
+	.index body {
+		padding: 40px 20px 20px 20px;
 	}
 	
-	header {
+	.index header {
 		position: absolute;
 		height: 40px;
 		width: 100%;
@@ -74,8 +95,8 @@
 		left: 0;
 	}
 	
-	textarea,
-	section {
+	.index textarea,
+	.index section {
 		border: 1px solid #B4B4B4;
 		height: 100%;
 		float: left;
@@ -84,36 +105,59 @@
 		width: 49%;
 	}
 	
-	textarea {
+	.index textarea {
 		resize: none;
 	}
 	
-	section {
+	.index section {
 		margin-left: 2%;
 		overflow-y: scroll;
 		padding: 15px 15px 15px 20px;
 	}
-
-	/* general */
 	
-	.tab {
+	.index .tab {
 		float: right;
 	}
 
-
-	button.btn-link {
+	.index button.btn-link {
 		font: 13px/23px "Lucida Grande", verdana, sans-serif;
 		font-weight: 300;
 		padding: 0;
 		margin-top: -2px;
 	}
+	
+	.index header h1 {
+		font-size: 13px;
+		display: inline;
+		margin: 0;
+	}
+	
+	/* preview */
+	
+	.preview body {
+		width: 1200px;
+		float: right;
+	}
 
+	.preview header {
+		display: none;
+	}
 
-
-
-
-
-
+	.preview article {
+		float: left;
+		width: 800px;
+		padding: 20px 50px 100px 20px;
+	}
+	
+	.preview aside {
+		background-color: #EAEDF1;
+		width: 400px;
+		position: fixed;
+		height: 100%;
+		right: 0;
+		padding: 40px;
+		border-left: solid 1px #D3D7DC;
+	}
 
 
 

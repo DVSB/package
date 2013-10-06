@@ -1,7 +1,9 @@
 module.exports = function(req, res) {
 	
 	
-	var save, preview, s3, sdk = require('aws-sdk');
+	var save, preview, s3, sdk = require('aws-sdk'), 
+	bucket = 'mdown', render, module;
+	
 	
 	s3 = new sdk.S3({ 
 		accessKeyId : 'AKIAI5KY54XEDOMGQSCQ', 
@@ -9,25 +11,32 @@ module.exports = function(req, res) {
 		s3: '2006-03-01'
 	});
 
+
 	preview = function(file) {
 		
 		var article, key;
 
 		s3.client.getObject({
-			Bucket : 'd41d8cd98f00',
+			Bucket : bucket,
 			Key : file
 		}, function(err, data){
 			if (err) throw err;
-			render(data);
+			render(data.Body+'');
 		});
 		
 	};	
 	
-	render = function(data) {
+	
+	render = function(md) {
 		
-		console.log(data);
+		var markdown = require('markdown').markdown;
+		
+		res.render('preview.html', { 
+			markdown : markdown.toHTML(md)
+		});
 		
 	};	
+
 
 	// get from URL module
 	module = require('url').parse(req.url);
