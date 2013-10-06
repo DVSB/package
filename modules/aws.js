@@ -75,7 +75,7 @@ module.exports = function(req, res) {
 			}
 		}, function(err, data){
 			if (err) throw err;
-			res.redirect('/pw;'+key+';');
+			res.redirect('/preview;'+key);
 		});
 		
 	}

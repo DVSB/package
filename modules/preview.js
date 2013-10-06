@@ -32,10 +32,11 @@ module.exports = function(req, res) {
 		var markdown = require('markdown').markdown;
 		
 		res.render('preview.html', { 
-			markdown : markdown.toHTML(md)
+			markdown : markdown.toHTML(md),
+			key : module
 		});
 		
-	};	
+	};
 
 
 	// get from URL module
