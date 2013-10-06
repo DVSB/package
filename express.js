@@ -31,7 +31,7 @@
 	// routing
 
 	screens = [
-		'preview', 'md'
+		'pw', 'aws'
 	].forEach(function(mod){
 		app.all('/'  + mod +  ';*', function(req, res) {
 			var module = require('./modules/' + mod)(req, res);

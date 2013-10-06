@@ -10,10 +10,10 @@
 
 </head><body lang="en">
 	
-	<form method="post" action="./md;create;">
+	<form method="post" action="./aws;create;">
 	
 		<header>
-			<h1>mdown - markdown online editor</h1>
+			<h1><a href="/">mdown</a> - markdown online editor</h1>
 			<div style="float: right">
 				<select name="expiration" style="margin-right: 15px">
 					<option value="day">Keep 1 day</option><option value="month">Keep 1 month</option><option value="year">Keep 1 year</option>
@@ -23,7 +23,6 @@
 		</header>
 	
 		<textarea id="input" oninput="this.editor.update()" rows="6" cols="60" name="markdown">
-
 # Welcome
 
 ## Suspendisse potenti
@@ -70,8 +69,7 @@ Curabitur volutpat nibh nulla, **semper blandit ligula convallis** eget.
 Nunc sed felis neque.  
 Ut non nisl scelerisque, venenatis ligula at, malesuada ligula.  
 Donec sit amet mattis mi. In vehicula non erat non porta.
-
-		</textarea>
+	</textarea>
 		
 		<section id="preview"></section>
 
