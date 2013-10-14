@@ -31,7 +31,7 @@
 	// routing
 
 	screens = [
-		'preview', 'storage', 'edit', 'reg', 'das'
+		'preview', 'storage', 'edit', 'usr', 'das', 'cdb'
 	].forEach(function(mod){
 		app.all('/'  + mod +  '/*', function(req, res) {
 			require('./modules/' + mod)(req, res);

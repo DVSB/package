@@ -50,11 +50,35 @@ module.exports = function(req, res) {
 		var body;
 		
 		// if empty response without email
-		if (request.email==='' || request.password==='') { res.redirect('/reg/'); }
-					
+		if (request.email==='' || request.password==='' || Object.keys(request).length===0) { 
+			res.redirect('/usr/signup'); return; }
+		
+		checkIfUserExists(request.email, function(isExists){
+			if (!isExists) { saveNewUser(); 
+			} else { res.send('Sorry, but this user exists!'); } 
+		});
+
+	};
+	
+	
+	checkIfUserExists = function(mail, callback){
+		
+		s3.client.getObject({
+			Bucket : 'mdown.users',
+			Key : getFingerPrint(mail)
+		}, function(err, data){
+			if (err && err.name==='NoSuchKey') { callback(false); }
+			if (data){ callback(true, data); }
+		});
+		
+	};
+	
+	
+	saveNewUser = function(){
+		
 		s3.client.putObject({
 			Bucket : 'mdown.users',
-			Key : getFingerPrint(request.email+''),
+			Key : getFingerPrint(request.email),
 			Body : JSON.stringify({ password : getFingerPrint(request.password) }),
 			StorageClass : 'REDUCED_REDUNDANCY',
 			ServerSideEncryption : 'AES256',
@@ -65,7 +89,8 @@ module.exports = function(req, res) {
 			}
 		}, function(err, data){
 			if (err) throw err;
-			res.redirect('/das/');
+			console.log('sdaasd');
+			res.redirect('/usr/login');
 		});
 		
 	};
@@ -87,17 +112,55 @@ module.exports = function(req, res) {
 	};
 	
 	
-	browse = function(rawString){
+	checkPassAndLogin = function(hashedPassword){
+		
+		savedPass = JSON.parse(hashedPassword).password;
+		sentPass = getFingerPrint(request.password);
+		
+		isCorrect = (savedPass===sentPass);
+		
+		
 					
-		res.render('reg.html');
+	};
+	
+	
+	check = function(){
+		
+		// if empty response without email
+		if (request.email==='' || request.password==='' || Object.keys(request).length===0) { 
+			res.redirect('/usr/login'); return; }
+						
+		checkIfUserExists(request.email, function(isExists, data){
+			if (isExists) { checkPassAndLogin(data.Body+'');
+			} else { res.send('User Not Exists. Please register first.');  } 
+		});
+					
+	};
+	
+	
+	login = function(){
+					
+		res.render('usr-login.html');
+					
+	};
+	
+	
+	signup = function(){
+					
+		res.render('usr-signup.html');
+					
+	};
+	
+	
+	resetpass = function(){
+					
+		res.render('usr-reset.html');
 					
 	};
 	
 
 	module = require('url').parse(req.url);
-	module = module.pathname.split('/')[2];
-	console.log(module);
-	
+	module = module.pathname.split('/')[2];	
 	
 	// routing of URL 
 	switch(module) {
@@ -106,8 +169,24 @@ module.exports = function(req, res) {
 		create();
 		break;
 		
+		case 'login': 
+		login();
+		break;
+		
+		case 'signup': 
+		signup();
+		break;
+		
+		case 'reset': 
+		resetpass();
+		break;
+		
+		case 'check': 
+		check();
+		break;
+		
 		default:
-		browse();
+		res.redirect('/usr/login');
 		break;
 		
 	};

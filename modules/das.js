@@ -89,7 +89,7 @@ module.exports = function(req, res) {
 	
 	browse = function(rawString){
 					
-		res.render('reg.html');
+		res.render('das.html');
 					
 	};
 	
