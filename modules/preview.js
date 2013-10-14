@@ -41,7 +41,7 @@ module.exports = function(req, res) {
 
 	// get from URL module
 	module = require('url').parse(req.url);
-	module = module.pathname.split(';')[1];
+	module = module.pathname.split('/')[2];
 	
 		
 	// routing of URL 

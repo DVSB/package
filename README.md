@@ -11,3 +11,16 @@
 		Sample: md.io/custom-url
 		
 	Have a nice day :)
+	
+	
+	Closest TODOs:
+	
+	- Registration / Login / ForgotPass refactoring
+	- Logged user authentification in localStorage
+	- List all MD files connected to account
+	
+	
+	Goals:
+	
+	- Registrate . Sign In . List MDs. Create news.
+	

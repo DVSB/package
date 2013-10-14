@@ -14,7 +14,8 @@ module.exports = function(req, res) {
 	switch(module) {
 		
 		default:
-		saveCookies();
+		res.render('cdb-get.html');	
+		//saveCookies();
 		break;
 		
 	};

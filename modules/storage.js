@@ -75,7 +75,7 @@ module.exports = function(req, res) {
 			}
 		}, function(err, data){
 			if (err) throw err;
-			res.redirect('/preview;'+key);
+			res.redirect('/preview/'+key);
 		});
 		
 	}
@@ -86,7 +86,7 @@ module.exports = function(req, res) {
 		var date, random;
 		
 		module = require('url').parse(req.url);
-		module = module.pathname.split(';')[2];
+		module = module.pathname.split('/')[2];
 		
 		s3.client.deleteObject({
 			Bucket : bucket,
@@ -116,8 +116,8 @@ module.exports = function(req, res) {
 
 	// get from URL module
 	module = require('url').parse(req.url);
-	module = module.pathname.split(';')[1];
-		
+	module = module.pathname.split('/')[2];
+			
 	// routing of URL 
 	switch(module) {
 		
