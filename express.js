@@ -31,10 +31,10 @@
 	// routing
 
 	screens = [
-		'preview', 'storage', 'edit', 'register'
+		'preview', 'storage', 'edit', 'reg', 'das'
 	].forEach(function(mod){
-		app.all('/'  + mod +  ';*', function(req, res) {
-			var module = require('./modules/' + mod)(req, res);
+		app.all('/'  + mod +  '/*', function(req, res) {
+			require('./modules/' + mod)(req, res);
 		});
 	});
 
