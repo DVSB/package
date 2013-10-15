@@ -3,7 +3,7 @@
 	<meta charset="utf-8" />
   	<meta name="viewport" content="width=device-width, initial-scale=1" />
   	
-	<title>Sing Up</title>
+	<title>Log In</title>
 	
 	<link rel="stylesheet" href="/s/bootstrap.css" type="text/css" />
 	
@@ -32,7 +32,6 @@
 			width: 100%;
 			font-weight: 300;
 			color: #444;
-			overflow: hidden;
 		}
 		
 		body:before {
@@ -71,26 +70,31 @@
 			font-size: 13px;
 			color: #34A334;
 		}
-		
-		.rules {
-			padding: 3px 0 0 5px;
-			color: #A3A3A3;
-			font-size: 12px;
-		}
-		
-		.rules strong {
-			color: #424242;
-		}
-		
-		.register {
-			float: right;
-			margin-top: 36px;
-		}
 	
 	</style>
 
 </head><body lang="en">
 		
+	<form role="form" method="post" action="./check">
+		
+		<div>
+			
+			<h3>Log In</h3>
+
+			<input type="text" name="email" placeholder="Email" style="width: 256px;" />
+	
+			<input type="password" name="password" placeholder="Password" style="width: 186px;" />
+		
+			<button type="submit" class="register btn btn-success">Log In</button>
+			
+			<h3><a href="./signup">Sign Up</a> or <a href="./reset">reset your password</a> </h3>
+		
+		</div>
+		
+	</form>
+	
+	
+	
 	<form role="form" method="post" action="./new/">
 		
 		<div>
@@ -145,6 +149,27 @@
 		<br><br><br><br><br>
 		<h3><a href="./login">Log In</a> or <a href="./reset">reset your password</a> </h3>
 		
+		
+	</form>
+	
+	
+	
+	
+	<form role="form" method="post" action="./new">
+		
+		<div>
+			
+			<h3>Reset Password</h3>
+
+			<input type="text" name="email" placeholder="Email" style="width: 256px;" />
+			
+			<div>
+				<button type="submit" class="register btn btn-success">Reset Password</button>
+			</div>
+			
+			<h3><a href="./login">Log In</a> or <a href="./signup">Sign Up</a> </h3>
+		
+		</div>
 		
 	</form>
 

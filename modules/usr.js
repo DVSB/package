@@ -140,21 +140,21 @@ module.exports = function(req, res) {
 	
 	login = function(){
 					
-		res.render('usr-login.html');
+		res.render('usr.html');
 					
 	};
 	
 	
 	signup = function(){
 					
-		res.render('usr-signup.html');
+		res.render('usr.html');
 					
 	};
 	
 	
 	resetpass = function(){
 					
-		res.render('usr-reset.html');
+		res.render('usr.html');
 					
 	};
 	
