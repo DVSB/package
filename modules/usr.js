@@ -2,7 +2,9 @@ module.exports = function(req, res) {
 	
 	var signup, saveNewUser, checkUser, checkPassAndLogin, login,
 	s3 = require('./_api')().s3, 
-	superhash = require('./_api')().superhash;	
+	cookies = require('./_api')().cookies,
+	fingerprint = require('./_api')().fingerprint,
+	enigma = require('./_api')().enigma;	
 
 	
 	checkIfExist = function() {
@@ -12,7 +14,7 @@ module.exports = function(req, res) {
 			res.redirect('/usr/'); return; }
 	
 		s3.isUserExists({
-			key : superhash.get(req.body.email)
+			key : fingerprint.getPrivate(req.body.email)
 		}, function(answer){
 			if (answer) { checkUser()
 			} else {	saveNewUser() }
@@ -24,8 +26,8 @@ module.exports = function(req, res) {
 	saveNewUser = function(){
 				
 		s3.putUser({
-			key : superhash.get(req.body.email),
-			body : JSON.stringify({ password : superhash.get(req.body.password) }),
+			key : fingerprint.getPrivate(req.body.email),
+			body : JSON.stringify({ password : fingerprint.getPrivate(req.body.password) }),
 		}, function(data){
 			res.redirect('/usr/');
 		});
@@ -38,11 +40,11 @@ module.exports = function(req, res) {
 		var arePassEqual;
 		
 		arePassEqual = function(user){
-			return (user.password===superhash.get(req.body.password));
+			return (user.password===fingerprint.getPrivate(req.body.password));
 		}
 		
 		s3.getUser({
-			key : superhash.get(req.body.email)
+			key : fingerprint.getPrivate(req.body.email)
 		}, function(data){
 			var userDetails = data.Body+'';
 			userDetails = JSON.parse(userDetails);
@@ -51,26 +53,34 @@ module.exports = function(req, res) {
 		});
 		
 	};
-	
-	console.log(req.cookies);
-	console.log(req.signedCookies);
-		
-	//res.cookie('logged', 'true', { signed: false });
-	//res.cookie('loggedSecure', 'samuelondrek', { signed: true });
-	
-	console.log(req.cookies);
-	console.log(req.signedCookies);
-	
-	res.send('check console');
-	
-	
-	
+
+
 	login = function(){
 		
-		console.log(req.cookies);
+		var publicUserHash, enigmaUserHash;
 		
-		req.cookies.logged = 'true';
-		res.send(req.cookies);
+		publicUserHash = fingerprint.getPublic(req.body.email);
+		enigmaUserHash = enigma.encrypt(publicUserHash);
+		
+		res.cookie(
+			'islogged', 
+			'true', 
+			{ signed: true, httpOnly: true }
+		);		
+		
+		res.cookie(
+			'userid', 
+			publicUserHash, 
+			{ signed: true, httpOnly: true }
+		);
+		
+		res.cookie(
+			'userhash', 
+			enigmaUserHash, 
+			{ signed: true, httpOnly: true }
+		);
+		
+		res.redirect('/');
 		
 	}
 	

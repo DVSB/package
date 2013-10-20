@@ -4,7 +4,7 @@ module.exports = function(req, res) {
 	var createNew, getRandom, updateLifeCycle, getLifeCycle, bucket = 'mdown',
 	markdown=require('markdown').markdown,
 	s3 = require('./_api')().s3, luhn = require('./_api')().luhn, 
-	fingerprint = require('./_api')().fingerprint;
+	random = require('./_api')().random;
 
 
 	createNew = function() {
@@ -24,7 +24,7 @@ module.exports = function(req, res) {
 		
 		// looks like `hn06xqi4` and represent date of creating
 		// which is written as 36base string
-		key = fingerprint.generate();
+		key = random.generate();
 		
 		redirectToPage = function(){
 			res.redirect('/-'+key);

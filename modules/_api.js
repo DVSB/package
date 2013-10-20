@@ -150,7 +150,7 @@ module.exports = function(req, res) {
 	};	
 	
 	
-	obj.fingerprint = {
+	obj.random = {
 		
 		// fingerprint is connected uniq miliseconds and random number from
 		// 100 to 900 (to have same lenght) and one number which provides
@@ -177,27 +177,45 @@ module.exports = function(req, res) {
 	};
 	
 	
-	obj.superhash = {
+	obj.fingerprint = {
 		
-		get : function(rawString){
+		getPrivate : function(rawString){
 			
 			var newstring = '';
 					
 			rawString = require('crypto').createHash('sha512').update(rawString+'nbusr123').digest('hex');
 
-			newstring += rawString.slice(0, 20);
+			newstring += rawString.slice(10, 30);
 			newstring += '-';
-			newstring += rawString.slice(20, 40);
-			newstring +=  '-';
 			newstring += rawString.slice(40, 60);
 			newstring +=  '-';
-			newstring += rawString.slice(60, 80);
-			newstring +=  '-';
-			newstring += rawString.slice(80, 100);
-			newstring +=  '-';	
-			newstring += rawString.slice(100, 120);
+			newstring += rawString.slice(70, 90);
 			
 			return newstring;
+	
+		},
+		
+		getPublic : function(rawString){
+								
+			rawString = require('crypto').createHash('sha512').update(rawString+'nbusr123').digest('hex');
+
+			return rawString.slice(10, 30);
+			
+	
+		}
+	
+	};
+	
+	
+	obj.enigma = {
+		
+		encrypt : function(string){
+			
+			var crypto = require('crypto');
+			string = crypto.createHash('sha512').update(string+'nbusr890').digest('hex').slice(10, 50);
+			string = crypto.createHash('sha512').update(string+'mlmkmklm').digest('hex').slice(70, 90);
+			
+			return string;
 	
 		}
 	
@@ -205,6 +223,7 @@ module.exports = function(req, res) {
 	
 		
 	return obj;
+	
 	
 };
 
