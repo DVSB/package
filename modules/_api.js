@@ -78,6 +78,20 @@ module.exports = function(req, res) {
 		},
 		
 		
+		// get users 
+		getUser : function(params, callback){
+			
+			s3.client.getObject({
+				Bucket : 'mdown.users',
+				Key : params.key
+			}, function(err, data){
+				if (err) throw err;
+				callback(data);
+			});
+		
+		},
+		
+		
 		isUserExists : function(params, callback){
 			
 			s3.client.getObject({

@@ -1,11 +1,11 @@
 module.exports = function(req, res) {
 	
-	var signup, saveNewUser, checkUser, checkPassAndLogin
+	var signup, saveNewUser, checkUser, checkPassAndLogin, login,
 	s3 = require('./_api')().s3, 
 	superhash = require('./_api')().superhash;	
 
 	
-	signup = function() {
+	checkIfExist = function() {
 						
 		// if empty response without email
 		if (req.body.email==='' || req.body.password==='' || Object.keys(req.body).length===0) { 
@@ -35,33 +35,29 @@ module.exports = function(req, res) {
 	
 	checkUser = function(){
 		
-		// if empty response without email
-		if (request.email==='' || request.password==='' || Object.keys(request).length===0) { 
-			res.redirect('/usr/login'); return; }
-						
-		checkIfUserExists(request.email, function(isExists, data){
-			if (isExists) { checkPassAndLogin(data.Body+'');
-			} else { res.send('User Not Exists. Please register first.');  } 
+		var arePassEqual;
+		
+		arePassEqual = function(user){
+			return (user.password===superhash.get(req.body.password));
+		}
+		
+		s3.getUser({
+			key : superhash.get(req.body.email)
+		}, function(data){
+			var userDetails = data.Body+'';
+			userDetails = JSON.parse(userDetails);
+			if (arePassEqual(userDetails)) { login() 
+			} else { res.send('sorry, passwords are not equal'); }
 		});
-					
-	};
-	
-	
-	checkPassAndLogin = function(hashedPassword){
 		
-		savedPass = JSON.parse(hashedPassword).password;
-		sentPass = getFingerPrint(request.password);
+	};
+	
+	
+	login = function(){
 		
-		isCorrect = (savedPass===sentPass);
-					
-	};
-	
-	
-	resetpass = function(){
-					
-		res.render('usr.html');
-					
-	};
+		
+		
+	}
 	
 
 	module = require('url').parse(req.url);
@@ -70,16 +66,8 @@ module.exports = function(req, res) {
 	// routing of URL 
 	switch(module) {
 		
-		case 'login': 
-		login();
-		break;
-		
 		case 'signup': 
-		signup();
-		break;
-		
-		case 'reset': 
-		resetpass();
+		checkIfExist();
 		break;
 		
 		default:
