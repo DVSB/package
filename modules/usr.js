@@ -52,10 +52,25 @@ module.exports = function(req, res) {
 		
 	};
 	
+	console.log(req.cookies);
+	console.log(req.signedCookies);
+		
+	//res.cookie('logged', 'true', { signed: false });
+	//res.cookie('loggedSecure', 'samuelondrek', { signed: true });
+	
+	console.log(req.cookies);
+	console.log(req.signedCookies);
+	
+	res.send('check console');
+	
+	
 	
 	login = function(){
 		
+		console.log(req.cookies);
 		
+		req.cookies.logged = 'true';
+		res.send(req.cookies);
 		
 	}
 	

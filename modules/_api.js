@@ -185,7 +185,7 @@ module.exports = function(req, res) {
 					
 			rawString = require('crypto').createHash('sha512').update(rawString+'nbusr123').digest('hex');
 
-			newstring += rawString.slice(10, 20);
+			newstring += rawString.slice(0, 20);
 			newstring += '-';
 			newstring += rawString.slice(20, 40);
 			newstring +=  '-';

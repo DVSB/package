@@ -13,24 +13,18 @@
 
 	app.configure(function(){
 		
-		var statics;
-					
-		app.use(express.compress());
-		app.use(express.methodOverride());
-	
-		app.use(express.bodyParser());
-		
-		statics = express.static(__dirname+'/statics');
-		app.use('/s', statics);
-
+		app.use('/s', express.static(__dirname+'/statics'));
 		app.set('views', __dirname + '/views');
 		app.engine('html', require('ejs').renderFile);
+		
+		app.use(express.bodyParser());
+		app.use(express.methodOverride());
+      app.use(express.cookieParser('9798789798798798JKJH987988')); 
+		app.use(app.router);		
 	
 	});
-
-
-	// routing
 	
+	// routing
 	
 	// if is article
 	app.all('/-*', function(req, res) {
@@ -38,7 +32,7 @@
 		// test if url is correct		
 		// module = require('url').parse(req.url);
 		// module = module.pathname.split('/')[1];
-		// res.send(module.length);
+		// res.send(module.length);		
 		
 		require('./modules/preview')(req, res);
 	
