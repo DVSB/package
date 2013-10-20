@@ -1,4 +1,4 @@
-<!DOCTYPE><html class="preview"><head>
+<!DOCTYPE><html><head>
 
 	<meta charset="utf-8" />
   	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -35,7 +35,6 @@
 		}
 		
 		body:before {
-			/*background: url('/s/2208193.png');*/
 			width: 100%;
 			height: 100%;
 			content: '';
@@ -46,7 +45,7 @@
 		}
 		
 		form {
-			padding: 120px 0;
+			padding: 300px 0;
 			width: 465px;
 			margin: 0 auto;
 		}
@@ -62,114 +61,78 @@
 			height: 45px;
 			width: auto;
 		}	
-		
-		h3 {
-			display: block;
-			padding-left: 5px;
-			margin-top: 22px;
-			font-size: 13px;
-			color: #34A334;
-		}
 	
 	</style>
 
 </head><body lang="en">
-		
-	<form role="form" method="post" action="./check">
-		
-		<div>
-			
-			<h3>Log In</h3>
-
-			<input type="text" name="email" placeholder="Email" style="width: 256px;" />
 	
-			<input type="password" name="password" placeholder="Password" style="width: 186px;" />
+	<!--
 		
-			<button type="submit" class="register btn btn-success">Log In</button>
-			
-			<h3><a href="./signup">Sign Up</a> or <a href="./reset">reset your password</a> </h3>
+	<form role="form" method="post" action="./login">
 		
-		</div>
+		<h2>Log In</h2><br><br>
+		<input type="text" name="email" placeholder="Email" style="width: 256px;" />
+		<input type="password" name="password" placeholder="Password" style="width: 186px;" />
+		<button type="submit" class="register btn btn-success">Log In</button>		
 		
 	</form>
+		
+	-->	
 	
+	<hr/>
 	
-	
-	<form role="form" method="post" action="./new/">
+	<form role="form" method="post" action="./signup">
 		
 		<div>
-			
-			<h3>Credentials</h3>
-
+			<h2>Register or Login</h2><br><br>
 			<input type="text" name="email" placeholder="Email" style="width: 256px;" />
-			
 			<input type="password" name="password" placeholder="Password" style="width: 186px;" />
-			
 		</div>
 		
+		<!--
 		<div>
-			
 			<h3>Credit Card</h3>
-			
 			<input type="text" name="creditcard" placeholder="Credit Card" style="width: 210px;" />
-			
 			<input type="text" name="cvc" placeholder="CVC" style="width: 68px;" />
-			
 			<select name="month" class="form-control">
-				<option>Month</option> 
+				<option value="">Month</option> 
 				<option value="01">01</option><option value="02">02</option><option value="03">03</option>
 				<option value="04">04</option><option value="05">05</option><option value="06">06</option>
 				<option value="07">07</option><option value="08">08</option><option value="09">09</option>
 				<option value="10">10</option><option value="11">11</option><option value="12">12</option>
 			</select>
-	
 			<select name="year" class="form-control">
-				<option>Year</option>
+				<option value="">Year</option>
 				<option value="2013">2013</option><option value="2014">2014</option><option value="2015">2015</option>
 				<option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option>
 				<option value="2019">2019</option><option value="2020">2020</option>
 			</select>
-			
 		</div>
 		
+		
 		<div>
-
 			<h3>Basic rules</h3>
-			
 			<div class="rules">
 				Your files are <strong>crypted</strong> by AES256. We don't store your email 
 				or password, <strong>only hashes</strong>. Month payment is 3€. You can 
 				<strong>anytime</strong> remove account with <strong>all</strong> data.
 			</div>
-		
-			<button type="submit" class="register btn btn-success">Register</button>
-		
+			<br><br>
 		</div>
 		
-		<br><br><br><br><br>
-		<h3><a href="./login">Log In</a> or <a href="./reset">reset your password</a> </h3>
-		
+		-->	
+			
+		<button type="submit" class="register btn btn-success">Register</button>
 		
 	</form>
 	
+	<hr/>
 	
-	
-	
-	<form role="form" method="post" action="./new">
+	<form role="form" method="post" action="./reset">
 		
-		<div>
-			
-			<h3>Reset Password</h3>
-
-			<input type="text" name="email" placeholder="Email" style="width: 256px;" />
-			
-			<div>
-				<button type="submit" class="register btn btn-success">Reset Password</button>
-			</div>
-			
-			<h3><a href="./login">Log In</a> or <a href="./signup">Sign Up</a> </h3>
-		
-		</div>
+		<h2>Reset Password</h2><br><br>
+		<input type="text" name="email" placeholder="Email" style="width: 256px;" />
+		<button type="submit" class="register btn btn-success">Reset Password</button>
 		
 	</form>
 

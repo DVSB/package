@@ -1,88 +1,54 @@
 module.exports = function(req, res) {
 	
 	
-	var create, getRandom, updateLifeCycle, getLifeCycle, bucket = 'mdown',
-	markdown=require('markdown').markdown, s3, sdk = require('aws-sdk');
+	var createNew, getRandom, updateLifeCycle, getLifeCycle, bucket = 'mdown',
+	markdown=require('markdown').markdown,
+	s3 = require('./_api')().s3, luhn = require('./_api')().luhn, 
+	fingerprint = require('./_api')().fingerprint;
 
-	s3 = new sdk.S3({ 
-		accessKeyId : 'AKIAI5KY54XEDOMGQSCQ', 
-		secretAccessKey : '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',
-		s3: '2006-03-01'
-	});
 
-	create = function() {
+	createNew = function() {
 		
-		var article, key;
-
-		key = getRandom();
-		article = req.body.markdown ? req.body.markdown : 'empty';
+		var getStamp, getRandom, key, redirectToPage;
 		
-		s3.client.putObject({
-			Bucket : bucket,
-			Key : key,
-			Body : article,
-			StorageClass : 'REDUCED_REDUNDANCY',
-			ServerSideEncryption : 'AES256',
-			ContentType : 'text/x-markdown',
-			Metadata : {
-				'email' : 'none',
-				'public' : 'true',
-			}
-		}, function(err, data){
-			if (err) throw err;
-			getLifeCycle(key);
+		// every file should expire in some moment, if user has payed
+		// version, this should be ignored and replaced in future
+		getStamp = function(expires){
+			return new Date().setDate(new Date().getDate()+(function(){
+				if (expires==='day') { return 1; }
+				if (expires==='week') { return 7; }
+				if (expires==='month') { return 31; }
+				if (expires==='year') { return 365; }
+			})());
+		}
+		
+		// looks like `hn06xqi4` and represent date of creating
+		// which is written as 36base string
+		key = fingerprint.generate();
+		
+		redirectToPage = function(){
+			res.redirect('/-'+key);
+		}
+			
+		// normal title of markdown file is based on uniq name, which
+		// browsable on url and with details like date when should be
+		// file expired, like `hn06xqi4-1382272010520`
+		s3.putObject({
+			key : key+'-'+getStamp(req.body.expiration), 
+			body : req.body.markdown ? req.body.markdown : 'empty',
+		}, function(){
+			redirectToPage()
 		});
 		
 	};	
 	
 	
-	getLifeCycle = function(key) {
-		
-		s3.client.getBucketLifecycle({
-			Bucket : bucket
-		}, function(err, data){
-			if (err) throw err;
-			updateLifeCycle(data, key);
-		});
-		
-	}
 	
-	
-	updateLifeCycle = function(data, key) {
-		
-		var expires, newRules=[];
-		
-		expires = req.body.expiration;
-		switch(expires) {
-			case 'day' : expires = 1; break;
-			case 'week' : expires = 7; break;
-			case 'month' : expires = 31; break;
-			case 'year' : expires = 365; break;
-		};
-			
-		newRules = data.Rules;
-		newRules.push({
-			ID : key,
-			Prefix : key,
-			Expiration : { Days : expires },
-			Status : 'Enabled'
-		});
-		
-		s3.client.putBucketLifecycle({
-			Bucket : bucket,
-			LifecycleConfiguration : {
-				Rules : newRules
-			}
-		}, function(err, data){
-			if (err) throw err;
-			res.redirect('/preview/'+key);
-		});
-		
-	}
 	
 	
 	unlink = function(){
 		
+		/*
 		var date, random;
 		
 		module = require('url').parse(req.url);
@@ -95,23 +61,9 @@ module.exports = function(req, res) {
 			if (err) throw err;
 			res.redirect('/');
 		});
+		*/l
 		
-	};	
-	
-	
-	getRandom = function(){
-		
-		var date, random;
-				
-		date = new Date().getTime();
-		random = Math.floor((Math.random()*800)+100);
-		
-		random = date + random;
-		random = random.toString(36);
-		
-		return random;
-		
-	};	
+	};		
 
 
 	// get from URL module
@@ -122,7 +74,7 @@ module.exports = function(req, res) {
 	switch(module) {
 		
 		case 'create': 
-		create();
+		createNew();
 		break;
 		
 		case 'unlink': 

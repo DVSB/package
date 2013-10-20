@@ -1,5 +1,6 @@
 
-	var express, app, screens;
+	var express, app, screens, 
+	fingerprint = require('./modules/_api')().fingerprint;;
 		
 
 	// express 
@@ -29,7 +30,20 @@
 
 
 	// routing
-
+	
+	
+	// if is article
+	app.all('/-*', function(req, res) {
+		
+		// test if url is correct		
+		// module = require('url').parse(req.url);
+		// module = module.pathname.split('/')[1];
+		// res.send(module.length);
+		
+		require('./modules/preview')(req, res);
+	
+	});
+	
 	screens = [
 		'preview', 'storage', 'edit', 'usr', 'das', 'cdb'
 	].forEach(function(mod){

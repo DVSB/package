@@ -1,61 +1,54 @@
 module.exports = function(req, res) {
 	
 	
-	var save, preview, s3, sdk = require('aws-sdk'), 
-	bucket = 'mdown', render, module;
+	var save, preview, render, module, getAndRenderBlog, 
+	s3 = require('./_api')().s3;
 	
-	
-	s3 = new sdk.S3({ 
-		accessKeyId : 'AKIAI5KY54XEDOMGQSCQ', 
-		secretAccessKey : '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',
-		s3: '2006-03-01'
-	});
-
 
 	preview = function(file) {
 		
-		var article, key;
-
-		s3.client.getObject({
-			Bucket : bucket,
-			Key : file
-		}, function(err, data){
-			if (err) throw err;
-			render(data.Body+'');
+		// with list all objects but with prefix which is uniq
+		// name of file, result is only one key always
+		s3.listObjects({
+			prefix : file
+		},function(data){
+			var realName = data.Contents[0].Key;
+			getAndRenderBlog(realName);
 		});
 		
 	};	
 	
 	
-	render = function(md) {
+	getAndRenderBlog = function(realFile){
 		
-		var markdown = require('markdown').markdown;
-		
-		res.render('preview.html', { 
-			markdown : markdown.toHTML(md),
-			key : module
+		// get object from s3, content is markdown file which
+		// we need parse before place to HTML
+		s3.getObject({
+			key : realFile
+		}, function(data){
+			fileContent = data.Body + '';
+			renderMDtoHTML(fileContent);
 		});
 		
 	};
+	
+	
+	renderMDtoHTML = function(mdContent){
+	
+		var markdown = require('markdown').markdown;
+		
+		res.render('preview.html', { 
+			markdown : markdown.toHTML(mdContent),
+			key : 'adsadsads'
+		});
+		
+	}
+	
 
 
 	// get from URL module
 	module = require('url').parse(req.url);
-	module = module.pathname.split('/')[2];
-	
-		
-	// routing of URL 
-	switch(module) {
-
-		case 'save;': 
-		save();
-		break;
-		
-		default:
-		preview(module);
-		break;
-		
-	};
-	
+	module = module.pathname.split('/')[1].substring(1);
+	preview(module);
 	
 };
