@@ -23,7 +23,9 @@ module.exports = function(req, res) {
 	
 	renderArticles = function(articles){
 		
-		res.send(articles);
+		res.render('dashboard.html', { 
+			allArticles : articles 
+		});
 				
 	};
 	

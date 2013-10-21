@@ -9,18 +9,7 @@ module.exports = function(req, res) {
 
 	createNew = function() {
 		
-		var getStamp, getRandom, key, redirectToPage;
-		
-		// every file should expire in some moment, if user has payed
-		// version, this should be ignored and replaced in future
-		getStamp = function(expires){
-			return new Date().setDate(new Date().getDate()+(function(){
-				if (expires==='day') { return 1; }
-				if (expires==='week') { return 7; }
-				if (expires==='month') { return 31; }
-				if (expires==='year') { return 365; }
-			})());
-		}
+		var getRandom, key, redirectToPage;
 		
 		// looks like `hn06xqi4` and represent date of creating
 		// which is written as 36base string
@@ -32,9 +21,9 @@ module.exports = function(req, res) {
 			
 		// normal title of markdown file is based on uniq name, which
 		// browsable on url and with details like date when should be
-		// file expired, like `hn06xqi4-1382272010520`
+		// file expired, like `hn06xqi4`
 		s3.putObject({
-			key : key+'-'+getStamp(req.body.expiration), 
+			key : key,
 			body : req.body.markdown ? req.body.markdown : 'empty',
 		}, function(){
 			redirectToPage()

@@ -15,7 +15,7 @@
 	   
 		if (isNotLogged) {
 			app.all('/', function(req, res) {
-				res.render('index.html');
+				require('./modules/firsttouch')(req, res);
 			});
 			next();
 		}

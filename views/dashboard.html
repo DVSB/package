@@ -6,7 +6,19 @@
 	<link rel="stylesheet" href="/s/bootstrap.css" type="text/css" />
 
 </head><body lang="en">
+	
+	<ul>	
+	<% allArticles.forEach(function(ele, i){ %>
 		
-	dashboard
+		<li>
+			<a href="-<%= ele.Key %>"><%= ele.Key %></a>
+			<a href="-<%= ele.Key %>/edit">edit</a>
+			<a href="-<%= ele.Key %>/remove">remove</a>
+		 	<time><%= ele.LastModified %></time>
+			<span><%= ele.Size %></span>
+		</li>
+		
+	<% }); %>
+	</ul>
 
 </body></html>
