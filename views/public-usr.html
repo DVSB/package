@@ -1,82 +1,83 @@
-<!DOCTYPE><html><head>
+<!DOCTYPE><html class="register"><head>
 
 	<meta charset="utf-8" />
   	<meta name="viewport" content="width=device-width, initial-scale=1" />
-  	
-	<title>Log In</title>
 	
-	<link rel="stylesheet" href="/s/bootstrap.css" type="text/css" />
+	<title>User Section</title>
 	
-	<style>
+	<link rel="stylesheet" href="/s/normalize.css" type="text/css" />
+	<link rel="stylesheet" href="/s/stylesheets.css" type="text/css" />
+	<link rel="stylesheet" href="/s/publics.css" type="text/css" />
 	
-		::selection {
-			background: #429279;
-			color: #FFF;
-		}
-		
-		::-moz-selection {
-			background: #429279;
-			color: #FFF;
-		}
-		
-		html {
-			height: 100%;
-		}
-		
-		h1, h2, h3 {
-			font-family: "Lucida Grande", verdana, sans-serif;
-		}
-	
-		body {
-			font: 13px/23px "Lucida Grande", verdana, sans-serif;
-			width: 100%;
-			font-weight: 300;
-			color: #444;
-		}
-		
-		body:before {
-			width: 100%;
-			height: 100%;
-			content: '';
-			opacity: 0.02;
-			display: block;
-			position: absolute;
-			z-index: -1;
-		}
-		
-		form {
-			padding: 300px 0;
-			width: 465px;
-			margin: 0 auto;
-		}
-		
-		input {
-			padding: 8px;
-			margin: 6px 4px;
-		}
-		
-		select.form-control {
-			display: inline;
-			margin: 3px 3px 6px 3px;
-			height: 45px;
-			width: auto;
-		}	
-	
-	</style>
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
 </head><body lang="en">
+	
+	<% 
+		if (show==='login') { 
+	%>
+	
+		<article id="login">
 		
-	<form role="form" method="post" action="./check">
+			<h2>Log in</h2>
 		
-		<div>
-			<h2>Register or Login</h2><br><br>
-			<input type="text" name="email" placeholder="Email" style="width: 256px;" />
-			<input type="password" name="password" placeholder="Password" style="width: 186px;" />
-		</div>
-			
-		<button type="submit" class="register btn btn-success">Register</button>
+			<form role="form" method="post" action="./login">
+				<input type="text" name="email" placeholder="Email" />
+				<input type="password" name="password" placeholder="Password" />
+				<button type="submit">Log in</button>
+			</form>
 		
-	</form>
-
-
+			<div class="rules">
+				We do not store your email or password, only hashes.<br>
+				<a href="./register">Create new account</a> or <a href="./reset">reset your password</a>.
+			</div>
+		
+		</article>
+	
+	<% 
+		} else if (show==='register') { 
+	%>
+	
+		<article id="register">
+		
+			<h2>Create new account</h2>
+		
+			<form role="form" method="post" action="./register">
+				<input type="text" name="email" placeholder="Email" />
+				<input type="password" name="password1" placeholder="Password" />
+				<input type="password" name="password2" placeholder="Password again" />
+				<button type="submit">Create</button>
+			</form>
+		
+			<div class="rules">
+				You can remove your account with <strong>all</strong> data anytime.<br>
+				<a href="./login">Log in</a> or <a href="./reset">reset your password</a>.
+			</div>
+		
+		</article>
+	
+	<% 
+		} else if (show==='reset') { 
+	%>
+	
+		<article id="reset">
+		
+			<h2>Reset your password</h2>
+		
+			<form role="form" method="post" action="./reset">
+				<input type="text" name="email" placeholder="Email" />
+				<button type="submit">Reset</button>
+			</form>
+		
+			<div class="rules">
+				Enter registrated email and we send there verification link.<br>
+				You can also <a href="./register">Sign up</a> or <a href="./login">Log in</a>.
+			</div>
+		
+		</article>
+	
+	<% 
+		} 
+	%>
+		
 </body></html>

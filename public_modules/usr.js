@@ -188,8 +188,26 @@ module.exports = function(req, res) {
 		verifyEmail();
 		break;
 	
+		case 'login':
+		res.render('public-usr.html', { 
+			show : 'login' 
+		});
+		break;
+		
+		case 'reset':
+		res.render('public-usr.html', { 
+			show : 'reset' 
+		});
+		break;
+
+		case 'register':
+		res.render('public-usr.html', { 
+			show : 'register' 
+		});
+		break;
+
 		default:
-		res.render('public-usr.html');
+		res.redirect('./register');
 		break;
 	
 	};

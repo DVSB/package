@@ -1,0 +1,33 @@
+	
+	.index body {
+		padding-left: 100px;
+	}
+	
+	/* register */
+	
+	.register article {
+		width: 460px;
+		padding: 30px;
+		margin: 0 auto;
+		height: 100%;
+		padding-top: 200px;
+	}
+	
+	.register input {
+		display: block;
+		margin-bottom: 15px;
+		width: 100%;
+	}
+	
+	.register form {
+		width: 400px;
+	}
+	
+	.register button {
+		float: right;
+	}
+	
+	.register .rules {
+		clear: both;
+		margin-top: 100px;
+	}
