@@ -1,4 +1,5 @@
 
+
 	var app, screens, checkAuth,
 	express = require('express'), app = module.exports = express(),
 	enigma = require('./modules/_api')().enigma,
@@ -19,11 +20,12 @@
 			next();
 		}
 		
-		console.log(isLogged);
-		
+		console.log(cookies);
+			
 		if (isLogged) {
 			app.all('/', function(req, res) {
 				res.render('dashboard.html');
+				require('./modules/dashboard')(req, res);
 			});
 			next();
 		}
@@ -47,7 +49,7 @@
 		app.use(express.bodyParser());
 		app.use(express.methodOverride());
 		
-      app.use(express.cookieParser('9798789798798798JKJH987988')); 
+      	app.use(express.cookieParser('9798789798798798JKJH987988')); 
 		// app.use(express.cookieSession());
 		
 		app.use(checkAuth);

@@ -1,10 +1,9 @@
 module.exports = function(req, res) {
 	
-	var signup, saveNewUser, checkUser, checkPassAndLogin, login,
-	s3 = require('./_api')().s3, 
-	cookies = require('./_api')().cookies,
-	fingerprint = require('./_api')().fingerprint,
-	enigma = require('./_api')().enigma;	
+	
+	var checkIfExist, saveNewUser, checkUser, login, 
+	_api = require('./_api')(), s3 = _api.s3, cookies = _api.cookies,
+	fingerprint = _api.fingerprint, enigma = _api.enigma;	
 
 	
 	checkIfExist = function() {
@@ -12,12 +11,12 @@ module.exports = function(req, res) {
 		// if empty response without email
 		if (req.body.email==='' || req.body.password==='' || Object.keys(req.body).length===0) { 
 			res.redirect('/usr/'); return; }
-	
-		s3.isUserExists({
-			key : fingerprint.getPrivate(req.body.email)
-		}, function(answer){
-			if (answer) { checkUser()
-			} else {	saveNewUser() }
+				
+		s3.isObjectExists({
+			key : fingerprint(req.body.email)+'/_config.json'
+		}, function(isExists){
+			if (isExists) { checkUser()
+			} else { saveNewUser() }
 		});
 		
 	};
@@ -25,13 +24,16 @@ module.exports = function(req, res) {
 	
 	saveNewUser = function(){
 				
-		s3.putUser({
-			key : fingerprint.getPrivate(req.body.email),
-			body : JSON.stringify({ password : fingerprint.getPrivate(req.body.password) }),
+		s3.putObject({
+			key : fingerprint(req.body.email)+'/_config.json',
+			body : JSON.stringify({ 
+				password : fingerprint(req.body.password),
+				isVerified : false
+			}),
 		}, function(data){
 			res.redirect('/usr/');
 		});
-		
+	
 	};
 	
 	
@@ -40,16 +42,15 @@ module.exports = function(req, res) {
 		var arePassEqual;
 		
 		arePassEqual = function(user){
-			return (user.password===fingerprint.getPrivate(req.body.password));
+			return (user.password===fingerprint(req.body.password));
 		}
 		
-		s3.getUser({
-			key : fingerprint.getPrivate(req.body.email)
+		s3.getObject({
+			key : fingerprint(req.body.email)+'/_config.json'
 		}, function(data){
-			var userDetails = data.Body+'';
-			userDetails = JSON.parse(userDetails);
-			if (arePassEqual(userDetails)) { login() 
-			} else { res.send('sorry, passwords are not equal'); }
+			arePassEqual = arePassEqual(JSON.parse(data.Body+''));
+			if (arePassEqual) { 
+			login() } else { res.send('passwrds not equal'); }
 		});
 		
 	};
@@ -59,14 +60,14 @@ module.exports = function(req, res) {
 		
 		var publicUserHash, enigmaUserHash;
 		
-		publicUserHash = fingerprint.getPublic(req.body.email);
+		publicUserHash = fingerprint(req.body.email);
 		enigmaUserHash = enigma.encrypt(publicUserHash);
 		
 		res.cookie(
 			'islogged', 
 			'true', 
 			{ signed: true, httpOnly: true }
-		);		
+		);
 		
 		res.cookie(
 			'userid', 

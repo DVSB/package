@@ -1,7 +1,7 @@
 module.exports = function(req, res) {
 	
 	
-	var save, preview, render, module, getAndRenderBlog, 
+	var save, preview, getAndRenderBlog, renderMDtoHTML,  
 	s3 = require('./_api')().s3;
 	
 
@@ -44,11 +44,11 @@ module.exports = function(req, res) {
 		
 	}
 	
-
-
+	
 	// get from URL module
 	module = require('url').parse(req.url);
 	module = module.pathname.split('/')[1].substring(1);
 	preview(module);
+	
 	
 };

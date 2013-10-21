@@ -1,14 +1,16 @@
 module.exports = function(req, res) {
 	
+	var s3, sdk = require('aws-sdk'), obj = {}, 
+	settings;
 	
-	var s3, sdk = require('aws-sdk'), obj = {};
+	settings = require('fs').readFileSync('./settings.json');
+	settings = JSON.parse(settings);
 	
 	s3 = new sdk.S3({ 
-		accessKeyId : 'AKIAI5KY54XEDOMGQSCQ', 
-		secretAccessKey : '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',
-		s3: '2006-03-01'
+		accessKeyId : settings.amazon.accessKeyId, 
+		secretAccessKey : settings.amazon.secretAccessKey,
+		s3: settings.amazon.apiVersion
 	});
-	
 	
 	obj.s3 = {
 	
@@ -21,24 +23,6 @@ module.exports = function(req, res) {
 				Body : params.body,
 				Key : params.key,
 				Bucket : 'mdown',
-				StorageClass : 'REDUCED_REDUNDANCY',
-				ServerSideEncryption : 'AES256'
-			}, function(err, data){
-				if (err) throw err;
-				callback(data);
-			});
-		
-		},
-		
-		// putobject to s3 is internal api and should have in future
-		// also more functions after callback, like metatags or like
-		// storageclass or enryption settings..
-		putUser : function(params, callback){
-		
-			s3.client.putObject({
-				Body : params.body,
-				Key : params.key,
-				Bucket : 'mdown.users',
 				StorageClass : 'REDUCED_REDUNDANCY',
 				ServerSideEncryption : 'AES256'
 			}, function(err, data){
@@ -78,24 +62,10 @@ module.exports = function(req, res) {
 		},
 		
 		
-		// get users 
-		getUser : function(params, callback){
+		isObjectExists : function(params, callback){
 			
 			s3.client.getObject({
-				Bucket : 'mdown.users',
-				Key : params.key
-			}, function(err, data){
-				if (err) throw err;
-				callback(data);
-			});
-		
-		},
-		
-		
-		isUserExists : function(params, callback){
-			
-			s3.client.getObject({
-				Bucket : 'mdown.users',
+				Bucket : 'mdown',
 				Key : params.key
 			}, function(err, data){
 				if (err && err.name==='NoSuchKey') { callback(false); }
@@ -177,33 +147,12 @@ module.exports = function(req, res) {
 	};
 	
 	
-	obj.fingerprint = {
+	obj.fingerprint = function(string) {
 		
-		getPrivate : function(rawString){
-			
-			var newstring = '';
-					
-			rawString = require('crypto').createHash('sha512').update(rawString+'nbusr123').digest('hex');
+		string = string+settings.passwords[0];
+		string = require('crypto').createHash('sha512').update(string).digest('hex');
+		return string.slice(10, 40);
 
-			newstring += rawString.slice(10, 30);
-			newstring += '-';
-			newstring += rawString.slice(40, 60);
-			newstring +=  '-';
-			newstring += rawString.slice(70, 90);
-			
-			return newstring;
-	
-		},
-		
-		getPublic : function(rawString){
-								
-			rawString = require('crypto').createHash('sha512').update(rawString+'nbusr123').digest('hex');
-
-			return rawString.slice(10, 30);
-			
-	
-		}
-	
 	};
 	
 	
@@ -212,8 +161,8 @@ module.exports = function(req, res) {
 		encrypt : function(string){
 			
 			var crypto = require('crypto');
-			string = crypto.createHash('sha512').update(string+'nbusr890').digest('hex').slice(10, 50);
-			string = crypto.createHash('sha512').update(string+'mlmkmklm').digest('hex').slice(70, 90);
+			string = crypto.createHash('sha512').update(string+settings.passwords[1]).digest('hex').slice(10, 50);
+			string = crypto.createHash('sha512').update(string+settings.passwords[1]).digest('hex').slice(70, 90);
 			
 			return string;
 	
