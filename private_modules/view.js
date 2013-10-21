@@ -1,33 +1,31 @@
 module.exports = function(req, res) {
 	
 	
-	var save, preview, getAndRenderBlog, renderMDtoHTML,  
-	s3 = require('./_api')().s3, cookies = req.signedCookies;
+	var preview, getAndRenderBlog, renderMDtoHTML,  
+	s3 = require('./_api')().s3;
 	
 
 	preview = function(file) {
 		
-		console.log(cookies);
-		return false;
+		var cookies;
 		
-		// with list all objects but with prefix which is uniq
-		// name of file, result is only one key always
-		s3.listObjects({
-			prefix : cookies.userid+'/articles/'+file
-		},function(data){
-			var realName = data.Contents[0].Key;
-			getAndRenderBlog(realName);
-		});
+		cookies = req.signedCookies;
+		file = cookies.userid+'/articles/'+file;
+
+		s3.isObjectExists({
+			key : file
+		}, function(isExists){
+			if (isExists) { getAndRenderBlog(file)
+			} else { res.send('file does not exists!') }
+		})
 		
 	};	
 	
 	
-	getAndRenderBlog = function(realFile){
+	getAndRenderBlog = function(blogPath){
 		
-		// get object from s3, content is markdown file which
-		// we need parse before place to HTML
 		s3.getObject({
-			key : realFile
+			key : blogPath
 		}, function(data){
 			fileContent = data.Body + '';
 			renderMDtoHTML(fileContent);
@@ -39,8 +37,8 @@ module.exports = function(req, res) {
 	renderMDtoHTML = function(mdContent){
 	
 		var markdown = require('markdown').markdown;
-		
-		res.render('private-preview.html', { 
+	
+		res.render('private-view.html', { 
 			markdown : markdown.toHTML(mdContent),
 			key : 'adsadsads'
 		});

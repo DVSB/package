@@ -8,32 +8,24 @@ module.exports = function(req, res) {
 
 
 	createNew = function() {
-		
-		var getRandom, key, redirectToPage;
-		
-		// looks like `hn06xqi4` and represent date of creating
-		// which is written as 36base string
+				
+		var getRandom, key, redirectToPage,
+		cookies = req.signedCookies;
+
 		key = random.generate();
-		
-		redirectToPage = function(){
-			res.redirect('/-/view/'+key);
-		}
-			
-		// normal title of markdown file is based on uniq name, which
-		// browsable on url and with details like date when should be
-		// file expired, like `hn06xqi4`
+
 		s3.putObject({
-			key : key,
+			key : cookies.userid+'/articles/'+key,
 			body : req.body.markdown ? req.body.markdown : 'empty',
 		}, function(){
-			redirectToPage()
+			res.redirect('/-/view/'+key);
 		});
 		
 	};		
 
 
 	module = require('url').parse(req.url);
-	module = module.pathname.split('/')[2];
+	module = module.pathname.split('/')[3];
 			
 	// routing of URL 
 	switch(module) {
