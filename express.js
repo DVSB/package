@@ -1,14 +1,13 @@
 
 
 	var app, screens, checkAuth,
-	express = require('express'), app = module.exports = express(),
-	enigma = require('./modules/_api')().enigma,
-	fingerprint = require('./modules/_api')().fingerprint;
+	express = require('express'), app = module.exports = express();
 	
 	
 	checkAuth = function(req, res, next) {
 		
-		var isNotLogged, isLogged, cookies = req.signedCookies;
+		var isNotLogged, isLogged, cookies = req.signedCookies,
+		enigma = require('./public_modules/_api')().enigma;
 		
 		isNotLogged = (!cookies.islogged || cookies.islogged!=='true');
 		isLogged = (cookies.islogged==='true')&&(cookies.userhash===enigma.encrypt(cookies.userid));
