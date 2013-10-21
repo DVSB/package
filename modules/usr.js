@@ -1,12 +1,18 @@
 module.exports = function(req, res) {
 	
 	
-	var checkIfExist, saveNewUser, checkUser, login, sendVerification,
-	_api = require('./_api')(), s3 = _api.s3, cookies = _api.cookies,
-	fingerprint = _api.fingerprint, enigma = _api.enigma;	
+	// this file care about login, registration, forgot and verify
+	// user type password and if exists, is logged, if not is checked
+	// if is verified and if it's correct password, if now, is redirected
+	// to verify message or forgotten passsword message
+	
+	
+	var checkIfExists, saveNewUserAndSendEmail, checkUserStatus, createCookies,
+	sendEmailVerification, verifyEmail, module, _api = require('./_api')(), s3 = _api.s3,
+	fingerprint = _api.fingerprint, enigma = _api.enigma;
 
 	
-	checkIfExist = function() {
+	checkIfExists = function(callback) {
 						
 		// if empty response without email
 		if (req.body.email==='' || req.body.password==='' || Object.keys(req.body).length===0) { 
@@ -14,15 +20,12 @@ module.exports = function(req, res) {
 				
 		s3.isObjectExists({
 			key : fingerprint(req.body.email)+'/_config.json'
-		}, function(isExists){
-			if (isExists) { checkUser()
-			} else { saveNewUser() }
-		});
+		}, callback);
 		
 	};
 	
 	
-	saveNewUser = function(){
+	saveNewUserAndSendEmail = function(){
 				
 		s3.putObject({
 			key : fingerprint(req.body.email)+'/_config.json',
@@ -31,32 +34,38 @@ module.exports = function(req, res) {
 				isVerified : false
 			}),
 		}, function(data){
-			sendVerification(req.body.email);
+			sendEmailVerification(req.body.email);
 		});
 	
 	};
 	
 	
-	checkUser = function(){
+	checkUserStatus = function(){
 		
-		var arePassEqual;
+		var arePassEqual, isVerified, checkStatus;
 		
 		arePassEqual = function(user){
 			return (user.password===fingerprint(req.body.password));
 		}
 		
+		isVerified = function(user){
+			return (user.isVerified===true);
+		}
+		
+		checkStatus = function(data){
+			data = JSON.parse(data.Body+'');
+			if (arePassEqual(data)&&isVerified(data)) { createCookies() 
+			} else { res.send('not equal pass or user not verified'); }
+		}
+		
 		s3.getObject({
 			key : fingerprint(req.body.email)+'/_config.json'
-		}, function(data){
-			arePassEqual = arePassEqual(JSON.parse(data.Body+''));
-			if (arePassEqual) { 
-			login() } else { res.send('passwrds not equal'); }
-		});
+		}, checkStatus);
 		
 	};
 
 
-	login = function(){
+	createCookies = function(){
 		
 		var publicUserHash, enigmaUserHash;
 		
@@ -86,7 +95,7 @@ module.exports = function(req, res) {
 	};
 	
 	
-	sendVerification = function(userEmail){
+	sendEmailVerification = function(userEmail){
 		
 		var smtp, userFingerprint, html='', text='';
 		
@@ -106,47 +115,84 @@ module.exports = function(req, res) {
 		html += '<a href="http://mdown.co/usr/verify?'+userFingerprint;
 		html += '">Click Here!</a><br><br><br>Have a nice day!';
 		
-		console.log('i am before');
-		
 		smtp.sendMail({
 			from: 'mdown <support@mdown.co>',
-			to: 'samuel@ondrek.com', // TODO:userEmail
+			to: 'masdlmdasklm@ondrek.com', // TODO:userEmail
 			subject: 'Verify your mdown email',
 			text: text,
 			html: html
 		}, function(err, data) {
-			
-			// if (err) throw err;
-		    
-			if (err){ console.log(error);
+			if (err){ console.log(err);
 		    } else { console.log("Message sent: " + data.message); }
-			
-			//smtp.close();
-			
 			res.redirect('/');
 		});
-		
-		console.log('i am after');
-				
+	
 	};
 	
 	
-	module = require('url').parse(req.url);
-	module = module.pathname.split('/')[2];	
+	verifyEmail = function(){
+		
+		var userFingerprint, getConfigOnS3, updateConfigOnS3;
+		
+		userFingerprint = require('url').parse(req.url);
+		if (!userFingerprint.search) { res.redirect('/usr/'); return; }; 
+		userFingerprint = userFingerprint.search.substring(1);
+				
+		getConfigOnS3 = function(){
+			s3.getObject({
+				key : userFingerprint+'/_config.json'
+			}, function(data){
+				data = JSON.parse(data.Body+'');
+				data.isVerified = true;
+				data = JSON.stringify(data);
+				updateConfigOnS3(data);
+			});
+		}
+		
+		updateConfigOnS3 = function(data){
+			s3.putObject({
+				key : userFingerprint+'/_config.json',
+				body : data
+			}, function(data){
+				res.redirect('/usr/');
+			});
+		}
+		
+		s3.isObjectExists({
+			key : userFingerprint+'/_config.json'
+		}, function(isExists){
+			if (isExists) { getConfigOnS3();
+			} else { res.redirect('./'); }
+		});
 	
-	// routing of URL 
+	};
+	
+		
+	// this is browse module, this module use two parts of url, first
+	// is module and second is search /usr/verify?mkldmkasmk, in switch
+	// is browsed module and search can be send inside
+
+	module = require('url').parse(req.url).path.split('/')[2].split('?')[0];
+	module = (module==='') ? null : module;
+
 	switch(module) {
-		
-		case 'signup': 
-		checkIfExist();
+	
+		case 'check': 
+		checkIfExists(function(isExists){
+			if (isExists) { checkUserStatus()
+			} else { saveNewUserAndSendEmail() }
+		});
 		break;
-		
+	
+		case 'verify': 
+		verifyEmail();
+		break;
+	
 		default:
 		res.render('usr.html');
 		break;
-		
-	};
 	
+	};
 	
 };
 

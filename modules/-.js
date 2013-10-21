@@ -1,5 +1,8 @@
 module.exports = function(req, res) {
 	
+	// this module is run only when user is logged and has correct all
+	// credentials, if is user here, always should be all comunication
+	// checked in every request to prevent hacked cookies and IP adress
 	
 	var cookies = req.signedCookies, getAllArticles, renderArticles,
 	_api = require('./_api')(), s3 = _api.s3, underscore = require('underscore');

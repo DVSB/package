@@ -15,14 +15,14 @@
 	   
 		if (isNotLogged) {
 			app.all('/', function(req, res) {
-				require('./modules/firsttouch')(req, res);
+				require('./modules/index')(req, res);
 			});
 			next();
 		}
 					
 		if (isLogged) {
 			app.all('/', function(req, res) {
-				require('./modules/dashboard')(req, res);
+				require('./modules/-')(req, res);
 			});
 			next();
 		}
