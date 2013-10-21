@@ -19,12 +19,9 @@
 			});
 			next();
 		}
-		
-		console.log(cookies);
-			
+					
 		if (isLogged) {
 			app.all('/', function(req, res) {
-				res.render('dashboard.html');
 				require('./modules/dashboard')(req, res);
 			});
 			next();
@@ -73,9 +70,13 @@
 	
 	});
 	
+	app.all('/new/', function(req, res) {
+		res.render('new.html');
+	});
+	
 	
 	screens = [
-		'preview', 'storage', 'edit', 'usr', 'das', 'cdb'
+		'preview', 'storage', 'usr', 'create'
 	].forEach(function(mod){
 		app.all('/'  + mod +  '/*', function(req, res) {
 			require('./modules/' + mod)(req, res);

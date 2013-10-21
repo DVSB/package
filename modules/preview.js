@@ -50,5 +50,4 @@ module.exports = function(req, res) {
 	module = module.pathname.split('/')[1].substring(1);
 	preview(module);
 	
-	
 };
