@@ -1,7 +1,7 @@
 module.exports = function(req, res) {
 	
 	
-	var checkIfExist, saveNewUser, checkUser, login, 
+	var checkIfExist, saveNewUser, checkUser, login, sendVerification,
 	_api = require('./_api')(), s3 = _api.s3, cookies = _api.cookies,
 	fingerprint = _api.fingerprint, enigma = _api.enigma;	
 
@@ -31,7 +31,7 @@ module.exports = function(req, res) {
 				isVerified : false
 			}),
 		}, function(data){
-			res.redirect('/usr/');
+			sendVerification(req.body.email);
 		});
 	
 	};
@@ -83,9 +83,54 @@ module.exports = function(req, res) {
 		
 		res.redirect('/');
 		
-	}
+	};
 	
-
+	
+	sendVerification = function(userEmail){
+		
+		var smtp, userFingerprint, html='', text='';
+		
+		userFingerprint = fingerprint(userEmail);
+						
+		smtp = require('nodemailer').createTransport('SMTP', {
+			service: 'Gmail',
+			auth: { user: 'samuel@ondrek.com', pass: 'papluhaMM00' }
+		});
+		
+		text += 'Hello,\n\n',
+		text += 'Please visit this URL for verification of account:\n';
+		text += 'http://mdown.co/usr/verify?'+userFingerprint;
+		
+		html += 'Hello,<br><br>';
+		html += 'Please verify your email by click on this link:<br>';
+		html += '<a href="http://mdown.co/usr/verify?'+userFingerprint;
+		html += '">Click Here!</a><br><br><br>Have a nice day!';
+		
+		console.log('i am before');
+		
+		smtp.sendMail({
+			from: 'mdown <support@mdown.co>',
+			to: 'samuel@ondrek.com', // TODO:userEmail
+			subject: 'Verify your mdown email',
+			text: text,
+			html: html
+		}, function(err, data) {
+			
+			// if (err) throw err;
+		    
+			if (err){ console.log(error);
+		    } else { console.log("Message sent: " + data.message); }
+			
+			//smtp.close();
+			
+			res.redirect('/');
+		});
+		
+		console.log('i am after');
+				
+	};
+	
+	
 	module = require('url').parse(req.url);
 	module = module.pathname.split('/')[2];	
 	

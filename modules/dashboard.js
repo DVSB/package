@@ -33,6 +33,7 @@ module.exports = function(req, res) {
 	module = require('url').parse(req.url);
 	module = module.pathname.split('/')[2];	
 	
+	
 	// routing of URL 
 	switch(module) {
 		
