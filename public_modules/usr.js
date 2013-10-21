@@ -189,7 +189,7 @@ module.exports = function(req, res) {
 		break;
 	
 		default:
-		res.render('usr.html');
+		res.render('public-usr.html');
 		break;
 	
 	};

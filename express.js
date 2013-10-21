@@ -20,10 +20,21 @@
 		}
 					
 		if (isLogged) {
-			app.all('/-/*', function(req, res) {
-				require('./private_modules/-')(req, res);
+			
+			app.all('/-/', function(req, res) {
+				require('./private_modules/_dashboard')(req, res);
 			});
+			
+			screens = [
+				'new', 'list', 'settings'
+			].forEach(function(mod){
+				app.all('/-/'  + mod +  '/*', function(req, res) {
+					require('./private_modules/' + mod)(req, res);
+				});
+			});
+			
 			next();
+			
 		}
 		
 		// todo continue here
@@ -57,18 +68,13 @@
 	
 	// routing
 	
-	
-	app.all('/new/', function(req, res) {
-		res.render('new.html');
-	});
-	
 	app.all('/', function(req, res) {
-		res.render('index.html');
+		res.render('public-index.html');
 	});
 	
 	
 	screens = [
-		'preview', 'storage', 'usr', 'create'
+		'storage', 'usr' // , 'blog', 'support', 'status', 'prices'
 	].forEach(function(mod){
 		app.all('/'  + mod +  '/*', function(req, res) {
 			require('./public_modules/' + mod)(req, res);
