@@ -16,7 +16,7 @@ module.exports = function(req, res) {
 						
 		// if empty response without email
 		if (req.body.email==='' || req.body.password==='' || Object.keys(req.body).length===0) { 
-			res.redirect('/usr/'); return; }
+			res.redirect('/usr/'); return; } 
 				
 		s3.isObjectExists({
 			key : fingerprint(req.body.email)+'/_config.json'

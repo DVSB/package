@@ -4,7 +4,7 @@ module.exports = function(req, res) {
 	// credentials, if is user here, always should be all comunication
 	// checked in every request to prevent hacked cookies and IP adress
 	
-	var cookies = req.signedCookies, getAllArticles, renderArticles,
+	var cookies = req.signedCookies, getAllArticles, renderArticles, createNew,
 	_api = require('./_api')(), s3 = _api.s3, underscore = require('underscore');
 	
 	
@@ -33,6 +33,13 @@ module.exports = function(req, res) {
 	};
 	
 	
+	createNew = function(articles){
+		
+		res.send('createanew');
+				
+	};
+	
+	
 	module = require('url').parse(req.url);
 	module = module.pathname.split('/')[2];	
 	
@@ -40,8 +47,8 @@ module.exports = function(req, res) {
 	// routing of URL 
 	switch(module) {
 		
-		case:
-		getAllArticles();
+		case 'new': 
+		createNew();
 		break;
 	
 		default:
