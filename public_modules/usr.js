@@ -90,7 +90,7 @@ module.exports = function(req, res) {
 			{ signed: true, httpOnly: true }
 		);
 		
-		res.redirect('/');
+		res.redirect('/-/');
 		
 	};
 	

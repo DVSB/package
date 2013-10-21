@@ -8,16 +8,15 @@
 </head><body lang="en">
 	
 	<a href="/-/new/">create new</a>
-	<a href="/-/list/">list all</a>
 	<a href="/-/settings/">list all</a>
 	
 	<ul>	
 	<% allArticles.forEach(function(ele, i){ %>
 		
 		<li>
-			<a href="-<%= ele.Key %>"><%= ele.Key %></a>
-			<a href="-<%= ele.Key %>/edit">edit</a>
-			<a href="-<%= ele.Key %>/remove">remove</a>
+			<a href="/-/view/<%= ele.Key %>"><%= ele.Key %></a>
+			<a href="/-/view/<%= ele.Key %>/edit">edit</a>
+			<a href="/-/view/<%= ele.Key %>/remove">remove</a>
 		 	<time><%= ele.LastModified %></time>
 			<span><%= ele.Size %></span>
 		</li>

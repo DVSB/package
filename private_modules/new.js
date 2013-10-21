@@ -16,7 +16,7 @@ module.exports = function(req, res) {
 		key = random.generate();
 		
 		redirectToPage = function(){
-			res.redirect('/-'+key);
+			res.redirect('/-/view/'+key);
 		}
 			
 		// normal title of markdown file is based on uniq name, which

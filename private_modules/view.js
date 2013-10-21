@@ -2,15 +2,18 @@ module.exports = function(req, res) {
 	
 	
 	var save, preview, getAndRenderBlog, renderMDtoHTML,  
-	s3 = require('./_api')().s3;
+	s3 = require('./_api')().s3, cookies = req.signedCookies;
 	
 
 	preview = function(file) {
 		
+		console.log(cookies);
+		return false;
+		
 		// with list all objects but with prefix which is uniq
 		// name of file, result is only one key always
 		s3.listObjects({
-			prefix : file
+			prefix : cookies.userid+'/articles/'+file
 		},function(data){
 			var realName = data.Contents[0].Key;
 			getAndRenderBlog(realName);
@@ -45,9 +48,8 @@ module.exports = function(req, res) {
 	}
 	
 	
-	// get from URL module
 	module = require('url').parse(req.url);
-	module = module.pathname.split('/')[1].substring(1);
+	module = module.pathname.split('/')[3];
 	preview(module);
 	
 };

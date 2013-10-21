@@ -26,7 +26,7 @@
 			});
 			
 			screens = [
-				'new', 'list', 'settings'
+				'new', 'list', 'settings', 'view'
 			].forEach(function(mod){
 				app.all('/-/'  + mod +  '/*', function(req, res) {
 					require('./private_modules/' + mod)(req, res);
