@@ -14,15 +14,15 @@
 		isLogged = (cookies.islogged==='true')&&(cookies.userhash===enigma.encrypt(cookies.userid));
 	   
 		if (isNotLogged) {
-			app.all('/', function(req, res) {
-				require('./modules/index')(req, res);
+			app.all('/-/*', function(req, res) {
+				res.redirect('/');
 			});
 			next();
 		}
 					
 		if (isLogged) {
-			app.all('/', function(req, res) {
-				require('./modules/-')(req, res);
+			app.all('/-/*', function(req, res) {
+				require('./private_modules/-')(req, res);
 			});
 			next();
 		}
@@ -52,26 +52,19 @@
 		app.use(checkAuth);
 		
 		app.use(express.favicon());
-		app.use(app.router);		
+		app.use(app.router);	
 	
 	});
 	
 	// routing
 	
-	// if is article
-	app.all('/-*', function(req, res) {
-		
-		// test if url is correct		
-		// module = require('url').parse(req.url);
-		// module = module.pathname.split('/')[1];
-		// res.send(module.length);		
-		
-		require('./modules/preview')(req, res);
-	
-	});
 	
 	app.all('/new/', function(req, res) {
 		res.render('new.html');
+	});
+	
+	app.all('/', function(req, res) {
+		res.render('index.html');
 	});
 	
 	
@@ -79,7 +72,7 @@
 		'preview', 'storage', 'usr', 'create'
 	].forEach(function(mod){
 		app.all('/'  + mod +  '/*', function(req, res) {
-			require('./modules/' + mod)(req, res);
+			require('./public_modules/' + mod)(req, res);
 		});
 	});
 
