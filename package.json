@@ -7,7 +7,7 @@
 		"markdown": "0.5.0",
 		"underscore": "1.5.2",
 		"underscore.string": "2.3.3",
-		"validator" : "*"
+		"validator": "*"
 	},
 	"name": "mdown",
 	"subdomain": "mdown",
@@ -18,7 +18,7 @@
 		"mdown.co",
 		"www.mdown.co"
 	],
-	"version": "0.1.0-4",
+	"version": "0.1.0-5",
 	"engines": {
 		"node": "0.10.*"
 	}
