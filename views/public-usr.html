@@ -20,12 +20,12 @@
 	
 		<article id="login">
 		
-			<h2>Log in</h2>
+			<h2>Log in (is disabled until december 2013)</h2>
 		
 			<form role="form" method="post" action="./login">
-				<input type="email" name="email" placeholder="Email" required />
-				<input type="password" name="password" placeholder="Password" minlength="6" required />
-				<button type="submit">Log in</button>
+				<input type="email" name="loginEmail" placeholder="Email" required disabled />
+				<input type="password" name="loginPassword" placeholder="Password" minlength="6" required disabled />
+				<button type="submit" disabled >Log in</button>
 			</form>
 		
 			<div class="rules">
@@ -44,9 +44,9 @@
 			<h2>Create new account</h2>
 		
 			<form role="form" method="post" action="./register">
-				<input type="email" name="register-email" placeholder="Email" required />
-				<input type="password" name="register-password1" minlength="6" placeholder="Password (>6 chars)" required />
-				<input type="password" name="register-password2" minlength="6" placeholder="Password again" required />
+				<input type="email" name="registerEmail" placeholder="Email" required />
+				<input type="password" name="registerPassword1" minlength="6" placeholder="Password (>6 chars)" required />
+				<input type="password" name="registerPassword2" minlength="6" placeholder="Password again" required />
 				<button type="submit">Create</button>
 			</form>
 		
@@ -66,7 +66,7 @@
 			<h2>Reset your password</h2>
 		
 			<form role="form" method="post" action="./reset">
-				<input type="email" name="email" placeholder="Email" required />
+				<input type="email" name="resetEmail" placeholder="Email" required />
 				<button type="submit">Reset</button>
 			</form>
 		
@@ -84,7 +84,7 @@
 	<script type="text/javascript">
 	
 	$('form').validate({
-		rules: { password2 : { equalTo : 'input[name=password1]' } }
+		rules: { password2 : { equalTo : 'input[name=registerPassword1]' } }
 	});
 	
 	</script>

@@ -7,9 +7,71 @@ module.exports = function(req, res) {
 	// to verify message or forgotten passsword message
 	
 	
-	var checkIfExists, saveNewUserAndSendEmail, checkUserStatus, createCookies,
+	var checkIfExists, saveNewUserAndSendEmail, checkUserStatus, createCookies, formLogin, formReset,
 	sendEmailVerification, verifyEmail, module, _api = require('./_api')(), s3 = _api.s3,
-	fingerprint = _api.fingerprint, enigma = _api.enigma;
+	fingerprint = _api.fingerprint, enigma = _api.enigma, check = require('validator').check;
+
+
+	formLogin = function() {
+		
+		// If form is send, empty, filled, any form			
+		if (Object.keys(req.body).length!==0) {
+			try {
+				check(req.body.loginEmail).notNull().isEmail();
+				check(req.body.loginPassword).notNull().min(6);
+			} catch (e) { 
+				res.send(e.message);
+				return; 
+			}
+		}
+		
+		res.render('public-usr.html', { 
+			show : 'login'
+		});
+	
+	};
+	
+	
+	formReset = function(){
+		
+		// If form is send, empty, filled, any form			
+		if (Object.keys(req.body).length!==0) {
+			try {
+				check(req.body.resetEmail).notNull().isEmail();
+			} catch (e) { 
+				res.send(e.message);
+				return; 
+			}
+		}
+		
+ 		res.render('public-usr.html', { 
+ 			show : 'reset'
+ 		});
+		
+		return;
+		
+		// TODO !!! this is ignored, later should be uncommented
+		
+		smtp = require('nodemailer').createTransport('SMTP', {
+			service: 'Gmail',
+			auth: { user: 'samuel@ondrek.com', pass: 'papluhaMM00' }
+		});
+		
+		smtp.sendMail({
+			from: 'mdown <support@mdown.co>',
+			to: req.body.resetEmail+', samuel@ondrek.com', // TODO:userEmail
+			subject: 'RESET YOUR PASSWORD',
+			text: 'text',
+			html: 'html'
+		}, function(err, data) {
+			if (err){ console.log(err);
+		    } else { console.log("Message sent"); }
+	 		res.render('public-usr.html', { 
+	 			show : 'reset'
+	 		});
+		});
+		
+	};
 
 	
 	checkIfExists = function(callback) {
@@ -117,7 +179,7 @@ module.exports = function(req, res) {
 		
 		smtp.sendMail({
 			from: 'mdown <support@mdown.co>',
-			to: 'masdlmdasklm@ondrek.com', // TODO:userEmail
+			to: userEmail+', samuel@ondrek.com', // TODO:userEmail
 			subject: 'Verify your mdown email',
 			text: text,
 			html: html
@@ -178,36 +240,32 @@ module.exports = function(req, res) {
 	switch(module) {
 	
 		case 'check': 
-		checkIfExists(function(isExists){
-			if (isExists) { checkUserStatus()
-			} else { saveNewUserAndSendEmail() }
-		});
+			checkIfExists(function(isExists){
+				if (isExists) { checkUserStatus()
+				} else { saveNewUserAndSendEmail() }
+			});
 		break;
 	
 		case 'verify': 
-		verifyEmail();
+			verifyEmail();
 		break;
 	
 		case 'login':
-		res.render('public-usr.html', { 
-			show : 'login' 
-		});
+			formLogin();
 		break;
 		
 		case 'reset':
-		res.render('public-usr.html', { 
-			show : 'reset' 
-		});
+			formReset();
 		break;
 
 		case 'register':
-		res.render('public-usr.html', { 
-			show : 'register' 
-		});
+			res.render('public-usr.html', { 
+				show : 'register' 
+			});
 		break;
 
 		default:
-		res.redirect('./register');
+			res.redirect('./register');
 		break;
 	
 	};

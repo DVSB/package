@@ -53,19 +53,20 @@
 		app.set('views', __dirname + '/views');
 		app.engine('html', require('ejs').renderFile);
 		
+		app.use(express.favicon());
+		app.use(express.logger('dev'));
+		
 		app.use(express.bodyParser());
 		app.use(express.methodOverride());
 		
-      	app.use(express.cookieParser('9798789798798798JKJH987988')); 
+		
+      app.use(express.cookieParser('9798789798798798JKJH987988')); 
 		// app.use(express.cookieSession());
 		
 		app.use(checkAuth);
-		
-		app.use(express.favicon());
 		app.use(app.router);	
 	
 	});
-	
 	
 	// routing
 	
@@ -75,7 +76,7 @@
 	
 	
 	screens = [
-		'storage', 'usr' // , 'blog', 'support', 'status', 'prices'
+		'storage', 'usr', 'log' // , 'blog', 'support', 'status', 'prices'
 	].forEach(function(mod){
 		app.all('/'  + mod +  '/*', function(req, res) {
 			require('./public_modules/' + mod)(req, res);
