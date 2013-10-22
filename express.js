@@ -1,6 +1,6 @@
 
 
-	var app, screens, checkAuth,
+	var app, screens, checkAuth, settings,
 	express = require('express'), app = module.exports = express();
 	
 	
@@ -65,6 +65,7 @@
 		app.use(app.router);	
 	
 	});
+	
 	
 	// routing
 	

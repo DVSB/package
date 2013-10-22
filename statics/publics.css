@@ -31,3 +31,13 @@
 		clear: both;
 		margin-top: 100px;
 	}
+	
+	.register label.error {
+		display: none !important;
+	}
+	
+	.register input.error {
+		border: 1px solid #F08A8A;
+	}
+	
+	

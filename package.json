@@ -17,7 +17,7 @@
 		"mdown.co",
 		"www.mdown.co"
 	],
-	"version": "0.1.0-2",
+	"version": "0.1.0-4",
 	"engines": {
 		"node": "0.10.*"
 	}
