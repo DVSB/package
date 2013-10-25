@@ -21,15 +21,15 @@
 					
 		if (isLogged) {
 			
-			app.all('/-/', function(req, res) {
-				require('./private_modules/_dashboard')(req, res);
+			app.all('/-/*', function(req, res) {
+				require('./modules/_dashboard')(req, res);
 			});
 			
 			screens = [
 				'new', 'list', 'settings', 'view'
 			].forEach(function(mod){
 				app.all('/-/'  + mod +  '/*', function(req, res) {
-					require('./private_modules/' + mod)(req, res);
+					require('./modules/' + mod)(req, res);
 				});
 			});
 			
@@ -79,7 +79,7 @@
 		'storage', 'usr', 'log' // , 'blog', 'support', 'status', 'prices'
 	].forEach(function(mod){
 		app.all('/'  + mod +  '/*', function(req, res) {
-			require('./public_modules/' + mod)(req, res);
+			require('./modules/' + mod)(req, res);
 		});
 	});
 

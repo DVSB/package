@@ -61,6 +61,21 @@ module.exports = function(req, res) {
 		
 		},
 		
+		// remove object from datastore, can be used for remove whole
+		// user but also for removing only article or module, be affraid
+		// with this module
+		deleteObjects : function(params, callback){
+			
+			s3.client.deleteObjects({
+				Bucket : 'mdown',
+				Delete : params.Delete
+			}, function(err, data){
+				if (err) throw err;
+				callback(data);
+			});
+		
+		},
+		
 		
 		isObjectExists : function(params, callback){
 			

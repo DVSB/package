@@ -44,10 +44,10 @@
 			<h2>Create new account</h2>
 		
 			<form role="form" method="post" action="./formRegister">
-				<input type="email" name="registerEmail" placeholder="Email" required disabled />
-				<input type="password" name="registerPassword1" minlength="6" placeholder="Password (>6 chars)" required disabled />
-				<input type="password" name="registerPassword2" minlength="6" placeholder="Password again" required disabled />
-				<button type="submit" disabled>Create</button>
+				<input type="email" name="registerEmail" placeholder="Email" required />
+				<input type="password" name="registerPassword1" minlength="6" placeholder="Password (>6 chars)" required />
+				<input type="password" name="registerPassword2" minlength="6" placeholder="Password again" required />
+				<button type="submit">Create</button>
 			</form>
 		
 			<div class="rules">
@@ -65,7 +65,7 @@
 		
 			<h2>Reset your password</h2>
 		
-			<form role="form" method="post" action="./formReset" disabled >
+			<form role="form" method="post" action="./formReset" >
 				<input type="email" name="resetEmail" placeholder="Email" required disabled />
 				<button type="submit" disabled>Reset</button>
 			</form>

@@ -2,7 +2,7 @@
 
 	<meta charset="utf-8" />
   	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>Log In</title>
+	<title>Dashboard</title>
 	<link rel="stylesheet" href="/s/bootstrap.css" type="text/css" />
 
 </head><body lang="en">
@@ -23,5 +23,24 @@
 		
 	<% }); %>
 	</ul>
+	
+	<form role="form" method="post" action="./formResetPassword" >
+		
+		<h2>Change a password</h2>
+		
+		<input type="password" name="changeEmail" placeholder="Change your password" required />
+		<input type="password" name="changeEmail2" placeholder="Password again" required />
+		<button type="submit">Reset</button>
+		
+	</form>
+	
+	<form role="form" method="post" action="./formRemoveAccount" >
+		
+		<h2>Remove account</h2>
+		
+		<input type="password" name="removeAccountPassword" placeholder="Change your password" required />
+		<button type="submit">Remove</button>
+		
+	</form>
 
 </body></html>

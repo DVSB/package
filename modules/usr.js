@@ -111,7 +111,7 @@ module.exports = function(req, res) {
 	
 	
 	createNewUserl = function(){
-				
+		
 		s3.putObject({
 			key : fingerprint(req.body.email)+'/user-details/_config.json',
 			body : JSON.stringify({ 
@@ -175,45 +175,44 @@ module.exports = function(req, res) {
 		// form
 	
 		case 'formRegister':
-			isUserExists(function(yes){
-				if (!yes) { createNewUserl();
-				} else { res.send('this email already exists'); }
-			});
+		isUserExists(function(yes){
+			if (!yes) { createNewUserl();
+			} else { res.send('this email already exists'); }
+		});
 		break;
 	
 		case 'formLogin': 
-			isUserExists(function(yes){
-				if (yes) { loginUser();
-				} else { res.send('email isnt registered'); }
-			});
+		isUserExists(function(yes){
+			if (yes) { loginUser();
+			} else { res.send('email isnt registered'); }
+		});
 		break;
 
 		case 'formReset': 
-			isUserExists(function(yes){
-				if (yes) { resetPassw() 
-				} else { res.send('sorry, this user doesnt exists'); }
-			});
+		isUserExists(function(yes){
+			if (yes) { resetPassw() 
+			} else { res.send('sorry, this user doesnt exists'); }
+		});
 		break;
 		
 		// display
 	
 		case 'login':
-	 		res.render('public-usr.html', { show : 'login' });
+	 	res.render('public-usr.html', { show : 'login' });
 		break;
 		
 		case 'reset':
-	 		res.render('public-usr.html', { show : 'reset' });
+	 	res.render('public-usr.html', { show : 'reset' });
 		break;
 
 		case 'register':
-			res.render('public-usr.html', { show : 'register' });
+		res.render('public-usr.html', { show : 'register' });
 		break;
 		
 		// default
 
 		default:
-			console.log('= Browsed submodule Default');
-			res.redirect('./register');
+		res.redirect('./register');
 		break;
 	
 	};
