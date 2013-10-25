@@ -7,7 +7,7 @@
 	checkAuth = function(req, res, next) {
 		
 		var isNotLogged, isLogged, cookies = req.signedCookies,
-		enigma = require('./public_modules/_api')().enigma;
+		enigma = require('./modules/_api')().enigma;
 		
 		isNotLogged = (!cookies.islogged || cookies.islogged!=='true');
 		isLogged = (cookies.islogged==='true')&&(cookies.userhash===enigma.encrypt(cookies.userid));
@@ -22,7 +22,7 @@
 		if (isLogged) {
 			
 			app.all('/-/*', function(req, res) {
-				require('./modules/_dashboard')(req, res);
+				require('./modules/dashboard')(req, res);
 			});
 			
 			screens = [
@@ -71,7 +71,7 @@
 	// routing
 	
 	app.all('/', function(req, res) {
-		res.render('public-index.html');
+		res.render('index.html');
 	});
 	
 	

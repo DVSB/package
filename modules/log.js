@@ -1,6 +1,6 @@
 module.exports = function(req, res) {
 
-	res.render('public-log.html');
+	res.render('log.html');
 			
 };
 

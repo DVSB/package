@@ -35,7 +35,7 @@ module.exports = function(req, res) {
 		break;
 		
 		default:
-		res.render('private-new.html');
+		res.render('new.html');
 		break;
 		
 	};

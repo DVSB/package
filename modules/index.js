@@ -5,6 +5,6 @@ module.exports = function(req, res) {
 	// on website first time, its real index but root (/) is 
 	// used also after login for dashboard, thats reason why firsttouch
 	
-	res.render('public-index.html');
+	res.render('index.html');
 
 };

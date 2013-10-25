@@ -38,7 +38,7 @@ module.exports = function(req, res) {
 	
 		var markdown = require('markdown').markdown;
 	
-		res.render('private-view.html', { 
+		res.render('view.html', { 
 			markdown : markdown.toHTML(mdContent),
 			key : 'adsadsads'
 		});

@@ -122,7 +122,7 @@ module.exports = function(req, res) {
 	
 	renderArticles = function(articles){
 		
-		res.render('private-dashboard.html', { 
+		res.render('dashboard.html', { 
 			allArticles : articles 
 		});
 		

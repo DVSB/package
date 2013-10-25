@@ -71,7 +71,7 @@ module.exports = function(req, res) {
 	
 	resetPassw = function(){
 		
- 		res.render('public-usr.html', { 
+ 		res.render('usr.html', { 
  			show : 'reset'
  		});
 		
@@ -93,7 +93,7 @@ module.exports = function(req, res) {
 		}, function(err, data) {
 			if (err){ console.log(err);
 		    } else { console.log("Message sent"); }
-	 		res.render('public-usr.html', { 
+	 		res.render('usr.html', { 
 	 			show : 'reset'
 	 		});
 		});
@@ -198,15 +198,15 @@ module.exports = function(req, res) {
 		// display
 	
 		case 'login':
-	 	res.render('public-usr.html', { show : 'login' });
+	 	res.render('usr.html', { show : 'login' });
 		break;
 		
 		case 'reset':
-	 	res.render('public-usr.html', { show : 'reset' });
+	 	res.render('usr.html', { show : 'reset' });
 		break;
 
 		case 'register':
-		res.render('public-usr.html', { show : 'register' });
+		res.render('usr.html', { show : 'register' });
 		break;
 		
 		// default
