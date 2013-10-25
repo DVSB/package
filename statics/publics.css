@@ -14,7 +14,6 @@
 		width: 460px;
 		padding: 30px;
 		margin: 0 auto;
-		height: 100%;
 		padding-top: 200px;
 	}
 	
@@ -45,4 +44,8 @@
 		border: 1px solid #F08A8A;
 	}
 	
+	/* errors */
 	
+	.errors body {
+		padding: 150px 200px;
+	}

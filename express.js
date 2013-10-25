@@ -59,8 +59,7 @@
 		app.use(express.bodyParser());
 		app.use(express.methodOverride());
 		
-		
-      app.use(express.cookieParser('9798789798798798JKJH987988')); 
+		app.use(express.cookieParser('9798789798798798JKJH987988')); 
 		// app.use(express.cookieSession());
 		
 		app.use(checkAuth);
@@ -76,7 +75,7 @@
 	
 	
 	screens = [
-		'storage', 'usr', 'log' // , 'blog', 'support', 'status', 'prices'
+		'storage', 'usr', 'log', 'errors', // , 'blog', 'support', 'status', 'prices'
 	].forEach(function(mod){
 		app.all('/'  + mod +  '/*', function(req, res) {
 			require('./modules/' + mod)(req, res);
