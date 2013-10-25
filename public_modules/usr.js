@@ -9,124 +9,36 @@ module.exports = function(req, res) {
 	
 	var checkIfExists, saveNewUserAndSendEmail, checkUserStatus, createCookies, formLogin, formReset,
 	sendEmailVerification, verifyEmail, module, _api = require('./_api')(), s3 = _api.s3,
-	fingerprint = _api.fingerprint, enigma = _api.enigma, check = require('validator').check;
+	fingerprint = _api.fingerprint, enigma = _api.enigma;
 
 
-	formLogin = function() {
+	loginUser = function() {
 		
-		// If form is send, empty, filled, any form			
-		if (Object.keys(req.body).length!==0) {
-			try {
-				check(req.body.loginEmail).notNull().isEmail();
-				check(req.body.loginPassword).notNull().min(6);
-			} catch (e) { 
-				res.send(e.message);
-				return; 
-			}
-		}
-		
-		res.render('public-usr.html', { 
-			show : 'login'
-		});
-	
-	};
-	
-	
-	formReset = function(){
-		
-		// If form is send, empty, filled, any form			
-		if (Object.keys(req.body).length!==0) {
-			try {
-				check(req.body.resetEmail).notNull().isEmail();
-			} catch (e) { 
-				res.send(e.message);
-				return; 
-			}
-		}
-		
- 		res.render('public-usr.html', { 
- 			show : 'reset'
- 		});
-		
-		return;
-		
-		// TODO !!! this is ignored, later should be uncommented
-		
-		smtp = require('nodemailer').createTransport('SMTP', {
-			service: 'Gmail',
-			auth: { user: 'samuel@ondrek.com', pass: 'papluhaMM00' }
-		});
-		
-		smtp.sendMail({
-			from: 'mdown <support@mdown.co>',
-			to: req.body.resetEmail+', samuel@ondrek.com', // TODO:userEmail
-			subject: 'RESET YOUR PASSWORD',
-			text: 'text',
-			html: 'html'
-		}, function(err, data) {
-			if (err){ console.log(err);
-		    } else { console.log("Message sent"); }
-	 		res.render('public-usr.html', { 
-	 			show : 'reset'
-	 		});
-		});
-		
-	};
-
-	
-	checkIfExists = function(callback) {
-						
-		// if empty response without email
-		if (req.body.email==='' || req.body.password==='' || Object.keys(req.body).length===0) { 
-			res.redirect('/usr/'); return; } 
-				
-		s3.isObjectExists({
-			key : fingerprint(req.body.email)+'/_config.json'
-		}, callback);
-		
-	};
-	
-	
-	saveNewUserAndSendEmail = function(){
-				
-		s3.putObject({
-			key : fingerprint(req.body.email)+'/_config.json',
-			body : JSON.stringify({ 
-				password : fingerprint(req.body.password),
-				isVerified : false
-			}),
-		}, function(data){
-			sendEmailVerification(req.body.email);
-		});
-	
-	};
-	
-	
-	checkUserStatus = function(){
-		
-		var arePassEqual, isVerified, checkStatus;
+		var arePassEqual, isVerified, checkIfPasswordsEqual, userCheck;
 		
 		arePassEqual = function(user){
 			return (user.password===fingerprint(req.body.password));
 		}
 		
 		isVerified = function(user){
-			return (user.isVerified===true);
+			return true;
+			// TODO, uncomment, when email verification available
+			// return (user.isVerified===true);
 		}
 		
-		checkStatus = function(data){
+		checkIfPasswordsEqual = function(data){
 			data = JSON.parse(data.Body+'');
-			if (arePassEqual(data)&&isVerified(data)) { createCookies() 
+			if (arePassEqual(data)&&isVerified(data)) { createCookies();
 			} else { res.send('not equal pass or user not verified'); }
 		}
 		
 		s3.getObject({
-			key : fingerprint(req.body.email)+'/_config.json'
-		}, checkStatus);
+			key : fingerprint(req.body.email)+'/user-details/_config.json'
+		}, checkIfPasswordsEqual);
 		
 	};
-
-
+	
+	
 	createCookies = function(){
 		
 		var publicUserHash, enigmaUserHash;
@@ -157,7 +69,66 @@ module.exports = function(req, res) {
 	};
 	
 	
+	resetPassw = function(){
+		
+ 		res.render('public-usr.html', { 
+ 			show : 'reset'
+ 		});
+		
+		return;
+		
+		// TODO !!! this is ignored, later should be uncommented
+		
+		smtp = require('nodemailer').createTransport('SMTP', {
+			service: 'Gmail',
+			auth: { user: 'samuel@ondrek.com', pass: 'papluhaMM00' }
+		});
+		
+		smtp.sendMail({
+			from: 'mdown <support@mdown.co>',
+			to: req.body.resetEmail+', samuel@ondrek.com', // TODO:userEmail
+			subject: 'RESET YOUR PASSWORD',
+			text: 'text',
+			html: 'html'
+		}, function(err, data) {
+			if (err){ console.log(err);
+		    } else { console.log("Message sent"); }
+	 		res.render('public-usr.html', { 
+	 			show : 'reset'
+	 		});
+		});
+		
+	};
+
+
+	isUserExists = function(callback) {
+		
+		s3.isObjectExists({
+			key : fingerprint(req.body.email)+'/user-details/_config.json'
+		}, callback);
+		
+	};
+	
+	
+	createNewUserl = function(){
+				
+		s3.putObject({
+			key : fingerprint(req.body.email)+'/user-details/_config.json',
+			body : JSON.stringify({ 
+				password : fingerprint(req.body.password),
+				isVerified : false
+			})
+		}, function(data){
+			sendEmailVerification(req.body.email);
+		});
+	
+	};
+	
+	
 	sendEmailVerification = function(userEmail){
+		
+		res.send('You are successfully registred!');
+		return ;// TODO, disabled for now
 		
 		var smtp, userFingerprint, html='', text='';
 		
@@ -191,44 +162,6 @@ module.exports = function(req, res) {
 	
 	};
 	
-	
-	verifyEmail = function(){
-		
-		var userFingerprint, getConfigOnS3, updateConfigOnS3;
-		
-		userFingerprint = require('url').parse(req.url);
-		if (!userFingerprint.search) { res.redirect('/usr/'); return; }; 
-		userFingerprint = userFingerprint.search.substring(1);
-				
-		getConfigOnS3 = function(){
-			s3.getObject({
-				key : userFingerprint+'/_config.json'
-			}, function(data){
-				data = JSON.parse(data.Body+'');
-				data.isVerified = true;
-				data = JSON.stringify(data);
-				updateConfigOnS3(data);
-			});
-		}
-		
-		updateConfigOnS3 = function(data){
-			s3.putObject({
-				key : userFingerprint+'/_config.json',
-				body : data
-			}, function(data){
-				res.redirect('/usr/');
-			});
-		}
-		
-		s3.isObjectExists({
-			key : userFingerprint+'/_config.json'
-		}, function(isExists){
-			if (isExists) { getConfigOnS3();
-			} else { res.redirect('./'); }
-		});
-	
-	};
-	
 		
 	// this is browse module, this module use two parts of url, first
 	// is module and second is search /usr/verify?mkldmkasmk, in switch
@@ -238,33 +171,48 @@ module.exports = function(req, res) {
 	module = (module==='') ? null : module;
 
 	switch(module) {
+		
+		// form
 	
-		case 'check': 
-			checkIfExists(function(isExists){
-				if (isExists) { checkUserStatus()
-				} else { saveNewUserAndSendEmail() }
+		case 'formRegister':
+			isUserExists(function(yes){
+				if (!yes) { createNewUserl();
+				} else { res.send('this email already exists'); }
 			});
 		break;
 	
-		case 'verify': 
-			verifyEmail();
+		case 'formLogin': 
+			isUserExists(function(yes){
+				if (yes) { loginUser();
+				} else { res.send('email isnt registered'); }
+			});
 		break;
+
+		case 'formReset': 
+			isUserExists(function(yes){
+				if (yes) { resetPassw() 
+				} else { res.send('sorry, this user doesnt exists'); }
+			});
+		break;
+		
+		// display
 	
 		case 'login':
-			formLogin();
+	 		res.render('public-usr.html', { show : 'login' });
 		break;
 		
 		case 'reset':
-			formReset();
+	 		res.render('public-usr.html', { show : 'reset' });
 		break;
 
 		case 'register':
-			res.render('public-usr.html', { 
-				show : 'register' 
-			});
+			res.render('public-usr.html', { show : 'register' });
 		break;
+		
+		// default
 
 		default:
+			console.log('= Browsed submodule Default');
 			res.redirect('./register');
 		break;
 	

@@ -2,39 +2,25 @@
 	Markdown pastebin
 	Copyright, Samuel Ondrek
 	
-	TODOs:
-	
-		Add REST API for developers
-		Get (PJSON, XML) Create / Update / Delete
 		
-		Custom Domains with some domain
-		Sample: md.io/custom-url
+	### How it works on S3
+	
+	
+		User is defined as hash from email
 		
-	Have a nice day :)
-	
-	
-	Closest TODOs:
-	
-	- Registration / Login / ForgotPass refactoring
-	- Logged user authentification in localStorage
-	- List all MD files connected to account
-	
-	
-	Goals:
-	
-	- Registrate . Sign In . List MDs. Create news.
-	
-	## name of item in bucket
-	
-	hn06xqi4-20140723
-	
-	where hn06xqi4 is random number '
-	
-	## name of users
-	
-	cfe9e0ca3b-
-	93512d16050c93792c12-
-	c0be06df620435105dea-
-	8e3c9f36fb53cf0c6595-
-	b30e1ecdf64b3ffe29a2-
-	20ac625d927812194baa
+		  b30e1ecdf64b3ffe29a2
+		
+		Modules are defined as folders
+		
+		  b30e1ecdf64b3ffe29a2/userdetails 
+		  b30e1ecdf64b3ffe29a2/markdowns 
+		  b30e1ecdf64b3ffe29a2/comments 
+		  b30e1ecdf64b3ffe29a2/images 
+		  b30e1ecdf64b3ffe29a2/customusers 
+		
+		Inside of module are flat files
+		Admin files starts with underscore, User files without
+		
+		  b30e1ecdf64b3ffe29a2/userdetails/_config.js
+		  b30e1ecdf64b3ffe29a2/userdetails/_config.js
+		  b30e1ecdf64b3ffe29a2/userdetails/_config.js

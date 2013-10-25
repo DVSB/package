@@ -20,12 +20,12 @@
 	
 		<article id="login">
 		
-			<h2>Log in (is disabled until december 2013)</h2>
+			<h2>Log in (disabled until 12/2013)</h2>
 		
-			<form role="form" method="post" action="./login">
-				<input type="email" name="loginEmail" placeholder="Email" required disabled />
-				<input type="password" name="loginPassword" placeholder="Password" minlength="6" required disabled />
-				<button type="submit" disabled >Log in</button>
+			<form role="form" method="post" action="./formLogin">
+				<input type="email" name="loginEmail" placeholder="Email" required />
+				<input type="password" name="loginPassword" placeholder="Password" minlength="6" required />
+				<button type="submit">Log in</button>
 			</form>
 		
 			<div class="rules">
@@ -43,7 +43,7 @@
 		
 			<h2>Create new account</h2>
 		
-			<form role="form" method="post" action="./register">
+			<form role="form" method="post" action="./formRegister">
 				<input type="email" name="registerEmail" placeholder="Email" required />
 				<input type="password" name="registerPassword1" minlength="6" placeholder="Password (>6 chars)" required />
 				<input type="password" name="registerPassword2" minlength="6" placeholder="Password again" required />
@@ -65,9 +65,9 @@
 		
 			<h2>Reset your password</h2>
 		
-			<form role="form" method="post" action="./reset">
-				<input type="email" name="resetEmail" placeholder="Email" required />
-				<button type="submit">Reset</button>
+			<form role="form" method="post" action="./formReset" disabled >
+				<input type="email" name="resetEmail" placeholder="Email" required disabled />
+				<button type="submit" disabled>Reset</button>
 			</form>
 		
 			<div class="rules">
