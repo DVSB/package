@@ -12,11 +12,11 @@ module.exports = function(req, res) {
 	fingerprint = _api.fingerprint, enigma = _api.enigma;
 
 
-	loginUser = function() {
+	loginUser = function() { 
 		
 		var arePassEqual, isVerified, checkIfPasswordsEqual, userCheck;
-		
-		arePassEqual = function(user){
+		 
+		arePassEqual = function(user){  
 			return (user.password===fingerprint(req.body.password));
 		}
 		
@@ -36,7 +36,7 @@ module.exports = function(req, res) {
 			key : fingerprint(req.body.email)+'/user-details/_config.json'
 		}, checkIfPasswordsEqual);
 		
-	};
+	}; 
 	
 	
 	createCookies = function(){
@@ -101,31 +101,31 @@ module.exports = function(req, res) {
 	};
 
 
-	isUserExists = function(callback) {
+	isUserExists = function(email, callback) {
 		
 		s3.isObjectExists({
-			key : fingerprint(req.body.email)+'/user-details/_config.json'
+			key : fingerprint(email)+'/user-details/_config.json'
 		}, callback);
 		
 	};
 	
 	
-	createNewUserl = function(){
-		
+	createNewUser = function(){
+				
 		s3.putObject({
-			key : fingerprint(req.body.email)+'/user-details/_config.json',
+			key : fingerprint(req.body.registerEmail)+'/user-details/_config.json',
 			body : JSON.stringify({ 
-				password : fingerprint(req.body.password),
+				password : fingerprint(req.body.registerPassword1),
 				isVerified : false
 			})
-		}, function(data){
-			sendEmailVerification(req.body.email);
+		}, function(){
+			res.redirect('/');
 		});
 	
 	};
 	
 	
-	sendEmailVerification = function(userEmail){
+	sendEmailVerif = function(userEmail){
 		
 		res.send('You are successfully registred!');
 		return ;// TODO, disabled for now
@@ -175,8 +175,11 @@ module.exports = function(req, res) {
 		// form
 	
 		case 'formRegister':
-		isUserExists(function(yes){
-			if (!yes) { createNewUserl();
+		isUserExists(req.body.registerEmail, function(yes) {
+			console.log(yes);
+			if (!yes) { 
+				createNewUser();
+				sendEmailVerif(req.body.email);
 			} else { res.send('this email already exists'); }
 		});
 		break;
