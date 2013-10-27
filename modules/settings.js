@@ -90,7 +90,6 @@ module.exports = function(req, res) {
 		};
 				
 		removeCookies = function(){
-			console.log('asddasdas');
 			var options;
 			options = { signed: true, httpOnly: true };
 			res.cookie('islogged', 'false', options);

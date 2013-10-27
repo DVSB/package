@@ -3,20 +3,25 @@
 	<meta charset="utf-8" />
   	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	
-	<title>Dashboard</title>
+	<title>User Section</title>
 	
 	<link rel="stylesheet" href="/s/normalize.css" type="text/css" />
 	<link rel="stylesheet" href="/s/stylesheets.css" type="text/css" />
 	<link rel="stylesheet" href="/s/privates.css" type="text/css" />
+	
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
 
 </head><body lang="en">
 	
-	<ul class="globals">
-		<li><a href="/">mDown</a></li>
-		<li><a href="/-/">Dashboard</a></li>
-		<li><a href="/-/create/">Create</a></li>
-		<li><a href="/-/settings/">Settings</a></li>
-	</ul>
+	<nav>
+		<ul class="globals">
+			<li><a href="/">mDown</a></li>
+			<li><a href="/-/">Dashboard</a></li>
+			<li><a href="/-/create/">Create</a></li>
+			<li><a href="/-/settings/">Settings</a></li>
+		</ul>
+	</nav>
 		
 	<ul>	
 	<% allArticles.forEach(function(ele, i){ %>
