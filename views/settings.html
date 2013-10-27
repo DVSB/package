@@ -1,0 +1,214 @@
+<!DOCTYPE><html class="settings"><head>
+
+	<meta charset="utf-8" />
+  	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	
+	<title>Settings</title>
+	
+	<link rel="stylesheet" href="/s/normalize.css" type="text/css" />
+	<link rel="stylesheet" href="/s/stylesheets.css" type="text/css" />
+	<link rel="stylesheet" href="/s/privates.css" type="text/css" />
+	
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+</head><body lang="en">
+	
+	<ul class="globals">
+		<li><a href="/">mDown</a></li>
+		<li><a href="/-/">Dashboard</a></li>
+		<li><a href="/-/create/">Create</a></li>
+		<li><a href="/-/settings/">Settings</a></li>
+	</ul>
+	
+	<h1>Admin Settings</h1>
+	
+	<h2>Admin settings</h2>
+		
+	<section class="question">
+		
+		<h3>Pay with credit card</h3>
+		<div>Your free account is here only for 90 days. After will be removed.</div>
+					
+		<form role="form" method="post" action="./formResetPassword" >
+			<input type="password" name="changeEmail" placeholder="Change your password" required />
+			<input type="password" name="changeEmail2" placeholder="Password again" required />
+			<button type="submit">Reset</button>
+		</form>
+					
+	</section>
+	
+	<section class="question">
+		
+		<h3>Change my password</h3>
+		<div>If you want remove administrator password you can do it here.</div>
+		
+		<form role="form" method="post" action="./formResetPassword" >
+			<input type="password" name="changeEmail" placeholder="Change your password" required />
+			<input type="password" name="changeEmail2" placeholder="Password again" required />
+			<button type="submit">Reset</button>
+		</form>
+					
+	</section>
+	
+	<section class="question">
+		
+		<h3>Remove this blog</h3>
+		<div>Your blog will be removed with <strong>all</strong> data. There is no way how to recover it.</div>
+		
+		<form role="form" method="post" action="./formRemoveAccount" >
+			<input type="password" name="removeAccountPassword" placeholder="Change your password" required />
+			<button type="submit">Remove</button>	
+		</form>
+					
+	</section>
+	
+	<h2>Security settings</h2>
+
+	<section class="question">
+		
+		<h3>User2User Cryptography</h3>
+		<div>Your files can be saved on ours servers crypted with AES256.</div>
+		
+		<form role="form" method="post" action="#" >
+			<input type="password" name="removeAccountPassword" placeholder="Unavailable functionality now" required />
+			
+		</form>
+					
+	</section>
+
+	<section class="question">
+		
+		<h3>Backup Settings</h3>
+		<div>If you want backup blog on our servers and create backups.</div>
+		
+		<form role="form" method="post" action="#" >
+			<input type="password" name="removeAccountPassword" placeholder="Unavailable functionality now" required />
+			
+		</form>
+					
+	</section>
+
+	<section class="question">
+		
+		<h3>Active Devices and Devices Log</h3>
+		<div>You can see active devices from which you are logged.</div>
+		
+		<form role="form" method="post" action="#" >
+			<input type="password" name="removeAccountPassword" placeholder="Unavailable functionality now" required />
+			
+		</form>
+					
+	</section>
+
+	<section class="question">
+		
+		<h3>Second step verification</h3>
+		<div>You can add second verifing of passwords</div>
+		
+		<form role="form" method="post" action="#" >
+			<input type="password" name="removeAccountPassword" placeholder="Unavailable functionality now" required />
+			
+		</form>
+					
+	</section>
+	
+	<h2>Privacy settings</h2>
+
+	<section class="question">
+		
+		<h3>Cookies Descriptions</h3>
+		<div>Which cookies we stored? You can see description.</div>
+		
+		<form role="form" method="post" action="#" >
+			<input type="password" name="removeAccountPassword" placeholder="Unavailable functionality now" required />
+			
+		</form>
+					
+	</section>
+
+	<section class="question">
+		
+		<h3>Your public key</h3>
+		<div>You can use this key with external apps or in creating your own module</div>
+		
+		<form role="form" method="post" action="#" >
+			<input type="password" name="removeAccountPassword" placeholder="Unavailable functionality now" required />
+			
+		</form>
+					
+	</section>
+	
+	<h2>Module Blog</h2>
+
+	<section class="question">
+		
+		<h3>General Settings</h3>
+		<div>Set public informations about blog.</div>
+		
+		<form role="form" method="post" action="#" >
+			<input type="password" name="removeAccountPassword" placeholder="Unavailable functionality now" required />
+			
+		</form>
+					
+	</section>
+
+	<section class="question">
+		
+		<h3>RSS feed</h3>
+		<div>You can allow RSS generated for every page on blog.</div>
+		
+		<form role="form" method="post" action="#" >
+			<input type="password" name="removeAccountPassword" placeholder="Unavailable functionality now" required />
+			
+		</form>
+					
+	</section>
+
+	<section class="question">
+		
+		<h3>Template</h3>
+		<div>Choose your own templates for blog, edit them or upload own.</div>
+		
+		<form role="form" method="post" action="#" >
+			<input type="password" name="removeAccountPassword" placeholder="Unavailable functionality now" required />
+			
+		</form>
+					
+	</section>
+
+	<section class="question">
+		
+		<h3>Structure Matrix</h3>
+		<div>What should be on index? Do you want subsections? How fill menu?</div>
+		
+		<form role="form" method="post" action="#" >
+			<input type="password" name="removeAccountPassword" placeholder="Unavailable functionality now" required />
+			
+		</form>
+					
+	</section>
+	
+	<script type="text/javascript">
+	
+	// hide by default all sections
+	$('section form').css('display', 'none');
+	
+	// on click toggle this one, and hide all others
+	$('section h3').on('click', function(){
+		
+		// form in same section
+		var thisForm = $(this).parent().children('form');
+		var isOpened = (thisForm.css('display')==='block');
+		
+		// close opened after click
+		if (isOpened) { $(this).parent().children('form').slideUp(); return; }
+		
+		// others should be toggled and closed
+		$('section form').slideUp();
+		$(this).parent().children('form').slideDown({ duration : 100 });
+		
+	});
+	
+	</script>
+
+</body></html>

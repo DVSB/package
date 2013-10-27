@@ -35,7 +35,7 @@ module.exports = function(req, res) {
 		break;
 		
 		default:
-		res.render('new.html');
+		res.render('create.html');
 		break;
 		
 	};

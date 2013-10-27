@@ -1,14 +1,22 @@
-<!DOCTYPE><html class="preview"><head>
+<!DOCTYPE><html class="create"><head>
 
 	<meta charset="utf-8" />
   	<meta name="viewport" content="width=device-width, initial-scale=1" />
-  	
-	<title>mdown - markdown online editor</title>
 	
-	<link rel="stylesheet" href="/s/bootstrap.css" type="text/css" />
+	<title>Create</title>
+	
+	<link rel="stylesheet" href="/s/normalize.css" type="text/css" />
 	<link rel="stylesheet" href="/s/stylesheets.css" type="text/css" />
+	<link rel="stylesheet" href="/s/privates.css" type="text/css" />
 
 </head><body lang="en">
+	
+	<ul class="globals">
+		<li><a href="/">mDown</a></li>
+		<li><a href="/-/">Dashboard</a></li>
+		<li><a href="/-/create/">Create</a></li>
+		<li><a href="/-/settings/">Settings</a></li>
+	</ul>
 		
 	<header>
 		
@@ -23,8 +31,6 @@
 	</header>
 
 	<article class="mdsyntax">
-
-		<%- markdown  %>
 	
 	</article>
 	
@@ -40,8 +46,6 @@
 		<span><strong>Public</strong> / Private</span><br><br>
 		
 		<strong>Settings:</strong><br>
-		<span><a href="/edit;<%= key %>">Edit</a>, </span>
-		<span><a href="/storage;unlink;<%= key %>">Delete</a></span><br>
 		
 		<br><br><br><br>
 		<div>

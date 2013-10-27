@@ -16,11 +16,11 @@
 	a, a:hover, 
 	button, button:hover,
 	input, input:hover {
-		-webkit-transition: background 0.2s;
-		-moz-transition: background 0.2s;
-		-ms-transition: background 0.2s;
-		-o-transition: background 0.2s;
-		transition: background 0.2s;
+		-webkit-transition: background 0.1s;
+		-moz-transition: background 0.1s;
+		-ms-transition: background 0.1s;
+		-o-transition: background 0.1s;
+		transition: background 0.1s;
 	}
 	
 	body, button, input, textarea, select {

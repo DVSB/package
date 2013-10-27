@@ -18,9 +18,6 @@
 		
 			isAuth = (existsLoggedCookie&&isCookieLoggedTrue&&isCookieSecretEqual);
 	
-			console.log(cookies.userhash);
-			console.log(cookieSecret);
-	
 			if (isAuth) { next();
 			} else { res.redirect('/'); }
 		
@@ -71,7 +68,7 @@
 			require('./modules/dashboard')(req, res);
 		});
 	
-		screens = [ 'new', 'list', 'settings', 'view'
+		screens = [ 'create', 'list', 'settings', 'view'
 		].forEach(function(mod){
 			app.all('/-/'  + mod +  '/*', hasAuth, function(req, res) {
 				require('./modules/' + mod)(req, res);

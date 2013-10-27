@@ -1,0 +1,67 @@
+	
+	body {
+		padding-bottom: 100px;
+	}
+	
+	.globals {
+		background: #666;
+		color: #FFF;
+		margin: 0;
+		padding: 0;
+	}
+	
+	.globals li {
+		display: inline-block;
+		margin: 0;
+		list-style: none;
+	}
+	
+	.globals a {
+		color: inherit;
+		text-decoration: none;
+		padding: 6px 14px;
+		display: inline-block;
+	}
+	
+	.globals a:hover {
+		background: #888;
+	}
+	
+	.settings h1 {
+		margin: 10px 100px 30px;
+	}
+	
+	.settings h2 {
+		margin: 30px 100px 15px;
+		font-size: 17px;
+		font-weight: 300;
+		color: #000;
+	}
+	
+	.settings h3 {
+		color: #42927F;
+		text-decoration: underline;
+		cursor: pointer;
+		font-size: 13px;
+		margin: 0;
+		font-weight: 400;
+	}
+	
+	.settings h3:hover {
+		color: #40BEC2;
+	}
+	
+	.settings .globals {
+		margin-bottom: 30px;
+	}
+	
+	.settings .question {
+		margin: 7px 100px 0;
+		border: 1px solid #E2E2E2;
+		padding: 10px 20px;
+		background: #F7F7F7;
+	}
+	
+	.settings form {
+		margin: 20px 0 5px;
+	}

@@ -5,6 +5,8 @@ module.exports = function(req, res) {
 	module = require('url').parse(req.url).path.split('/')[2].split('?')[0];
 	module = (module==='') ? null : module;
 	
+	// errors
+	
 	errors.e200 = {
 		error: 'Page not exists', 
 		descr: 'UUh :( Sorry, you not should be here, this page doesn`t exists.'
@@ -30,11 +32,23 @@ module.exports = function(req, res) {
 		descr: 'Sorry :( but user with this email is already registered.'
 	};
 	
+	errors.e205 = {
+		error: 'This password is wrong', 
+		descr: 'Sorry, we cannot remove this account, because password is wrong.'
+	};
+	
+	// infos
+	
 	errors.i200 = {
 		error: 'You are successfully registered', 
 		descr: 'Your account has been created. Please check email box for verification.'
 	};
-		
+	
+	errors.i201 = {
+		error: 'Your password was changed successfully', 
+		descr: 'Next time you can sign in with new password. We sent you email about this change.'
+	};
+	
 	routing = function(number){
 			
 		var params = {}, 
