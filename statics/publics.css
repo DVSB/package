@@ -48,4 +48,5 @@
 	
 	.errors body {
 		padding: 150px 200px;
+		overflow: hidden;
 	}

@@ -9,42 +9,48 @@ module.exports = function(req, res) {
 	
 	var checkIfExists, saveNewUserAndSendEmail, checkUserStatus, createCookies, formLogin, formReset,
 	sendEmailVerification, verifyEmail, module, _api = require('./_api')(), s3 = _api.s3,
-	fingerprint = _api.fingerprint, enigma = _api.enigma;
+	fingerprint = _api.fingerprint, cookieSecret = _api.cookieSecret;
 
 
 	loginUser = function() { 
 		
-		var arePassEqual, isVerified, checkIfPasswordsEqual, userCheck;
-		 
-		arePassEqual = function(user){  
-			return (user.password===fingerprint(req.body.password));
+		var checkIfPasswordsEqual, checkIfUserVefified, 
+		fingerprintEmail, fingerprintPassw;
+			
+		fingerprintEmail = fingerprint(req.body.loginEmail);
+		fingerprintPassw = fingerprint(req.body.loginPassword);
+		
+		checkIfPasswordsEqual = function(passwrd, callback){
+			if (passwrd!==fingerprintPassw) {
+				/* wrong passwords error */
+				res.redirect('/errors/e201');
+			} else {	callback(); }
 		}
 		
-		isVerified = function(user){
-			return true;
-			// TODO, uncomment, when email verification available
-			// return (user.isVerified===true);
-		}
-		
-		checkIfPasswordsEqual = function(data){
-			data = JSON.parse(data.Body+'');
-			if (arePassEqual(data)&&isVerified(data)) { createCookies();
-			} else { res.send('not equal pass or user not verified'); }
+		checkIfUserVefified = function(isVerified){
+			if (isVerified!==true) {
+				/* is not verified */ 
+				res.redirect('/errors/e202');
+			} else { createCookies(); }
 		}
 		
 		s3.getObject({
-			key : fingerprint(req.body.email)+'/user-details/_config.json'
-		}, checkIfPasswordsEqual);
-		
+			key : fingerprintEmail+'/user-details/_config.json'
+		}, function(data){
+			var isOK1, isOK2;
+			data = JSON.parse(data.Body+'');
+			checkIfPasswordsEqual(data.password, function(){
+				checkIfUserVefified(data.isVerified);
+			});
+		});
+
 	}; 
 	
 	
 	createCookies = function(){
-		
-		var publicUserHash, enigmaUserHash;
-		
-		publicUserHash = fingerprint(req.body.email);
-		enigmaUserHash = enigma.encrypt(publicUserHash);
+				
+		var publicUserHash;
+		publicUserHash = fingerprint(req.body.loginEmail);
 		
 		res.cookie(
 			'islogged', 
@@ -60,7 +66,7 @@ module.exports = function(req, res) {
 		
 		res.cookie(
 			'userhash', 
-			enigmaUserHash, 
+			cookieSecret(publicUserHash), 
 			{ signed: true, httpOnly: true }
 		);
 		
@@ -110,6 +116,7 @@ module.exports = function(req, res) {
 	};
 	
 	
+	
 	createNewUser = function(){
 				
 		s3.putObject({
@@ -127,7 +134,7 @@ module.exports = function(req, res) {
 	
 	sendEmailVerif = function(userEmail){
 		
-		res.send('You are successfully registred!');
+		res.redirect('/errors/i200');
 		return ;// TODO, disabled for now
 		
 		var smtp, userFingerprint, html='', text='';
@@ -176,24 +183,23 @@ module.exports = function(req, res) {
 	
 		case 'formRegister':
 		isUserExists(req.body.registerEmail, function(yes) {
-			console.log(yes);
 			if (!yes) { 
 				createNewUser();
 				sendEmailVerif(req.body.email);
-			} else { res.send('this email already exists'); }
+			} else { res.redirect('/errors/e204'); }
 		});
 		break;
 	
 		case 'formLogin': 
-		isUserExists(function(yes){
+		isUserExists(req.body.loginEmail, function(yes){
 			if (yes) { loginUser();
-			} else { res.send('email isnt registered'); }
+			} else { res.redirect('/errors/e203'); }
 		});
 		break;
 
 		case 'formReset': 
 		isUserExists(function(yes){
-			if (yes) { resetPassw() 
+			if (yes) { resetPassw();
 			} else { res.send('sorry, this user doesnt exists'); }
 		});
 		break;

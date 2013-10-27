@@ -171,7 +171,7 @@ module.exports = function(req, res) {
 		hash = crypto.createHash('sha512').update(string).digest('hex');
 		hash = hash + salt + string;
 			
-		hash = crypto.createHash('sha512').update(hash).digest('hex');	
+		hash = crypto.createHash('sha256').update(hash).digest('hex');	
 		hash = parseInt(hash, 16).toString(36);
 
 		return hash;
@@ -179,23 +179,23 @@ module.exports = function(req, res) {
 	};
 	
 	
-	obj.enigma = {
+	obj.cookieSecret = function(string){
+
+		var hash, crypto = require('crypto'), salt;
 		
-		encrypt : function(string){
+		salt = '74.27-as%87.47-as%82.47-vc%42.98-yx%14.89-xy';
+		
+		hash = crypto.createHash('sha512').update(string).digest('hex');
+		hash = hash + salt + string;
 			
-			var crypto = require('crypto');
-			string = crypto.createHash('sha512').update(string+settings.passwords[1]).digest('hex').slice(10, 50);
-			string = crypto.createHash('sha512').update(string+settings.passwords[1]).digest('hex').slice(70, 90);
-			
-			return string;
-	
-		}
+		hash = crypto.createHash('sha256').update(hash).digest('hex');	
+		hash = parseInt(hash, 16).toString(36);
+
+		return hash;
 	
 	};
-	
-		
-	return obj;
-	
+
+	return obj;	
 	
 };
 

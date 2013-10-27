@@ -5,11 +5,36 @@ module.exports = function(req, res) {
 	module = require('url').parse(req.url).path.split('/')[2].split('?')[0];
 	module = (module==='') ? null : module;
 	
-	errors.e200 = { 
+	errors.e200 = {
 		error: 'Page not exists', 
-		descr: 'Sorry, you not should be here, this page doesnt exists.'
+		descr: 'UUh :( Sorry, you not should be here, this page doesn`t exists.'
 	};
 	
+	errors.e201 = {
+		error: 'Wrong password', 
+		descr: 'AAh :( Please try use different password. This one is wrong.'
+	};
+	
+	errors.e202 = {
+		error: 'User is not verified', 
+		descr: 'OOh :( Your account is ready, but, please find email from mDown.'
+	};
+	
+	errors.e203 = {
+		error: 'User not exists', 
+		descr: 'UUf :( this email address is not registered yet.'
+	};
+	
+	errors.e204 = {
+		error: 'This email already exists', 
+		descr: 'Sorry :( but user with this email is already registered.'
+	};
+	
+	errors.i200 = {
+		error: 'You are successfully registered', 
+		descr: 'Your account has been created. Please check email box for verification.'
+	};
+		
 	routing = function(number){
 			
 		var params = {}, 
