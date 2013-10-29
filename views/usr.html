@@ -10,7 +10,7 @@
 		
 			<h2>Log in (disabled until 12/2013)</h2>
 		
-			<form role="form" method="post" action="./formLogin">
+			<form role="form" method="post" action="./form-login">
 				<input type="email" name="loginEmail" placeholder="Email" required />
 				<input type="password" name="loginPassword" placeholder="Password" minlength="6" required />
 				<button type="submit">Log in</button>
@@ -31,10 +31,10 @@
 		
 			<h2>Create new account</h2>
 		
-			<form role="form" method="post" action="./formRegister">
-				<input type="email" name="registerEmail" placeholder="Email" required />
-				<input type="password" name="registerPassword1" minlength="6" placeholder="Password (>6 chars)" required />
-				<input type="password" name="registerPassword2" minlength="6" placeholder="Password again" required />
+			<form role="form" method="post" action="./form-register">
+				<input type="email" name="email" placeholder="Email" required />
+				<input type="password" name="password" minlength="6" placeholder="Password (>6 chars)" required />
+				<input type="password" name="password2" minlength="6" placeholder="Password again" required />
 				<button type="submit">Create</button>
 			</form>
 		
@@ -53,7 +53,7 @@
 		
 			<h2>Reset your password</h2>
 		
-			<form role="form" method="post" action="./formReset" >
+			<form role="form" method="post" action="./form-reset" >
 				<input type="email" name="resetEmail" placeholder="Email" required />
 				<button type="submit">Reset</button>
 			</form>

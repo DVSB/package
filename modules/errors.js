@@ -44,10 +44,11 @@ module.exports = function(req, res) {
 	
 	// infos
 	
-	errors.i200 = {
-		error: 'You are successfully registered', 
-		descr: 'Your account has been created. Please check email box for verification.'
-	};
+		errors.i200 = {
+			error: 'Registration successful', 
+			descr: 'Check email box for verification link.',
+			refer: '/'
+		};
 	
 	errors.i201 = {
 		error: 'Your password was changed successfully', 
@@ -70,7 +71,8 @@ module.exports = function(req, res) {
 		} else {
 			res.render('errors.html', {
 				error : errors[number].error,
-				descr : errors[number].descr
+				descr : errors[number].descr,
+				refer : errors[number].refer
 			});
 		}
 		

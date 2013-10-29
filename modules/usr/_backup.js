@@ -16,68 +16,6 @@ module.exports = function(req, res) {
 	api.email = require('../api/email')();
 
 
-	loginUser = function() { 
-		
-		var checkIfPasswordsEqual, checkIfUserVefified, 
-		fingerprintEmail, fingerprintPassw;
-			
-		fingerprintEmail = fingerprint(req.body.loginEmail);
-		fingerprintPassw = fingerprint(req.body.loginPassword);
-		
-		checkIfPasswordsEqual = function(passwrd, callback){
-			if (passwrd!==fingerprintPassw) {
-				/* wrong passwords error */
-				res.redirect('/errors/e201');
-			} else {	callback(); }
-		}
-		
-		checkIfUserVefified = function(isVerified){
-			if (isVerified!==true) {
-				/* is not verified */ 
-				res.redirect('/errors/e202');
-			} else { createCookies(); }
-		}
-		
-		s3.getObject({
-			Key : fingerprintEmail+'/user-details/_config.json'
-		}, function(data){
-			var isOK1, isOK2;
-			data = JSON.parse(data.Body+'');
-			checkIfPasswordsEqual(data.password, function(){
-				checkIfUserVefified(data.isVerified);
-			});
-		});
-		
-		createCookies = function(){
-				
-			var
-			publicUserHash = fingerprint(req.body.loginEmail),
-			options = { signed: true, httpOnly: true };
-	
-			res.cookie('islogged', 'true', options);
-			res.cookie('userid', publicUserHash, options);
-			res.cookie('userhash', cookieSecret(publicUserHash), options);
-			res.redirect('/-/');
-		
-		};
-
-	}; 
-	
-	
-	resetPassw = function(){
-		
-		var
-		publicUserHash,
-		privateKey='-';
-		
-		publicUserHash = fingerprint(req.body.resetEmail);
-		privateKey += fingerprint(publicUserHash).substring(0, 30);
-		
-		api.email.resetPassword(req.body.resetEmail, publicUserHash+privateKey, function(){
-			res.redirect('/errors/i202');
-		});
-		
-	};
 	
 	
 	verifyKeyForResetPassword = function(){
@@ -149,59 +87,6 @@ module.exports = function(req, res) {
 	};
 	
 	
-	createNewUser = function(){
-		
-		var getTemplate, saveTemplate, editTemplate;
-		
-		getTemplate = function(){
-					
-			var templateConf = __dirname+'/../templates/configuration.json';	
-			require('fs').readFile(templateConf, function (err, data) {
-				if (err) throw err;
-				editTemplate(data+'');
-			});
-			
-		};
-		
-		editTemplate = function(data){
-			
-			data = JSON.parse(data);
-			data.details.password = fingerprint(req.body.registerPassword1);
-			data.api.publicKey = fingerprint(req.body.registerEmail);
-			data.api.privateKey = random.generate();
-			saveTemplate(JSON.stringify(data));
-			
-		};
-	
-		saveTemplate = function(data){
-						
-			var path;
-			
-			path = fingerprint(req.body.registerEmail);
-			path += '/user-details/_config.json';
-			
-			s3.putObject({
-				Key : path,
-				Body : data
-			}, function(){
-				sendEmailVerif();
-			});
-			
-		};
-		
-		sendEmailVerif = function(userEmail){
-		
-			var userEmail = req.body.registerEmail;
-			api.email.verifyAccount(userEmail, fingerprint(userEmail), function(){
-				res.redirect('/errors/i200');
-			});
-	
-		};
-				
-		getTemplate();
-	
-	
-	};
 	
 	
 	verifyAccountFromEmail = function(){
@@ -244,38 +129,9 @@ module.exports = function(req, res) {
 				
 	}
 	
-		
-	// this is browse module, this module use two parts of url, first
-	// is module and second is search /usr/verify?mkldmkasmk, in switch
-	// is browsed module and search can be send inside
-	module = require('url').parse(req.url).path.split('/')[2].split('?')[0];
-	module = (module==='') ? null : module;
-
+	
 	switch(module) {
 		
-		// form
-	
-		case 'formRegister':
-		isUserExists(req.body.registerEmail, function(yes) {
-			if (!yes) { 
-				createNewUser();
-			} else { res.redirect('/errors/e204'); }
-		});
-		break;
-	
-		case 'formLogin': 
-		isUserExists(req.body.loginEmail, function(yes){
-			if (yes) { loginUser();
-			} else { res.redirect('/errors/e203'); }
-		});
-		break;
-
-		case 'formReset': 
-		isUserExists(req.body.resetEmail, function(yes){
-			if (yes) { resetPassw();
-			} else { res.send('sorry, this user doesnt exists'); }
-		});
-		break;
 		
 		// email
 		
@@ -288,26 +144,6 @@ module.exports = function(req, res) {
 		break;
 		
 		
-		
-		// display
-	
-		case 'login':
-	 	res.render('usr.html', { show : 'login' });
-		break;
-		
-		case 'reset':
-	 	res.render('usr.html', { show : 'reset' });
-		break;
-
-		case 'register':
-		res.render('usr.html', { show : 'register' });
-		break;
-		
-		// default
-
-		default:
-		res.redirect('./register');
-		break;
 	
 	};
 	

@@ -5,61 +5,53 @@ module.exports = function(req, res) {
 
 	switch(module) {
 		
-		// form
-	
-		case 'formRegister':
-		isUserExists(req.body.registerEmail, function(yes) {
-			if (!yes) { 
-				createNewUser();
-			} else { res.redirect('/errors/e204'); }
-		});
-		break;
-	
-		case 'formLogin': 
-		isUserExists(req.body.loginEmail, function(yes){
-			if (yes) { loginUser();
-			} else { res.redirect('/errors/e203'); }
-		});
+		// if referer of this url should be form, this 
+		// modules are run after click on Button in login
+		// or register or reset password forms
+
+		case 'form-register':
+		require('./usr/form-register')(req, res);
 		break;
 
-		case 'formReset': 
-		isUserExists(req.body.resetEmail, function(yes){
-			if (yes) { resetPassw();
-			} else { res.send('sorry, this user doesnt exists'); }
-		});
+		case 'form-login': 
+		require('./usr/form-login')(req, res);
+		break;
+
+		case 'form-reset':
+		require('./usr/form-reset')(req, res);
 		break;
 		
-		// email
+		// this links are opened when refered is email
+		// this should be run only for verification of
+		// email and reset of password
 		
-		case 'emailVerify': 
-		verifyAccountFromEmail();
+		case 'email-verify':
+		require('./usr/default')(req, res);
 		break;
-		
-		case 'emailResetPass': 
-		verifyKeyForResetPassword();
-		break;
-		
-		
-		
-		// display
 	
-		case 'login':
-	 	res.render('usr.html', { show : 'login' });
+		case 'email-resetPass': 
+		require('./usr/default')(req, res);
 		break;
 		
+		// this part should work when is normally browsed
+		// url and render only html, normally only for login
+		// reset and register
+
+		case 'login':
+		require('./usr/login')(req, res);
+		break;
+	
 		case 'reset':
-	 	res.render('usr.html', { show : 'reset' });
+		require('./usr/reset')(req, res);
 		break;
 
 		case 'register':
-		res.render('usr.html', { show : 'register' });
+		require('./usr/register')(req, res);
 		break;
 		
-		// default
-
-		default:
-		res.redirect('./register');
-		break;
+	default:
+	require('./usr/default')(req, res);
+	break;
 	
 	};
 	

@@ -1,4 +1,4 @@
-module.exports = function(req, res) {
+module.exports = function() {
 	
 	
 	var smtp, email={}, rawEmail;
