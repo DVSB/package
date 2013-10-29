@@ -21,9 +21,8 @@ module.exports = function(req, res) {
 			res.redirect('/-/view/'+key);
 		});
 		
-	};		
-
-
+	};
+	
 	module = require('url').parse(req.url);
 	module = module.pathname.split('/')[3];
 			

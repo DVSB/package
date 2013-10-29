@@ -110,7 +110,7 @@ module.exports = function(req, res) {
 	isUserExists = function(email, callback) {
 		
 		s3.isObjectExists({
-			key : fingerprint(email)+'/user-details/_config.json'
+			Key : fingerprint(email)+'/user-details/_config.json'
 		}, callback);
 		
 	};
@@ -118,21 +118,45 @@ module.exports = function(req, res) {
 	
 	
 	createNewUser = function(){
+		
+		var getTemplate, saveTemplate;
+		
+		getTemplate = function(){
+			
+			var templateConf;
+			
+			templateConf = __dirname+'/../templates/configuration.json';	
+			require('fs').readFile(templateConf, function (err, data) {
+				if (err) throw err;
+				saveTemplate(data+'');
+			});
+			
+		};
+	
+		saveTemplate = function(data){
+						
+			var path;
+			
+			path = fingerprint(req.body.registerEmail);
+			path += '/user-details/_config.json';
+			
+			s3.putObject({
+				Key : path,
+				Body : data
+			}, function(){
+				sendEmailVerif();
+			});
+			
+		};
 				
-		s3.putObject({
-			key : fingerprint(req.body.registerEmail)+'/user-details/_config.json',
-			body : JSON.stringify({ 
-				password : fingerprint(req.body.registerPassword1),
-				isVerified : false
-			})
-		}, function(){
-			res.redirect('/');
-		});
+		getTemplate();
 	
 	};
 	
 	
 	sendEmailVerif = function(userEmail){
+		
+		var userEmail = req.body.email;
 		
 		res.redirect('/errors/i200');
 		return ;// TODO, disabled for now
@@ -185,7 +209,6 @@ module.exports = function(req, res) {
 		isUserExists(req.body.registerEmail, function(yes) {
 			if (!yes) { 
 				createNewUser();
-				sendEmailVerif(req.body.email);
 			} else { res.redirect('/errors/e204'); }
 		});
 		break;

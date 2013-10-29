@@ -11,21 +11,13 @@ module.exports = function(req, res) {
 	fingerprint = _api.fingerprint, removeAccount;
 	
 	
-
-	
-	
-	
 	getAllArticles = function(){
-						
-		s3.listObjects({
-			prefix : cookies.userid+'/articles/'
+
+		s3.getObject({
+			key : cookies.userid+'/blog-module/_articles.json'
 		}, function(data){
-			articles = data.Contents;
-			articles.forEach(function(ele, i){
-				articles[i] = underscore.pick(articles[i], 'Key', 'LastModified', 'Size');
-				articles[i].Key = articles[i].Key.split('/')[2];
-			});
-			renderArticles(articles);
+			data = JSON.parse(data.Body+'');
+			renderArticles(data);
 		});
 		
 	};

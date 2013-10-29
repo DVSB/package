@@ -14,27 +14,29 @@
 
 </head><body lang="en">
 	
-	<nav>
-		<ul class="globals">
+	<nav class="globals"><ul>
 			<li><a href="/">mDown</a></li>
 			<li><a href="/-/">Dashboard</a></li>
 			<li><a href="/-/create/">Create</a></li>
 			<li><a href="/-/settings/">Settings</a></li>
-		</ul>
-	</nav>
+	</ul></nav>
 		
-	<ul>	
+	<ul class="articleslist">	
 	<% allArticles.forEach(function(ele, i){ %>
 		
 		<li>
-			<a href="/-/view/<%= ele.Key %>"><%= ele.Key %></a>
-			<a href="/-/view/<%= ele.Key %>/edit">edit</a>
-			<a href="/-/view/<%= ele.Key %>/remove">remove</a>
-		 	<time><%= ele.LastModified %></time>
-			<span><%= ele.Size %></span>
+		 	<span><%= ele.key %></span>
+			<span><%= ele.title %></span>
+			<span><%= ele.date %></span>
+			<span><%= ele.size %></span>
+			<div><%= ele.perex %></div>
 		</li>
 		
 	<% }); %>
 	</ul>
+	
+	<footer>
+		Copyright 2014, mDown.
+	</footer>
 
 </body></html>

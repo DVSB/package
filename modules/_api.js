@@ -20,8 +20,8 @@ module.exports = function(req, res) {
 		putObject : function(params, callback){
 		
 			s3.client.putObject({
-				Body : params.body,
-				Key : params.key,
+				Body : params.Body,
+				Key : params.Key,
 				Bucket : 'mdown',
 				StorageClass : 'REDUCED_REDUNDANCY',
 				ServerSideEncryption : 'AES256'
@@ -39,7 +39,7 @@ module.exports = function(req, res) {
 			
 			s3.client.listObjects({
 				Bucket : 'mdown',
-				Prefix : params.prefix
+				Prefix : params.Prefix
 			}, function(err, data){
 				if (err) throw err;
 				callback(data);
@@ -53,7 +53,7 @@ module.exports = function(req, res) {
 			
 			s3.client.getObject({
 				Bucket : 'mdown',
-				Key : params.key
+				Key : params.Key
 			}, function(err, data){
 				if (err) throw err;
 				callback(data);
@@ -81,12 +81,25 @@ module.exports = function(req, res) {
 			
 			s3.client.getObject({
 				Bucket : 'mdown',
-				Key : params.key
+				Key : params.Key
 			}, function(err, data){
 				if (err && err.name==='NoSuchKey') { callback(false); }
 				if (data){ callback(true); }
 			});
 		
+		},
+		
+		copyObject : function(params, callback){
+			
+			s3.client.copyObject({
+				Bucket : 'mdown',
+				CopySource : params.CopySource,
+				Key : params.Key
+			}, function(err, data){
+				if (err) throw err;
+				callback(data);
+			});
+			
 		}
 	
 	
@@ -143,12 +156,13 @@ module.exports = function(req, res) {
 		generate : function(){
 			
 			var random, luhnSum;
-			random = Math.floor((Math.random()*800)+100) + new Date().getTime() + '';
+			random = Math.floor((Math.random()*800)+100) + new Date().getTime() - 1000000000000 + '';
 			luhnSum = obj.luhn.calculate(random);
 			
-			return parseInt(random + luhnSum).toString(36);
+			return parseInt(random + luhnSum);
 			
 		},
+		
 		
 		// fingerprint is only short way how write longer number in deca base
 		// we can also get real value of fingerprint with simple conversion 

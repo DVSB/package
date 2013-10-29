@@ -1,26 +1,43 @@
 
-	Markdown pastebin
-	Copyright, Samuel Ondrek
+	## Structure
+
+	mdown.co							
 	
-		
-	### How it works on S3
+		5q0rq...kso / configurations / admin.json
+		5q0rq...kso / configurations / modules.json
+		5q0rq...kso / configurations / paynment.json
+		5q0rq...kso / configurations / settings.json
+											
+		5q0rq...kso / blog-module / 3830011811582
+		5q0rq...kso / blog-module / 3830011811640
+		5q0rq...kso / blog-module / 3830011811665
+		5q0rq...kso / blog-module / 3830011811681
+	
+	api.mdown.co
+	
+		5q0rq...kso / articles.json
+		5q0rq...kso / articles.xml
+		5q0rq...kso / articles-full.json
+		5q0rq...kso / articles-full.xml
+		5q0rq...kso / last-5.json
+		5q0rq...kso / last-5.json
 	
 	
-		User is defined as hash from email
-		
-		  b30e1ecdf64b3ffe29a2
-		
-		Modules are defined as folders
-		
-		  b30e1ecdf64b3ffe29a2/userdetails 
-		  b30e1ecdf64b3ffe29a2/markdowns 
-		  b30e1ecdf64b3ffe29a2/comments 
-		  b30e1ecdf64b3ffe29a2/images 
-		  b30e1ecdf64b3ffe29a2/customusers 
-		
-		Inside of module are flat files
-		Admin files starts with underscore, User files without
-		
-		  b30e1ecdf64b3ffe29a2/userdetails/_config.js
-		  b30e1ecdf64b3ffe29a2/userdetails/_config.js
-		  b30e1ecdf64b3ffe29a2/userdetails/_config.js
+	
+	
+	## Actions
+	
+	user 
+	-> wants index 
+	-> get api.mdown.co/5q0rq...kso/articles.json
+	-> display
+	
+	user 
+	-> wants specific article 
+	-> get mdown.co/5q0rq...kso/blog-module/3830011811582.md
+	-> display
+	
+	user 
+	-> wants specific image 
+	-> get mdown.co/5q0rq...kso/image-module/3830011811582.png
+	-> display
