@@ -54,8 +54,8 @@
 			<h2>Reset your password</h2>
 		
 			<form role="form" method="post" action="./formReset" >
-				<input type="email" name="resetEmail" placeholder="Email" required disabled />
-				<button type="submit" disabled>Reset</button>
+				<input type="email" name="resetEmail" placeholder="Email" required />
+				<button type="submit">Reset</button>
 			</form>
 		
 			<div class="rules">
@@ -64,6 +64,29 @@
 			</div>
 		
 		</article>
+		
+	<% 
+		} else if (show==='reset2step') { 
+	%>
+		
+		<article class="reset">
+	
+			<h2>Reset your password</h2>
+	
+			<form role="form" method="post" action="./formReset2step" >
+				<input type="text" name="reset2stepPublicKey" value="<%= publicKey %>" required readonly />
+				<input type="text" name="reset2stepSecretKey" value="<%= secretKey %>" required readonly  />
+				<input type="email" name="reset2stepEmail" placeholder="Email" required />
+				<button type="submit">Reset</button>
+			</form>
+	
+			<div class="rules">
+				We will send here verification link.<br>
+				You can also <a href="./register">Sign up</a> or <a href="./login">Log in</a>.
+			</div>
+	
+		</article>
+		
 	
 	<% 
 		} 

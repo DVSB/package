@@ -37,6 +37,11 @@ module.exports = function(req, res) {
 		descr: 'Sorry, we cannot remove this account, because password is wrong.'
 	};
 	
+	errors.e206 = {
+		error: 'You cannot reset password', 
+		descr: 'Sorry, you cannot reset password to this account.'
+	};
+	
 	// infos
 	
 	errors.i200 = {
@@ -47,6 +52,11 @@ module.exports = function(req, res) {
 	errors.i201 = {
 		error: 'Your password was changed successfully', 
 		descr: 'Next time you can sign in with new password. We sent you email about this change.'
+	};
+	
+	errors.i202 = {
+		error: 'Check your email', 
+		descr: 'We sent there verification link where you get password.'
 	};
 	
 	routing = function(number){
