@@ -9,7 +9,11 @@ module.exports = function(req, res) {
 	
 	var checkIfExists, saveNewUserAndSendEmail, checkUserStatus, createCookies, formLogin, formReset,
 	sendEmailVerification, verifyEmail, module, _api = require('./_api')(), s3 = _api.s3,
-	fingerprint = _api.fingerprint, cookieSecret = _api.cookieSecret;
+	fingerprint = _api.fingerprint, cookieSecret = _api.cookieSecret, random = _api.random,
+	fprint = _api.fprint;
+	
+	var api = {};
+	api.email = require('../api/email')();
 
 
 	loginUser = function() { 
@@ -45,7 +49,7 @@ module.exports = function(req, res) {
 		});
 
 	}; 
-	
+		
 	
 	createCookies = function(){
 				
@@ -83,26 +87,7 @@ module.exports = function(req, res) {
 		
 		return;
 		
-		// TODO !!! this is ignored, later should be uncommented
-		
-		smtp = require('nodemailer').createTransport('SMTP', {
-			service: 'Gmail',
-			auth: { user: 'samuel@ondrek.com', pass: 'papluhaMM00' }
-		});
-		
-		smtp.sendMail({
-			from: 'mdown <support@mdown.co>',
-			to: req.body.resetEmail+', samuel@ondrek.com', // TODO:userEmail
-			subject: 'RESET YOUR PASSWORD',
-			text: 'text',
-			html: 'html'
-		}, function(err, data) {
-			if (err){ console.log(err);
-		    } else { console.log("Message sent"); }
-	 		res.render('usr.html', { 
-	 			show : 'reset'
-	 		});
-		});
+		api.email.verifyAccount(req.body.registerEmail);
 		
 	};
 
@@ -116,20 +101,27 @@ module.exports = function(req, res) {
 	};
 	
 	
-	
 	createNewUser = function(){
 		
-		var getTemplate, saveTemplate;
+		var getTemplate, saveTemplate, editTemplate;
 		
 		getTemplate = function(){
-			
-			var templateConf;
-			
-			templateConf = __dirname+'/../templates/configuration.json';	
+					
+			var templateConf = __dirname+'/../templates/configuration.json';	
 			require('fs').readFile(templateConf, function (err, data) {
 				if (err) throw err;
-				saveTemplate(data+'');
+				editTemplate(data+'');
 			});
+			
+		};
+		
+		editTemplate = function(data){
+			
+			data = JSON.parse(data);
+			data.details.password = fingerprint(req.body.registerPassword1);
+			data.api.publicKey = fingerprint(req.body.registerEmail);
+			data.api.privateKey = random.generate();
+			saveTemplate(JSON.stringify(data));
 			
 		};
 	
@@ -148,56 +140,67 @@ module.exports = function(req, res) {
 			});
 			
 		};
+		
+		sendEmailVerif = function(userEmail){
+		
+			var userEmail = req.body.registerEmail;
+			api.email.verifyAccount(userEmail, fingerprint(userEmail), function(){
+				res.redirect('/errors/i200');
+			});
+	
+		};
 				
 		getTemplate();
 	
-	};
-	
-	
-	sendEmailVerif = function(userEmail){
-		
-		var userEmail = req.body.email;
-		
-		res.redirect('/errors/i200');
-		return ;// TODO, disabled for now
-		
-		var smtp, userFingerprint, html='', text='';
-		
-		userFingerprint = fingerprint(userEmail);
-						
-		smtp = require('nodemailer').createTransport('SMTP', {
-			service: 'Gmail',
-			auth: { user: 'samuel@ondrek.com', pass: 'papluhaMM00' }
-		});
-		
-		text += 'Hello,\n\n',
-		text += 'Please visit this URL for verification of account:\n';
-		text += 'http://mdown.co/usr/verify?'+userFingerprint;
-		
-		html += 'Hello,<br><br>';
-		html += 'Please verify your email by click on this link:<br>';
-		html += '<a href="http://mdown.co/usr/verify?'+userFingerprint;
-		html += '">Click Here!</a><br><br><br>Have a nice day!';
-		
-		smtp.sendMail({
-			from: 'mdown <support@mdown.co>',
-			to: userEmail+', samuel@ondrek.com', // TODO:userEmail
-			subject: 'Verify your mdown email',
-			text: text,
-			html: html
-		}, function(err, data) {
-			if (err){ console.log(err);
-		    } else { console.log("Message sent: " + data.message); }
-			res.redirect('/');
-		});
 	
 	};
+	
+	
+	verifyAccountFromEmail = function(){
+		
+		var
+		publicKey = require('url').parse(req.url).path.split('/')[2].split('?')[1],
+		verifyThisAccount;
+		
+		s3.isObjectExists({
+			Key : publicKey+'/user-details/_config.json'
+		}, function(yes){
+			if (yes) { getActualConfig(); 
+			} else { res.send('this key doesnt exists with any account'); }
+		});
+		
+		getActualConfig = function(){
+			
+			s3.getObject({
+				Key : publicKey+'/user-details/_config.json'
+			}, function(data){
+				data = JSON.parse(data.Body+'');
+				data.details.isVerified = true;
+				data = JSON.stringify(data);
+				uploadNewConfig(data);
+			});
+			
+		}
+		
+		uploadNewConfig = function(data){
+			
+			s3.putObject({
+				Key : publicKey+'/user-details/_config.json',
+				Body : data,
+				ContentType : 'application/json'
+			}, function(data){
+				res.redirect('/');
+			});
+			
+		}
+		
+				
+	}
 	
 		
 	// this is browse module, this module use two parts of url, first
 	// is module and second is search /usr/verify?mkldmkasmk, in switch
 	// is browsed module and search can be send inside
-
 	module = require('url').parse(req.url).path.split('/')[2].split('?')[0];
 	module = (module==='') ? null : module;
 
@@ -225,6 +228,10 @@ module.exports = function(req, res) {
 			if (yes) { resetPassw();
 			} else { res.send('sorry, this user doesnt exists'); }
 		});
+		break;
+		
+		case 'verify': 
+		verifyAccountFromEmail();
 		break;
 		
 		// display
