@@ -62,7 +62,10 @@ module.exports = function(req, res) {
 	};
 	
 	
-	sendVerificationEmail = function(userEmail){
+	sendVerificationEmail = function(){
+		
+		// from some reasone sending emails doesnt work
+		// TODO check this, maybe limits with gmail smtp
 				
 		_email.verifyAccount(formEmail, _fingerprint(formEmail), function(){
 			res.redirect('/errors/i200');

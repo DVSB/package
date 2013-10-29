@@ -9,37 +9,44 @@ module.exports = function(req, res) {
 	
 	errors.e200 = {
 		error: 'Page not exists', 
-		descr: 'UUh :( Sorry, you not should be here, this page doesn`t exists.'
+		descr: 'UUh :( Sorry, you not should be here, this page doesn`t exists.',
+		refer: '/'
 	};
 	
-	errors.e201 = {
-		error: 'Wrong password', 
-		descr: 'AAh :( Please try use different password. This one is wrong.'
-	};
+		errors.e201 = {
+			error: 'Log In Error: Wrong password', 
+			descr: 'Try use different password. This one is wrong.',
+			refer: '/usr/login'
+		};
 	
-	errors.e202 = {
-		error: 'User is not verified', 
-		descr: 'OOh :( Your account is ready, but, please find email from mDown.'
-	};
+		errors.e202 = {
+			error: 'Log In Error: User is not verified', 
+			descr: 'OOh :( Your account is ready, but, please find email from mDown.',
+			refer: '/usr/login'
+		};
 	
-	errors.e203 = {
-		error: 'User not exists', 
-		descr: 'UUf :( this email address is not registered yet.'
-	};
+		errors.e203 = {
+			error: 'Log In Error: User not exists', 
+			descr: 'This email address is not registered yet.',
+			refer: '/usr/login'
+		};
 	
 	errors.e204 = {
 		error: 'This email already exists', 
-		descr: 'Sorry :( but user with this email is already registered.'
+		descr: 'Sorry :( but user with this email is already registered.',
+		refer: '/'
 	};
 	
 	errors.e205 = {
 		error: 'This password is wrong', 
-		descr: 'Sorry, we cannot remove this account, because password is wrong.'
+		descr: 'Sorry, we cannot remove this account, because password is wrong.',
+		refer: '/'
 	};
 	
 	errors.e206 = {
 		error: 'You cannot reset password', 
-		descr: 'Sorry, you cannot reset password to this account.'
+		descr: 'Sorry, you cannot reset password to this account.',
+		refer: '/'
 	};
 	
 	// infos
@@ -52,13 +59,15 @@ module.exports = function(req, res) {
 	
 	errors.i201 = {
 		error: 'Your password was changed successfully', 
-		descr: 'Next time you can sign in with new password. We sent you email about this change.'
+		descr: 'Next time you can sign in with new password. We sent you email about this change.',
+		refer: '/'
 	};
 	
-	errors.i202 = {
-		error: 'Check your email', 
-		descr: 'We sent there verification link where you get password.'
-	};
+		errors.i202 = {
+			error: 'Check your email', 
+			descr: 'We sent there verification link where you get password.',
+			refer: '/usr/login'
+		};
 	
 	routing = function(number){
 			
