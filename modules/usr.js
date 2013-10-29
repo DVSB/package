@@ -35,7 +35,7 @@ module.exports = function(req, res) {
 		}
 		
 		s3.getObject({
-			key : fingerprintEmail+'/user-details/_config.json'
+			Key : fingerprintEmail+'/user-details/_config.json'
 		}, function(data){
 			var isOK1, isOK2;
 			data = JSON.parse(data.Body+'');

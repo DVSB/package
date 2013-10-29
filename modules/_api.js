@@ -53,6 +53,8 @@ module.exports = function(req, res) {
 			
 			s3.client.getObject({
 				Bucket : 'mdown',
+				StorageClass : 'REDUCED_REDUNDANCY',
+				ServerSideEncryption : 'AES256',
 				Key : params.Key
 			}, function(err, data){
 				if (err) throw err;

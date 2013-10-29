@@ -1,24 +1,12 @@
-<!DOCTYPE><html class="usr"><head>
+<% include shared/head-publics.html %>
+<body lang="en" class="usr">
 
-	<meta charset="utf-8" />
-  	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	
-	<title>User Section</title>
-	
-	<link rel="stylesheet" href="/s/normalize.css" type="text/css" />
-	<link rel="stylesheet" href="/s/stylesheets.css" type="text/css" />
-	<link rel="stylesheet" href="/s/publics.css" type="text/css" />
-	
-	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
-
-</head><body lang="en">
 	
 	<% 
 		if (show==='login') { 
 	%>
 	
-		<article id="login">
+		<article class="login">
 		
 			<h2>Log in (disabled until 12/2013)</h2>
 		
@@ -39,7 +27,7 @@
 		} else if (show==='register') { 
 	%>
 	
-		<article id="register">
+		<article class="register">
 		
 			<h2>Create new account</h2>
 		
@@ -61,7 +49,7 @@
 		} else if (show==='reset') { 
 	%>
 	
-		<article id="reset">
+		<article class="reset">
 		
 			<h2>Reset your password</h2>
 		
@@ -71,7 +59,7 @@
 			</form>
 		
 			<div class="rules">
-				Enter registrated email and we send there verification link.<br>
+				We will send here verification link.<br>
 				You can also <a href="./register">Sign up</a> or <a href="./login">Log in</a>.
 			</div>
 		
@@ -84,7 +72,7 @@
 	<script type="text/javascript">
 	
 	$('form').validate({
-		rules: { password2 : { equalTo : 'input[name=registerPassword1]' } }
+		rules: { registerPassword2 : { equalTo : 'input[name=registerPassword1]' } }
 	});
 	
 	</script>

@@ -4,13 +4,13 @@
 	/* general */
 		
 	::selection {
-		background: #42927F;
-		color: #FFF;
+		background: #B3C0CF;
+		color: #000;
 	}
 		
 	::-moz-selection {
-		background: #42927F;
-		color: #FFF;
+		background: #B3C0CF;
+		color: #000;
 	}
 	
 	a, a:hover, 

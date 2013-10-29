@@ -1,0 +1,83 @@
+	
+	body {
+		width: 1200px;
+		margin: 0 auto;
+		padding: 0;
+	}
+	
+	.index body {
+		padding-left: 100px;
+		padding-bottom: 100px;
+	}
+	
+	/* usr */
+	
+		.usr label.error {
+			display: none !important;
+		}
+		
+		.usr input.error {
+			border: 1px solid #DD4040;
+		}
+	
+		/* register */
+	
+			.usr .register {
+				width: 400px;
+				margin: 200px auto;
+				padding-bottom: 200px;
+			}
+	
+			.usr .register input {
+				display: block;
+				margin-bottom: 15px;
+				width: 100%;
+			}
+	
+			.usr .register button {
+				float: right;
+			}
+	
+		/* login */
+	
+			.usr .login {
+				width: 400px;
+				margin: 200px auto;
+				padding-bottom: 200px;
+			}
+	
+			.usr .login input {
+				display: block;
+				margin-bottom: 15px;
+				width: 100%;
+			}
+	
+			.usr .login button {
+				float: right;
+			}
+	
+		/* reset */
+	
+			.usr .reset {
+				width: 400px;
+				margin: 200px auto;
+				padding-bottom: 200px;
+			}
+	
+			.usr .reset input {
+				display: block;
+				margin-bottom: 15px;
+				width: 100%;
+			}
+	
+			.usr .reset button {
+				float: right;
+			}
+	
+	
+	/* errors */
+	
+	.errors body {
+		padding: 150px 200px;
+		overflow: hidden;
+	}
