@@ -26,7 +26,7 @@ module.exports = function(req, res) {
 		// email and reset of password
 		
 		case 'email-verify':
-		require('./usr/default')(req, res);
+		require('./usr/email-verify')(req, res);
 		break;
 	
 		case 'email-resetPass': 

@@ -44,6 +44,12 @@
 			</div>
 		
 		</article>
+		
+		<script type="text/javascript">	
+			$('form').validate({
+				rules: { password2 : { equalTo : 'input[name=password]' } }
+			});
+		</script>
 	
 	<% 
 		} else if (show==='reset') { 
@@ -87,17 +93,9 @@
 	
 		</article>
 		
-	
 	<% 
 		} 
 	%>
 	
-	<script type="text/javascript">
-	
-	$('form').validate({
-		rules: { registerPassword2 : { equalTo : 'input[name=registerPassword1]' } }
-	});
-	
-	</script>
 		
 </body></html>

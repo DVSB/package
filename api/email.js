@@ -11,14 +11,20 @@ module.exports = function() {
 	
 	
 	rawEmail = function(to, subject, text, html, callback){
-		
-		smtp.sendMail({
-			from: 'mdown <support@mdown.co>', to: to, subject: subject, text: text, html: html
-		}, function(err, data) {
+
+		console.log(to);
+		console.log(subject);
+
+      smtp.sendMail({
+              from: 'mdown <support@mdown.co>',
+              to: 'samuel@ondrek.com',
+              subject: subject,
+              text: text,
+              html: html
+      }, function(err, data) {
 			if (err) throw err;
-			console.log(data);
 			callback();
-		});
+      });
 		
 	};
 	

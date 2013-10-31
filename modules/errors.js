@@ -68,6 +68,12 @@ module.exports = function(req, res) {
 			descr: 'We sent there verification link where you get password.',
 			refer: '/usr/login'
 		};
+		
+		errors.i203 = {
+			error: 'Account verified successfully', 
+			descr: 'Now you can login and use your account.',
+			refer: '/usr/login'
+		};
 	
 	routing = function(number){
 			
