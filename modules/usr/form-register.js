@@ -37,6 +37,7 @@ module.exports = function(req, res) {
 		data = JSON.parse(data);
 		
 		data.details.password = _fingerprint(formPass);
+		data.details.email = formEmail;
 		data.api.publicKey = _fingerprint(formEmail);
 		data.api.privateKey = _randomplus.generate();
 		

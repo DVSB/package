@@ -1,8 +1,7 @@
 module.exports = function(req, res) {
 
 
-	var
-	_s3 = require('../../api/s3')(),
+	var _s3 = require('../../api/s3')(),
 	_fingerprint = require('../../api/fingerprint')().get,
 	_email = require('../../api/email')(),
 	formEmail = req.body.email;
@@ -10,9 +9,12 @@ module.exports = function(req, res) {
 	
 	sentResetEmail = function(){
 		
-		var
-		publicUserHash = _fingerprint(formEmail),
+		var publicUserHash = _fingerprint(formEmail),
 		privateKey = _fingerprint(publicUserHash).substring(0, 30);
+		
+	
+		console.log('public: ' + publicUserHash);
+		console.log('private: ' + privateKey);
 		
 		_email.resetPassword(formEmail, publicUserHash+privateKey, function(){
 			res.redirect('/errors/i202');

@@ -11,10 +11,7 @@ module.exports = function() {
 	
 	
 	rawEmail = function(to, subject, text, html, callback){
-
-		console.log(to);
-		console.log(subject);
-
+		
       smtp.sendMail({
               from: 'mdown <support@mdown.co>',
               to: 'samuel@ondrek.com',
@@ -73,8 +70,29 @@ module.exports = function() {
 		});
 		
 	};
-
-
+	
+	
+	email.sendNewPass = function(email, newPassword, callback){
+		
+		var
+		text = '',
+		html = '';
+		
+		text += 'Hello,\n\n',
+		text += 'You reseted your password. Your new password is:\n';
+		text += newPassword;
+		
+		html += 'Hello,<br><br>';
+		html += 'You reseted your password. Your new password is:<br>';
+		html += '<strong>'+newPassword+'</strong>';
+		
+		rawEmail(email, 'Your new password!', text, html, function(){
+			callback();
+		});
+		
+	};
+	
+	
 	return email;	
 	
 	

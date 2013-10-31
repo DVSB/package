@@ -30,7 +30,7 @@ module.exports = function(req, res) {
 		break;
 	
 		case 'email-resetPass': 
-		require('./usr/default')(req, res);
+		require('./usr/email-resetPass')(req, res);
 		break;
 		
 		// this part should work when is normally browsed

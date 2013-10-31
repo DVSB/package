@@ -14,19 +14,19 @@ module.exports = function(req, res) {
 	};
 	
 		errors.e201 = {
-			error: 'Log In Error: Wrong password', 
+			error: 'Wrong password', 
 			descr: 'Try use different password. This one is wrong.',
 			refer: '/usr/login'
 		};
 	
 		errors.e202 = {
-			error: 'Log In Error: User is not verified', 
+			error: 'User is not verified', 
 			descr: 'OOh :( Your account is ready, but, please find email from mDown.',
 			refer: '/usr/login'
 		};
 	
 		errors.e203 = {
-			error: 'Log In Error: User not exists', 
+			error: 'User not exists', 
 			descr: 'This email address is not registered yet.',
 			refer: '/usr/login'
 		};
@@ -54,14 +54,14 @@ module.exports = function(req, res) {
 		errors.i200 = {
 			error: 'Registration successful', 
 			descr: 'Check email box for verification link.',
-			refer: '/'
+			refer: '/usr/login'
 		};
 	
-	errors.i201 = {
-		error: 'Your password was changed successfully', 
-		descr: 'Next time you can sign in with new password. We sent you email about this change.',
-		refer: '/'
-	};
+		errors.i201 = {
+			error: 'Your password was changed', 
+			descr: 'Check email for new one and login, you should change it.',
+			refer: '/'
+		};
 	
 		errors.i202 = {
 			error: 'Check your email', 
@@ -74,6 +74,7 @@ module.exports = function(req, res) {
 			descr: 'Now you can login and use your account.',
 			refer: '/usr/login'
 		};
+		
 	
 	routing = function(number){
 			

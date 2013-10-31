@@ -1,7 +1,8 @@
 {
 	"details" : {
 		"password" : null,
-		"isVerified" : false
+		"isVerified" : false,
+		"email" : null
 	},
 	"creditcard" : {
 		"number" : null,
