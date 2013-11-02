@@ -57,7 +57,7 @@
 		screens = [ 'storage', 'usr', 'log', 'errors', // , 'blog', 'support', 'status', 'prices'
 		].forEach(function(mod){
 			app.all('/'  + mod +  '/*', function(req, res) {
-				require('./mod_publics/' + mod)(req, res);
+				require('./publics/' + mod)(req, res);
 			});
 		});
 	
@@ -66,13 +66,13 @@
 	
 	
 		app.all('/-/', hasAuth, function(req, res) {
-			require('./mod_privates/dashboard')(req, res);
+			require('./privates/dashboard')(req, res);
 		});
 	
 		screens = [ 'create', 'list', 'settings', 'view'
 		].forEach(function(mod){
 			app.all('/-/'  + mod +  '/*', hasAuth, function(req, res) {
-				require('./mod_privates/' + mod)(req, res);
+				require('./privates/' + mod)(req, res);
 			});
 		});
 	
