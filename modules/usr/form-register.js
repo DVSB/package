@@ -1,16 +1,12 @@
 module.exports = function(req, res) {
 	
-	var
-	_randomplus = require('../../api/randomplus')(),
+	var _randomplus = require('../../api/randomplus')(),
 	_s3 = require('../../api/s3')(),
 	_email = require('../../api/email')(),
 	_fingerprint = require('../../api/fingerprint')().get,
 	formEmail = req.body.email,
 	formPass = req.body.password,
-	createNewUser,
-	getTemplate,
-	editTemplate,
-	saveTemplateToS3;
+	createNewUser, getTemplate, editTemplate, saveTemplateToS3;
 	
 	
 	if (!formEmail || !formPass || formPass.length<6 || formEmail.length<7) {

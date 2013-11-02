@@ -1,43 +1,27 @@
 module.exports = function(req, res) {
-	
-	
-	var createNew, getRandom, updateLifeCycle, getLifeCycle, bucket = 'mdown',
-	markdown=require('markdown').markdown,
-	s3 = require('./_api')().s3, luhn = require('./_api')().luhn, 
-	random = require('./_api')().random;
 
+	module = require('url').parse(req.url).path.split('/')[3].split('?')[0];
+	module = (module==='') ? null : module;
 
-	createNew = function() {
-				
-		var getRandom, key, redirectToPage,
-		cookies = req.signedCookies;
-
-		key = random.generate();
-
-		s3.putObject({
-			key : cookies.userid+'/articles/'+key,
-			body : req.body.markdown ? req.body.markdown : 'empty',
-		}, function(){
-			res.redirect('/-/view/'+key);
-		});
-		
-	};
-	
-	module = require('url').parse(req.url);
-	module = module.pathname.split('/')[3];
-			
-	// routing of URL 
 	switch(module) {
 		
-		case 'create': 
-		createNew();
+		// if referer of this url should be form, this 
+		// modules are run after click on Button in login
+		// or register or reset password forms
+
+		case 'form-createnew':
+		require('./create/form-createnew')(req, res);
 		break;
+		
+		// this part should work when is normally browsed
+		// url and render only html, normally only for login
+		// reset and register
 		
 		default:
-		res.render('create.html');
+		require('./create/new')(req, res);
 		break;
-		
+	
 	};
 	
-	
 };
+

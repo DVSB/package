@@ -25,11 +25,10 @@
 	<% allArticles.forEach(function(ele, i){ %>
 		
 		<li>
-		 	<span><%= ele.key %></span>
+		 	<span><%= ele.category %></span>
+			<span><%= ele.author %></span>
+			<span><%= ele.publised %></span>
 			<span><%= ele.title %></span>
-			<span><%= ele.date %></span>
-			<span><%= ele.size %></span>
-			<div><%= ele.perex %></div>
 		</li>
 		
 	<% }); %>

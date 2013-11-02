@@ -9,15 +9,15 @@
 		hasAuth = function(req, res, next){
 		
 			var existsLoggedCookie, isCookieLoggedTrue, cookieSecret, isCookieSecretEqual,
-			cookies=req.signedCookies, cookieSecret=require('./modules/_api')().cookieSecret;
+			cookies=req.signedCookies, _fingerprint = require('./api/fingerprint')().get;
 			
 			existsLoggedCookie = (cookies.islogged!==undefined);
 			isCookieLoggedTrue = (cookies.islogged==='true');
-			cookieSecret = (cookies.userid) ? cookieSecret(cookies.userid) : undefined;
+			cookieSecret = (cookies.userid) ? _fingerprint(cookies.userid) : undefined;
 			isCookieSecretEqual = (cookies.userhash===cookieSecret);
-		
+			
 			isAuth = (existsLoggedCookie&&isCookieLoggedTrue&&isCookieSecretEqual);
-	
+			
 			if (isAuth) { next();
 			} else { res.redirect('/'); }
 		
