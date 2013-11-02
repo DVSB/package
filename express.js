@@ -36,6 +36,7 @@
 			//app.use(express.logger('dev'));
 		
 			app.use(express.bodyParser());
+			
 			app.use(express.methodOverride());
 		
 			app.use(express.cookieParser('74.27-as%87.47-as%82.47-vc%42.98-yx%14.89-xy')); 
@@ -50,7 +51,7 @@
 	
 	
 		app.all('/', function(req, res) {
-			res.render('index.html');
+			res.render('publics/index.html');
 		});
 	
 		screens = [ 'storage', 'usr', 'log', 'errors', // , 'blog', 'support', 'status', 'prices'
