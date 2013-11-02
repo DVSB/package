@@ -28,7 +28,9 @@
 		 	<span><%= ele.category %></span>
 			<span><%= ele.author %></span>
 			<span><%= ele.publised %></span>
-			<span><%= ele.title %></span>
+			<span><a href="<%= '/-/view/'+ele.blogid %>">
+				<%= ele.title %>
+			</a></span>
 		</li>
 		
 	<% }); %>

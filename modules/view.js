@@ -1,53 +1,42 @@
 module.exports = function(req, res) {
 	
 	
-	var preview, getAndRenderBlog, renderMDtoHTML,  
-	s3 = require('./_api')().s3;
+	var _s3 = require('../api/s3')(), cookies=req.signedCookies, 
+	getArticlesList, uploadListAndBlog;
+
 	
-
-	preview = function(file) {
+	preview = function() {
 		
-		var cookies;
+		var articleID; 
 		
-		cookies = req.signedCookies;
-		file = cookies.userid+'/articles/'+file;
-
-		s3.isObjectExists({
-			key : file
-		}, function(isExists){
-			if (isExists) { getAndRenderBlog(file)
-			} else { res.send('file does not exists!') }
+		articleID = require('url').parse(req.url).path.split('/')[3].split('?')[0];
+		articleID = (articleID==='') ? null : articleID;
+		
+		console.log(cookies.userid+'/blog-module/'+articleID);
+	
+		_s3.getObject({
+			Key : cookies.userid+'/blog-module/'+articleID
+		}, function(data){
+			data = JSON.parse(data.Body+'');
+			renderBlog(data);
 		})
 		
 	};	
 	
 	
-	getAndRenderBlog = function(blogPath){
+	renderBlog = function(blogDetails){
 		
-		s3.getObject({
-			key : blogPath
-		}, function(data){
-			fileContent = data.Body + '';
-			renderMDtoHTML(fileContent);
+		blogDetails.html = 
+			require('markdown').markdown.toHTML(blogDetails.markdown);
+			
+		res.render('view.html', { 
+			data : blogDetails
 		});
 		
 	};
 	
 	
-	renderMDtoHTML = function(mdContent){
+	preview();
 	
-		var markdown = require('markdown').markdown;
-	
-		res.render('view.html', { 
-			markdown : markdown.toHTML(mdContent),
-			key : 'adsadsads'
-		});
-		
-	}
-	
-	
-	module = require('url').parse(req.url);
-	module = module.pathname.split('/')[3];
-	preview(module);
 	
 };
