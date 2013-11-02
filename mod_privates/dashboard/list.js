@@ -24,7 +24,7 @@ module.exports = function(req, res) {
 	
 	renderArticles = function(articles){
 		
-		res.render('dashboard.html', { 
+		res.render('privates/dashboard.html', { 
 			allArticles : articles 
 		});
 		

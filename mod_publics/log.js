@@ -1,6 +1,7 @@
 module.exports = function(req, res) {
-
-	res.render('log.html');
-			
+	
+	
+	require('./log/log')(req, res);
+	
+	
 };
-
