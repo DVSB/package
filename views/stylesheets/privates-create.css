@@ -1,62 +1,82 @@
 
 	
-	/* create */
+	/* containers */
 	
-		.create body {
-			padding: 0;
-			width: 1200px;
-			margin: 0 auto;
-			overflow: hidden;
+		.create .container {
+			width: 900px;
+			float: left;
+			padding-right: 50px;
 		}
-		
-		.create textarea {
-			font-family: Consolas, "droid-sans-mono", Monaco, Menlo, "Courier New", monospace;
+	
+		.create .leftmenu {
+			width: 300px;
+			background: #E8EAEC;
+			float: right;
+			padding: 10px 10px;
+			border: 1px solid #E2E2E2;
+			margin-bottom: 10px;
+		}
+	
+	/* container */
+	
+		.create .container textarea[name=markdown] {
 			font-weight: 400;
 			font-size: 13px;
 			line-height: 17px;
-			white-space: pre;
+			width: 100%;
+			border: 1px solid #E2E2E2;
+			display: block;
+			padding: 25px 20px;
+			min-height: 400px;
+			max-width: 100%;
 		}
 	
-		.create textarea {
-			width: 800px;
-			resize: none;
-			border: 1px solid #E2E2E2;
-			position: fixed;
-			bottom: 30px;
-			top: 60px;
-			padding: 30px 40px;
-			background: transparent;
-		}
-		
-		.create .details {
-			position: fixed;
-			bottom: 5px;
+		.create .container .details {
 			font-size: 11px;
 			color: #8A8A8A;
 		}
-		
-		.create .leftmenu {
-			width: 384px;
-			background: #E8EAEC;
-			float: right;
-			padding: 30px 40px;
-			margin-bottom: 306px;
-			margin-top: 2px;
+	
+		.create .container input[name=title]{
+			margin-bottom: 10px;
+			width: 100%;
+			padding-left: 20px;
+			background: #E7E7E7;
+			font-weight: 600;
+			padding: 16px 20px;
+			font-size: 14px;
+		}
+	
+	/* leftmenu */
+	
+		.create .leftmenu input {
+			width: 100%;
+			margin-bottom: 9px;
 		}
 		
-		.create .leftmenu ul {
-			padding: 0;
+		.create .leftmenu .published,
+		.create .leftmenu .author,
+		.create .leftmenu .category {
+			position: absolute;
+			line-height: 40px;
+			padding: 0 10px;
+			color: #B3B3B3;
 		}
 		
-		.create .leftmenu li {
-			list-style-type: none;
-			padding: 2px 0;
+		.create .leftmenu input[name=published] {
+			padding-left: 47px;
 		}
 		
-		.create .leftmenu input[type=checkbox]{
-			margin-right: 8px;
+		.create .leftmenu input[name=author] {
+			padding-left: 61px;
 		}
 		
+		.create .leftmenu input[name=category] {
+			padding-left: 72px;
+		}
+	
+	
+	
+	
 
 
 

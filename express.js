@@ -72,8 +72,12 @@
 		app.all('/-/', hasAuth, function(req, res) {
 			require('./privates/dashboard')(req, res);
 		});
+		
+		app.all('/c/*', hasAuth, function(req, res) {
+			require('./privates/preview')(req, res);
+		});
 	
-		screens = [ 'create', 'list', 'settings', 'view', 'blog'
+		screens = [ 'create', 'list', 'settings', 'blog'
 		].forEach(function(mod){
 			app.all('/-/'  + mod +  '/*', hasAuth, function(req, res) {
 				require('./privates/' + mod)(req, res);

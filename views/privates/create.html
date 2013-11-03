@@ -2,42 +2,37 @@
 <body lang="en" class="create">
 <% include ../shared/top-privates.html %>
 	
-	<form method="post" action="/-/create/form-createnew">
-
-		<textarea id="input" rows="6" cols="60" name="markdown"># My new awesome blog, because I'm awesome
-
-Hello, this is place where you can write yours new blogs and articles. We support amazing markdown 
-formatting, so you please feel free format your blogs. If you want to use pictures, or code, or attach
-files, just activate module in Settings, we support many awesome features.
-
-## Article after perex is also awesom
-
-My new blog is about .. 
-		</textarea>
-		
-		<aside class="details">
-			1828 words | 83 revisions
-		</aside>
+<form method="post" action="/-/create/?new">
 	
-		<aside class="leftmenu">
-				
-			<button type="submit">Save</button>
-		
-			<br><br>
-		
-			<h2>Options</h2>
+	<section class="container">
+	
+		<input type="text" name="title" value="Title of article" required />
+		<textarea id="input" rows="6" cols="60" name="markdown">Today I saw ..</textarea>
+		<span class="details">1828 words | 83 revisions</span>
+	
+	</section>
+
+	<aside class="leftmenu">
 			
-			<input type="text" name="title" placeholder="Title of article" style="width:304px;" value="Testing Article" required />
-			<br><br>
-			<input type="text" name="publised" placeholder="Published at :"  value="2013-10-30" style="width:304px;"  />
-			<br><br>
-			<input type="text" name="author" placeholder="Author :" value="Samuel Ondrek"  style="width:304px;"  />
-			<br><br>
-			<input type="text" name="category" placeholder="Category: " value="Uncategoried"  style="width:304px;"  />
-			<br><br>
+		<button type="submit">Save</button>
+		<span>or</span>
+		<a href="#">Remove</a>
+	
+	</aside>
+	
+	<aside class="leftmenu">
+			
+		<label class="published">date: </label>
+		<input type="text" name="published" value="2013-10-30" required />
 		
-		</aside>
+		<label class="author">author: </label>
+		<input type="text" name="author" value="Paul Irish" required />
+		
+		<label class="category">category: </label>
+		<input type="text" name="category" value="Uncategoried" required />
 	
-	</form>
+	</aside>
+
+</form>
 	
-% include ../shared/footer-privates.html %>
+<% include ../shared/footer-privates.html %>

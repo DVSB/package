@@ -9,11 +9,9 @@ module.exports = function(req, res) {
 		
 		var articleID; 
 		
-		articleID = require('url').parse(req.url).path.split('/')[3].split('?')[0];
+		articleID = require('url').parse(req.url).path.split('/')[2].split('?')[0];
 		articleID = (articleID==='') ? null : articleID;
-		
-		console.log(cookies.userid+'/blog-module/'+articleID);
-	
+			
 		_s3.getObject({
 			Key : cookies.userid+'/blog-module/'+articleID
 		}, function(data){
@@ -29,7 +27,7 @@ module.exports = function(req, res) {
 		blogDetails.html = 
 			require('markdown').markdown.toHTML(blogDetails.markdown);
 			
-		res.render('privates/view.html', { 
+		res.render('privates/preview.html', { 
 			data : blogDetails
 		});
 		

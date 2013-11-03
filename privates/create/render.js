@@ -1,7 +1,5 @@
 module.exports = function(req, res) {
 	
-	
-	require('./view/view')(req, res);
-	
+	res.render('privates/create.html');
 	
 };
