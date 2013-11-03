@@ -2,11 +2,11 @@
 	/* footer */
 
 		.footer {
-			padding: 40px 0;
+			padding: 20px 0;
 			border-top: 1px dashed #DFDFDF;
-			margin-top: 100px;
+			margin-top: 70px;
 			color: #979797;
-			padding-left: 898px;
+			padding-left: 963px;
 		}
 
 		.footer a:after {
@@ -15,7 +15,7 @@
 		}
 
 		.footer a {
-			color: #8A5F5F;
+			color: #373766;
 			text-decoration: none;
 		}
 	
