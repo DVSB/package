@@ -6,13 +6,16 @@
 	<% allArticles.forEach(function(ele, i){ %>
 		
 		<li>
-		 	
-			<span><%= ele.publised %></span>
-			<span><a href="<%= '/-/view/'+ele.blogid %>">
+			<span class="published"><%= ele.publised %></span>
+			<span class="blogid"><a href="<%= '/c/'+ele.blogid %>">
 				<%= ele.title %>
 			</a></span>
-		 	<span><%= ele.category %></span>
-			<span><%= ele.author %></span>
+		 	<span class="category"><%= ele.category %></span>
+			<span class="author"><%= ele.author %></span>
+			
+			<span class="remove"><a href="<%= '/-/blog/'+ele.blogid+'?remove' %>">Remove</a></span>
+			<span class="edit"><a href="<%= '/-/blog/'+ele.blogid+'?edit' %>">Edit</a></span>
+			<span class="details"><a href="<%= '/-/blog/'+ele.blogid+'?details' %>">Details</a></span>
 		</li>
 		
 	<% }); %>

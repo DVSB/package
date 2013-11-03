@@ -73,7 +73,7 @@
 			require('./privates/dashboard')(req, res);
 		});
 	
-		screens = [ 'create', 'list', 'settings', 'view'
+		screens = [ 'create', 'list', 'settings', 'view', 'blog'
 		].forEach(function(mod){
 			app.all('/-/'  + mod +  '/*', hasAuth, function(req, res) {
 				require('./privates/' + mod)(req, res);
