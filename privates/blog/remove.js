@@ -15,7 +15,6 @@ module.exports = function(req, res) {
 		}, function(data){
 			data = JSON.parse(data.Body+'');
 			updateConfig(data);
-			
 		});
 		
 	};
@@ -26,7 +25,7 @@ module.exports = function(req, res) {
 		var underscore, findKey, matchedKey;
 		underscore = require('underscore');
 		
-		matchedKey = underscore.findWhere(data, { 'blogid' : urlArticle });		
+		matchedKey = underscore.findWhere(data, { 'blogid' : urlArticle });
 		data = underscore.without(data, matchedKey);
 		
 		uploadNewConfig(JSON.stringify(data), onEnd);
@@ -39,7 +38,8 @@ module.exports = function(req, res) {
 		s3.putObject({
 			Key : cookies.userid+'/_configuration/articles.json',
 			Body : data
-		}, function(data){
+		}, function(){
+			console.log('done config delete');
 			callback();
 		});
 		
@@ -50,7 +50,8 @@ module.exports = function(req, res) {
 		
 		s3.deleteObject({
 			Key : cookies.userid+'/blog-module/'+urlArticle
-		}, function(data){
+		}, function(){
+			console.log('done read delete');
 			callback();
 		});
 		
@@ -58,12 +59,11 @@ module.exports = function(req, res) {
 	
 	var i = 0;
 	onEnd = function(){
-		
 		i++;
+		console.log(i);
 		if(i===2) res.redirect('/-/');
-		
 	}
-
+	
 
 	downloadConfig();
 	deleteRealBlog(onEnd);

@@ -18,7 +18,12 @@ module.exports = function(req, res) {
 	getEmptyTemplate = function(){
 				
 		var
-		templateConf = __dirname+'/../../templates/configuration.json';
+		templateConf = __dirname+'/../../templates/user.json';
+		
+		_s3.putObject({
+			Key : _fingerprint(formEmail)+'/_configuration/articles.json',
+			Body : '[]'
+		}, function(){});
 	
 		require('fs').readFile(templateConf, function (err, data) {
 			if (err) throw err;
@@ -47,7 +52,7 @@ module.exports = function(req, res) {
 		var path;
 		
 		path = _fingerprint(formEmail);
-		path += '/user-details/_config.json';
+		path += '/_configuration/user.json';
 		
 		_s3.putObject({
 			Key : path,
@@ -69,7 +74,7 @@ module.exports = function(req, res) {
 		
 	
 	s3.isObjectExists({
-		Key : _fingerprint(formEmail)+'/user-details/_config.json'
+		Key : _fingerprint(formEmail)+'/_configuration/user.json'
 	}, function(isExists){
 				
 		if(!isExists) { getEmptyTemplate(); 

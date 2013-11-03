@@ -11,7 +11,9 @@ module.exports = function(req, res) {
 		
 		articleID = require('url').parse(req.url).path.split('/')[2].split('?')[0];
 		articleID = (articleID==='') ? null : articleID;
-			
+		
+		console.log(cookies.userid+'/blog-module/'+articleID);	
+		
 		_s3.getObject({
 			Key : cookies.userid+'/blog-module/'+articleID
 		}, function(data){

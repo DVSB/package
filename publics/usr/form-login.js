@@ -20,7 +20,7 @@ module.exports = function(req, res) {
 	getConfig = function(){
 		
 		s3.getObject({
-			Key : _fingerprint(formEmail)+'/user-details/_config.json'
+			Key : _fingerprint(formEmail)+'/_configuration/user.json'
 		}, function(data){
 			data = JSON.parse(data.Body+'');
 			checkIfPasswordsEqual(data);
@@ -65,7 +65,7 @@ module.exports = function(req, res) {
 	
 	
 	s3.isObjectExists({
-		Key : _fingerprint(formEmail)+'/user-details/_config.json'
+		Key : _fingerprint(formEmail)+'/_configuration/user.json'
 	}, function(isExists){
 		
 		if(isExists) { getConfig(); 

@@ -24,7 +24,7 @@ module.exports = function(req, res) {
 	
 	
 	s3.isObjectExists({
-		Key : _fingerprint(formEmail)+'/user-details/_config.json'
+		Key : _fingerprint(formEmail)+'/_configuration/user.json'
 	}, function(isExists){
 		
 		if(isExists) { sentResetEmail(); 

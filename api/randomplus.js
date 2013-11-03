@@ -52,7 +52,8 @@ module.exports = function() {
 		random = Math.floor((Math.random()*800)+100) + new Date().getTime() - 1000000000000 + '';
 		luhnSum = luhn.calculate(random);
 		
-		return parseInt(random + luhnSum);
+		random = parseInt(random + luhnSum);
+		return random+'';
 		
 	};
 	

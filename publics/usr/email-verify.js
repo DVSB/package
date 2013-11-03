@@ -8,7 +8,7 @@ module.exports = function(req, res) {
 	donwloadOldConfig = function(){
 		
 		_s3.getObject({
-			Key : userKey+'/user-details/_config.json'
+			Key : userKey+'/_configuration/user.json'
 		}, function(data){
 			data = JSON.parse(data.Body+'');
 			updateConfig(data);
@@ -29,7 +29,7 @@ module.exports = function(req, res) {
 	uploadNewConfig = function(config){
 		
 		_s3.putObject({
-			Key : userKey+'/user-details/_config.json',
+			Key : userKey+'/_configuration/user.json',
 			Body : config
 		}, function(){
 			res.redirect('/errors/i203');
@@ -43,12 +43,11 @@ module.exports = function(req, res) {
 	
 	
 	_s3.isObjectExists({
-		Key : userKey+'/user-details/_config.json'
+		Key : userKey+'/_configuration/user.json'
 	}, function(isExists){
 		if(isExists) { donwloadOldConfig(); 
 		} else { res.redirect('/errors/e204'); }
 	});
-	
 	
 };
 

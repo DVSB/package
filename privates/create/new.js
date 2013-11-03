@@ -21,7 +21,7 @@ module.exports = function(req, res) {
 	uploadListAndBlog = function(articles){
 
 		var callback, i=0, newArticle, 
-		articleId=_randomplus.generate();
+		articleId=_randomplus.generate()+'';
 
 		newArticle = {};
 		newArticle.blogid = articleId;
@@ -46,13 +46,15 @@ module.exports = function(req, res) {
 		});
   
 		newArticle = JSON.stringify({
-			'blogid' : articleId,
+			'blogid' : articleId+'',
 			'title' : req.body.title,
 			'publised' : req.body.publised,
 			'author' : req.body.author,
 			'category' : req.body.category,
 			'markdown' : req.body.markdown
 		});
+		
+		console.log(newArticle);
 
 		_s3.putObject({
 			Key : cookies.userid+'/blog-module/'+articleId,

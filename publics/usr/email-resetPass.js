@@ -40,7 +40,7 @@ module.exports = function(req, res) {
 	donwloadOldConfig = function(){
 		
 		_s3.getObject({
-			Key : publicURLKey+'/user-details/_config.json'
+			Key : publicURLKey+'/_configuration/user.json'
 		}, function(data){
 			data = JSON.parse(data.Body+'');
 			updateConfig(data);
@@ -65,7 +65,7 @@ module.exports = function(req, res) {
 	uploadNewConfig = function(config, newPassword){
 		
 		_s3.putObject({
-			Key : publicURLKey+'/user-details/_config.json',
+			Key : publicURLKey+'/_configuration/user.json',
 			Body : config
 		}, function(){
 			sendEmailWithNewPass(config, newPassword);

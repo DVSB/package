@@ -11,7 +11,7 @@ module.exports = function(req, res) {
 		
 		var
 		cookies=req.signedCookies;
-
+		
 		_s3.getObject({
 			Key : cookies.userid+'/_configuration/articles.json'
 		}, function(data){
