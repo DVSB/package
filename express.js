@@ -77,7 +77,7 @@
 			require('./privates/preview')(req, res);
 		});
 	
-		screens = [ 'create', 'list', 'settings', 'blog', 'logout'
+		screens = [ 'create', 'list', 'settings', 'blog', 'logout', 'modules'
 		].forEach(function(mod){
 			app.all('/-/'  + mod +  '/*', hasAuth, function(req, res) {
 				require('./privates/' + mod)(req, res);
