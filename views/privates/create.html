@@ -1,12 +1,6 @@
 <% include ../shared/head-privates.html %>
-<body lang="en" class="usr">
-	
-	<nav class="globals"><ul>
-			<li><a href="/">mDown</a></li>
-			<li><a href="/-/">Dashboard</a></li>
-			<li><a href="/-/create/">Create</a></li>
-			<li><a href="/-/settings/">Settings</a></li>
-	</ul></nav>
+<body lang="en" class="create">
+<% include ../shared/top-privates.html %>
 	
 	<form method="post" action="/-/create/form-createnew">
 
@@ -46,4 +40,4 @@ My new blog is about ..
 	
 	</form>
 	
-</body></html>
+% include ../shared/footer-privates.html %>

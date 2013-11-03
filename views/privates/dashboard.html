@@ -1,30 +1,21 @@
 <% include ../shared/head-privates.html %>
-<body lang="en" class="usr">
-	
-	<nav class="globals"><ul>
-			<li><a href="/">mDown</a></li>
-			<li><a href="/-/">Dashboard</a></li>
-			<li><a href="/-/create/">Create</a></li>
-			<li><a href="/-/settings/">Settings</a></li>
-	</ul></nav>
+<body lang="en" class="dashboard">
+<% include ../shared/top-privates.html %>
 		
 	<ul class="articleslist">	
 	<% allArticles.forEach(function(ele, i){ %>
 		
 		<li>
-		 	<span><%= ele.category %></span>
-			<span><%= ele.author %></span>
+		 	
 			<span><%= ele.publised %></span>
 			<span><a href="<%= '/-/view/'+ele.blogid %>">
 				<%= ele.title %>
 			</a></span>
+		 	<span><%= ele.category %></span>
+			<span><%= ele.author %></span>
 		</li>
 		
 	<% }); %>
 	</ul>
-	
-	<footer class="footer">
-		Copyright 2014, mDown.
-	</footer>
 
-</body></html>
+<% include ../shared/footer-privates.html %>

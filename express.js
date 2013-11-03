@@ -27,9 +27,11 @@
 	// config
 
 		app.configure(function(){
-				
-			app.use('/s', express.static(__dirname+'/views/statics'));
+			
+			app.use('/s', express.static(__dirname+'/views/fonts'));
+			app.use('/s', express.static(__dirname+'/views/stylesheets'));
 			app.use('/s', express.static(__dirname+'/views/images'));
+			app.use('/s', express.static(__dirname+'/views/javascript'));
 			
 			app.set('views', __dirname + '/views');
 			app.engine('html', require('ejs').renderFile);
