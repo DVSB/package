@@ -31,7 +31,6 @@ module.exports = function(req, res) {
 		
 		uploadNewConfig(JSON.stringify(data), onEnd);
 		
-	
 	};
 	
 	
