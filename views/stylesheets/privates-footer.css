@@ -1,0 +1,27 @@
+
+	/* footer */
+
+		.footer {
+			padding: 40px 0;
+			border-top: 1px dashed #DFDFDF;
+			margin-top: 100px;
+			color: #979797;
+			padding-left: 898px;
+		}
+
+		.footer a:after {
+			content: ',';
+			color: #ADADAD;
+		}
+
+		.footer a {
+			color: #8A5F5F;
+			text-decoration: none;
+		}
+	
+		.footer a:hover {
+			color: #777;
+		}
+
+
+

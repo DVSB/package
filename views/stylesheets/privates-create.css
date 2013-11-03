@@ -1,0 +1,64 @@
+
+	
+	/* create */
+	
+		.create body {
+			padding: 0;
+			width: 1200px;
+			margin: 0 auto;
+			overflow: hidden;
+		}
+		
+		.create textarea {
+			font-family: Consolas, "droid-sans-mono", Monaco, Menlo, "Courier New", monospace;
+			font-weight: 400;
+			font-size: 13px;
+			line-height: 17px;
+			white-space: pre;
+		}
+	
+		.create textarea {
+			width: 800px;
+			resize: none;
+			border: 1px solid #E2E2E2;
+			position: fixed;
+			bottom: 30px;
+			top: 60px;
+			padding: 30px 40px;
+			background: transparent;
+		}
+		
+		.create .details {
+			position: fixed;
+			bottom: 5px;
+			font-size: 11px;
+			color: #8A8A8A;
+		}
+		
+		.create .leftmenu {
+			width: 384px;
+			background: #E8EAEC;
+			float: right;
+			padding: 30px 40px;
+			margin-bottom: 306px;
+			margin-top: 2px;
+		}
+		
+		.create .leftmenu ul {
+			padding: 0;
+		}
+		
+		.create .leftmenu li {
+			list-style-type: none;
+			padding: 2px 0;
+		}
+		
+		.create .leftmenu input[type=checkbox]{
+			margin-right: 8px;
+		}
+		
+
+
+
+
+
