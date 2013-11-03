@@ -76,7 +76,19 @@ module.exports = function() {
 		});
 	
 	};
+
+	s3.deleteObject = function(params, callback){
+		
+		s3original.client.deleteObject({
+			Bucket : 'mdown',
+			Key : params.Key
+		}, function(err, data){
+			if (err) throw err;
+			callback(data);
+		});
 	
+	};
+		
 	
 	s3.isObjectExists = function(params, callback){
 		
