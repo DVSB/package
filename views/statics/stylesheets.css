@@ -13,6 +13,16 @@
 		color: #000;
 	}
 	
+	body::selection {
+		background: #B3C0CF;
+		color: #000;
+	}
+		
+	body::-moz-selection {
+		background: #B3C0CF;
+		color: #000;
+	}
+	
 	a, a:hover, 
 	button, button:hover,
 	input, input:hover {

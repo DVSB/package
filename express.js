@@ -29,6 +29,8 @@
 		app.configure(function(){
 				
 			app.use('/s', express.static(__dirname+'/views/statics'));
+			app.use('/s', express.static(__dirname+'/views/images'));
+			
 			app.set('views', __dirname + '/views');
 			app.engine('html', require('ejs').renderFile);
 		
@@ -54,7 +56,7 @@
 			res.render('publics/index.html');
 		});
 	
-		screens = [ 'storage', 'usr', 'log', 'errors', // , 'blog', 'support', 'status', 'prices'
+		screens = [ 'storage', 'usr', 'log', 'errors', 'support', 'docs', 'media', 'privacy', 'faq'
 		].forEach(function(mod){
 			app.all('/'  + mod +  '/*', function(req, res) {
 				require('./publics/' + mod)(req, res);

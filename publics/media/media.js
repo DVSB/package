@@ -1,6 +1,5 @@
 module.exports = function(req, res) {
-
-	res.redirect('/usr/register');
 	
-};
+	res.render('publics/media.html');
 
+};
