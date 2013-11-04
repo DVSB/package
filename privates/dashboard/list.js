@@ -5,12 +5,10 @@ module.exports = function(req, res) {
 	_s3 = require('../../api/s3')(),
 	_email = require('../../api/email')();
 	
-	
 	 	
 	getAllArticles = function(){
 		
-		var
-		cookies=req.signedCookies;
+		var cookies=req.signedCookies;
 		
 		_s3.getObject({
 			Key : cookies.userid+'/_configuration/articles.json'
@@ -23,9 +21,9 @@ module.exports = function(req, res) {
 	
 	
 	renderArticles = function(articles){
-		
-		res.render('privates/dashboard.html', { 
-			allArticles : articles 
+				
+		res.render('privates/dashboard.html', {
+			'articles' : articles
 		});
 		
 	};

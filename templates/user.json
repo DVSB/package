@@ -4,17 +4,12 @@
 		"isVerified" : false,
 		"email" : null
 	},
-	"creditcard" : {
-		"number" : null,
-		"ccv" : null,
-		"expire" : null
-	},
 	"api" : {
 		"publicKey" : null,
 		"privateKey" : null
 	},
 	"modules" : [
-		"blog",
-		"images"
+		"published",
+		"author"
 	]
 }

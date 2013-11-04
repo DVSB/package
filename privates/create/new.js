@@ -25,11 +25,12 @@ module.exports = function(req, res) {
 
 		newArticle = {};
 		newArticle.blogid = articleId;
-		newArticle.title = req.body.title;
-		newArticle.publised = req.body.published;
-		newArticle.author = req.body.author;
-		newArticle.category = req.body.category;
-
+		newArticle['tags'] = {
+			'title' : req.body.title,
+			'published' : req.body.published,
+			'author' : req.body.author
+		};
+		
 		articles.unshift(newArticle);
 		articles = JSON.stringify(articles);
 
@@ -46,16 +47,15 @@ module.exports = function(req, res) {
 		});
   
 		newArticle = JSON.stringify({
-			'blogid' : articleId+'',
-			'title' : req.body.title,
-			'publised' : req.body.publised,
-			'author' : req.body.author,
-			'category' : req.body.category,
-			'markdown' : req.body.markdown
+			'blogid' : articleId,
+			'markdown' : req.body.markdown,
+			'tags' : {
+				'title' : req.body.title,
+				'published' : req.body.published,
+				'author' : req.body.author
+			}
 		});
-		
-		console.log(newArticle);
-
+	
 		_s3.putObject({
 			Key : cookies.userid+'/blog-module/'+articleId,
 			Body : newArticle

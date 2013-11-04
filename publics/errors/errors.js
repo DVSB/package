@@ -49,6 +49,19 @@ module.exports = function(req, res) {
 		refer: '/'
 	};
 	
+		errors.e207 = {
+			error: 'Change Password Error', 
+			descr: 'Fill all fields and same passwords. Password must be > 7 chars.',
+			refer: '/-/settings/'
+		};
+		
+		errors.e208 = {
+			error: 'Passwords are not the same', 
+			descr: 'For change passwords you need original password.',
+			refer: '/-/settings/'
+		};
+	
+		
 	// infos
 	
 		errors.i200 = {
@@ -73,6 +86,12 @@ module.exports = function(req, res) {
 			error: 'Account verified successfully', 
 			descr: 'Now you can login and use your account.',
 			refer: '/usr/login'
+		};
+	
+		errors.i204 = {
+			error: 'Password changed', 
+			descr: 'Next time you can use new password.',
+			refer: '/-/settings/'
 		};
 		
 	

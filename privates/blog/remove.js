@@ -39,7 +39,6 @@ module.exports = function(req, res) {
 			Key : cookies.userid+'/_configuration/articles.json',
 			Body : data
 		}, function(){
-			console.log('done config delete');
 			callback();
 		});
 		
@@ -51,7 +50,6 @@ module.exports = function(req, res) {
 		s3.deleteObject({
 			Key : cookies.userid+'/blog-module/'+urlArticle
 		}, function(){
-			console.log('done read delete');
 			callback();
 		});
 		
@@ -60,7 +58,6 @@ module.exports = function(req, res) {
 	var i = 0;
 	onEnd = function(){
 		i++;
-		console.log(i);
 		if(i===2) res.redirect('/-/');
 	}
 	
