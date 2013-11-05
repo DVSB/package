@@ -2,7 +2,9 @@ module.exports = function(req, res) {
 	
 	
 	var fingerprint = require('../../api/fingerprint')().get;
-
+	var randomplus = require('../../api/randomplus')();
+	var s3 = require('../../api/s3')();
+	
 		
 	var checkIfExists = function(){
 		
@@ -10,18 +12,31 @@ module.exports = function(req, res) {
 		var userPrivateKey = fingerprint(req.body.email);
 				
 		mdowninterface.getUser(userPrivateKey, function(data){
-			if(data===404) { getEmptyTemplate(data);
+			if(data===404) { 
+				createRequiredModules();
+				sendVerificationEmail();
+				getEmptyTemplate();
 			} else { res.redirect('/errors/e204'); }
 		});
 	
 	};
 	
 	
-	var getEmptyTemplate = function(userdetails){
+	var createRequiredModules = function(){
 		
-		var randomplus = require('../../api/randomplus')();
-		var s3 = require('../../api/s3')();
+		s3.putObject({
+			Key : randomplus()+'/blogs/full.json',
+			Body : '[]',
+			Bucket : 'api.mdown.co'
+		}, function(){
+			onEndCallback();
+		});
 		
+	}
+	
+	
+	var getEmptyTemplate = function(){
+			
 		var emptyUser = {
 			'details' : { 'password' : fingerprint(req.body.password), 'isVerified' : false, 'email' : req.body.email },
 			'publicKey' : randomplus(),
@@ -53,11 +68,11 @@ module.exports = function(req, res) {
 	var i=0;
 	var onEndCallback = function(){
 		i++;
-		if(i===2) res.redirect('/errors/i200');
+		if(i===3) res.redirect('/errors/i200');
 	};
 	
+	
 	checkIfExists();
-	sendVerificationEmail();
 	
 };
 

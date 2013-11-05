@@ -1,4 +1,27 @@
 
+
+	README
+	
+	nechal som rozbite dashboard
+	predpokladam ze pri registracii som zle vytvoril list of blogov
+	preto ked browsnem teraz dashboard tak to spadne
+	rovnako aj na realnom developmente domene
+	
+	
+	CO TREBA ESTE
+	- treba este refactornut dashboard na pekny routing
+	- treba vytvorit jedneho ukazkoveho usera
+	- treba sa pustit do tvorby realnych tepmatov a blogu
+ 	=> posledny krok
+
+
+
+
+
+
+
+
+
 	## theme-module
 	
 		### blog theme for developers 
