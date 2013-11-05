@@ -10,10 +10,9 @@ module.exports = function(req, res) {
 		break;
 		
 		default:
-		require('./create/render')(req, res);
+		require('./create/default')(req, res);
 		break;
 	
 	};
 	
 };
-

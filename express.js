@@ -3,7 +3,7 @@
 		var app, screens, hasAuth, settings,
 		express = require('express'), app = module.exports = express();
 	
-	
+		
 	// Helper
 	
 		hasAuth = function(req, res, next){

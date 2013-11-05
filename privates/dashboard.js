@@ -26,7 +26,7 @@ module.exports = function(req, res) {
 		// reset and register
 		
 	default:
-	require('./dashboard/list')(req, res);
+	require('./dashboard/default')(req, res);
 	break;
 	
 	};

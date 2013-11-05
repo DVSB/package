@@ -1,69 +1,72 @@
 module.exports = function(req, res) {
-
-
-	var _s3 = require('../../api/s3')(), cookies=req.signedCookies,
-	getArticlesList, _fingerprint = require('../../api/fingerprint')().get,
-	uploadListAndBlog, _randomplus = require('../../api/randomplus')();
-
-
-	getArticlesList = function(){
-  
-		_s3.getObject({
-			Key : cookies.userid+'/_configuration/articles.json'
-		}, function(data){
-			data = JSON.parse(data.Body+'');
-			uploadListAndBlog(data);
+	
+	
+	var newBlogId = require('../../api/randomplus')()();
+	
+	
+	var getArticlesList = function(){
+		
+		var mdownapi = require('../../api/mdownapi')();
+		var publicUserId = req.signedCookies.publickey;
+		
+		mdownapi.getJson(publicUserId, '/blogs/full.json', function(data){
+			uploadNewBlogs1000(data);
+			uploadNewBlog(data);
 		});
 
 	};
+	
+	
+	var uploadNewBlogs1000 = function(json, newArticleId){
+		
+		var publicUserId = req.signedCookies.publickey;
+		var s3 = require('../../api/s3')();
+		
+		json.unshift({
+			'blogid': newBlogId,
+			'tags': { 'title':req.body.title, 'published':req.body.published, 'author':req.body.author }
+		});
+				
+ 		s3.putObject({
+ 			Key : publicUserId+'/blogs/full.json',
+ 			Body : JSON.stringify(json),
+			Bucket : 'api.mdown.co'
+ 		}, function(){
+ 			onEndCallback();
+ 		});
+		
+	};
 
 
-	uploadListAndBlog = function(articles){
+	var uploadNewBlog = function(articles){
+		
+		var s3 = require('../../api/s3')();
+		var publicUserId = req.signedCookies.publickey;
 
-		var callback, i=0, newArticle, 
-		articleId=_randomplus.generate()+'';
-
-		newArticle = {};
-		newArticle.blogid = articleId;
-		newArticle['tags'] = {
-			'title' : req.body.title,
-			'published' : req.body.published,
-			'author' : req.body.author
+		var newArticle = {
+			'blogid': newBlogId,
+			'markdown': req.body.markdown,
+			'tags': { 'title':req.body.title, 'published':req.body.published, 'author':req.body.author }
 		};
 		
-		articles.unshift(newArticle);
-		articles = JSON.stringify(articles);
-
-		callback = function(){
-			i++;
-			if(i===2) res.redirect('/-/');
-		}
-
-		_s3.putObject({
-			Key : cookies.userid+'/_configuration/articles.json',
-			Body : articles
-		}, function(){
-			callback();
-		});
-  
-		newArticle = JSON.stringify({
-			'blogid' : articleId,
-			'markdown' : req.body.markdown,
-			'tags' : {
-				'title' : req.body.title,
-				'published' : req.body.published,
-				'author' : req.body.author
-			}
-		});
-	
-		_s3.putObject({
-			Key : cookies.userid+'/blog-module/'+articleId,
-			Body : newArticle
-		}, function(){
-			callback();
-		});
-
+ 		s3.putObject({
+ 			Key : publicUserId+'/blog/'+newBlogId,
+ 			Body : JSON.stringify(newArticle),
+			Bucket : 'api.mdown.co'
+ 		}, function(){
+ 			onEndCallback();
+ 		});
+			
 	};
+	
+	
+	var i=0;
+	var onEndCallback = function(){
+		
+		i++;
+		if(i===2) res.redirect('/-/')
+		
+	}
 
 
 	getArticlesList();

@@ -5,9 +5,8 @@ module.exports = function(req, res) {
 	_email = require('../../api/email')(),
 	_fingerprint = require('../../api/fingerprint')().get,
 	formEmail = req.body.email,
-	formPass = req.body.password,
-	createNewUser, getTemplate, editTemplate, saveTemplateToS3;
-	
+	formPass = req.body.password;
+
 	
 	if (!formEmail || !formPass || formPass.length<6 || formEmail.length<7) {
 		res.redirect('/usr/register');
@@ -15,7 +14,7 @@ module.exports = function(req, res) {
 	}
 	
 	
-	getEmptyTemplate = function(){
+	var getEmptyTemplate = function(){
 				
 		var
 		templateConf = __dirname+'/../../templates/user.json';
@@ -33,7 +32,7 @@ module.exports = function(req, res) {
 	};
 	
 	
-	fillTemplateWithCredentials = function(data){
+	var fillTemplateWithCredentials = function(data){
 		
 		data = JSON.parse(data);
 		
@@ -47,7 +46,7 @@ module.exports = function(req, res) {
 	};
 	
 	
-	saveTemplateToS3 = function(data){
+	var saveTemplateToS3 = function(data){
 					
 		var path;
 		
@@ -64,14 +63,14 @@ module.exports = function(req, res) {
 	};
 	
 	
-	sendVerificationEmail = function(){
+	var sendVerificationEmail = function(){
 				
 		_email.verifyAccount(formEmail, _fingerprint(formEmail), function(){
 			res.redirect('/errors/i200');
 		});
 
 	};
-		
+	
 	
 	s3.isObjectExists({
 		Key : _fingerprint(formEmail)+'/_configuration/user.json'

@@ -22,7 +22,7 @@ module.exports = function() {
 		s3original.client.putObject({
 			Body : params.Body,
 			Key : params.Key,
-			Bucket : 'mdown',
+			Bucket : params.Bucket,
 			StorageClass : 'REDUCED_REDUNDANCY',
 			ServerSideEncryption : 'AES256',
 			ContentType : 'text/plain' || params.ContentType
@@ -39,7 +39,7 @@ module.exports = function() {
 	s3.listObjects = function(params, callback){
 		
 		s3original.client.listObjects({
-			Bucket : 'mdown',
+			Bucket : params.Bucket,
 			Prefix : params.Prefix
 		}, function(err, data){
 			if (err) throw err;
@@ -53,7 +53,7 @@ module.exports = function() {
 	s3.getObject = function(params, callback){
 		
 		s3original.client.getObject({
-			Bucket : 'mdown',
+			Bucket : params.Bucket,
 			Key : params.Key
 		}, function(err, data){
 			if (err) throw err;
@@ -68,7 +68,7 @@ module.exports = function() {
 	s3.deleteObjects = function(params, callback){
 		
 		s3original.client.deleteObjects({
-			Bucket : 'mdown',
+			Bucket : params.Bucket,
 			Delete : params.Delete
 		}, function(err, data){
 			if (err) throw err;
@@ -80,7 +80,7 @@ module.exports = function() {
 	s3.deleteObject = function(params, callback){
 		
 		s3original.client.deleteObject({
-			Bucket : 'mdown',
+			Bucket : params.Bucket,
 			Key : params.Key
 		}, function(err, data){
 			if (err) throw err;
@@ -93,7 +93,7 @@ module.exports = function() {
 	s3.isObjectExists = function(params, callback){
 		
 		s3original.client.getObject({
-			Bucket : 'mdown',
+			Bucket : params.Bucket,
 			Key : params.Key
 		}, function(err, data){
 			if (err && err.name==='NoSuchKey') { callback(false); }
@@ -106,7 +106,7 @@ module.exports = function() {
 	s3.copyObject = function(params, callback){
 		
 		s3original.client.copyObject({
-			Bucket : 'mdown',
+			Bucket : params.Bucket,
 			CopySource : params.CopySource,
 			Key : params.Key
 		}, function(err, data){

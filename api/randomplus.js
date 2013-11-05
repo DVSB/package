@@ -46,7 +46,7 @@ module.exports = function() {
 	// fingerprint is connected uniq miliseconds and random number from
 	// 100 to 900 (to have same lenght) and one number which provides
 	// control sum (luhn function)
-	randomplus.generate = function(){
+	randomplus = function(){
 		
 		var random, luhnSum;
 		random = Math.floor((Math.random()*800)+100) + new Date().getTime() - 1000000000000 + '';
@@ -54,16 +54,6 @@ module.exports = function() {
 		
 		random = parseInt(random + luhnSum);
 		return random+'';
-		
-	};
-	
-	
-	// fingerprint is only short way how write longer number in deca base
-	// we can also get real value of fingerprint with simple conversion 
-	// from 36base string to number and after to string
-	randomplus.encrypt = function(finterprint){
-
-		return parseInt(finterprint, 36)+'';
 		
 	};
 	
