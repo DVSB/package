@@ -1,69 +1,65 @@
 module.exports = function(req, res) {
 	
 	
-	var urlArticle, s3 = require('../../api/s3')(), 
-	cookies=req.signedCookies;
-	
-	urlArticle = require('url').parse(req.url).path.split('/')[3].split('?')[0];
-	urlArticle = (urlArticle==='') ? null : urlArticle;
+	var s3 = require('../../api/s3')();
+	var urlArticleId = require('url').parse(req.url).path.split('/')[3].split('?')[0];
 	
 	
-	downloadConfig = function(){
+	var downloadList = function(){
 		
-		s3.getObject({
-			Key : cookies.userid+'/_configuration/articles.json'
-		}, function(data){
-			data = JSON.parse(data.Body+'');
-			updateConfig(data);
+		var mdownapi = require('../../api/mdownapi')();
+		var publicUserId = req.signedCookies.publickey;
+		
+		mdownapi.getJson(publicUserId, '/blogs/full.json', function(data){
+			updateAndUploadConfig(data);
 		});
 		
 	};
 	
 	
-	updateConfig = function(data){
+	var updateAndUploadConfig = function(data){
 		
-		var underscore, findKey, matchedKey;
-		underscore = require('underscore');
-		
-		matchedKey = underscore.findWhere(data, { 'blogid' : urlArticle });
+		var underscore = require('underscore');
+		var matchedKey = underscore.findWhere(data, { 'blogid' : urlArticleId });
+		var publicUserId = req.signedCookies.publickey;
+				
 		data = underscore.without(data, matchedKey);
-		
-		uploadNewConfig(JSON.stringify(data), onEnd);
-		
-	};
-	
-	
-	uploadNewConfig = function(data, callback){
+		data = JSON.stringify(data);
 		
 		s3.putObject({
-			Key : cookies.userid+'/_configuration/articles.json',
-			Body : data
+			Key : publicUserId+'/blogs/full.json',
+			Body : data,
+			Bucket : 'api.mdown.co'
 		}, function(){
-			callback();
+			onEndCallback();
 		});
 		
 	};
 	
 	
-	deleteRealBlog = function(callback){
+	var deleteRealBlog = function(){
+		
+		var publicUserId = req.signedCookies.publickey;
 		
 		s3.deleteObject({
-			Key : cookies.userid+'/blog-module/'+urlArticle
+			Key : publicUserId+'/blog/'+urlArticleId,
+			Bucket : 'api.mdown.co'
 		}, function(){
-			callback();
+			onEndCallback();
 		});
 		
 	};
 	
-	var i = 0;
-	onEnd = function(){
+	
+	var i=0;
+	var onEndCallback = function(){
 		i++;
-		if(i===2) res.redirect('/-/');
-	}
+		if(i===2) res.redirect('/-/')
+	};
 	
 
-	downloadConfig();
-	deleteRealBlog(onEnd);
+	downloadList();
+	deleteRealBlog();
 	
 	
 };
