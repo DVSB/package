@@ -4,7 +4,7 @@ module.exports = function() {
 	
 	s3.getUser = function(userid, callback){
 		
-		path = 'http://interface.mdown.co.s3-website-us-east-1.amazonaws.com/'+userid+'/user.json';
+		path = 'http://interface.mdown.co/'+userid+'/user.json';
 		var body = '';
 
 		require('http').get(path, function(res) {

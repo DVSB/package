@@ -1,77 +1,67 @@
 module.exports = function(req, res) {
-
-	var
-	_s3 = require('../../api/s3')(),
-	_fingerprint = require('../../api/fingerprint')().get,
-	formEmail = req.body.email,
-	formPass = req.body.password,
-	getConfig,
-	checkIfPasswordsEqual,
-	checkIfUserVefified,
-	createCookies;
 	
 	
-	if (!formEmail || !formPass || formPass.length<6 || formEmail.length<7) {
-		res.redirect('/usr/login');
+	if (!req.body.email || !req.body.password || req.body.password.length<6 || req.body.email.length<7) {
+		res.redirect('/login/');
 		return;
 	}
 	
 	
-	getConfig = function(){
+	var fingerprint = require('../../api/fingerprint')().get;
+
+	
+	var checkIfThisUserExists = function(){
 		
-		s3.getObject({
-			Key : _fingerprint(formEmail)+'/_configuration/user.json'
-		}, function(data){
-			data = JSON.parse(data.Body+'');
-			checkIfPasswordsEqual(data);
+		var mdowninterface = require('../../api/mdowninterface')();
+		var userPrivateKey = fingerprint(req.body.email);
+				
+		mdowninterface.getUser(userPrivateKey, function(data){
+			if (data===404) { res.redirect('/errors/e203');
+			} else { checkIfPasswordsEqual(data); }
 		});
 		
 	};
 	
 	
-	checkIfPasswordsEqual = function(data){
+	var checkIfPasswordsEqual = function(userData){
 		
-		if (data.details.password!==_fingerprint(formPass)) {
-			/* wrong passwords error */
-			res.redirect('/errors/e201');
-		} else {	checkIfUserVefified(data); }
-		
-	};
-	
-	
-	checkIfUserVefified = function(data){
-						
-		if (data.details.isVerified!==true) {
-			/* is not verified */ 
-			res.redirect('/errors/e202');
-		} else { createCookies(); }
+		var userSavedPassword = userData.details.password;
+		var userEnteredPass = fingerprint(req.body.password);
+					
+		if (userEnteredPass===userSavedPassword){
+		checkIfVerified(userData); } else { res.redirect('/errors/e201'); }
 		
 	};
-	
-	
-	createCookies = function(){
-			
-		var
-		publicUserHash = _fingerprint(formEmail),
-		cookieSecret = _fingerprint(publicUserHash),
-		options = { signed: true, httpOnly: true };
 
+
+	var checkIfVerified = function(userData){
+		
+		var userIsVerified = userData.details.isVerified;
+		
+		console.log(userIsVerified===true);
+		
+		if (userIsVerified===true) { createLoginCookies(userData); 
+		} else { res.redirect('/errors/e202'); }
+		
+	};
+	
+	
+	var createLoginCookies = function(userData){
+		
+		var publicUserHash = fingerprint(req.body.email);
+		var cookieSecret = fingerprint(publicUserHash);
+		
+		var options = { signed: true, httpOnly: true };
+		res.cookie('checkhash', cookieSecret, options);
 		res.cookie('islogged', 'true', options);
-		res.cookie('userid', publicUserHash, options);
 		res.cookie('userhash', cookieSecret, options);
+		
 		res.redirect('/-/');
 	
 	};
 	
 	
-	s3.isObjectExists({
-		Key : _fingerprint(formEmail)+'/_configuration/user.json'
-	}, function(isExists){
-		
-		if(isExists) { getConfig(); 
-		} else { res.redirect('/errors/e203'); }
-		
-	});
+	checkIfThisUserExists();
 	
 	
 };

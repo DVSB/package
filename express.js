@@ -8,6 +8,10 @@
 	
 		hasAuth = function(req, res, next){
 		
+			/*
+			
+			JUST FOR NOW 
+			
 			var existsLoggedCookie, isCookieLoggedTrue, cookieSecret, isCookieSecretEqual,
 			cookies=req.signedCookies, _fingerprint = require('./api/fingerprint')().get;
 			
@@ -20,7 +24,10 @@
 			
 			if (isAuth) { next();
 			} else { res.redirect('/'); }
-		
+			*/
+			
+			next();
+			
 		}
 	
 	
@@ -59,7 +66,8 @@
 		});
 	
 		screens = [
-			'storage', 'usr', 'log', 'errors', 'support', 'docs', 'media', 'privacy', 'faq', 'register', 'login'
+			'storage', 'usr', 'log', 'errors', 'support', 'docs', 'media', 
+			'privacy', 'faq', 'register', 'login', 'reset'
 		].forEach(function(mod){
 			app.all('/'  + mod +  '/*', function(req, res) {
 				require('./publics/' + mod)(req, res);

@@ -10,7 +10,7 @@ module.exports = function(req, res) {
 		break;
 		
 		default:
-		require('./reset/reset')(req, res);
+		require('./reset/default')(req, res);
 		break;
 	
 	};

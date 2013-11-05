@@ -1,8 +1,6 @@
 module.exports = function(req, res) {
 
-	res.render('publics/usr.html', { 
-		show : 'reset' 
-	});
+	res.render('publics/reset.html');
 	
 };
 
