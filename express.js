@@ -58,7 +58,8 @@
 			res.render('publics/index.html');
 		});
 	
-		screens = [ 'storage', 'usr', 'log', 'errors', 'support', 'docs', 'media', 'privacy', 'faq'
+		screens = [
+			'storage', 'usr', 'log', 'errors', 'support', 'docs', 'media', 'privacy', 'faq', 'register', 'login'
 		].forEach(function(mod){
 			app.all('/'  + mod +  '/*', function(req, res) {
 				require('./publics/' + mod)(req, res);

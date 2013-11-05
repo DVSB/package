@@ -1,0 +1,23 @@
+<% include ../shared/head-publics.html %>
+<body lang="en" class="usr">
+<% include ../shared/top-publics.html %>
+
+	
+	<article class="reset">
+	
+		<h2>Reset your password</h2>
+	
+		<form role="form" method="post" action="./?reset" >
+			<input type="email" name="email" placeholder="Email" required />
+			<button type="submit">Reset</button>
+		</form>
+	
+		<div class="rules">
+			We will send here verification link.<br>
+			You can also <a href="/register/">Sign up</a> or <a href="/login/">Log in</a>.
+		</div>
+	
+	</article>
+	
+		
+<% include ../shared/footer-publics.html %>
