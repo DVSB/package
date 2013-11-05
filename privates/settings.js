@@ -11,6 +11,10 @@ module.exports = function(req, res) {
 		require('./settings/changepassword')(req, res);
 		break;
 		
+		case 'getpublickey':
+		require('./settings/getpublickey')(req, res);
+		break;
+		
 		default:
 		require('./settings/settings')(req, res);
 		break;
