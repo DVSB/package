@@ -35,12 +35,12 @@ module.exports = function() {
 		text += 'Hello,\n\n',
 		text += 'On your account was requested new password:\n';
 		text += 'If you dont want reset password, ignore this message:\n';
-		text += 'http://mdown.co/usr/email-resetPass?'+verifyHash;
+		text += 'http://mdown.co/reset/?verify/'+verifyHash;
 		
 		html += 'Hello,<br><br>';
 		html += 'On your account was requested new password:<br>';
 		text += 'If you dont want reset password, ignore this message:<br>';
-		html += '<a href="http://mdown.co/usr/email-resetPass?'+verifyHash;
+		html += '<a href="http://mdown.co/reset/?verify/'+verifyHash;
 		html += '">Click Here!</a><br><br><br>Have a nice day!';
 		
 		rawEmail(email, 'Reset password on mDown?', text, html, function(){
@@ -58,11 +58,11 @@ module.exports = function() {
 		
 		text += 'Hello,\n\n',
 		text += 'Please visit this URL for verification of account:\n';
-		text += 'http://mdown.co/usr/email-verify?'+verifyHash;
+		text += 'http://mdown.co/register/?verify/'+verifyHash;
 		
 		html += 'Hello,<br><br>';
 		html += 'Please verify your email by click on this link:<br>';
-		html += '<a href="http://mdown.co/usr/email-verify?'+verifyHash;
+		html += '<a href="http://mdown.co/register/?verify/'+verifyHash;
 		html += '">Click Here!</a><br><br><br>Have a nice day!';
 		
 		rawEmail(email, 'Verification email!', text, html, function(){

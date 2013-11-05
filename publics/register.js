@@ -9,6 +9,10 @@ module.exports = function(req, res) {
 		require('./register/register')(req, res);
 		break;
 		
+		case 'verify':
+		require('./register/verify')(req, res);
+		break;
+		
 		default:
 		require('./register/default')(req, res);
 		break;

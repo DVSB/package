@@ -72,8 +72,8 @@ module.exports = function(req, res) {
 	
 		errors.i201 = {
 			error: 'Your password was changed', 
-			descr: 'Check email for new one and login, you should change it.',
-			refer: '/'
+			descr: 'Youcan Log in with new one..',
+			refer: '/login/'
 		};
 	
 		errors.i202 = {

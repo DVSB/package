@@ -9,6 +9,14 @@ module.exports = function(req, res) {
 		require('./reset/reset')(req, res);
 		break;
 		
+		case 'verify':
+		require('./reset/verify')(req, res);
+		break;
+		
+		case 'savenew':
+		require('./reset/savenew')(req, res);
+		break;
+		
 		default:
 		require('./reset/default')(req, res);
 		break;

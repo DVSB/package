@@ -1,36 +1,70 @@
 module.exports = function(req, res) {
 
 
-	var _s3 = require('../../api/s3')(),
-	_fingerprint = require('../../api/fingerprint')().get,
-	_email = require('../../api/email')(),
-	formEmail = req.body.email;
+	var fingerprint = require('../../api/fingerprint')().get;
 	
 	
-	sentResetEmail = function(){
+	var checkIfExists = function(){
 		
-		var publicUserHash = _fingerprint(formEmail),
-		privateKey = _fingerprint(publicUserHash).substring(0, 30);
-		
+		var mdowninterface = require('../../api/mdowninterface')();
+		var userPrivateKey = fingerprint(req.body.email);
+				
+		mdowninterface.getUser(userPrivateKey, function(data){
+			if(data!==404) { generateResetConfigFlag(data);
+			} else { res.redirect('/errors/e203'); }
+		});
 	
-		console.log('public: ' + publicUserHash);
-		console.log('private: ' + privateKey);
+	};
+	
+	
+	var generateResetConfigFlag = function(config){
+			
+		var userPrivateKey = fingerprint(req.body.email);
+		var resetFlag = fingerprint(userPrivateKey);
 		
-		_email.resetPassword(formEmail, publicUserHash+privateKey, function(){
-			res.redirect('/errors/i202');
+		config.details.resetPasswordFlag = resetFlag;
+		config = JSON.stringify(config);
+		
+		uploadNewConfig(userPrivateKey, config);
+		sendResetEmail(resetFlag);
+		
+	};
+	
+	
+	var uploadNewConfig = function(userPrivateKey, config){
+		
+		var s3 = require('../../api/s3')();
+		
+		s3.putObject({
+			Key : userPrivateKey+'/user.json',
+			Body : config,
+			Bucket : 'interface.mdown.co'
+		}, function(){
+			onEndCallback();
 		});
 		
 	};
 	
 	
-	s3.isObjectExists({
-		Key : _fingerprint(formEmail)+'/_configuration/user.json'
-	}, function(isExists){
+	var sendResetEmail = function(resetFlag){
 		
-		if(isExists) { sentResetEmail(); 
-		} else { res.redirect('/errors/e203'); }
+		var email = require('../../api/email')();
 		
-	});
+		email.resetPassword(req.body.email, resetFlag, function(){
+			onEndCallback();
+		});
+		
+	};
+	
+	
+	var i=0;
+	var onEndCallback = function(){
+		i++;
+		if(i===2) res.redirect('/errors/i202');
+	};
+	
+	
+	checkIfExists();
 	
 	
 };
