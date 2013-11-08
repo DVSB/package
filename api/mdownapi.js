@@ -14,7 +14,8 @@ module.exports = function() {
 			});
 
 			res.on('end', function() {
-				callback(JSON.parse(body));
+				try { callback(JSON.parse(body));
+				} catch(e) { callback(404); }
 			});
 			
 		}).on('error', function(e) { throw e; }); 

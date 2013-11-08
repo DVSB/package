@@ -37,9 +37,7 @@ module.exports = function(req, res) {
 	var checkIfVerified = function(userData){
 		
 		var userIsVerified = userData.details.isVerified;
-		
-		console.log(userIsVerified===true);
-		
+				
 		if (userIsVerified===true) { createLoginCookies(userData); 
 		} else { res.redirect('/errors/e202'); }
 		
@@ -47,15 +45,12 @@ module.exports = function(req, res) {
 	
 	
 	var createLoginCookies = function(userData){
-		
-		var publicUserHash = fingerprint(req.body.email);
-		var cookieSecret = fingerprint(publicUserHash);
-		
+ 
 		var options = { signed: true, httpOnly: true };
-		res.cookie('checkhash', cookieSecret, options);
 		res.cookie('islogged', 'true', options);
-		res.cookie('userhash', cookieSecret, options);
-		
+		res.cookie('fingerprint', fingerprint(userData.publicKey), options);
+		res.cookie('publicKey', userData.publicKey, options);
+
 		res.redirect('/-/');
 	
 	};

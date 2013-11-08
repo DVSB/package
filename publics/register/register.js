@@ -2,7 +2,7 @@ module.exports = function(req, res) {
 	
 	
 	var fingerprint = require('../../api/fingerprint')().get;
-	var randomplus = require('../../api/randomplus')();
+	var randomplus = require('../../api/randomplus')()();
 	var s3 = require('../../api/s3')();
 	
 		
@@ -15,7 +15,7 @@ module.exports = function(req, res) {
 			if(data===404) { 
 				createRequiredModules();
 				sendVerificationEmail();
-				getEmptyTemplate();
+				createEmptyUser();
 			} else { res.redirect('/errors/e204'); }
 		});
 	
@@ -25,7 +25,7 @@ module.exports = function(req, res) {
 	var createRequiredModules = function(){
 		
 		s3.putObject({
-			Key : randomplus()+'/blogs/full.json',
+			Key : randomplus+'/blogs/full.json',
 			Body : '[]',
 			Bucket : 'api.mdown.co'
 		}, function(){
@@ -35,11 +35,11 @@ module.exports = function(req, res) {
 	}
 	
 	
-	var getEmptyTemplate = function(){
+	var createEmptyUser = function(){
 			
 		var emptyUser = {
 			'details' : { 'password' : fingerprint(req.body.password), 'isVerified' : false, 'email' : req.body.email },
-			'publicKey' : randomplus(),
+			'publicKey' : randomplus,
 			'modules' : ['published','author']
 		};
 		
@@ -57,7 +57,8 @@ module.exports = function(req, res) {
 	var sendVerificationEmail = function(){
 		
 		var email = require('../../api/email')();
-		
+		onEndCallback();
+		return;
 		email.verifyAccount(req.body.email, fingerprint(req.body.email), function(){
 			onEndCallback();
 		});
