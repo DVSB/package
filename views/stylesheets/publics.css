@@ -5,6 +5,7 @@
 	@import url('./publics-index.css');
 	@import url('./publics-support.css');
 	@import url('./publics-usr.css');
+	@import url('./publics-docs.css');
 	
 	body {
 		width: 1200px;

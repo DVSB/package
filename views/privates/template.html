@@ -1,0 +1,22 @@
+<% include ../shared/head-privates.html %>
+<body lang="en" class="template">
+<% include ../shared/top-privates.html %>
+		
+	<form role="form" method="post" action="./?update">
+
+		<div>
+			<button type="submit">Update Template</button>
+		</div>
+
+		<h2>HTML markup</h2>
+		<code><textarea required><%- markup %></textarea></code>
+
+		<h2>CSS Styles</h2>
+		<code><textarea required><%- stylesheets %></textarea></code>
+
+		<h2>Javascript</h2>
+		<code><textarea required><%- javascript %></textarea></code>
+
+	</form>
+	
+<% include ../shared/footer-privates.html %>

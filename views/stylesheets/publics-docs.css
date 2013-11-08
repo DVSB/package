@@ -1,0 +1,17 @@
+
+	
+	/* docs */
+	
+	.docs textarea {
+		display: block;
+		width: 100%;
+		margin: 0 auto 40px;
+		max-width: 100%;
+		min-height: 154px;
+	}
+
+	.docs section {
+		border: 1px solid red;
+		width: 48%;
+		display: inline-block;
+	}

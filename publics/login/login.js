@@ -49,7 +49,7 @@ module.exports = function(req, res) {
 		var options = { signed: true, httpOnly: true };
 		res.cookie('islogged', 'true', options);
 		res.cookie('fingerprint', fingerprint(userData.publicKey), options);
-		res.cookie('publicKey', userData.publicKey, options);
+		res.cookie('publickey', userData.publicKey, options);
 
 		res.redirect('/-/');
 	

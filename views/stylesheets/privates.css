@@ -5,6 +5,7 @@
 	@import url('./privates-header.css');
 	@import url('./privates-settings.css');
 	@import url('./privates-preview.css');
+	@import url('./privates-template.css');
 
 	body {
 		width: 1200px;
