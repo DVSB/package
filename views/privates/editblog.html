@@ -1,7 +1,14 @@
 <% include ../shared/head-privates.html %>
-<body lang="en" class="blog">
+<body lang="en" class="editblog">
 <% include ../shared/top-privates.html %>
 	
-blog
+	<strong><%- title  %></strong>
+	<div><%- author  %>, <%- published  %></div>
+
+	<br><br>
+
+	<textarea>
+		<%- markdown  %>
+	</textarea>
 	
 <% include ../shared/footer-privates.html %>

@@ -16,14 +16,12 @@ module.exports = function(req, res) {
 	
 	
 	var renderBlog = function(blog){
-		
-		var html = require('markdown').markdown.toHTML(blog.markdown);
 			
 		res.render('privates/editblog.html', { 
 			title : blog.tags.title, 
 			published: blog.tags.published, 
 			author : blog.tags.author, 
-			html : html
+			markdown : blog.markdown
 		});
 		
 	};
