@@ -9,8 +9,12 @@ module.exports = function(req, res) {
 		require('./blog/remove')(req, res);
 		break;
 
-		case 'details': 
-		require('./blog/details')(req, res);
+		case 'edit': 
+		require('./blog/edit')(req, res);
+		break;
+
+		case 'preview': 
+		require('./blog/preview')(req, res);
 		break;
 		
 		default:

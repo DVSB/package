@@ -1,38 +1,47 @@
 module.exports = function(req, res) {
 
 
-	var getAllArticles = function(){
-		
+	var getTemplateFiles = function(){
+
 		var mdownapi = require('../../api/mdownapi')();
 		var publicUserId = req.signedCookies.publickey;
 
-		mdownapi.getJson('3839164116251', '/blog/3839168825212', function(data){
-			renderArticles(data);
+		var i=0, obj={};
+		var onEndCallback = function(markup, stylesheets, javascript){
+			if(markup) { obj.markup = markup.content; }
+			if(stylesheets) { obj.stylesheets = stylesheets.content; }
+			if(javascript) { obj.javascript = javascript.content; }
+			i++;
+			if(i===3) renderArticles(obj);
+		}
+		
+		mdownapi.getJson(publicUserId, '/template/markup.json', function(markup){
+			onEndCallback(markup, null, null);
+		});
+
+		mdownapi.getJson(publicUserId, '/template/stylesheets.json', function(stylesheets){
+			onEndCallback(null, stylesheets, null);
+		});
+
+		mdownapi.getJson(publicUserId, '/template/javascript.json', function(javascript){
+			onEndCallback(null, null, javascript);
 		});
 
 	};
 
 
-	var renderArticles = function(articles){
-
-		var markup = '';
-
-		markup += '<body>\n\n<article>';
-		markup += articles.markdown;
-		markup += '</article>\n\n</body>';
-
-		console.log(markup);
+	var renderArticles = function(obj){
 	
 		res.render('privates/template.html', {
-			markup : markup,
-			stylesheets : markup,
-			javascript : markup
+			markup : obj.markup,
+			stylesheets : obj.stylesheets,
+			javascript : obj.javascript
 		});
 
 	};
 
 
-	getAllArticles();
+	getTemplateFiles();
 
 	
 };

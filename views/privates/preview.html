@@ -1,8 +1,14 @@
 <% include ../shared/head-privates.html %>
 <body lang="en" class="preview">
+<% include ../shared/top-privates.html %>
 	
+	<br><br><br><br>
+	<div><%- author  %></div>
+	<div><%- title  %></div>
+	<div><%- published  %></div>
+
 	<article class="blog">
-		<%- data.html  %>
+		<%- html  %>
 	</article>
 	
 <% include ../shared/footer-privates.html %>
