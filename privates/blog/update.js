@@ -64,9 +64,11 @@ module.exports = function(req, res) {
 	}
 
 
-	getOriginalBlog();
+	updateBlogPost();
 	updateBlogList();
 
+
+	// todo to be continue in here
 
 };
 
@@ -77,83 +79,7 @@ module.exports = function(req, res) {
 
 
 
-	module.exports = function(req, res) {
-
-
-		// My AWS s3 REST API implementation
-		var s3 = require('../../api/s3');
-
-		// Library for requests
-		var getJson = require('../../api/cors').json();
 	
-	
-		var postOldThisBlogPost = function(){
-
-			var useridFromForm = res.body.userid;
-			var blogID = res.body.blogid;
-			var newBlogFromForm = res.body.markdown;
-
-			s3.putObject({
-	 			Key : useridFromForm+'/blogs/'+blogID+'-latest.md',
-	 			Body : JSON.stringify(newBlogFromForm),
-				Bucket : 'myS3bucket'
-	 		}, function(){
-	 			onEndCallback();
-	 		});
-
-		};
-
-
-		var getThisBlogPost = function(articles){
-
-			var blogID = res.body.blogid;
-			var pathOfJson = 'api.ondrek.me/blog/'+blogid+'.json';
-
-			getJson(pathOfJson, function(){
-				onEndCallback();
-			});
-				
-		};
-
-
-		var getListOfAllBlogs = function(articles){
-
-			var pathOfJson = 'api.ondrek.me/blogs/all.json';
-			
-			getJson(pathOfJson, function(){
-				onEndCallback();
-			});
-				
-		};
-
-
-		var getBlogHistory = function(articles){
-			
-			var latest = req.body.latestBlogId;
-			var pathOfJson = 'api.ondrek.me/blog/history-'+latest+'.json';
-			
-			getJson(pathOfJson, function(){
-				onEndCallback();
-			});
-				
-		};
-		
-		
-		var i=0;
-		var onEndCallback = function(){
-			i++;
-			if (i===4) res.render('blogs.html');
-		}
-
-
-		// old version of blogpost shoud be in history
-		// newer version should be on s3 with name -latest.
-		postOldThisBlogPost();
-		getThisBlogPost();
-		getListOfAllBlogs();
-		getBlogHistory();
-
-	};
 
 
 
