@@ -6,15 +6,15 @@ module.exports = function(req, res) {
 	switch(module) {
 
 		case 'register':
-		require('./register/register')(req, res);
+		require('./register')(req, res);
 		break;
 		
 		case 'verify':
-		require('./register/verify')(req, res);
+		require('./verify')(req, res);
 		break;
 		
 		default:
-		require('./register/default')(req, res);
+		require('./default')(req, res);
 		break;
 	
 	};

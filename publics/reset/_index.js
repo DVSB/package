@@ -6,19 +6,19 @@ module.exports = function(req, res) {
 	switch(module) {
 
 		case 'reset':
-		require('./reset/reset')(req, res);
+		require('./reset')(req, res);
 		break;
 		
 		case 'verify':
-		require('./reset/verify')(req, res);
+		require('./verify')(req, res);
 		break;
 		
 		case 'savenew':
-		require('./reset/savenew')(req, res);
+		require('./savenew')(req, res);
 		break;
 		
 		default:
-		require('./reset/default')(req, res);
+		require('./default')(req, res);
 		break;
 	
 	};

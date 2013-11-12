@@ -21,7 +21,8 @@ module.exports = function(req, res) {
 			title : blog.tags.title, 
 			published: blog.tags.published, 
 			author : blog.tags.author, 
-			markdown : blog.markdown
+			markdown : blog.markdown,
+			blogid : blog.blogid
 		});
 		
 	};

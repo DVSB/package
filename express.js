@@ -64,11 +64,11 @@
 	});
 
 	screens = [
-		'storage', 'usr', 'log', 'errors', 'support', 'docs', 'media', 
+		'log', 'errors', 'support', 'docs', 'media', 'logout',
 		'privacy', 'faq', 'register', 'login', 'reset'
 	].forEach(function(mod){
 		app.all('/'  + mod +  '/*', function(req, res) {
-			require('./publics/' + mod)(req, res);
+			require('./publics/' + mod +'/_index')(req, res);
 		});
 	});
 
@@ -77,18 +77,14 @@
 
 
 	app.all('/-/', hasAuth, function(req, res) {
-		require('./privates/dashboard')(req, res);
-	});
-	
-	app.all('/c/*', hasAuth, function(req, res) {
-		require('./privates/preview')(req, res);
+		require('./privates/dashboard/_index')(req, res);
 	});
 
 	screens = [
-	'create', 'list', 'settings', 'blog', 'logout', 'modules', 'template'
+	'settings', 'blog', 'modules', 'template', 'generate'
 	].forEach(function(mod){
 		app.all('/-/'  + mod +  '/*', hasAuth, function(req, res) {
-			require('./privates/' + mod)(req, res);
+			require('./privates/' + mod + '/_index')(req, res);
 		});
 	});
 

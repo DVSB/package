@@ -4,32 +4,34 @@
 
 	<form method="post" action="/-/blog/?update">
 
-	<section class="container">
-	
-		<input type="text" name="title" value="<%- title  %>" required />
-		<textarea id="input" rows="6" cols="60" name="markdown"><%- markdown  %></textarea>
-		<span class="details">1828 words | 83 revisions</span>
-	
-	</section>
+		<section class="container">
+		
+			<input type="text" name="title" value="<%- title  %>" required />
+			<input type="hidden" name="blogid" value="<%- blogid  %>" required />
+
+			<textarea id="input" rows="6" cols="60" name="markdown"><%- markdown  %></textarea>
+			<span class="details">1828 words | 83 revisions</span>
+		
+		</section>
+
+		<aside class="leftmenu">
+				
+			<button type="submit">Update</button>
+			<span>or</span>
+			<a href="?remove">Remove</a>
+		
+		</aside>
+		
+		<aside class="leftmenu">
+				
+			<label class="published">date: </label>
+			<input type="text" name="published" value="<%- published  %>" required />
+			
+			<label class="author">author: </label>
+			<input type="text" name="author" value="<%- author  %>" required />
+		
+		</aside>
 
 	</form>
-
-	<aside class="leftmenu">
-			
-		<button type="submit">Update</button>
-		<span>or</span>
-		<a href="#">Remove</a>
-	
-	</aside>
-	
-	<aside class="leftmenu">
-			
-		<label class="published">date: </label>
-		<input type="text" name="published" value="<%- published  %>" required />
-		
-		<label class="author">author: </label>
-		<input type="text" name="author" value="<%- author  %>" required />
-	
-	</aside>
 	
 <% include ../shared/footer-privates.html %>

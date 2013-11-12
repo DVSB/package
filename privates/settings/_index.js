@@ -8,15 +8,15 @@ module.exports = function(req, res) {
 	switch(action) {
 
 		case 'changepassword':
-		require('./settings/changepassword')(req, res);
+		require('./changepassword')(req, res);
 		break;
 		
 		case 'getpublickey':
-		require('./settings/getpublickey')(req, res);
+		require('./getpublickey')(req, res);
 		break;
 		
 		default:
-		require('./settings/settings')(req, res);
+		require('./settings')(req, res);
 		break;
 	
 	};

@@ -6,11 +6,11 @@ module.exports = function(req, res) {
 	switch(module) {
 
 		case 'login':
-		require('./login/login')(req, res);
+		require('./login')(req, res);
 		break;
 		
 		default:
-		require('./login/default')(req, res);
+		require('./default')(req, res);
 		break;
 	
 	};

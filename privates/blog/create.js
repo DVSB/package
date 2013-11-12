@@ -1,7 +1,7 @@
 module.exports = function(req, res) {
 	
-	
-	require('./log/log')(req, res);
+
+	res.render('privates/create.html');
 	
 	
 };

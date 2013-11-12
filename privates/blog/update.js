@@ -1,59 +1,90 @@
 module.exports = function(req, res) {
 	
 	
-	var getOriginalBlog = function(){
+	var getBlogList = function(){
 		
 		var mdownapi = require('../../api/mdownapi')();
 		var publicUserId = req.signedCookies.publickey;
 		
-		mdownapi.getJson(publicUserId, '/blogs/full.json', function(data){
-			uploadNewBlogs1000(data);
-			uploadNewBlog(data);
+		mdownapi.getJson(publicUserId, '/blogs/full', function(data){
+			editBlogList(data);
 		});
 
 	};
-	
-	
-	var uploadNewBlogs1000 = function(json, newArticleId){
-		
+
+
+	var editBlogList = function(list){
+
+		var updateObject = function(ele){
+			ele.tags.title = req.body.title;
+			ele.tags.published = req.body.published;
+			ele.tags.author = req.body.author;
+		};
+
+		list.forEach(function(ele){
+			if(ele.blogid===req.body.blogid) updateObject(ele);
+		});
+
+		uploadBlogList(list);
+
+	};
+
+
+	var uploadBlogList = function(list){
+
 		var publicUserId = req.signedCookies.publickey;
 		var s3 = require('../../api/s3')();
-		
-		json.unshift({
-			'blogid': newBlogId,
-			'tags': { 'title':req.body.title, 'published':req.body.published, 'author':req.body.author }
-		});
 				
  		s3.putObject({
- 			Key : publicUserId+'/blogs/full.json',
- 			Body : JSON.stringify(json),
+ 			Key : publicUserId+'/blogs/full',
+ 			Body : JSON.stringify(list),
 			Bucket : 'api.mdown.co'
  		}, function(){
  			onEndCallback();
  		});
+
+	};
+	
+	
+	var getBlogPost = function(json, newArticleId){
 		
+		var mdownapi = require('../../api/mdownapi')();
+		var publicUserId = req.signedCookies.publickey;
+		var blogid = req.body.blogid;
+		
+		mdownapi.getJson(publicUserId, '/blog/'+blogid, function(data){
+			editBlogPost(data);
+		});
+
 	};
 
 
-	var uploadNewBlog = function(articles){
-		
-		var s3 = require('../../api/s3')();
-		var publicUserId = req.signedCookies.publickey;
+	var editBlogPost = function(article){
 
-		var newArticle = {
-			'blogid': newBlogId,
-			'markdown': req.body.markdown,
-			'tags': { 'title':req.body.title, 'published':req.body.published, 'author':req.body.author }
-		};
-		
+		article.markdown = req.body.markdown;
+		article.tags.title = req.body.title;
+		article.tags.published = req.body.published;
+		article.tags.author = req.body.author;
+
+		uploadBlogPost(article);
+
+	};
+
+
+	var uploadBlogPost = function(article){
+
+		var publicUserId = req.signedCookies.publickey;
+		var s3 = require('../../api/s3')();
+		var blogid = req.body.blogid;
+				
  		s3.putObject({
- 			Key : publicUserId+'/blog/'+newBlogId,
- 			Body : JSON.stringify(newArticle),
+ 			Key : publicUserId+'/blog/'+blogid,
+ 			Body : JSON.stringify(article),
 			Bucket : 'api.mdown.co'
  		}, function(){
  			onEndCallback();
  		});
-			
+
 	};
 	
 	
@@ -64,11 +95,9 @@ module.exports = function(req, res) {
 	}
 
 
-	updateBlogPost();
-	updateBlogList();
+	getBlogList();
+	getBlogPost();
 
-
-	// todo to be continue in here
 
 };
 

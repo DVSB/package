@@ -7,6 +7,14 @@ module.exports = function() {
 		path = 'http://api.mdown.co/'+userid+path;
 		var body = '';
 
+		var onSuccess = function(body){
+			callback(body);
+		}
+
+		var onError = function(){
+			callback(404);
+		}
+
 		require('http').get(path, function(res) {
 
 			res.on('data', function(chunk) {
@@ -14,8 +22,9 @@ module.exports = function() {
 			});
 
 			res.on('end', function() {
-				try { callback(JSON.parse(body));
+				try { body = JSON.parse(body);
 				} catch(e) { callback(404); }
+				onSuccess(body);
 			});
 			
 		}).on('error', function(e) { throw e; }); 

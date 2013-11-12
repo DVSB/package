@@ -1,9 +1,0 @@
-{
-  "name": "mdown",
-  "version": "0.0.2",
-  "description": "mDown API implementation",
-  "main": "index.js",
-  "homepage": "http://github.com/ondrek/mdown",
-  "author": "Samuel Ondrek <samuel@ondrek.com> (http://ondrek.com/)",
-  "license": "BSD"
-}

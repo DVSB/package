@@ -1,7 +1,7 @@
 module.exports = function(req, res) {
 	
 	
-	require('./index/index')(req, res);
+	require('./support')(req, res);
 	
 	
 };
