@@ -5,6 +5,18 @@ module.exports = function(req, res) {
 
 	switch(module) {
 
+		case 'rename':
+		require('./rename')(req, res);
+		break;
+
+		case 'remove':
+		require('./remove')(req, res);
+		break;
+
+		case 'new':
+		require('./new')(req, res);
+		break;
+
 		default:
 		require('./default')(req, res);
 		break;

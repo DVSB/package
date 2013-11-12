@@ -1,18 +1,25 @@
 module.exports = function(req, res) {
 
 
-	var getAllTags(){
+	var getAllTags = function(){
 
 		var mdownapi = require('../../api/mdownapi')();
 		var userId = req.signedCookies.publickey;
 
 		mdownapi.getJson(userId, '/all/tags', function(data){
-			parseEjs(data);
+			renderScreen(data);
 		});
 
-		res.send('hello world');
+	};
 
-	}
+
+	var renderScreen = function(tags){
+
+		res.render('privates/tags.html', {
+			'tags' : tags
+		});
+
+	};
 
 
 	getAllTags();
