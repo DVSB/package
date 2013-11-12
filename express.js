@@ -1,12 +1,12 @@
 
 
-	var app, screens, hasAuth, settings,
-	express = require('express'), app = module.exports = express();
+	var express = require('express');
+	var app = module.exports = express();
 
 	
 // Helper
 
-	hasAuth = function(req, res, next){
+	var hasAuth = function(req, res, next){
 	
 		/*
 		
@@ -63,7 +63,7 @@
 		res.render('publics/index.html');
 	});
 
-	screens = [
+	var screens = [
 		'log', 'errors', 'support', 'docs', 'media', 'logout',
 		'privacy', 'faq', 'register', 'login', 'reset'
 	].forEach(function(mod){
@@ -80,8 +80,9 @@
 		require('./privates/dashboard/_index')(req, res);
 	});
 
-	screens = [
-	'settings', 'blog', 'modules', 'template', 'generate'
+	var screens = [
+		'settings', 'blog', 'modules', 'template', 'generate', 
+		'tags'
 	].forEach(function(mod){
 		app.all('/-/'  + mod +  '/*', hasAuth, function(req, res) {
 			require('./privates/' + mod + '/_index')(req, res);
