@@ -1,5 +1,6 @@
 module.exports = function(req, res) {
 
+
 	var getAllTags = function(){
 
 		var mdownapi = require('../../api/mdownapi')();
@@ -20,17 +21,17 @@ module.exports = function(req, res) {
 	};
 
 
-	var addNewOne = function(updatedTags){
+	var uploadNewConfig = function(updatedTags){
 
 		var s3 = require('../../api/s3')();
-		var publicUserId = req.signedCookies.publickey;
+		var userId = req.signedCookies.publickey;
 		
  		s3.putObject({
- 			Key : publicUserId+'/tags/'+req.body.type,
- 			Body : JSON.stringify(toUpload),
+ 			Key : userId+'/all/tags',
+ 			Body : JSON.stringify(updatedTags),
 			Bucket : 'api.mdown.co'
  		}, function(){
- 			res.redirect('./?'+req.body.type);
+ 			res.redirect('/-/tags/');
  		});
 
 	};
