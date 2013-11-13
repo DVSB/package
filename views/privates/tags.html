@@ -28,6 +28,14 @@
 		<li><%= tag %></li>
 	<% }); %>
 
-	<br><br><br><br><br>
+	<br><br><br>
+
+	<form method="post" action="/-/tags/?synch">
+		Remember that after edit you need synchronize tags with all articles.<br>
+		(this can take a moment)<br><br>
+		<button type="submit">Synchronize all tags</button>
+	</form><br>
+
+	<br><br>
 	
 <% include ../shared/footer-privates.html %>
