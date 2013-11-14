@@ -23,8 +23,7 @@ module.exports = function(req, res) {
 		var s3 = require('../../api/s3')();
 		
 		json.unshift({
-			'blogid': newBlogId,
-			'tags': { 'title':req.body.title, 'published':req.body.published, 'author':req.body.author }
+			'blogid': newBlogId
 		});
 				
  		s3.putObject({

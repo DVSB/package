@@ -1,84 +1,43 @@
+/* containers */
 
-	
-	/* containers */
-	
-		.create .container {
-			width: 900px;
-			float: left;
-			padding-right: 50px;
-		}
-	
-		.create .leftmenu {
-			width: 300px;
-			background: #E8EAEC;
-			float: right;
-			padding: 10px 10px;
-			border: 1px solid #E2E2E2;
-			margin-bottom: 10px;
-		}
-	
-	/* container */
-	
-		.create .container textarea[name=markdown] {
-			font-weight: 400;
-			font-size: 13px;
-			line-height: 17px;
-			width: 100%;
-			border: 1px solid #E2E2E2;
-			display: block;
-			padding: 25px 20px;
-			min-height: 400px;
-			max-width: 100%;
-		}
-	
-		.create .container .details {
-			font-size: 11px;
-			color: #8A8A8A;
-		}
-	
-		.create .container input[name=title]{
-			margin-bottom: 10px;
-			width: 100%;
-			padding-left: 20px;
-			background: #E7E7E7;
-			font-weight: 600;
-			padding: 16px 20px;
-			font-size: 14px;
-		}
-	
-	/* leftmenu */
-	
-		.create .leftmenu input {
-			width: 100%;
-			margin-bottom: 9px;
-		}
-		
-		.create .leftmenu .published,
-		.create .leftmenu .author,
-		.create .leftmenu .category {
-			position: absolute;
-			line-height: 40px;
-			padding: 0 10px;
-			color: #B3B3B3;
-		}
-		
-		.create .leftmenu input[name=published] {
-			padding-left: 47px;
-		}
-		
-		.create .leftmenu input[name=author] {
-			padding-left: 61px;
-		}
-		
-		.create .leftmenu input[name=category] {
-			padding-left: 72px;
-		}
-	
-	
-	
-	
+	.create .container {
+		width: 900px;
+		float: left;
+		padding-right: 50px;
+	}
 
+	.create .leftmenu {
+		width: 300px;
+		background: #E8EAEC;
+		float: right;
+		padding: 10px 10px;
+		border: 1px solid #E2E2E2;
+		margin-bottom: 10px;
+	}
 
+/* container */
 
+	.create .container textarea[name=markdown] {
+		font-weight: 400;
+		font-size: 13px;
+		line-height: 17px;
+		width: 100%;
+		border: 1px solid #E2E2E2;
+		display: block;
+		padding: 25px 20px;
+		min-height: 400px;
+		max-width: 100%;
+	}
 
+	.create .container .details {
+		font-size: 11px;
+		color: #8A8A8A;
+	}
 
+/* leftmenu */
+
+	.create .leftmenu input {
+		width: 100%;
+		margin-bottom: 9px;
+	}
+	
