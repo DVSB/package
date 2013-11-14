@@ -14,6 +14,9 @@ module.exports = function(req, res) {
 
 
 	var renderArticles = function(articles){
+
+		// later this should load LAST1000 instead of all
+		console.log(articles);
 	
 		res.render('privates/dashboard.html', {
 			'articles' : articles

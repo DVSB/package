@@ -17,6 +17,10 @@ module.exports = function(req, res) {
 		require('./new')(req, res);
 		break;
 
+		case 'synch':
+		require('./synch')(req, res);
+		break;
+
 		default:
 		require('./default')(req, res);
 		break;

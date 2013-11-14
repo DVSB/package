@@ -1,43 +1,66 @@
 module.exports = function(req, res) {
 
+	console.log('adsdsadsa')
 
-	var getAllTags = function(){
 
-		var mdownapi = require('../../api/mdownapi')();
-		var userId = req.signedCookies.publickey;
+	var mdownapi = require('../../api/mdownapi')();
+	var userId = req.signedCookies.publickey;
+	var allBlogs;
+	var allTags;
 
-		mdownapi.getJson(userId, '/all/tags', function(data){
-			addNewOne(data);
+
+	var getAllBlogs = function(){
+
+		mdownapi.getJson(userId, '/all/blogs', function(data){
+			allBlogs = data;
+			onEndCallback();
 		});
 
 	};
 
 
-	var addNewOne = function(tags){
+	var getAllTags = function(all){
 
-		tags.push(req.body.tag);
-		uploadNewConfig(tags);
+		mdownapi.getJson(userId, '/all/tags', function(data){
+			allTags = data;
+			onEndCallback();
+		});
 
 	};
 
 
-	var uploadNewConfig = function(updatedTags){
+	var i=0;
+	var onEndCallback = function(){
 
-		var s3 = require('../../api/s3')();
-		var userId = req.signedCookies.publickey;
+		i++;
+		if(i===2) updateAllArticles();
+
+	};
+
+
+	var updateAllArticles = function(){
+
+		allBlogs.forEach(function(ele, i){
+			updateBlogTags(ele);
+		});
+
+		res.send('done');
+
+	};
+
+
+	var updateBlogTags = function(blogid){
+
 		
- 		s3.putObject({
- 			Key : userId+'/all/tags',
- 			Body : JSON.stringify(updatedTags),
-			Bucket : 'api.mdown.co'
- 		}, function(){
- 			res.redirect('/-/tags/');
- 		});
+
+		
 
 	};
 
 
+
+	getAllBlogs();
 	getAllTags();
-	
+
 };
 

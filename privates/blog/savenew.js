@@ -22,9 +22,7 @@ module.exports = function(req, res) {
 		var publicUserId = req.signedCookies.publickey;
 		var s3 = require('../../api/s3')();
 		
-		json.unshift({
-			'blogid': newBlogId
-		});
+		json.unshift(newBlogId);
 				
  		s3.putObject({
  			Key : publicUserId+'/all/blogs',
