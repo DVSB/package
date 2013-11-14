@@ -9,7 +9,7 @@ module.exports = function(req, res) {
 		var mdownapi = require('../../api/mdownapi')();
 		var publicUserId = req.signedCookies.publickey;
 		
-		mdownapi.getJson(publicUserId, '/blogs/full', function(data){
+		mdownapi.getJson(publicUserId, '/all/blogs', function(data){
 			uploadNewBlogs1000(data);
 			uploadNewBlog(data);
 		});
@@ -28,7 +28,7 @@ module.exports = function(req, res) {
 		});
 				
  		s3.putObject({
- 			Key : publicUserId+'/blogs/full',
+ 			Key : publicUserId+'/all/blogs',
  			Body : JSON.stringify(json),
 			Bucket : 'api.mdown.co'
  		}, function(){

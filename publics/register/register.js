@@ -25,7 +25,15 @@ module.exports = function(req, res) {
 	var createRequiredModules = function(){
 		
 		s3.putObject({
-			Key : randomplus+'/blogs/full.json',
+			Key : randomplus+'/all/blogs',
+			Body : '[]',
+			Bucket : 'api.mdown.co'
+		}, function(){
+			onEndCallback();
+		});
+
+		s3.putObject({
+			Key : randomplus+'/all/tags',
 			Body : '[]',
 			Bucket : 'api.mdown.co'
 		}, function(){
@@ -57,8 +65,7 @@ module.exports = function(req, res) {
 	var sendVerificationEmail = function(){
 		
 		var email = require('../../api/email')();
-		onEndCallback();
-		return;
+		
 		email.verifyAccount(req.body.email, fingerprint(req.body.email), function(){
 			onEndCallback();
 		});
@@ -69,7 +76,7 @@ module.exports = function(req, res) {
 	var i=0;
 	var onEndCallback = function(){
 		i++;
-		if(i===3) res.redirect('/errors/i200');
+		if(i===4) res.redirect('/errors/i200');
 	};
 	
 	
