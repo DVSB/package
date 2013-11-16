@@ -12,7 +12,7 @@
 		<ul class="tags">
 		<% tags.forEach(function(ele){ %>
 			<li>
-				<input type="text" value="<%= ele %>" readonly />
+				<input type="text" value="<%= ele %>" disabled />
 				<input type="text" name="tags[<%= ele %>]" placeholder="value" />
 			</li>
 		<% }); %>

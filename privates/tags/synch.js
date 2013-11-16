@@ -1,10 +1,10 @@
 module.exports = function(req, res) {
 
-
+	var s3 = require('../../api/s3')();
 	var mdownapi = require('../../api/mdownapi')();
 	var userId = req.signedCookies.publickey;
 	var underscore = require('underscore');
-	
+
 	var allBlogs;
 	var futureTags;
 
@@ -40,10 +40,6 @@ module.exports = function(req, res) {
 
 	var updateAllArticles = function(){
 
-		console.log('what should be there - new tags');
-		console.log(futureTags);
-		console.log('..');
-
 		allBlogs.forEach(function(ele, i){
 			updateOneBlogTags(ele);
 		});
@@ -63,11 +59,8 @@ module.exports = function(req, res) {
 
 	var compareAndEditTags = function(blogcontent){
 
-		var articleTags = underscore.keys(blogcontent.tags);
-		
-		console.log('articletags now:');
-		console.log(articleTags);
-		console.log('..');
+		var articleTags = underscore.keys(
+			blogcontent['tags']);
 
 		var whatToAdd = underscore.difference(
 			futureTags, articleTags);
@@ -75,19 +68,40 @@ module.exports = function(req, res) {
 		var whatToRemove = underscore.difference(
 			articleTags, futureTags);
 
-		console.log(whatToAdd);
-		console.log(whatToRemove);
-		
-		console.log('..');
+		whatToRemove.forEach(function(ele){
+			delete blogcontent['tags'][ele];
+		});
+
+		whatToAdd.forEach(function(ele){
+			blogcontent['tags'][ele] = '';
+		});
+
+		saveToS3newBlog(blogcontent)
 
 	};
 
 
-	var i=0;
+	var saveToS3newBlog = function(blogcontent){
+
+		var blogId = blogcontent.blogid;
+		var userId = req.signedCookies.publickey;
+
+ 		s3.putObject({
+ 			Key : userId+'/blog/'+blogId,
+ 			Body : JSON.stringify(blogcontent),
+			Bucket : 'api.mdown.co'
+ 		}, function(){
+ 			updateDoneCallback();
+ 		});
+
+	};
+
+
+	var j = 0;
 	var updateDoneCallback = function(){
 
-		i++;
-		if(i===1) res.send('done');
+		j++;
+		if(j===allBlogs.length) res.redirect('/-/tags/');
 
 	}
 
