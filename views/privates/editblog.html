@@ -2,55 +2,35 @@
 <body lang="en" class="editblog">
 <% include ../shared/top-privates.html %>
 
-	<form method="post" action="/-/blog/?update">
+<form method="post" action="?update">
 
-		<section class="container">
-		
-			<input type="text" name="title" value="<%- title  %>" required />
-			<input type="hidden" name="blogid" value="<%- blogid  %>" required />
+	<input type="hidden" name="blogid" value="<%- blogid  %>" required />
+	
+	<section class="container">
+	
+		<textarea id="input" rows="6" cols="60" name="markdown"><%- markdown  %></textarea>
+		<span class="details">1828 words | 83 revisions</span>
 
-			<textarea id="input" rows="6" cols="60" name="markdown"><%- markdown  %></textarea>
-			<span class="details">1828 words | 83 revisions</span>
+		<ul class="tags">
 
-			<ul class="tags">
-				<li>
-					<input type="text" name="name" value="" placeholder="name" required />
-					<input type="text" name="value" value="" placeholder="value" required />
-				</li>
-				<li>
-					<input type="text" name="name" value="" placeholder="name" required />
-					<input type="text" name="value" value="" placeholder="value" required />
-				</li>
-				<li>
-					<input type="text" name="name" value="" placeholder="name" required />
-					<input type="text" name="value" value="" placeholder="value" required />
-				</li>
-				<li>
-					<input type="text" name="name" value="" placeholder="name" required />
-					<input type="text" name="value" value="" placeholder="value" required />
-				</li>
-				<li>
-					<input type="text" name="name" value="" placeholder="name" required />
-					<input type="text" name="value" value="" placeholder="value" required />
-				</li>
-				<li>
-					<input type="text" name="name" value="" placeholder="name" required />
-					<input type="text" name="value" value="" placeholder="value" required />
-				</li>
-			</ul>
+		<% Object.keys(tags).forEach(function(ele){ %>
+			<li>
+				<input type="text" value="<%= ele %>" disabled />
+				<input type="text" name="tags[<%= ele %>]" placeholder="value" value="<%= tags[ele] %>" />
+			</li>
+		<% }); %>
+		</ul>
+	
+	</section>
 
-		</section>
-
-		<aside class="leftmenu">
-				
-			<button type="submit">Update</button>
-			<span>or</span>
-			<a href="?remove">Remove</a>
-		
-		</aside>
-		
-		
-
-	</form>
+	<aside class="leftmenu">
+			
+		<button type="submit">Update</button>
+		<span>or</span>
+		<a href="?remove">Remove</a>
+	
+	</aside>
+	
+</form>
 	
 <% include ../shared/footer-privates.html %>
