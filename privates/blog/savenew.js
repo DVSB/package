@@ -1,6 +1,6 @@
-module.exports = function(req, res) {
+module.exports = function(req, res) {	
 	
-	
+
 	var newBlogId = require('../../api/randomplus')()();
 	
 	
@@ -43,7 +43,7 @@ module.exports = function(req, res) {
 		var newArticle = {
 			'blogid': newBlogId,
 			'markdown': req.body.markdown,
-			'tags': { 'title':req.body.title, 'published':req.body.published, 'author':req.body.author }
+			'tags': req.body.tags
 		};
 		
  		s3.putObject({

@@ -3,17 +3,17 @@
 <% include ../shared/top-privates.html %>
 		
 	<ul class="articleslist">	
-	<% articles.forEach(function(ele, i){ %>
+	<% articles.forEach(function(tag, i){ %>
 		
 		<li>
-			<span class="published"><%= 'null' || ele.tags.published %></span>
-			<span class="blogid"><a href="<%= '/-/blog/'+ele.blogid+'?preview' %>">
-				<%= 'null' || ele.tags.title %>
+			<span class="published"><%= tag %></span>
+			<span class="blogid"><a href="<%= '/-/blog/'+tag+'?preview' %>">
+				<%= tag %>
 			</a></span>
-			<span class="author"><%= 'null' || ele.tags.author %></span>
+			<span class="author"><%= tag %></span>
 			
-			<span class="remove"><a href="<%= '/-/blog/'+ele.blogid+'?remove' %>">Remove</a></span>
-			<span class="edit"><a href="<%= '/-/blog/'+ele.blogid+'?edit' %>">Edit</a></span>
+			<span class="remove"><a href="<%= '/-/blog/'+tag+'?remove' %>">Remove</a></span>
+			<span class="edit"><a href="<%= '/-/blog/'+tag+'?edit' %>">Edit</a></span>
 		</li>
 		
 	<% }); %>

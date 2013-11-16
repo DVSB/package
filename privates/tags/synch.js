@@ -1,12 +1,12 @@
 module.exports = function(req, res) {
 
-	console.log('adsdsadsa')
-
 
 	var mdownapi = require('../../api/mdownapi')();
 	var userId = req.signedCookies.publickey;
+	var underscore = require('underscore');
+	
 	var allBlogs;
-	var allTags;
+	var futureTags;
 
 
 	var getAllBlogs = function(){
@@ -22,7 +22,7 @@ module.exports = function(req, res) {
 	var getAllTags = function(all){
 
 		mdownapi.getJson(userId, '/all/tags', function(data){
-			allTags = data;
+			futureTags = data;
 			onEndCallback();
 		});
 
@@ -40,27 +40,62 @@ module.exports = function(req, res) {
 
 	var updateAllArticles = function(){
 
+		console.log('what should be there - new tags');
+		console.log(futureTags);
+		console.log('..');
+
 		allBlogs.forEach(function(ele, i){
-			updateBlogTags(ele);
+			updateOneBlogTags(ele);
 		});
 
-		res.send('done');
+	};
+
+
+	var updateOneBlogTags = function(blogid){
+
+		mdownapi.getJson(userId, '/blog/'+blogid, function(data){
+			compareAndEditTags(data);
+			updateDoneCallback();
+		});
 
 	};
 
 
-	var updateBlogTags = function(blogid){
+	var compareAndEditTags = function(blogcontent){
 
+		var articleTags = underscore.keys(blogcontent.tags);
 		
+		console.log('articletags now:');
+		console.log(articleTags);
+		console.log('..');
 
+		var whatToAdd = underscore.difference(
+			futureTags, articleTags);
+
+		var whatToRemove = underscore.difference(
+			articleTags, futureTags);
+
+		console.log(whatToAdd);
+		console.log(whatToRemove);
 		
+		console.log('..');
 
 	};
+
+
+	var i=0;
+	var updateDoneCallback = function(){
+
+		i++;
+		if(i===1) res.send('done');
+
+	}
 
 
 
 	getAllBlogs();
 	getAllTags();
+
 
 };
 

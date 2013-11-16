@@ -12,8 +12,8 @@
 		<ul class="tags">
 		<% tags.forEach(function(ele){ %>
 			<li>
-				<input type="text" name="<%= ele %>" value="<%= ele %>" placeholder="name" disabled />
-				<input type="text" name="value" value="" placeholder="value" />
+				<input type="text" value="<%= ele %>" readonly />
+				<input type="text" name="tags[<%= ele %>]" placeholder="value" />
 			</li>
 		<% }); %>
 		</ul>
