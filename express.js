@@ -35,6 +35,8 @@
 
 	app.configure(function(){
 
+		app.use(express.logger('dev'));
+
 		app.use(express.favicon());
 		
 		app.use('/s', express.static(__dirname+'/views/fonts'));
@@ -45,7 +47,9 @@
 		app.set('views', __dirname + '/views');
 		app.engine('html', require('ejs').renderFile);
 	
-		app.use(express.bodyParser());
+		app.use(express.json());
+		app.use(express.urlencoded());
+
 		app.use(express.methodOverride());
 
 		var salt = '74.27-as%87.47-as%82.47-vc%42.98-yx%14.89-xy';
