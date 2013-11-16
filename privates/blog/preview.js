@@ -1,5 +1,6 @@
 module.exports = function(req, res) {
 	
+
 	var getThisArticle = function() {
 
 		var mdownapi = require('../../api/mdownapi')();
@@ -17,13 +18,12 @@ module.exports = function(req, res) {
 	
 	var renderBlog = function(blog){
 		
-		var html = require('markdown').markdown.toHTML(blog.markdown);
+		var content = require('markdown').markdown.toHTML(
+			blog.markdown);
 			
 		res.render('privates/preview.html', { 
-			title : blog.tags.title, 
-			published: blog.tags.published, 
-			author : blog.tags.author, 
-			html : html
+			tags : blog.tags, 
+			content : content
 		});
 		
 	};
