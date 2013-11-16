@@ -35,8 +35,6 @@ module.exports = function(req, res) {
 	
 	
 	var deleteRealBlog = function(){
-
-		console.log(urlArticleId);
 				
 		s3.deleteObject({
 			Key : publicUserId+'/blog/'+urlArticleId,
@@ -51,7 +49,7 @@ module.exports = function(req, res) {
 	var i=0;
 	var onEndCallback = function(){
 		i++;
-		if(i===2) res.redirect('/-/')
+		if(i===2) res.redirect('/-/');
 	};
 	
 

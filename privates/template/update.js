@@ -8,10 +8,13 @@ module.exports = function(req, res) {
 
 		var toUpload = {};
 
+		toUpload.pregenerate = { 'content' : req.body.pregenerate };
 		toUpload.markup = { 'content' : req.body.markup };
 		toUpload.stylesheets = { 'content' : req.body.stylesheets };
 		toUpload.javascript = { 'content' : req.body.javascript };
-		
+
+		console.log(toUpload);
+
  		s3.putObject({
  			Key : publicUserId+'/template/'+req.body.type,
  			Body : JSON.stringify(toUpload),

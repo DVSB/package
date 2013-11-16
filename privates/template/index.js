@@ -16,6 +16,7 @@ module.exports = function(req, res) {
 	var renderArticles = function(obj){
 	
 		res.render('privates/template.html', {
+			pregenerate : obj.pregenerate.content,
 			markup : obj.markup.content,
 			stylesheets : obj.stylesheets.content,
 			javascript : obj.javascript.content,
