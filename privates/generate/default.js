@@ -1,60 +1,59 @@
 module.exports = function(req, res) {
 
 
-	var mdownapi = require('../../api/mdownapi')();
-	var publicUserId = req.signedCookies.publickey;
-	var underscore = require('underscore');
-
-
 	var getTemplateFiles = function(){
 
-		mdownapi.getJson(publicUserId, '/template/index', function(data){
-			parseEjs(data);
+		var mdownapi = require('../../api/mdownapi')();
+		var publicUserId = req.signedCookies.publickey;
+
+		mdownapi.getJson(publicUserId, '/template', function(data){
+			renderIndex(data.template);
+			renderBlog(data.template);
+			renderArchive(data.template);
 		});
 
 	};
 
 
-	var parseEjs = function(data){
+	var renderIndex = function(data){
 
-		var markup = data.markup.content;
-		
-		mdownapi.getJson(publicUserId, '/all/blogs', function(allblogs){
-			
-			markup = underscore.template(
-				markup, { blogs:allblogs }
-			);
+		var underscore = require('underscore');
 
-			res.send(markup);
-
+		data = underscore.template(data, { 
+			tag : { date:'', author:'' },
+			type : 'samko', 
+			isArchive : false, isBlog : false, isIndex : true, 
+			blog : '', content : '', blogs : []
 		});
+
+		res.send(data);
 
 	};
 
 
-	var getAllArticles = function(){
+	var renderBlog = function(data){
 
-		// <li><a href="url" title="">text</a></li>
+		var underscore = require('underscore');
 
-		var createMarkup = function(articles){
+		data = underscore.template(data, { 
+			tag : { date:'', author:'' },
+			type : 'samko', 
+			isArchive : false, isBlog : false, isIndex : true, 
+			blog : '', content : '', blogs : []
+		});
 
-			var htmlList = [];
+	};
 
-			articles.forEach(function(ele, i){
-				htmlList[i]  = '<li><a href="/';
-				htmlList[i] += ele.blogid;
-				htmlList[i] += '" title="';
-				htmlList[i] += ele.tags.title;
-				htmlList[i] += '">';
-				htmlList[i] += ele.tags.title;
-				htmlList[i] += '</a></li>';
-			});
+	
+	var renderArchive = function(data){
 
-			res.send(articles);
-		}
+		var underscore = require('underscore');
 
-		mdownapi.getJson(publicUserId, '/blogs/full', function(json){
-			createMarkup(json);
+		data = underscore.template(data, { 
+			tag : { date:'', author:'' },
+			type : 'samko', 
+			isArchive : false, isBlog : false, isIndex : true, 
+			blog : '', content : '', blogs : []
 		});
 
 	};
@@ -64,3 +63,6 @@ module.exports = function(req, res) {
 
 
 };
+
+
+
