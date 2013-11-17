@@ -4,15 +4,14 @@
 		
 	<form role="form" method="post" action="./?update">
 
-		<input type="hidden" value="<%- type %>" name="type" />
-
 		<div>
 			<button type="submit">Update Template</button>
 		</div>
 
 		<h2>Editor</h2>
+		
 		<code>
-			<textarea name="markup" required><%- markup %></textarea>
+			<textarea name="template" required><%- template %></textarea>
 		</code>
 
 	</form>

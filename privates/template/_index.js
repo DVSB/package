@@ -10,16 +10,8 @@ module.exports = function(req, res) {
 		require('./update')(req, res);
 		break;
 
-		case 'index':
-		require('./index')(req, res);
-		break;
-
-		case 'page':
-		require('./page')(req, res);
-		break;
-
-		case 'archive':
-		require('./archive')(req, res);
+		case 'editor':
+		require('./editor')(req, res);
 		break;
 		
 		default:
