@@ -5,6 +5,10 @@ module.exports = function(req, res) {
 
 	switch(module) {
 
+		case 'downloadzip':
+		require('./downloadzip')(req, res);
+		break;
+
 		default:
 		require('./default')(req, res);
 		break;
