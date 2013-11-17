@@ -35,8 +35,6 @@
 
 	app.configure(function(){
 
-		app.use(express.logger('dev'));
-
 		app.use(express.favicon());
 		
 		app.use('/s', express.static(__dirname+'/views/fonts'));

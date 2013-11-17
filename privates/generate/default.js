@@ -3,6 +3,7 @@ module.exports = function(req, res) {
 
 	var mdownapi = require('../../api/mdownapi')();
 	var publicUserId = req.signedCookies.publickey;
+	var underscore = require('underscore');
 
 
 	var getTemplateFiles = function(){
@@ -14,20 +15,19 @@ module.exports = function(req, res) {
 	};
 
 
-	var contains = function(where, what){
-
-		return (where.indexOf(what) !== -1);
-
-	};
-
-
 	var parseEjs = function(data){
 
 		var markup = data.markup.content;
 		
-		// {{allarticle}}
-		if (contains(markup, '{{allarticle}}'))
-			markup = markup.replace('{{allarticle}}', getAllArticles());
+		mdownapi.getJson(publicUserId, '/all/blogs', function(allblogs){
+			
+			markup = underscore.template(
+				markup, { blogs:allblogs }
+			);
+
+			res.send(markup);
+
+		});
 
 	};
 
