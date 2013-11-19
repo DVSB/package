@@ -84,7 +84,7 @@
 
 	var screens = [
 		'settings', 'blog', 'modules', 'template', 'generate', 
-		'tags'
+		'tags', 'routing'
 	].forEach(function(mod){
 		app.all('/-/'  + mod +  '/*', hasAuth, function(req, res) {
 			require('./privates/' + mod + '/_index')(req, res);
