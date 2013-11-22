@@ -3,37 +3,6 @@
 	var express = require('express');
 	var app = module.exports = express();
 
-	
-// Helper
-
-
-	var hasAuth = function(req, res, next){
-	
-		/*
-
-		JUST FOR NOW 
-		
-		var existsLoggedCookie, isCookieLoggedTrue, cookieSecret,
-		isCookieSecretEqual, cookies=req.signedCookies,
-		_fingerprint = require('./api/fingerprint')().get;
-		
-		existsLoggedCookie = (cookies.islogged!==undefined);
-		isCookieLoggedTrue = (cookies.islogged==='true');
-		cookieSecret =
-		    (cookies.userid) ? _fingerprint(cookies.userid) : undefined;
-		isCookieSecretEqual = (cookies.userhash===cookieSecret);
-		
-		isAuth = (existsLoggedCookie&&isCookieLoggedTrue&&isCookieSecretEqual);
-		
-		if (isAuth) { next();
-		} else { res.redirect('/'); }
-
-		*/
-		
-		next();
-		
-	};
-
 
 // Configuration for Express
 
@@ -65,14 +34,14 @@
 // Routing
 
 
-	app.all('/', hasAuth, function(req, res) {
+	app.all('/', function(req, res) {
 		require('./modules/dashboard/_index')(req, res);
 	});
 
 
     [ 'blog', 'errors', 'generate', 'login', 'logout', 'modules', 'routing',
       'settings', 'tags', 'template' ].forEach(function(screen){
-		app.all('/-/'  + screen +  '/*', hasAuth, function(req, res) {
+		app.all('/-/'  + screen +  '/*', function(req, res) {
 			require('./modules/' + screen + '/_index')(req, res);
 		});
 	});
