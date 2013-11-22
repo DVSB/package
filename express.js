@@ -40,7 +40,7 @@
 
 
     [ 'blog', 'errors', 'generate', 'login', 'logout', 'modules', 'routing',
-      'settings', 'tags', 'template' ].forEach(function(screen){
+      'tags', 'template' ].forEach(function(screen){
 		app.all('/'  + screen +  '/*', function(req, res) {
 			require('./modules/' + screen + '/_index')(req, res);
 		});
