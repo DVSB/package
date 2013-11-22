@@ -1,0 +1,24 @@
+<% include ./shared/head-publics.html %>
+<body lang="en" class="usr">
+<% include ./shared/top-publics.html %>
+
+
+	<article class="login">
+	
+		<h2>Log in (disabled until 12/2013)</h2>
+	
+		<form role="form" method="post" action="./?login">
+			<input type="email" name="email" placeholder="Email" required />
+			<input type="password" name="password" placeholder="Password" minlength="6" required />
+			<button type="submit" disabled>Log in</button>
+		</form>
+	
+		<div class="rules">
+			We do not store your email or password, only hashes.<br>
+			<a href="/register/">Create new account</a> or <a href="/reset/">reset your password</a>.
+		</div>
+	
+	</article>
+	
+		
+<% include ./shared/footer-publics.html %>

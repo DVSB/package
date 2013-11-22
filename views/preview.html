@@ -1,0 +1,15 @@
+<% include ./shared/head-privates.html %>
+<body lang="en" class="preview">
+<% include ./shared/top-privates.html %>
+
+	<article class="blog">
+		<%- content  %>
+	</article>
+
+	<ul>
+	<% Object.keys(tags).forEach(function(tag){ %>
+		<li><%= tag %> - <%= tags[tag] %></li>
+	<% }) %>
+	</ul>
+	
+<% include ./shared/footer-privates.html %>

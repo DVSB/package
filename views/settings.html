@@ -1,0 +1,151 @@
+<% include ./shared/head-privates.html %>
+<body lang="en" class="settings">
+<% include ./shared/top-privates.html %>
+	
+	<h1>Settings</h1>
+	
+	<h2>User settings</h2>
+	
+	<!--
+	<section class="question">
+		
+		<h3>DISABLED: Pay with credit card</h3>
+		<div>Your free account is here only for 90 days. After will be removed.</div>
+					
+		<form role="form" method="post" action="./formResetPassword" >
+			<input type="password" name="changeEmail" placeholder="Change your password" required />
+			<input type="password" name="changeEmail2" placeholder="Password again" required />
+			<button type="submit" disabled>Reset</button>
+		</form>
+					
+	</section>
+	-->
+	
+	<section class="question">
+		
+		<h3>Change my password</h3>
+		<div>If you want remove administrator password you can do it here.</div>
+		
+		<form role="form" method="post" action="privates?changepassword" >
+			<input type="password" name="oldpass" placeholder="Your old password" required />
+			<input type="password" name="newpass" placeholder="New password > 7 chars" required />
+			<input type="password" name="newpass2" placeholder="Password again" required />
+			<button type="submit">Change Password</button>
+		</form>
+					
+	</section>
+	
+	<!--
+	<section class="question">
+		
+		<h3>DISABLED: Remove this blog</h3>
+		<div>Your blog will be removed with <strong>all</strong> data. There is no way how to recover it.</div>
+		
+		<form role="form" method="post" action="./formRemoveAccount" >
+			<input type="password" name="removeAccountPassword" placeholder="Change your password" required />
+			<button type="submit">Remove</button>	
+		</form>
+					
+	</section>
+	-->
+		
+	<h2>Privacy settings</h2>
+
+	<section class="question">
+		
+		<h3>Cookies Descriptions</h3>
+		<div>Which cookies we stored? You can see description.</div>
+		
+		<form role="form" method="post" action="#" >
+			<input type="password" name="removeAccountPassword" placeholder="Unavailable functionality now" required />
+			
+		</form>
+					
+	</section>
+
+	<section class="question">
+		
+		<h3>Your public key</h3>
+		<div>You can use this key with external apps or in creating your own module</div>
+		
+		<form role="form" method="post" action="#" >
+			<a href="privates?getpublickey">Get Public Key</a>
+			<br>
+		</form>
+					
+	</section>
+	
+	<h2>Module Blog</h2>
+
+	<section class="question">
+		
+		<h3>General Settings</h3>
+		<div>Set public informations about blog.</div>
+		
+		<form role="form" method="post" action="#" >
+			<input type="password" name="removeAccountPassword" placeholder="Unavailable functionality now" required />
+			
+		</form>
+					
+	</section>
+
+	<section class="question">
+		
+		<h3>RSS feed</h3>
+		<div>You can allow RSS generated for every page on blog.</div>
+		
+		<form role="form" method="post" action="#" >
+			<input type="password" name="removeAccountPassword" placeholder="Unavailable functionality now" required />
+			
+		</form>
+					
+	</section>
+
+	<section class="question">
+		
+		<h3>Template</h3>
+		<div>Choose your own templates for blog, edit them or upload own.</div>
+		
+		<form role="form" method="post" action="#" >
+			<input type="password" name="removeAccountPassword" placeholder="Unavailable functionality now" required />
+			
+		</form>
+					
+	</section>
+
+	<section class="question">
+		
+		<h3>Structure Matrix</h3>
+		<div>What should be on index? Do you want subsections? How fill menu?</div>
+		
+		<form role="form" method="post" action="#" >
+			<input type="password" name="removeAccountPassword" placeholder="Unavailable functionality now" required />
+			
+		</form>
+					
+	</section>
+	
+	<script type="text/javascript">
+	
+	// hide by default all sections
+	$('section form').css('display', 'none');
+	
+	// on click toggle this one, and hide all others
+	$('section h3').on('click', function(){
+		
+		// form in same section
+		var thisForm = $(this).parent().children('form');
+		var isOpened = (thisForm.css('display')==='block');
+		
+		// close opened after click
+		if (isOpened) { $(this).parent().children('form').slideUp(); return; }
+		
+		// others should be toggled and closed
+		$('section form').slideUp();
+		$(this).parent().children('form').slideDown({ duration : 100 });
+		
+	});
+	
+	</script>
+
+<% include ./shared/footer-privates.html %>

@@ -1,0 +1,33 @@
+<% include ./shared/head-privates.html %>
+<body lang="en" class="create">
+<% include ./shared/top-privates.html %>
+
+<form method="post" action="?savenew">
+
+	<section class="container">
+	
+		<textarea id="input" rows="6" cols="60" name="markdown">Here write</textarea>
+		<span class="details">1828 words | 83 revisions</span>
+
+		<ul class="tags">
+		<% tags.forEach(function(ele){ %>
+			<li>
+				<input type="text" value="<%= ele %>" disabled />
+				<input type="text" name="tags[<%= ele %>]" placeholder="value" />
+			</li>
+		<% }); %>
+		</ul>
+	
+	</section>
+
+	<aside class="leftmenu">
+			
+		<button type="submit">Save new</button>
+			
+	</aside>
+	
+	
+
+</form>
+	
+<% include ./shared/footer-privates.html %>

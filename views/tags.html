@@ -1,0 +1,34 @@
+<% include ./shared/head-privates.html %>
+<body lang="en" class="blog">
+<% include ./shared/top-privates.html %>
+
+	<form method="post" action="/-/tags/?new">
+		<strong>Add new</strong><br>
+		<input type="text" name="tag" placeholder="Uniq name of new tag" />
+		<button type="submit">Add New</button>
+	</form><br>
+
+	<form method="post" action="/-/tags/?remove">
+		<strong>Remove existing tag</strong><br>
+		<input type="text" name="tag" placeholder="Name of tag" />
+		<button type="submit">Remove this tag from all articles</button>
+	</form><br>
+
+	<br>
+
+	<strong>Existing tags</strong><br><br>
+	<% tags.forEach(function(tag){ %>
+		<li><%= tag %></li>
+	<% }); %>
+
+	<br><br><br>
+
+	<form method="post" action="/-/tags/?synch">
+		Remember that after edit you need synchronize tags with all articles.<br>
+		(this can take a moment)<br><br>
+		<button type="submit">Synchronize all tags</button>
+	</form><br>
+
+	<br><br>
+	
+<% include ./shared/footer-privates.html %>
