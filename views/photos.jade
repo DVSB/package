@@ -1,0 +1,113 @@
+!!! 5
+html.no-js
+
+	head
+
+		meta(charset='utf-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1')
+	
+		title n200/photos
+	
+		meta(name='robots', content='noindex, nofollow')
+	
+		link(rel='shortcut icon', href='/statics/favicon.ico')
+	
+		link(rel='stylesheet', href='/statics/css_bootstrap.css')
+		link(rel='stylesheet', href='/css/photos.css')
+
+	body.container(lang='en', style='width: 1250px;')
+
+		- if (view==='browse')
+
+			header
+
+				span
+					a(href='./new') Create new album
+
+				span(style='float: right;')
+					a(href='/admin/') Administrator
+					| , 
+					a(href='/options/') Options
+					| , 
+					a(href='/logout/') Log Out
+
+			article.albums
+			
+				- for (var i=0; i<albums.length; i++)
+
+					section
+					
+						= albums[i].time + ' _ '
+
+						a(href='./album?'+albums[i].hash)
+							= albums[i].name
+
+
+		- else if (view==='new')
+
+			header
+
+				span
+					a(href='./browse') Browse all albums
+
+				span(style='float: right;')
+					
+					form(method='post', action='./', style='margin: 0;', enctype='multipart/form-data')
+						button.btn-link.primary(type='submit', name='action', value='share') User
+						button.btn-link.primary(type='submit', name='action', value='share') Options
+						button.btn-link.primary(type='submit', name='action', value='share') Log Out
+		
+			article.albums
+
+				form(method='post', action='./upload', style='margin: 0;', enctype='multipart/form-data')
+
+					label Month and Year of Album
+					input(type='month', name='albumDate')
+					label Name of album
+					input(type='text', name='albumName')
+					label Select your photos
+					input(type='file', name='images', multiple='')
+					button.btn.btn-primary(type='submit') Upload
+
+		- else if (view==='album')
+
+			header
+
+				span
+					a(href='./browse') Browse all albums
+
+				span(style='float: right;')
+					
+					form(method='post', action='./', style='margin: 0;', enctype='multipart/form-data')
+						button.btn-link.primary(type='submit', name='action', value='share') User
+						button.btn-link.primary(type='submit', name='action', value='share') Options
+						button.btn-link.primary(type='submit', name='action', value='share') Log Out
+		
+			article.albums
+
+				- for (var i=0; i<albums.files.length; i++)
+
+					section
+			
+						= albums.files[i].name
+						span(style='display:inline-block; width:30px')
+						= albums.files[i].lastModifiedDate 
+						span(style='display:inline-block; width:30px')
+						= albums.files[i].type
+						span(style='display:inline-block; width:30px')
+						= albums.files[i].size 
+						span(style='display:inline-block; width:30px')
+						= albums.files[i].hash 
+						span(style='display:inline-block; width:30px')
+						a(href='./removep?'+albums.hash+'/'+albums.files[i].hash) Remove
+						span(style='display:inline-block; width:30px')
+						a(href='./download?'+albums.hash+'/'+albums.files[i].hash) Download
+						span(style='display:inline-block; width:30px')
+						a(href='./rename?'+albums.hash+'/'+albums.files[i].hash) Rename
+
+		- else
+
+			wtf? .. you should't be here
+
+
+
