@@ -1,6 +1,6 @@
 module.exports = function(req, res) {
 
-	var action = require('url').parse(req.url).path.split('/')[3].split('?')[1];
+	var action = require('url').parse(req.url).path.split('/')[2].split('?')[1];
 	action = (action==='') ? null : action;
 
 

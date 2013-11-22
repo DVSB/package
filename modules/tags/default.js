@@ -15,7 +15,7 @@ module.exports = function(req, res) {
 
 	var renderScreen = function(tags){
 
-		res.render('privates/tags.html', {
+		res.render('tags.html', {
 			'tags' : tags
 		});
 

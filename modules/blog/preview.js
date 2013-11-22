@@ -21,7 +21,7 @@ module.exports = function(req, res) {
 		var content = require('markdown').markdown.toHTML(
 			blog.markdown);
 			
-		res.render('privates/preview.html', { 
+		res.render('preview.html', {
 			tags : blog.tags, 
 			content : content
 		});

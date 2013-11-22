@@ -118,7 +118,7 @@ module.exports = function(req, res) {
 		break;
 
 		default: 
-		res.render('privates/settings.html');
+		res.render('settings.html');
 		break;
 	
 	};

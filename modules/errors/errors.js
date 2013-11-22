@@ -104,7 +104,7 @@ module.exports = function(req, res) {
 		if (!isExists || isNotDefined){
 			res.redirect('/errors/e200');
 		} else {
-			res.render('publics/errors.html', {
+			res.render('errors.html', {
 				error : errors[number].error,
 				descr : errors[number].descr,
 				refer : errors[number].refer

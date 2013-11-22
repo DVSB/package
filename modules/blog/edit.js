@@ -17,7 +17,7 @@ module.exports = function(req, res) {
 	
 	var renderBlog = function(blog){
 			
-		res.render('privates/editblog.html', { 
+		res.render('editblog.html', {
 			tags : blog.tags, 
 			markdown : blog.markdown,
 			blogid : blog.blogid

@@ -29,7 +29,7 @@ module.exports = function(req, res) {
  			Body : JSON.stringify(article),
 			Bucket : 'api.mdown.co'
  		}, function(){
- 			res.redirect('/-/');
+ 			res.redirect('/');
  		});
 
 	};

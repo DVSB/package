@@ -84,7 +84,7 @@ module.exports = function(req, res) {
  			Body : JSON.stringify(data),
 			Bucket : 'api.mdown.co'
  		}, function(){
- 			//res.redirect('/-/');
+ 			//res.redirect('/');
  		});
 
 	};
@@ -110,7 +110,7 @@ module.exports = function(req, res) {
 		function callbackOnEnd(){
 
 			if(i===allBlogs.length-1) {
-				res.redirect('/-/');
+				res.redirect('/');
 			} else i++;
 
 		};

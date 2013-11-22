@@ -51,7 +51,7 @@ module.exports = function(req, res) {
 		res.cookie('fingerprint', fingerprint(userData.publicKey), options);
 		res.cookie('publickey', userData.publicKey, options);
 
-		res.redirect('/-/');
+		res.redirect('/');
 	
 	};
 	

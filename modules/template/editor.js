@@ -15,7 +15,7 @@ module.exports = function(req, res) {
 
 	var renderArticles = function(obj){
 	
-		res.render('privates/template.html', {
+		res.render('template.html', {
 			template : obj.template,
 		});
 
