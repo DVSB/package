@@ -15,7 +15,7 @@ module.exports = function(req, res) {
 		break;
 		
 		default:
-		res.redirect('/-/modules/');
+		res.redirect('/modules/');
 		break;
 	
 	};

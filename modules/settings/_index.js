@@ -1,9 +1,7 @@
 module.exports = function(req, res) {
 
-	action = require('url').parse(req.url).path.split('/')[2].split('?')[1];
+	var action = require('url').parse(req.url).path.split('/')[2].split('?')[1];
 	action = (action==='') ? null : action;
-
-	console.log(action);
 
 	switch(action) {
 
@@ -19,7 +17,6 @@ module.exports = function(req, res) {
 		require('./settings')(req, res);
 		break;
 	
-	};
+	}
 	
 };
-

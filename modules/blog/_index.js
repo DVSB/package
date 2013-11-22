@@ -33,7 +33,6 @@ module.exports = function(req, res) {
 		require('./display')(req, res);
 		break;
 	
-	};
+	}
 	
 };
-

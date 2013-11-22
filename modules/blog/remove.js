@@ -2,7 +2,7 @@ module.exports = function(req, res) {
 	
 	
 	var s3 = require('../../api/s3')();
-	var urlArticleId = require('url').parse(req.url).path.split('/')[3].split('?')[0];
+	var urlArticleId = require('url').parse(req.url).path.split('/')[2].split('?')[0];
 	var publicUserId = req.signedCookies.publickey;
 
 	

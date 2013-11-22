@@ -60,7 +60,7 @@ module.exports = function(req, res) {
 	var i=0;
 	var onEndCallback = function(){
 		i++;
-		if(i===2) res.redirect('/-/')
+		if(i===2) res.redirect('/')
 	}
 
 

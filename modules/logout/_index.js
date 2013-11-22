@@ -5,6 +5,6 @@ module.exports = function(req, res) {
 	res.cookie('islogged', 'null', options);
 	res.cookie('publickey', 'null', options);
 	
-	res.redirect('/');
+	res.redirect('/login/');
 	
 };

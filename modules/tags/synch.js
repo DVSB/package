@@ -101,7 +101,7 @@ module.exports = function(req, res) {
 	var updateDoneCallback = function(){
 
 		j++;
-		if(j===allBlogs.length) res.redirect('/-/tags/');
+		if(j===allBlogs.length) res.redirect('/tags/');
 
 	}
 

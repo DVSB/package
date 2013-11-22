@@ -37,7 +37,7 @@ module.exports = function(req, res) {
  			Body : JSON.stringify(updatedTags),
 			Bucket : 'api.mdown.co'
  		}, function(){
- 			res.redirect('/-/tags/');
+ 			res.redirect('/tags/');
  		});
 
 	};
