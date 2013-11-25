@@ -1,17 +1,25 @@
+/* routing */
 	
-	/* routing */
-	
-		.routing input[type="text"] {
-			margin: 4px 0;
-			width: 800px;
-		}
+	.routing input[type="text"] {
+		margin: 4px 0;
+		width: 341px;
+		margin-right: 10px;
+	}
 
-		.routing li {
-			margin-bottom: 40px;
-		}
+	.routing li {
+		margin-bottom: 10px;
+	}
 
-		.routing ul {
-			list-style-type: none;
-			padding: 0;
-		}
+	.routing ul {
+		list-style-type: none;
+		padding: 0;
+	}
 
+
+	.routing fieldset {
+		padding: 20px 50px;
+	}
+
+	.routing input[type=checkbox]{
+		margin-right: 20px;
+	}

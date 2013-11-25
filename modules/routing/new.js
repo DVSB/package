@@ -7,20 +7,15 @@ module.exports = function(req, res) {
 		var userId = req.signedCookies.publickey;
 
 		mdownapi.getJson(userId, '/routing', function(data){
-			removeChecked(data);
+			addNewOne(data);
 		});
 
 	};
 
 
-	var remove = function(rules){
+	var addNewOne = function(rules){
 
-		var checked = req.body.checked;
-
-		checked.forEach(function(ele){
-			array.splice(ele, 1);
-		});
-
+		rules.push(req.body);
 		uploadNewConfig(rules);
 
 	};
@@ -44,4 +39,5 @@ module.exports = function(req, res) {
 
 	getAllRules();
 
+	
 };

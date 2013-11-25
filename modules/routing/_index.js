@@ -9,6 +9,10 @@ module.exports = function(req, res) {
 		require('./update')(req, res);
 		break;
 
+		case 'new':
+		require('./new')(req, res);
+		break;
+
 		default:
 		require('./default')(req, res);
 		break;

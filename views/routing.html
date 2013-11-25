@@ -1,22 +1,16 @@
 <% include shared/head.html %>
 <body lang="en" class="routing">
 <% include shared/header.html %>
-
-<form method="post" action="?update">
-
-	<button type="submit">Update</button>
-
-	<br><br><br><br>
 	
-	<section>
+	<form method="post" action="?update">
+	<fieldset>
 
-		<strong>Existing Rules</strong>
-
-		<br>
+		<legend>Existing Rules</legend>
 
 		<ul class="rules">
 		<% rules.forEach(function(ele, i){ %>
 			<li>
+				<input type="checkbox" name="checked" value="<%= i %>" />
 				<input type="text" name="<%= i %>[description]" value="<%= ele.description %>" placeholder="Description" />
 				<input type="text" name="<%= i %>[rule]" value="<%= ele.rule %>" placeholder="Rule" />
 				<input type="text" name="<%= i %>[path]" value="<%= ele.path %>" placeholder="Path" />
@@ -24,17 +18,31 @@
 		<% }); %>
 		</ul>
 
-		<strong>Add New Rule</strong>
+		<button type="submit">Update</button>
+		<button type="submit">Remove</button>
+
+		<br><br>
+
+	</fieldset>
+	</form>
+
+	<form method="post" action="?new">
+	<fieldset>
+
+		<legend>Add New Rule</legend>
 
 		<ul class="rules">
 			<li>
-				<input type="text" name="<%= rules.length %>[description]" placeholder="Description" />
-				<input type="text" name="<%= rules.length %>[rule]" placeholder="Rule" />
-				<input type="text" name="<%= rules.length %>[path]" placeholder="Path" />
+				<input type="text" name="description" placeholder="Description" />
+				<input type="text" name="rule" placeholder="Rule" />
+				<input type="text" name="path" placeholder="Path" />
 			</li>
 		</ul>
+
+		<button type="submit">Create new</button><br><br>
 	
-	</section>
+	</fieldset>
+	</form>
 	
 </form>
 	
