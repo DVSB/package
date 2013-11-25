@@ -1,0 +1,41 @@
+<% include ../shared/head-privates.html %>
+<body lang="en" class="routing">
+<% include ../shared/top-privates.html %>
+
+<form method="post" action="?update">
+
+	<button type="submit">Update</button>
+
+	<br><br><br><br>
+	
+	<section>
+
+		<strong>Existing Rules</strong>
+
+		<br>
+
+		<ul class="rules">
+		<% rules.forEach(function(ele, i){ %>
+			<li>
+				<input type="text" name="<%= i %>[description]" value="<%= ele.description %>" placeholder="Description" />
+				<input type="text" name="<%= i %>[rule]" value="<%= ele.rule %>" placeholder="Rule" />
+				<input type="text" name="<%= i %>[path]" value="<%= ele.path %>" placeholder="Path" />
+			</li>
+		<% }); %>
+		</ul>
+
+		<strong>Add New Rule</strong>
+
+		<ul class="rules">
+			<li>
+				<input type="text" name="<%= rules.length %>[description]" placeholder="Description" />
+				<input type="text" name="<%= rules.length %>[rule]" placeholder="Rule" />
+				<input type="text" name="<%= rules.length %>[path]" placeholder="Path" />
+			</li>
+		</ul>
+	
+	</section>
+	
+</form>
+	
+<% include ../shared/footer-privates.html %>

@@ -6,6 +6,7 @@
 	@import url('./privates-settings.css');
 	@import url('./privates-preview.css');
 	@import url('./privates-template.css');
+	@import url('./privates-routing.css');
 	@import url('./privates-editblog.css');
 
 	body {
