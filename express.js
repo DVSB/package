@@ -3,48 +3,21 @@
 	var express = require('express');
 	var app = module.exports = express();
 
-	
-// Helper
 
-	var hasAuth = function(req, res, next){
-	
-		/*
-		
-		JUST FOR NOW 
-		
-		var existsLoggedCookie, isCookieLoggedTrue, cookieSecret, isCookieSecretEqual,
-		cookies=req.signedCookies, _fingerprint = require('./api/fingerprint')().get;
-		
-		existsLoggedCookie = (cookies.islogged!==undefined);
-		isCookieLoggedTrue = (cookies.islogged==='true');
-		cookieSecret = (cookies.userid) ? _fingerprint(cookies.userid) : undefined;
-		isCookieSecretEqual = (cookies.userhash===cookieSecret);
-		
-		isAuth = (existsLoggedCookie&&isCookieLoggedTrue&&isCookieSecretEqual);
-		
-		if (isAuth) { next();
-		} else { res.redirect('/'); }
-		*/
-		
-		next();
-		
-	}
+// Configuration for Express
 
-
-// config
 
 	app.configure(function(){
 
 		app.use(express.favicon());
 		
 		app.use('/s', express.static(__dirname+'/views/fonts'));
-		app.use('/s', express.static(__dirname+'/views/stylesheets'));
-		app.use('/s', express.static(__dirname+'/views/images'));
 		app.use('/s', express.static(__dirname+'/views/javascript'));
+        app.use('/s', express.static(__dirname+'/views/css'));
 		
 		app.set('views', __dirname + '/views');
 		app.engine('html', require('ejs').renderFile);
-	
+
 		app.use(express.json());
 		app.use(express.urlencoded());
 
@@ -58,41 +31,23 @@
 	});
 
 
-// unauthorised
+// Routing
 
 
 	app.all('/', function(req, res) {
-		res.render('publics/index.html');
+		require('./modules/dashboard/_index')(req, res);
 	});
 
-	var screens = [
-		'log', 'errors', 'support', 'docs', 'media', 'logout',
-		'privacy', 'faq', 'register', 'login', 'reset'
-	].forEach(function(mod){
-		app.all('/'  + mod +  '/*', function(req, res) {
-			require('./publics/' + mod +'/_index')(req, res);
+
+    [ 'blog', 'errors', 'generate', 'login', 'logout', 'modules', 'routing',
+      'tags', 'template' ].forEach(function(screen){
+		app.all('/'  + screen +  '/*', function(req, res) {
+			require('./modules/' + screen + '/_index')(req, res);
 		});
 	});
 
 
-// authorised
-
-
-	app.all('/-/', hasAuth, function(req, res) {
-		require('./privates/dashboard/_index')(req, res);
-	});
-
-	var screens = [
-		'settings', 'blog', 'modules', 'template', 'generate', 
-		'tags', 'routing'
-	].forEach(function(mod){
-		app.all('/-/'  + mod +  '/*', hasAuth, function(req, res) {
-			require('./privates/' + mod + '/_index')(req, res);
-		});
-	});
-
-
-// run
+// Server only on Development Env
 
 
 	if (!module.parent) {

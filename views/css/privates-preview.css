@@ -1,0 +1,13 @@
+/* containers */
+	
+	.preview {
+		padding-bottom: 80px;
+		font-family: 'Lucida Sans';
+	}
+	
+	.preview .blog {
+		width: 800px;
+		border: 1px dashed #DADADA;
+		padding: 100px 100px;
+		margin: 100px auto;
+	}

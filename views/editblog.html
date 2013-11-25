@@ -1,0 +1,36 @@
+<% include ./shared/head.html %>
+<body lang="en" class="editblog">
+<% include ./shared/header.html %>
+
+<form method="post" action="?update">
+
+	<input type="hidden" name="blogid" value="<%- blogid  %>" required />
+	
+	<section class="container">
+	
+		<textarea id="input" rows="6" cols="60" name="markdown"><%- markdown  %></textarea>
+		<span class="details">1828 words | 83 revisions</span>
+
+		<ul class="tags">
+
+		<% Object.keys(tags).forEach(function(ele){ %>
+			<li>
+				<input type="text" value="<%= ele %>" disabled />
+				<input type="text" name="tags[<%= ele %>]" placeholder="value" value="<%= tags[ele] %>" />
+			</li>
+		<% }); %>
+		</ul>
+	
+	</section>
+
+	<aside class="leftmenu">
+			
+		<button type="submit">Update</button>
+		<span>or</span>
+		<a href="?remove">Remove</a>
+	
+	</aside>
+	
+</form>
+	
+<% include ./shared/footer.html %>

@@ -1,0 +1,17 @@
+
+	@import url('./privates-create.css');
+	@import url('./privates-dashboard.css');
+	@import url('./privates-footer.css');
+	@import url('./privates-header.css');
+	@import url('./privates-modules.css');
+	@import url('./privates-preview.css');
+	@import url('./privates-template.css');
+	@import url('./privates-routing.css');
+	@import url('./privates-editblog.css');
+
+	body {
+		width: 1200px;
+		margin: 0 auto;
+		padding: 0;
+		padding-bottom: 50px;
+	}
