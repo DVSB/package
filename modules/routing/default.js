@@ -6,7 +6,7 @@ module.exports = function(req, res) {
 	
 	
 	mdownapi.getJson(publicUserId, '/routing', function(data){
-		res.render('privates/routing.html', { rules : data });
+		res.render('routing.html', { rules : data });
 	});
 	
 

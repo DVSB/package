@@ -1,0 +1,17 @@
+	
+	/* routing */
+	
+		.routing input[type="text"] {
+			margin: 4px 0;
+			width: 800px;
+		}
+
+		.routing li {
+			margin-bottom: 40px;
+		}
+
+		.routing ul {
+			list-style-type: none;
+			padding: 0;
+		}
+
