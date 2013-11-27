@@ -7,50 +7,52 @@ module.exports = function(req, res) {
 	var userId = req.signedCookies.publickey;
 	var s3 = require('../../api/s3')();
 
+	// get all necessary resources 
 
-	var getListOfBlogs = function(){
+		var getListOfBlogs = function(){
 
-		mdownapi.getJson(userId, '/blogs', function(blogs){
-			blogs.forEach(getBlog);
-			blogcontent.blogs = blogs;
-			howLongWait = blogs.length+2;
-			onEndCallback();
-		});
-		
-	};
-
-
-	blogcontent.blog = [];
-	var getBlog = function(ele, i){
-
-		mdownapi.getJson(userId, '/blog/'+ele, function(blog){
-			blogcontent.blog[i] = blog;
-			onEndCallback();
-		});
-
-	};
+			mdownapi.getJson(userId, '/blogs', function(blogs){
+				blogs.forEach(getBlog);
+				blogcontent.blogs = blogs;
+				howLongWait = blogs.length+2; // .length + getBlog + getAllTags
+				onEndCallback();
+			});
+			
+		};
 
 
-	var getAllTags = function(ele, i){
+		blogcontent.blog = [];
+		var getBlog = function(ele, i){
 
-		mdownapi.getJson(userId, '/tags', function(tags){
-			blogcontent.tags = tags;
-			onEndCallback();
-		});
+			mdownapi.getJson(userId, '/blog/'+ele, function(blog){
+				blogcontent.blog[i] = blog;
+				onEndCallback();
+			});
 
-	};
+		};
 
 
-	var i=0, howLongWait = 0;
-	var onEndCallback = function(){
+		var getAllTags = function(ele, i){
 
-		i++;
-		if(i===howLongWait) {
-			getTemplate();
-		}
+			mdownapi.getJson(userId, '/tags', function(tags){
+				blogcontent.tags = tags;
+				onEndCallback();
+			});
 
-	};
+		};
 
+
+		var i=0, howLongWait = 0;
+		var onEndCallback = function(){
+
+			i++;
+			if(i===howLongWait) {
+				getTemplate();
+			}
+
+		};
+
+	// 
 
 	var getTemplate = function(){
 
