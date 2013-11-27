@@ -7,18 +7,37 @@ module.exports = function(req, res) {
 		var userId = req.signedCookies.publickey;
 
 		mdownapi.getJson(userId, '/routing', function(data){
-			removeChecked(data);
+			var request = req.body;
+			if (request.remove) removeRules(data);
+			if (request.update) updateRules(data);
 		});
 
 	};
 
 
-	var remove = function(rules){
+	var removeRules = function(rules){
 
 		var checked = req.body.checked;
+		var request = req.body;
+
+		for (var i=checked.length; i--; ) {
+			rules.splice(checked[i], 1);
+		}
+
+		uploadNewConfig(rules);
+
+	};
+
+
+	var updateRules = function(rules){
+
+		var request = req.body;
+		
+		var checked = request.checked;
+		checked = (checked.length===1) ? [checked] : checked;
 
 		checked.forEach(function(ele){
-			array.splice(ele, 1);
+			rules[ele] = request[ele];
 		});
 
 		uploadNewConfig(rules);
@@ -43,5 +62,6 @@ module.exports = function(req, res) {
 
 
 	getAllRules();
+
 
 };
