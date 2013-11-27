@@ -6,7 +6,7 @@ module.exports = function(req, res) {
 		var mdownapi = require('../../api/mdownapi')();
 		var userId = req.signedCookies.publickey;
 
-		mdownapi.getJson(userId, '/all/tags', function(data){
+		mdownapi.getJson(userId, '/tags', function(data){
 			renderScreen(data);
 		});
 

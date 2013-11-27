@@ -11,7 +11,7 @@ module.exports = function(req, res) {
 
 	var getAllBlogs = function(){
 
-		mdownapi.getJson(userId, '/all/blogs', function(data){
+		mdownapi.getJson(userId, '/blogs', function(data){
 			allBlogs = data;
 			onEndCallback();
 		});
@@ -21,7 +21,7 @@ module.exports = function(req, res) {
 
 	var getAllTags = function(all){
 
-		mdownapi.getJson(userId, '/all/tags', function(data){
+		mdownapi.getJson(userId, '/tags', function(data){
 			futureTags = data;
 			onEndCallback();
 		});

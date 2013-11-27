@@ -10,7 +10,7 @@ module.exports = function(req, res) {
 		
 		var mdownapi = require('../../api/mdownapi')();
 		
-		mdownapi.getJson(publicUserId, '/all/blogs', function(data){
+		mdownapi.getJson(publicUserId, '/blogs', function(data){
 			updateAndUploadConfig(data);
 		});
 		
@@ -24,7 +24,7 @@ module.exports = function(req, res) {
 		);
 		
 		s3.putObject({
-			Key : publicUserId+'/all/blogs',
+			Key : publicUserId+'/blogs',
 			Body : JSON.stringify(data),
 			Bucket : 'api.mdown.co'
 		}, function(){

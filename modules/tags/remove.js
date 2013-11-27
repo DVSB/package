@@ -6,7 +6,7 @@ module.exports = function(req, res) {
 		var mdownapi = require('../../api/mdownapi')();
 		var userId = req.signedCookies.publickey;
 
-		mdownapi.getJson(userId, '/all/tags', function(data){
+		mdownapi.getJson(userId, '/tags', function(data){
 			removeSpecificTag(data);
 		});
 
@@ -33,7 +33,7 @@ module.exports = function(req, res) {
 		var userId = req.signedCookies.publickey;
 		
  		s3.putObject({
- 			Key : userId+'/all/tags',
+ 			Key : userId+'/tags',
  			Body : JSON.stringify(updatedTags),
 			Bucket : 'api.mdown.co'
  		}, function(){

@@ -8,17 +8,9 @@ module.exports = function(req, res) {
 	var s3 = require('../../api/s3')();
 
 
-	var getAllApiJsons = function(){
-
-		getListOfBlogs();
-		getAllTags();
-
-	};
-
-
 	var getListOfBlogs = function(){
 
-		mdownapi.getJson(userId, '/all/blogs', function(blogs){
+		mdownapi.getJson(userId, '/blogs', function(blogs){
 			blogs.forEach(getBlog);
 			blogcontent.blogs = blogs;
 			howLongWait = blogs.length+2;
@@ -41,7 +33,7 @@ module.exports = function(req, res) {
 
 	var getAllTags = function(ele, i){
 
-		mdownapi.getJson(userId, '/all/tags', function(tags){
+		mdownapi.getJson(userId, '/tags', function(tags){
 			blogcontent.tags = tags;
 			onEndCallback();
 		});
@@ -131,7 +123,8 @@ module.exports = function(req, res) {
 	};
 
 
-	getAllApiJsons();
+	getListOfBlogs();
+	getAllTags();
 
 
 };
