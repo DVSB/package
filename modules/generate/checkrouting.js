@@ -46,16 +46,21 @@ module.exports = function(req, res, callback) {
 
 	var parsePath = function(object){
 
-		// sample data: 
-		// "path": "/blog/{{%cool-url}}.html"
-
 		// remove all white spaces
+		// from: ==> "/blog/ {{% cool-url }} .html "
+		// into: ==> "/blog/{{%cool-url}}.html"
 		object.forEach(function(ele){
+			console.log(ele.path);
 			ele.path = ele.path.replace(/\s+/g, '');
+			console.log(ele.path);
 		});
 
 		// search for tags
-
+		object.forEach(function(ele){
+			ele.path = { origin : ele.path };
+			ele.path.tag = underscore(ele.path.origin).strRight('{{%');
+			ele.path.tag = underscore(ele.path.tag).strLeft('}}');
+		});
 
 		return object;
 
