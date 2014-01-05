@@ -4,17 +4,9 @@ module.exports = function(req, res) {
 	action = (action==='') ? null : action;
 
 	switch(action) {
-
-		case 'changepassword':
-		//require('./changepassword')(req, res);
-		break;
-		
-		case 'getpublickey':
-		//require('./getpublickey')(req, res);
-		break;
 		
 		default:
-		require('./settings')(req, res);
+		require('./default')(req, res);
 		break;
 	
 	}

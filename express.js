@@ -39,7 +39,7 @@
 	});
 
 
-    [ 'blog', 'errors', 'generate', 'install', 'login', 'logout', 'modules', 'routing',
+    [ 'blog', 'errors', 'generate', 'install', 'login', 'logout', 'settings', 'routing',
       'tags', 'template' ].forEach(function(screen){
 		app.all('/'  + screen +  '/*', function(req, res) {
 			require('./modules/' + screen + '/_index')(req, res);

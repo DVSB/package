@@ -1,3 +1,6 @@
 {
-    "key" : "value"
+    "user" : "ondrek",
+    "repo" : "my-blog",
+    "branch" : "gh-pages",
+    "tag" : "1.1"
 }

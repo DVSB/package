@@ -1,3 +1,6 @@
 {
-    "key" : "value"
+    "host" : "mdown.co",
+    "password" : "82899832893982",
+    "method" : "sftp",
+    "crypto" : "AES512"
 }
