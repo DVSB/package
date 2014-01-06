@@ -33,17 +33,8 @@
 
 // Routing
 
-
 	app.all('/', function(req, res) {
-		require('./modules/dashboard/_index')(req, res);
-	});
-
-
-    [ 'blog', 'errors', 'generate', 'install', 'login', 'logout', 'settings', 'routing',
-      'tags', 'template' ].forEach(function(screen){
-		app.all('/'  + screen +  '/*', function(req, res) {
-			require('./modules/' + screen + '/_index')(req, res);
-		});
+		require('./preview/preview')(req, res);
 	});
 
 
