@@ -22,10 +22,6 @@
 		app.use(express.urlencoded());
 
 		app.use(express.methodOverride());
-
-		var salt = '74.27-as%87.47-as%82.47-vc%42.98-yx%14.89-xy';
-		app.use(express.cookieParser(salt)); 
-	
 		app.use(app.router);
 
 	});
@@ -33,8 +29,17 @@
 
 // Routing
 
+
 	app.all('/', function(req, res) {
-		require('./preview/preview')(req, res);
+		require('./dashboard/settings/_index')(req, res);
+	});
+
+
+    [ 'blog', 'errors', 'generate', 'install', 'login', 'logout', 'settings', 'routing',
+      'tags', 'template' ].forEach(function(screen){
+		app.all('/'  + screen +  '/*', function(req, res) {
+			require('./dashboard/' + screen + '/_index')(req, res);
+		});
 	});
 
 
@@ -43,6 +48,7 @@
 
 	if (!module.parent) {
 		app.use(express.logger('dev'));
-		app.listen(4092);
+		app.listen(4091);
+        console.log('browser localhost:4091 for preview');
 	}
 

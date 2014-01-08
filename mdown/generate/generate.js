@@ -72,6 +72,6 @@ module.exports = function(req, res) {
     allFiles = filterSystemFolders(allFiles);
     allFiles = filterOnlyMarkdowns(allFiles);
 
-    res.send(allFiles);
+    // console.log(allFiles);
 
 };
