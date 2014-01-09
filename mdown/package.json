@@ -1,14 +1,10 @@
 {
 	"dependencies": {
-		"express": "3.4.3",
-		"aws-sdk": "1.9.0",
-		"ejs": "0.8.4",
-		"nodemailer": "0.5.3",
+		"express": "3.4.7",
+		"ejs": "0.8.5",
 		"markdown": "0.5.0",
 		"underscore": "1.5.2",
-		"underscore.string": "2.3.3",
-		"validator": "*",
-		"mu2": "0.5.20"
+		"underscore.string": "2.3.3"
 	},
 	"name": "mdown",
 	"subdomain": "mdown",

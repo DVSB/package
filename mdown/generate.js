@@ -1,45 +1,22 @@
 
 
-	var express = require('express');
-	var app = module.exports = express();
+    // in this file should be all generating of blog
+
+    require('./generate/createconfigs.js')();
+    require('./generate/generate.js')();
 
 
-// Configuration for Express
+    var walk = require('./node_library/walk.js')();
 
+    var changes = walk.watchFolder("../web");
+    console.log(changes);
 
-	app.configure(function(){
+    // implement walk function
+    // on every change pregenerate web and run this file
 
-		app.use(express.favicon());
-		
-		app.use('/s', express.static(__dirname+'/views/fonts'));
-		app.use('/s', express.static(__dirname+'/views/javascript'));
-        app.use('/s', express.static(__dirname+'/views/css'));
-		
-		app.set('views', __dirname + '/views');
-		app.engine('html', require('ejs').renderFile);
+    // 1) create necessary configs
+    // 2) get all templates and theme
+    // 3) get all articles and one by one pregenerate
+    // 4) save to _build
 
-		app.use(express.json());
-		app.use(express.urlencoded());
-
-		app.use(express.methodOverride());
-
-		var salt = '74.27-as%87.47-as%82.47-vc%42.98-yx%14.89-xy';
-		app.use(express.cookieParser(salt)); 
-	
-		app.use(app.router);
-
-	});
-
-
-// Routing
-
-    require('./generate/sequence')();
-
-
-// Server only on Development Env
-
-
-	if (!module.parent) {
-		app.use(express.logger('dev'));
-		app.listen(4092);
-	}
+    // this is the weekend TODOs
