@@ -1,23 +1,24 @@
 
 
-    // in this file should be all generating of blog
+    SETTINGS = require('./generate/get-all-settings')();
+    USERFILES = require('./generate/get-all-files')();
+    THEME = require('./generate/get-theme')();
 
-
-
-    // implement walk function
-    // on every change pregenerate web and run this file
-
-    // 1) create necessary configs
     // 2) get all templates and theme
-    // 3) get all articles and one by one pregenerate
+    // 3) get all articles and one by one pre-generate
     // 4) save to _build
 
-    // this is the weekend TODOs
+
+    require('./generate/create-templates')();
+
+
+    // this is used only in production
+    // in development we have nodemon which watchs
 
     var onAnyChange = function(event, path){
-        console.log(+new Date() + ' > ' + event + ' > ' + path);
-        require('./generate/createconfigs.js')();
-        require('./generate/generate.js')();
+        // console.log(+new Date() + ' > ' + event + ' > ' + path);
+        // require('./generate/createconfigs.js')();
+        // require('./generate/createtemplates.js')();
     };
 
     require('chokidar').watch(

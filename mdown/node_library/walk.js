@@ -3,18 +3,18 @@
     module.exports = function() {
 
         return {
-            watchFolder : _watchFolder,
-            getFiles : _getFiles,
-            getFolders : _getFolders
+            getFiles : getFiles,
+            getFolders : getFolders
         };
 
     };
 
 
     var filesystem = require("fs");
+    var ignoredfiles = ['.DS_Store'];
 
 
-    var _getFiles = function(dir) {
+    var getFiles = function(dir) {
 
         var results = [];
 
@@ -24,19 +24,21 @@
             var stat = filesystem.statSync(file);
 
             if (stat && stat.isDirectory()) {
-                results = results.concat(_getFiles(file))
+                results = results.concat(getFiles(file))
             } else results.push(file);
 
         });
+
+        results = _filterFiles(results, ignoredfiles);
 
         return results;
 
     };
 
 
-    var _getFolders = function(dir) {
+    var getFolders = function(dir) {
 
-        var allFiles = _getFiles(dir);
+        var allFiles = getFiles(dir);
 
         // Cut everything after a last slash
         allFiles.forEach(function(ele, i){
@@ -69,20 +71,19 @@
     };
 
 
-    var _watchFolder = function(target){
+    var _filterFiles = function(files, ignored) {
 
-        // for this we need to implement external library
-        // this is peace of shit
+        var filteredFiles = [];
 
-        var allFolders = _getFolders(target);
-        allFolders.forEach(forEachOne);
+        files.forEach(function(ele){
 
-        function forEachOne(ele){
-            filesystem.watch(ele, watchMe);
-        }
+            var isNotIgnoredFile = ele.substr(ele.lastIndexOf("/")+1);
+            isNotIgnoredFile = ignored.indexOf(isNotIgnoredFile)===-1;
 
-        function watchMe(event, filename){
-            console.log( { filename : filename, event : event } );
-        }
+            if (isNotIgnoredFile) filteredFiles.push(ele);
+
+        });
+
+       return filteredFiles;
 
     };

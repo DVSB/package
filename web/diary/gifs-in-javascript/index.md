@@ -1,7 +1,7 @@
 ---
 title: Hello World!
 date: 2013-09-10
-template: bloglayout
+template: diary
 category: Javascript
 tags: Javascript, HTML, Mobile, Apps
 author: ondrek
