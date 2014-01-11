@@ -2,14 +2,7 @@
 
     // in this file should be all generating of blog
 
-    require('./generate/createconfigs.js')();
-    require('./generate/generate.js')();
 
-
-    var walk = require('./node_library/walk.js')();
-
-    var changes = walk.watchFolder("../web");
-    console.log(changes);
 
     // implement walk function
     // on every change pregenerate web and run this file
@@ -20,3 +13,14 @@
     // 4) save to _build
 
     // this is the weekend TODOs
+
+    var onAnyChange = function(event, path){
+        console.log(+new Date() + ' > ' + event + ' > ' + path);
+        require('./generate/createconfigs.js')();
+        require('./generate/generate.js')();
+    };
+
+    require('chokidar').watch(
+        '../web/',
+        { ignored: /[\/\\]\./, persistent: true }
+    ).on('all', onAnyChange);

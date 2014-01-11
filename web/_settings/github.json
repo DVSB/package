@@ -1,6 +1,6 @@
 {
-    "user" : "ondrek",
-    "repo" : "my-blog",
-    "branch" : "gh-pages",
-    "tag" : "1.1"
+    "blog-name" : "My Personal Blog",
+    "root-url" : "http://steven.blogger.com",
+    "copyright" : "Copyright 2013",
+    "gvatar" : "125063924196134"
 }

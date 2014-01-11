@@ -4,7 +4,8 @@
 		"ejs": "0.8.5",
 		"markdown": "0.5.0",
 		"underscore": "1.5.2",
-		"underscore.string": "2.3.3"
+		"underscore.string": "2.3.3",
+        "chokidar" : "0.8.1"
 	},
 	"name": "mdown",
 	"subdomain": "mdown",
