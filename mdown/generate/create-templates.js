@@ -31,11 +31,10 @@
         };
 
         var afterLayout = compiled(userApiWrapper);
-
         compiled = underscore.template(afterLayout);
+        compiled = compiled(userApiWrapper);
 
-
-        console.log( compiled(userApiWrapper) );
+        // console.log( compiled );
 
     };
 

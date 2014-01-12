@@ -1,15 +1,17 @@
 
 
+    underscore = require('underscore');
+    underscore.mixin(require('underscore.string').exports());
+
     SETTINGS = require('./generate/get-all-settings')();
     USERFILES = require('./generate/get-all-files')();
     THEME = require('./generate/get-theme')();
 
-    // 2) get all templates and theme
-    // 3) get all articles and one by one pre-generate
-    // 4) save to _build
-
 
     require('./generate/create-templates')();
+
+    var rawMd = require('./node_library/parse-md')("about/index.md");
+    console.log(rawMd);
 
 
     // this is used only in production
