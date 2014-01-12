@@ -3,8 +3,8 @@
     module.exports = function() {
 
         return {
-            // settings : getAllFiles(),
-            // theme : getAllFiles(),
+            settings : getSettingsFiles(),
+            theme : getThemeFiles(),
             folders : getFilteredFolders(),
             files : getFilteredFiles()
         };
@@ -17,8 +17,7 @@
 
     var getFilteredFolders = function() {
 
-        var allFolders = _getAllFilesFromFolder(USER_FOLDER);
-        var ignoredFolders = _getIgnoredConfig().ignoredfolders;
+        var allFolders = getFilteredFiles();
 
         // cut whole string after last slash (after the file name)
         allFolders.forEach(function(ele, i){
@@ -28,43 +27,66 @@
         // remove all repeated items (in case of more files in one folder)
         allFolders = underscore.uniq(allFolders);
 
-        // remove folder if it's in the system folder
-        var systemFolders = ["%build", "%settings", "%theme"];
-        var filteredFolders = [];
-        allFolders.forEach(function(ele){
-            var currentFolder = ele.slice(ele.lastIndexOf("/")+1);
-            var isIgnoredFolder = systemFolders.indexOf(currentFolder)>-1;
-            if (!isIgnoredFolder) filteredFolders.push(ele);
-        });
-
-        return filteredFolders;
+        return allFolders;
 
     };
 
 
     var getFilteredFiles = function(){
 
-        var filteredFolders = getFilteredFolders();
         var allFiles = _getAllFilesFromFolder(USER_FOLDER);
-        var ignoredFile = _getIgnoredConfig().ignoredfiles;
 
-        // DRY remove file if is not in filtered folder (=> is ignored)
-        var filteredFiles = [];
-        allFiles.forEach(function(ele, i){
-            var currentFolder = ele.slice(0, ele.lastIndexOf("/"));
-            var isNotInFilteredFolder = filteredFolders.indexOf(currentFolder)>-1;
-            if (isNotInFilteredFolder) filteredFiles.push(ele);
+        var ignoredStrings = _getIgnoredConfig().ignored;
+        ignoredStrings.push("/%settings/", "/%build/", "/%theme/");
+
+        // pick all files which should be removed from array
+        var toBeRemoved = [];
+        allFiles.forEach(function(currentFile){
+            ignoredStrings.forEach(function(ignoredString){
+                var shouldBeRemoved = currentFile.indexOf(ignoredString)>-1;
+                if (shouldBeRemoved) toBeRemoved.push(currentFile);
+            });
         });
 
-        // remove all ignored files defined in the user configuration
-        var moreFilteredFiles = [];
-        filteredFiles.forEach(function(ele){
-            var currentFile = ele.substr(ele.lastIndexOf("/")+1);
-            var isIgnoredFile = ignoredFile.indexOf(currentFile)>-1;
-            if (!isIgnoredFile) moreFilteredFiles.push(ele);
+        allFiles = underscore.difference(allFiles, toBeRemoved);
+
+        return allFiles;
+
+    };
+
+
+    var getThemeFiles = function(){
+
+        var themeFiles = _getAllFilesFromFolder(USER_FOLDER + "/%theme/");
+        var filesystem = require("fs");
+        var newThemeObj = {};
+
+        themeFiles.forEach(function(ele, i){
+            var themeFile = filesystem.readFileSync(ele)+"";
+            var name = ele.slice(ele.lastIndexOf("/")+1).split(".html")[0];
+            var isNotFuckingDsStore = name!==".DS_Store";
+            if (isNotFuckingDsStore) newThemeObj[name] = themeFile;
         });
 
-        return moreFilteredFiles;
+        return newThemeObj;
+
+    };
+
+
+    var getSettingsFiles = function(){
+
+        var settingsFiles = _getAllFilesFromFolder(USER_FOLDER + "/%settings/");
+        var filesystem = require("fs");
+        var newSettingsObject = {};
+
+        settingsFiles.forEach(function(ele){
+            var jsonFile = filesystem.readFileSync(ele);
+            var name = ele.slice(ele.lastIndexOf("/")+1).split(".json")[0];
+            var isNotFuckingDsStore = name!==".DS_Store";
+            if (isNotFuckingDsStore) newSettingsObject[name] = JSON.parse(jsonFile);
+        });
+
+        return newSettingsObject;
 
     };
 

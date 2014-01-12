@@ -1,9 +1,6 @@
 {
-    "ignoredfolders" : [
-        "forum",
-        "blog"
-    ],
-    "ignoredfiles" : [
+    "ignored" : [
+        "/forum/",
         ".DS_Store",
         "README.md"
     ]

@@ -8,60 +8,77 @@
     };
     underscore.mixin(require("underscore.string").exports());
 
-    //SETTINGSFILES = require("./generate/get-settings-files")();
-    //USERFILES = require("./generate/get-all-files")();
-    //THEMEFILES = require("./generate/get-theme-files")();
+    FILES = require("./generate/const-FILES")();
 
-    console.log(require("./generate/const-FILES")());
 
     var generate = function(){
 
-        // get only markdown files
+        console.info(+new Date() + " > rebuilded");
 
+        var filesystem = require("fs");
+        var compile = require("./generate/markdown-compile");
+        var read = require("./generate/markdown-read");
         var markdownFiles = [];
+        var otherTypeFiles = [];
 
-        USERFILES.filteredfiles.forEach(function(ele){
-            var isMdFile = ele.indexOf(".md")>-1;
-            if (isMdFile) markdownFiles.push(ele);
+        FILES.files.forEach(function(ele){
+            if (ele.indexOf(".md")>-1) {
+                markdownFiles.push(ele);
+            } else { otherTypeFiles.push(ele); }
         });
 
-        console.log(USERFILES);
+        _cleanFolder("../web/%build");
+        _createFolders();
 
-        // for each markdown proceed
+        markdownFiles.forEach(function(pathToMarkdown){
 
-        var pluginMakrodwnCompile = require("./generate/markdown-compile");
-        var pluginMarkdownRead = require("./generate/markdown-read");
-
-        markdownFiles.forEach(function(ele){
-
-            var pathToMarkdown = ele;
-            var filesystem = require("fs");
-
-            console.log("\n\n\n- - - - - - - - - - - - - - - - - - - - - - -");
-            console.log(pathToMarkdown);
-            console.log("- - - - - - - - - - - - - - - - - - - - - - -");
-
-            var currentMdObj = pluginMarkdownRead(pathToMarkdown);
-            var html = pluginMakrodwnCompile(currentMdObj);
-
+            var currentMdObj = read(pathToMarkdown);
+            var html = compile(currentMdObj);
             var newPath = buildPathFromOriginalPath(pathToMarkdown);
-            //filesystem.writeFileSync(newPath, html);
+
+            var fd = filesystem.openSync(newPath, 'w');
+            filesystem.writeFileSync(newPath, html);
+            filesystem.closeSync(fd);
 
         });
 
     };
 
-    var getOnlyMarkdownFiles = function(){
+    var _cleanFolder = function(path) {
 
-        var shouldBeProceed = USERFILES.filteredfiles;
-        var onlyMarkdownFiles = [];
+        var files = [];
+        var filesystem = require("fs");
 
-        shouldBeProceed.forEach(function(ele){
-            var isMdFile = ele.indexOf(".md")>-1;
-            if (isMdFile) onlyMarkdownFiles.push(ele);
+        if ( filesystem.existsSync(path) ) {
+
+            files = filesystem.readdirSync(path);
+
+            files.forEach(function(file,index){
+                var curPath = path + "/" + file;
+                if(filesystem.statSync(curPath).isDirectory()) {
+                    _cleanFolder(curPath);
+                } else {
+                    filesystem.unlinkSync(curPath);
+                }
+            });
+
+            filesystem.rmdirSync(path);
+
+        }
+
+    };
+
+    var _createFolders = function() {
+
+        var sortedFolders = FILES.folders.sort();
+        var filesystem = require("fs");
+
+        filesystem.mkdirSync("../web/%build");
+
+        sortedFolders.forEach(function(folder){
+            var newPath = buildPathFromOriginalPath(folder);
+            filesystem.mkdirSync(newPath);
         });
-
-        return onlyMarkdownFiles;
 
     };
 
@@ -72,19 +89,14 @@
 
     };
 
-    // generate();
+    generate();
 
 
-    // this is used only in production
-    // in development we have nodemon which watchs
-
-    var onAnyChange = function(event, path){
-        // console.log(+new Date() + " > " + event + " > " + path);
-    };
-
-
-
+    /*
     require("chokidar").watch(
         "../web/",
         { ignored: /[\/\\]\./, persistent: true }
-    ).on("all", onAnyChange);
+    ).on("all", function(event, path){
+        console.log(+new Date() + " > " + event + " > " + path);
+    });
+    */
