@@ -1,8 +1,5 @@
 
 
-    var SETTINGS_FOLDER = "../web/%settings";
-
-
     module.exports = function() {
 
         createBlankConfig();
@@ -101,7 +98,7 @@
     function filteredFolders() {
 
         var allFolders = boilerplate.allfolders;
-        var ignoredFolders = boilerplate.ignoredfolders;
+        var ignoredFolders = ["../web/%build", "../web/%settings", "../web/%theme"];
         var filteredFolders = [];
 
         allFolders.forEach(function(ele, i){

@@ -1,14 +1,13 @@
 
 
-    module.exports = function(path, data) {
+    module.exports = function(path) {
 
         var markdownArticle = readFileByPath(path);
         var markdownBody = getBody(markdownArticle);
-        var markdownHeader = getHeader(markdownArticle);
+        var markdownHeaderObj = getHeaderObj(markdownArticle);
 
-        markdownHeader.content = markdownBody;
-
-        return markdownHeader;
+        markdownHeaderObj.content = markdownBody;
+        return markdownHeaderObj;
 
     };
 
@@ -26,7 +25,7 @@
     };
 
 
-    var getHeader = function(markdown) {
+    var getHeaderObj = function(markdown) {
 
         var croppedByNewLineArr = markdown.split(/\n/);
         var delimiterPosition = croppedByNewLineArr.indexOf("---", 1);

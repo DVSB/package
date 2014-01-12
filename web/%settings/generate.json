@@ -1,11 +1,10 @@
 {
+    "ignoredfolders" : [
+        "forum",
+        "blog"
+    ],
     "ignoredfiles" : [
         ".DS_Store",
         "README.md"
-    ],
-    "ignoredfolders" : [
-        "../web/_build",
-        "../web/_settings",
-        "../web/_theme"
     ]
 }
