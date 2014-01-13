@@ -1,5 +1,5 @@
 {
-    "name": "mdown",
+    "name": "mDown",
     "subdomain": "mdown",
     "scripts": {
         "start": "express.js"
