@@ -4,9 +4,9 @@
   "scripts": {
     "start": "express.js"
   },
-  "main": "./lib/index",
+  "main": "./lib/index.js",
   "bin": {
-    "mdown": "./bin/mdown"
+    "mdown": "./bin/mdown.js"
   },
   "homepage": "https://github.com/ondrek/mdown/",
   "author": {
