@@ -1,51 +1,51 @@
 {
-    "name": "mdown",
-    "subdomain": "mdown",
-    "scripts": {
-        "start": "express.js"
-    },
-    "main": "./lib/index",
-    "bin": {
-        "mdown": "./bin/mdown"
-    },
-    "homepage": "https://github.com/ondrek/mdown/",
-    "author": {
-        "name": "Samuel Ondrek",
-        "url": "http://github.com/ondrek/",
-        "website" : "http://ondrek.com",
-        "blog" : "http://ondrek.me",
-        "twitter" : "@ondrek"
-    },
-    "bugs" : {
-        "url" : "https://github.com/ondrek/mdown/issues"
-    },
-    "repository": {
-        "type": "git",
-        "url": "http://github.com/ondrek/mdown.git"
-    },
-    "description": "Lightweight and simple, but powerfull generator of static websites. mDown is configuration and conventions based generator of static websites, which can be used as a lightweight website for portofolios, blogs or standard websites.",
-    "keywords": [
-        "markdown",
-        "mdown",
-        "static",
-        "website",
-        "generator"
-    ],
-    "preferGlobal" : true,
-    "version": "0.0.4-1",
-    "license": "Apache License, Version 2.0",
-    "domains": [
-        "mdown.co",
-        "www.mdown.co"
-    ],
-    "dependencies": {
-        "markdown": "0.5.0",
-        "underscore": "1.5.2",
-        "underscore.string": "2.3.3",
-        "chokidar" : "0.7.1",
-        "colors" : "0.6.2"
-    },
-    "engines": {
-        "node": "0.10.*"
-    }
+  "name": "mdown",
+  "subdomain": "mdown",
+  "scripts": {
+    "start": "express.js"
+  },
+  "main": "./lib/index",
+  "bin": {
+    "mdown": "./bin/mdown"
+  },
+  "homepage": "https://github.com/ondrek/mdown/",
+  "author": {
+    "name": "Samuel Ondrek",
+    "url": "http://github.com/ondrek/",
+    "website": "http://ondrek.com",
+    "blog": "http://ondrek.me",
+    "twitter": "@ondrek"
+  },
+  "bugs": {
+    "url": "https://github.com/ondrek/mdown/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/ondrek/mdown.git"
+  },
+  "description": "Lightweight and simple, but powerfull generator of static websites. mDown is configuration and conventions based generator of static websites, which can be used as a lightweight website for portofolios, blogs or standard websites.",
+  "keywords": [
+    "markdown",
+    "mdown",
+    "static",
+    "website",
+    "generator"
+  ],
+  "preferGlobal": true,
+  "version": "0.0.5",
+  "license": "Apache License, Version 2.0",
+  "domains": [
+    "mdown.co",
+    "www.mdown.co"
+  ],
+  "dependencies": {
+    "markdown": "0.5.0",
+    "underscore": "1.5.2",
+    "underscore.string": "2.3.3",
+    "chokidar": "0.7.1",
+    "colors": "0.6.2"
+  },
+  "engines": {
+    "node": "0.10.*"
+  }
 }
