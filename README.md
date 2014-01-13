@@ -1,17 +1,14 @@
-PREALPHA VERSION!!!
+**PREALPHA VERSION!!!**
 
----
 
 # mDown
 ## Simple, lightweight but powerful website generator 
 
----
+![NPM image 1](https://nodei.co/npm/mdown.png)
 
 **Warning:** This version is very-alpha version and we recommend to use if from **march 2014** and not before because has many known bugs. Thank you for support.
 
 
-![NPM image 1](https://nodei.co/npm/mdown.png)
-![NPM image 2](https://nodei.co/npm-dl/mdown.png?months=3)  
 
 ### How to Install
 
