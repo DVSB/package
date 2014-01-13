@@ -1,23 +1,51 @@
 {
-	"dependencies": {
-		"express": "3.4.7",
-		"ejs": "0.8.5",
-		"markdown": "0.5.0",
-		"underscore": "1.5.2",
-		"underscore.string": "2.3.3",
+    "name": "mdown",
+    "subdomain": "mdown",
+    "scripts": {
+        "start": "express.js"
+    },
+    "main": "./lib/nodemon",
+    "bin": {
+        "nodemon": "./bin/nodemon.js"
+    },
+    "homepage": "http://mdown.co",
+    "author": {
+        "name": "Samuel Ondrek",
+        "url": "http://github.com/ondrek/",
+        "website" : "http://ondrek.com",
+        "blog" : "http://ondrek.me",
+        "twitter" : "@ondrek"
+    },
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/ondrek/mdown.git"
+    },
+    "description": "Static website generator based on NodeJs.",
+    "keywords": [
+        "markdown",
+        "mdown",
+        "static",
+        "website",
+        "generator"
+    ],
+    "version": "1.2.0",
+    "license": {
+        "type": "Apache License",
+        "version" : "Version 2.0, January 2004"
+    },
+    "domains": [
+        "mdown.co",
+        "www.mdown.co"
+    ],
+    "dependencies": {
+        "express": "3.4.7",
+        "ejs": "0.8.5",
+        "markdown": "0.5.0",
+        "underscore": "1.5.2",
+        "underscore.string": "2.3.3",
         "chokidar" : "0.8.1"
-	},
-	"name": "mdown",
-	"subdomain": "mdown",
-	"scripts": {
-		"start": "express.js"
-	},
-	"domains": [
-		"mdown.co",
-		"www.mdown.co"
-	],
-	"version": "0.1.1-27",
-	"engines": {
-		"node": "0.10.*"
-	}
+    },
+    "engines": {
+        "node": "0.10.*"
+    }
 }

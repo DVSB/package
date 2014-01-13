@@ -11,6 +11,9 @@
     FILES = require("./generate/const-FILES")();
 
 
+    require("./generate/filesystem")();
+
+
     var generate = function(){
 
         console.info(+new Date() + " > rebuilded");
@@ -89,7 +92,7 @@
 
     };
 
-    generate();
+    // generate();
 
 
     /*
