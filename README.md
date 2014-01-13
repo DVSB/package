@@ -5,7 +5,6 @@
 
 ![NPM image 1](https://nodei.co/npm/mdown.png)
 
-
 ### How to Install
 
     > sudo npm install -g mdown
