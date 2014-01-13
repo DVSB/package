@@ -11,7 +11,7 @@ PREALPHA VERSION!!!
 
 
 ![NPM image 1](https://nodei.co/npm/mdown.png)
-![NPM image 2](https://nodei.co/npm-dl/mdown.png?months=3)
+![NPM image 2](https://nodei.co/npm-dl/mdown.png?months=3)  
 
 ### How to Install
 
