@@ -4,7 +4,7 @@
   "scripts": {
     "start": "express.js"
   },
-  "main": "./lib/mdown.js",
+  "main": "./lib/_mdown.js",
   "bin": {
     "mdown": "./bin/mdown.js"
   },
