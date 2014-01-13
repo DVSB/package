@@ -3,4 +3,4 @@
 
 var path = require('path');
 var lib = path.join(path.dirname(require('fs').realpathSync(__filename)), '../lib');
-require(lib + '/main.js')();
+require(lib + '/mdown.js')();
