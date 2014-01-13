@@ -1,4 +1,9 @@
 
+    // welcome screen after run
+    require("./generate/console-echo")();
+
+
+    /*
 
     underscore = require("underscore");
     underscore.templateSettings = {
@@ -11,7 +16,9 @@
     FILES = require("./generate/const-FILES")();
 
 
-    require("./generate/filesystem")();
+    //require("./generate/filesystem")();
+
+
 
 
     var generate = function(){
@@ -95,7 +102,7 @@
     // generate();
 
 
-    /*
+
     require("chokidar").watch(
         "../web/",
         { ignored: /[\/\\]\./, persistent: true }
