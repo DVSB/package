@@ -4,11 +4,11 @@
     "scripts": {
         "start": "express.js"
     },
-    "main": "./lib/nodemon",
+    "main": "./mdown.js",
     "bin": {
-        "nodemon": "./bin/nodemon.js"
+        "mdown": "./mdown.js"
     },
-    "homepage": "http://mdown.co",
+    "homepage": "https://github.com/ondrek/mdown/",
     "author": {
         "name": "Samuel Ondrek",
         "url": "http://github.com/ondrek/",
@@ -16,11 +16,14 @@
         "blog" : "http://ondrek.me",
         "twitter" : "@ondrek"
     },
+    "bugs" : {
+        "url" : "https://github.com/ondrek/mdown/issues"
+    },
     "repository": {
         "type": "git",
         "url": "http://github.com/ondrek/mdown.git"
     },
-    "description": "Static website generator based on NodeJs.",
+    "description": "Lightweight and simple but powerfull generator of static websites.",
     "keywords": [
         "markdown",
         "mdown",
@@ -28,18 +31,14 @@
         "website",
         "generator"
     ],
+    "preferGlobal" : true,
     "version": "1.2.0",
-    "license": {
-        "type": "Apache License",
-        "version" : "Version 2.0, January 2004"
-    },
+    "license": "Apache License, Version 2.0",
     "domains": [
         "mdown.co",
         "www.mdown.co"
     ],
     "dependencies": {
-        "express": "3.4.7",
-        "ejs": "0.8.5",
         "markdown": "0.5.0",
         "underscore": "1.5.2",
         "underscore.string": "2.3.3",
