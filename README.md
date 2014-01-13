@@ -1,37 +1,40 @@
-process:
+PREALPHA VERSION!!!
 
-    `mdown install`
-    creates boilerplate with folders
+---
 
-    `mdown preview` (watch+generate+dashboard)
-    run dashboard with gui, eshop, settings
+# mDown
+## Simple, lightweight but powerful website generator 
 
-    _`mdown generate settings`
-    pregenerate all necessary settings to _settings
+---
 
-    _`mdown generate layout`
-    takes all layout files and use layout from _theme
+**Warning:** This version is very-alpha version and we recommend to use if from **march 2014** and not before because has many known bugs. Thank you for support.
 
-    _`mdown generate`
-    makes settings and layout in one time
+### How to Install
 
-    `mdown deploy`
-    deploy based on _settings website via sftp/rsync
+    > sudo npm install -g mdown
+    install mdown to your computer from npm
 
+    > mdown preview
+    preview your website on localhost
 
-easy user:
+    > mdown watch
+    build whole project and watch on changes in folder
 
-    `mdown install`
-    `mdown dashboard`
-        - shop
-        - settings
-        - layout
-        - articles
-        - generate
-        - deploy
+    > mdown create
+    create whole new websites from boilerplate 
 
-developer user:
+    > mdown deploy
+    deploy to github, s3, ftp or your own hosting
 
-    `mdown install theme settings`
-    `mdown preview`
-    `mdown generate`
+    > mdown update
+    check and if exists install a new version
+
+### Author, Bug, Issues, Credits
+
+Samuel Ondrek   
+http://github.com/ondrek/mdown  
+http://github.com/ondrek/mdown/issues
+
+---
+
+Thank you.
