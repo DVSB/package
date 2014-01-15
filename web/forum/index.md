@@ -3,7 +3,7 @@ title : Hello World : with dot something  cool!!
 date : 2013-09-10
 template : author
 category : Javascript
-tags : samko, ondrek, pepek, namornik, javascript
+tags : samaako, ondrek, pepek, namornik, javascript
 ---
 
 *Morbi volutpat iaculis libero, eu lacinia lorem luctus id.*
