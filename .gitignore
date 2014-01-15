@@ -3,6 +3,7 @@
 .DS_Store?
 ._*
 .idea/*
+web/*
 .project
 tmp-storage/*
 node_modules/*
