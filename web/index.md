@@ -1,5 +1,5 @@
 ---
-title : My Awesome Blog Index!
+title : My Awesome Blog Index! a
 date : 2013-09-10
 template : index
 category : null
@@ -20,7 +20,7 @@ est felis, ut blandit nulla egestas ac.
 ## Mauris nec orci id erat vehicula vehicula.
 a
 Quisque mollis, turpis non volutpat dictum, lacus tellus laoreet magna, sed venenatis nulla nisl
-at ipsum. Suspendisse consequat magna id nisi ornare feugiat.
+at ipsum. Suspendisse consequat magna id nisi ornare feugiat.a
 
 ## Sed vel odio a elita sulputate ullamcossrper.
 
