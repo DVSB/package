@@ -29,7 +29,7 @@
     "generator"
   ],
   "preferGlobal": true,
-  "version": "0.0.15",
+  "version": "0.0.16",
   "license": "Apache License, Version 2.0",
   "domains": [
     "mdown.co",
