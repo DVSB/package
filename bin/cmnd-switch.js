@@ -8,26 +8,26 @@
         switch (command) {
 
             case "create" :
-                _create();
+                // _create();
                 // require("./cmnd-create")();
                 break;
 
             case "deploy" :
-                require("./echo")("0004");
+                // require("../lib/echo")("0004");
                 // require("./cmnd-deploy")();
                 break;
 
             case "watch" :
-                require("./echo")("0005");
+                require("../lib/echo")("0005");
                 require("./cmnd-watch").initialization();
                 break;
 
             case "report" :
-                require("./cmnd-report")();
+                // require("cmnd-report")();
                 break;
 
             default :
-                require("./echo")("0003");
+                require("../lib/echo")("0003");
                 break;
 
         }

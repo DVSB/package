@@ -6,35 +6,33 @@
     module.exports.initialization = function() {
 
         // watch user current folder (and in dev this folder)
-        require("./lib-chokidar");
+        require("../lib/lib-chokidar");
 
     };
 
 
     module.exports.regenerate = function() {
 
-        // console.log("regenerate starts");
-
         // disabled listening for a moment
-        require("./lib-chokidar").listen(false);
+        require("../lib/lib-chokidar").listen(false);
 
         // remove force whole %build dir with whole content
-        require("./lib-filesystem")().removeDir("./%build");
+        require("../lib/lib-filesystem")().removeDir("./%build");
 
         // replace all markdown files to folders
-        require("./generate").builddir();
+        require("../lib/generate").builddir();
 
         // replace all markdown files to folders
-        require("./generate").folders();
+        require("../lib/generate").folders();
 
         // replace all assets to relevant folders
-        require("./generate").markdowns();
+        require("../lib/generate").markdowns();
 
         // replace all markdown files to folders
-        require("./generate").assets();
+        require("../lib/generate").assets();
 
         // generating is finished, enable listening
-        require("./lib-chokidar").listen(true);
+        require("../lib/lib-chokidar").listen(true);
 
     };
 

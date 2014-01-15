@@ -23,7 +23,7 @@
     function application(){
 
         // be welcome my friend message to console
-        require("./echo")("0001");
+        require("../lib/echo")("0001");
 
         // choose one command (watch, deploy, preview, create)
         require("./cmnd-switch")(process.argv[2]);

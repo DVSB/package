@@ -1,9 +1,9 @@
 ---
-title : Hello World : with dot something  cool!!
+title : My Awesome Blog Index!
 date : 2013-09-10
-template : author
-category : Javascript
-tags : samaako, ondrek, pepek, namornik, javascript
+template : index
+category : null
+tags : blog, empty, template, sample
 ---
 
 *Morbi volutpat iaculis libero, eu lacinia lorem luctus id.*
@@ -28,7 +28,7 @@ Etiam elementum massa in odio consequat eleifend.
 Nunc ac placerat odio. Integer quis enim nunc. In arcu mauris, tincidunt ac sem et, mattis bibendum
 dolor. Proin fermentum nibh in tortor laoreet aliquet. Cras laoreet lectus vitae turpis ultrices
 tempus. Nulla tristique mollis sapien, eget euismod nunc dictum nec. Suspendisse nec arcu lorem.
-Aliquam quis placerat diam. Etiam neque lacus, suscipit sed bibendum a, aliquet eget sapien. Quisque
+Aliquam quis placerata diam. Etiam neque lacus, suscipit sed bibendum a, aliquet eget sapien. Quisque
 nibh mauris, dapibus fringilla mi euismod, scelerisque tincidunt arcu. Lorem ipsum dolor sit amet,
 consectetur adipiscing elit. Nunc vitae ligula in nibh condimentum tincidunt. Maecenas mollis pretium
-diam, id iaculis massa lobortis eu. Vestibulum sollicitudin auctor feugiat.
+diam, id iaculis massa lobortis eu. Vestibulum sollicitudin auctor fecugiat.

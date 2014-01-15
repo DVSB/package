@@ -1,12 +1,9 @@
 {
   "name": "mdown",
   "subdomain": "mdown",
-  "scripts": {
-    "start": "express.js"
-  },
-  "main": "./lib/_mdown.js",
+  "main": "./bin/_mdown.js",
   "bin": {
-    "mdown": "./bin/mdown.js"
+    "mdown": "./bin/_bin.js"
   },
   "homepage": "https://github.com/ondrek/mdown/",
   "author": {
