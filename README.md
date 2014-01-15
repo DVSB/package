@@ -5,24 +5,23 @@
 
 ![NPM image 1](https://nodei.co/npm/mdown.png)
 
+THIS PROJECT WILL WORKS FROM START FEBRUARY OF 2014. THANK YOU. authors.
+
 ### How to Install
 
     > sudo npm install -g mdown
     install mdown to your computer from npm
 
-    > mdown preview
-    preview your website on localhost
-
     > mdown watch
     build whole project and watch on changes in folder
 
-    > mdown create
+    > mdown create // not implemented yet
     create whole new websites from boilerplate 
 
-    > mdown deploy
+    > mdown deploy // not implemented yet
     deploy to github, s3, ftp or your own hosting
 
-    > mdown update
+    > mdown update // not implemented yet
     check and if exists install a new version
 
 ### Author, Bug, Issues, Credits
