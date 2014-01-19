@@ -5,13 +5,32 @@
 
 </head><body>
 
-    {{# markdowns.forEach(function(current){ }}
-        {{# console.log(current); }}
+
+    {{#
+
+        // this is one of many ways how to get markdown
+
+        var onlyblogs = _.filter(markdowns, function(file){
+            return file._fullpath.indexOf("/blog/")>-1;
+        });
+
+    }}
+
+    <h1>{{ settings.author.name }}</h1>
+    <h2>{{ settings.author.description }}</h2>
+
+    {{# onlyblogs.forEach(function(current){ }}
         <li>
-            <date>{{ current.date }}</date>
-            <a href="{{ current._fullpath }}">{{ current.title }}</a>
-            <date>{{ current.category }}</date>
+
+            <a href="..{{ current._fullpath }}index.html">{{ current.title }}</a>
+
+            {{# if (current.description){ }}
+            <span>{{ current.description }}</span>
+            {{# } }}
+
+            <span>{{ current.category }}</span> in <date>{{ current.date }}</date>.
+
         </li>
     {{# }); }}
 
-{{ theme._footer }}
+</body></html>
