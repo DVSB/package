@@ -1,5 +1,5 @@
 ---
-title : My Awesome Blog Index! a
+title : Changed Index !!
 date : 2013-09-10
 template : index
 category : null
@@ -18,7 +18,7 @@ vel dictum. Nam mauris nulla, facilisis a augue eget, vulputate tempor tellus. A
 est felis, ut blandit nulla egestas ac.
 
 ## Mauris nec orci id erat vehicula vehicula.
-a
+aa
 Quisque mollis, turpis non volutpat dictum, lacus tellus laoreet magna, sed venenatis nulla nisl
 at ipsum. Suspendisse consequat magna id nisi ornare feugiat.a
 
@@ -26,7 +26,7 @@ at ipsum. Suspendisse consequat magna id nisi ornare feugiat.a
 
 Etiam elementum massa in odio consequat eleifend.
 Nunc ac placerat odio. Integer quis enim nunc. In arcu mauris, tincidunt ac sem et, mattis bibendum
-dolor. Proin fermentum nibh in tortor laoreet aliquet. Cras laoreet lectus vitae turpis ultrices
+dolor. Proin fermentum nibh in tor tor laoreet aliquet. Cras laoreet lectus vitae turpis ultrices
 tempus. Nulla tristique mollis sapien, eget euismod nunc dictum nec. Suspendisse nec arcu lorem.
 Aliquam quis placerata diam. Etiam neque lacus, suscipit sed bibeandum a, aliquet eget sapien. Quisque
 nibh mauris, dapibus fringilla mi euismod, scelerisque tincidunt arcu. Lorem ipsum dolor sit amet,

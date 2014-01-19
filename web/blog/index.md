@@ -1,7 +1,7 @@
 ---
 title : Hello World : with dot something  cool!!
 date : 2013-09-10
-template : author
+template : index
 category : Javascript
 tags : samko, ondrek, pepek, namornik, javascript
 ---

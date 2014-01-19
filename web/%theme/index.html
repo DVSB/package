@@ -1,10 +1,17 @@
-{{ htmlfile._header }}
+{{ theme._header }}
 
-    <title>{{ title }}</title>
-    <meta name="keywords" content="{{ tags }}" />
+    <title>{{ local.title }}</title>
+    <meta name="keywords" content="{{ local.tags }}" />
 
 </head><body>
 
+    {{# markdowns.forEach(function(current){ }}
+        {{# console.log(current); }}
+        <li>
+            <date>{{ current.date }}</date>
+            <a href="{{ current._fullpath }}">{{ current.title }}</a>
+            <date>{{ current.category }}</date>
+        </li>
+    {{# }); }}
 
-
-{{ htmlfile._footer }}
+{{ theme._footer }}
