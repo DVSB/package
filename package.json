@@ -29,7 +29,7 @@
     "generator"
   ],
   "preferGlobal": true,
-  "version": "0.0.20",
+  "version": "0.0.21",
   "license": "Apache License, Version 2.0",
   "domains": [
     "mdown.co",
@@ -39,8 +39,8 @@
     "markdown": "0.5.0",
     "chokidar": "0.7.1",
     "colors": "0.6.2",
-    "express" : "3.4.8",
-    "connect" : "*"
+    "express": "3.4.8",
+    "connect": "*"
   },
   "engines": {
     "node": "0.10.*"
