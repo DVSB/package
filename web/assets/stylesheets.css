@@ -1,0 +1,190 @@
+/* imports (yes, yes, this should be link) */
+
+@import url("http://cdnjs.cloudflare.com/ajax/libs/normalize/2.1.3/normalize.min.css");
+
+@import url("http://fonts.googleapis.com/css?family=PT+Serif:400,700");
+@import url("http://fonts.googleapis.com/css?family=Inconsolata");
+
+/* hacks, shits, funny features shit */
+
+* { box-sizing: border-box; }
+
+::selection { background: #6495DF; color: #FFF; }
+::-moz-selection { background: #6495DF; color: #FFF; }
+
+/* stylesheets for men with big muscles */
+
+/* color css settings (change this color, change style of web) */
+/* fuck sass/less, true frontend developer knows how write variables ;) */
+
+a {
+    color: #DB5D7B;
+}
+
+html:before {
+    background: #000;
+}
+
+/* general resets */
+
+html { /* do not use for a layout divs, HTML/BODY are tags as well */
+    font: normal 400 15px/27px "PT Serif", "Georgia", "serif";
+    max-width: 1100px;
+    color: #282C24;
+    margin: 0 auto;
+    padding: 170px 10px;
+}
+
+code { /* white-space, avoid a PRE tag */
+    font: normal 400 14px/25px "Inconsolata", "monospace", "serif";
+    white-space: pre-wrap;
+    color: #26487C;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #2A78AC;
+}
+
+hr { /* NBSP, BR and HR can be used, only if you know how */
+    height: 20px;
+    border: 0;
+}
+
+h1 {
+    margin: 504px 0 0;
+    font-size: 60px;
+    font-weight: 600;
+    line-height: 50px;
+    color: #FFF;
+    text-align: right;
+}
+
+h2 {
+    margin: 12px 0 139px;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 20px;
+    text-align: right;
+}
+
+h3 {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 19px;
+}
+
+/* layout */
+
+article, aside {
+    float: left;
+}
+
+article {
+    width: 700px;
+    margin-right: 40px;
+    border-right: 1px dashed #DDD;
+    padding-right: 40px;
+}
+
+aside {
+    width: 340px;
+    color: #ADADAD;
+    font-size: 14px;
+}
+
+/* funky effect (can be anytime removed) */
+
+html:before { /* thin line on top of document */
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+html:after { /* thin line on top of document */
+    content: 'proudly with a beauty of css and html';
+    display: block;
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    color: #FFF;
+    font-size: 12px;
+}
+
+body:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -84px;
+    left: 0;
+    height: 800px;
+    width: 100%;
+    z-index: -1;
+    background-image: url("./indexphoto.jpg");
+}
+
+a { /* fancy effect on hover with css3 transition */
+    text-shadow: 0 0 2px transparent;
+    -webkit-transition: color 0.2s ease-in-out;
+    -moz-transition: color 0.2s ease-in-out;
+    -o-transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+    text-shadow: 0 0 1px #415191;
+}
+
+#disqus_thread {
+    margin-top: 100px;
+    border-top: 1px dashed #DDD;
+    padding-top: 100px;
+}
+
+/* index */
+
+._index header {
+    margin: 0 0 200px;
+}
+
+._index header h2 {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 19px;
+}
+
+._index section {
+    border-bottom: 1px dashed #DDD;
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    overflow: hidden;
+}
+
+._index section img {
+    float: left;
+    margin: 0 30px 0px 0;
+}
+
+._index section p:first-of-type {
+    margin-top: -7px;
+}
+
+._index aside h2 {
+    font-size: 15px;
+}
+
+._index footer a {
+    color: #ACACAC;
+    margin-right: 15px;
+    font-size: 14px;
+}
