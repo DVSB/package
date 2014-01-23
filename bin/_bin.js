@@ -2,4 +2,4 @@
 
     "use strict";
 
-    require("./_mdown.js")("bin");
+    require("./_mdown.js")();
