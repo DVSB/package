@@ -22,10 +22,14 @@
     > cd boilerplate
     > sudo npm install -g mdown
     > mdown watch
-    > chrome localhost:3008
 
 ### Author, Bug, Issues, Credits
 
-    "Samuel Ondrek"
-    "http://github.com/ondrek/mdown"
-    "http://github.com/ondrek/mdown/issues"
+    > Samuel Ondrek
+    author, contributor
+
+    > http://github.com/ondrek/mdown
+    global repo of npm package
+
+    > http://github.com/ondrek/mdown/issues
+    issues, bugs, report area

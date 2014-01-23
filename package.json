@@ -20,7 +20,7 @@
     "type": "git",
     "url": "http://github.com/ondrek/mdown.git"
   },
-  "description": "THIS IS PRE ALPHA VERSION. PLEASE WAIT UNTIL REAL BETA VERSION - WHOLE FUNCTIONALITY IS NOW BUGGY. BETA IS PLANNED FOR RELEASE IN FIRST FEBRUARY!!",
+  "description": "**Warning:** This version is very-alpha version and we recommend to use if from **march 2014** and not before because has many known bugs. Thank you for support.",
   "keywords": [
     "markdown",
     "mdown",
