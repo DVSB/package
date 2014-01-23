@@ -11,13 +11,18 @@
     install mdown, after go inside your folder
 
     > mdown watch
-    watch actual folder for changes and create localhost
-
-    > mdown create (not implemented yet)
-    pick boilerplate type and create blank website
+    watch current folder on changes and create localhost
 
     > mdown deploy (not implemented yet)
     deploy to github, s3, ftp or your own hosting
+
+### How to clone MDown Boilerplate
+
+    > git clone https://github.com/mdownco/boilerplate-blog.git boilerplate
+    > cd boilerplate
+    > sudo npm install -g mdown
+    > mdown watch
+    > chrome localhost:3008
 
 ### Author, Bug, Issues, Credits
 

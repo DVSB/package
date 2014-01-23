@@ -41,6 +41,15 @@
         // yes, nodejs is so awesome that you need only this for server
         // cool right?
         var connect = require("connect");
-        require("http").createServer(connect().use(connect.static("./%build"))).listen(3008);
+        var http = require("http");
+        http.createServer(connect().use(connect.static("./%build")))
+            .listen(3008)
+            .on("error", errorHandling);
+
+    }
+
+    function errorHandling(e){
+
+        if (e.code==="EADDRINUSE") require("../lib/echo")("e0001");
 
     }
