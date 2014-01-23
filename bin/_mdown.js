@@ -3,24 +3,13 @@
     "use strict";
 
 
-    // in case of development nothing is run because its in exports
-    if (process.env.PWD==="/Users/samuel/Documents/mdown/web" || !env){
+    // exports are public properties of this file
+    module.exports = function(){
 
         watchFolderAndGenerate();
         createLocalhost();
 
-    } else {
-
-        // exports are public properties of this file
-        module.exports = function(){
-
-            watchFolderAndGenerate();
-            createLocalhost();
-
-        };
-
-    }
-
+    };
 
     // real application should just run functions
     function watchFolderAndGenerate(){
