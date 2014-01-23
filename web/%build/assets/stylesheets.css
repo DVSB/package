@@ -63,7 +63,7 @@
         max-width: 1200px;
         color: #282C24;
         margin: 0 auto;
-        padding: 170px 10px;
+        padding: 170px 10px 50px;
         font-weight: 400;
     }
 
@@ -163,6 +163,9 @@
         top: 10px;
         left: 10px;
         opacity: 0.6;
+        -webkit-border-radius: 5px 5px 16px 5px;
+        -moz-border-radius: 5px 5px 16px 5px;
+        border-radius: 5px 5px 16px 5px;
     }
 
     ._index strong {
@@ -211,4 +214,11 @@
         font-size: 15px;
         line-height: 15px;
         text-align: right;
+        color: #D3D3D3;
+    }
+
+    ._index footer {
+        margin-top: 200px;
+        font-size: 13px;
+        color: #A89999;
     }
