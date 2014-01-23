@@ -3,12 +3,9 @@
     <title>{{ local.title }}</title>
     <meta name="keywords" content="{{ local.tags }}" />
 
-</head><body>
-
+</head><body class="_index">
 
     {{#
-
-        // this is one of many ways how to get markdown
 
         var onlyblogs = _.filter(markdowns, function(file){
             return file._fullpath.indexOf("/blog/")>-1;
@@ -16,21 +13,64 @@
 
     }}
 
-    <h1>{{ settings.author.name }}</h1>
-    <h2>{{ settings.author.description }}</h2>
+    <a href="http://twitter.com/{{ settings.author.twitter }}">
+        <img class="gvatar" src="http://www.gravatar.com/avatar/{{ settings.author.gvatar }}?s=60" />
+    </a>
 
-    {{# onlyblogs.forEach(function(current){ }}
-        <li>
+    <h1>
+    {{ settings.author.name }}
+    </h1>
 
-            <a href="..{{ current._fullpath }}">{{ current.title }}</a>
+    <strong>
+    {{ settings.author.description }}
+    </strong>
 
-            {{# if (current.description){ }}
-            <span>{{ current.description }}</span>
-            {{# } }}
+    <main>
 
-            <span>{{ current.category }}</span> in <date>{{ current.date }}</date>.
+        <ul>
 
-        </li>
-    {{# }); }}
+            {{# onlyblogs.forEach(function(current){ }}
+            <li>
+
+                <h2>
+                    <a href="{{ current._fullpath }}">{{ current.title }}</a>
+                </h2>
+
+                {{# if (current.description){ }}
+                <span>{{ current.description }}</span>
+                {{# } }}
+
+                <div>
+                    {{ current.category }} in <date>{{ current.date }}</date>
+                </div>
+
+            </li>
+            {{# }); }}
+
+        </ul>
+
+        <footer>
+
+            Copyright Author of the Awesomeness, 2013
+
+        </footer>
+
+    </main>
+
+    <aside>
+
+        <a href="/gallery/">Gallery</a>
+        <br />
+        <a href="/portfolio/">Portfolio</a>
+
+    </aside>
+
+    <script>
+
+        // move content after fancy-hispter picture on top of body
+        document.querySelector("aside").style.marginTop = window.outerHeight-380;
+        document.querySelector("main").style.marginTop = window.outerHeight-380;
+
+    </script>
 
 </body></html>

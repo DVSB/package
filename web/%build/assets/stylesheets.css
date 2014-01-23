@@ -1,190 +1,214 @@
-/* imports (yes, yes, this should be link) */
+/* imports, can be links for better performance */
 
-@import url("http://cdnjs.cloudflare.com/ajax/libs/normalize/2.1.3/normalize.min.css");
 
-@import url("http://fonts.googleapis.com/css?family=PT+Serif:400,700");
-@import url("http://fonts.googleapis.com/css?family=Inconsolata");
+    @import url("./normalize.min.css");
 
-/* hacks, shits, funny features shit */
 
-* { box-sizing: border-box; }
+/* typography, load fonts from awesome google fonts */
 
-::selection { background: #6495DF; color: #FFF; }
-::-moz-selection { background: #6495DF; color: #FFF; }
+
+    @font-face {
+        font-family: 'PT Serif';
+        font-style: normal;
+        font-weight: 400;
+        src: local('PT Serif'), local('PTSerif-Regular'),
+        url(http://themes.googleusercontent.com/static/fonts/ptserif/v6/sDRi4fY9bOiJUbgq53yZCXYhjbSpvc47ee6xR_80Hnw.woff) format('woff');
+    }
+    @font-face {
+        font-family: 'PT Serif';
+        font-style: normal;
+        font-weight: 700;
+        src: local('PT Serif Bold'), local('PTSerif-Bold'),
+        url(http://themes.googleusercontent.com/static/fonts/ptserif/v6/QABk9IxT-LFTJ_dQzv7xpLrIa-7acMAeDBVuclsi6Gc.woff) format('woff');
+    }
+
+
+/* fancy shit and border-box */
+
+
+    * {
+        box-sizing: border-box;
+    }
+
+    ::selection {
+        background: #6495DF;
+        color: #FFF;
+    }
+    ::-moz-selection {
+        background: #6495DF;
+        color: #FFF;
+    }
+
+    a {
+        text-shadow: 0 0 2px transparent;
+        -webkit-transition: color 0.2s ease-in-out;
+        -moz-transition: color 0.2s ease-in-out;
+        -o-transition: color 0.2s ease-in-out;
+        transition: color 0.2s ease-in-out;
+    }
+
+    a:hover {
+        text-shadow: 0 0 1px #415191;
+    }
+
 
 /* stylesheets for men with big muscles */
 
-/* color css settings (change this color, change style of web) */
-/* fuck sass/less, true frontend developer knows how write variables ;) */
 
-a {
-    color: #DB5D7B;
-}
+    /* general resets */
 
-html:before {
-    background: #000;
-}
 
-/* general resets */
+    html {
+        font: normal 400 15px/27px "PT Serif", "Georgia", "serif";
+        max-width: 1200px;
+        color: #282C24;
+        margin: 0 auto;
+        padding: 170px 10px;
+        font-weight: 400;
+    }
 
-html { /* do not use for a layout divs, HTML/BODY are tags as well */
-    font: normal 400 15px/27px "PT Serif", "Georgia", "serif";
-    max-width: 1100px;
-    color: #282C24;
-    margin: 0 auto;
-    padding: 170px 10px;
-}
+    html:before {
+        background: #000;
+    }
 
-code { /* white-space, avoid a PRE tag */
-    font: normal 400 14px/25px "Inconsolata", "monospace", "serif";
-    white-space: pre-wrap;
-    color: #26487C;
-}
+    code {
+        font: normal 400 14px/25px "Inconsolata", "monospace", "serif";
+        white-space: pre-wrap;
+        color: #26487C;
+    }
 
-a {
-    text-decoration: none;
-}
+    a {
+        color: #DB5D7B;
+        text-decoration: none;
+    }
 
-a:hover {
-    text-decoration: none;
-    color: #2A78AC;
-}
+    a:hover {
+        text-decoration: none;
+    }
 
-hr { /* NBSP, BR and HR can be used, only if you know how */
-    height: 20px;
-    border: 0;
-}
+    hr { /* &NBSP, BR and HR can be used, only if you know how */
+        height: 20px;
+        border: 0;
+    }
 
-h1 {
-    margin: 504px 0 0;
-    font-size: 60px;
-    font-weight: 600;
-    line-height: 50px;
-    color: #FFF;
-    text-align: right;
-}
+    h1 {
+        font-size: 46px;
+        font-weight: 600;
+        line-height: 50px;
+        margin: 0;
+    }
 
-h2 {
-    margin: 12px 0 139px;
-    font-size: 22px;
-    font-weight: 600;
-    line-height: 20px;
-    text-align: right;
-}
+    h2 {
+        font-size: 22px;
+        font-weight: 600;
+        line-height: 20px;
+        margin: 0;
+    }
 
-h3 {
-    margin: 0;
-    font-size: 19px;
-    font-weight: 400;
-    line-height: 19px;
-}
+    h3 {
+        font-size: 19px;
+        font-weight: 400;
+        line-height: 19px;
+        margin: 0;
+    }
 
-/* layout */
+    /* funky effect (can be anytime removed) */
 
-article, aside {
-    float: left;
-}
+    html:before { /* thin line on top of document */
+        content: '';
+        display: block;
+        width: 100%;
+        height: 2px;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
 
-article {
-    width: 700px;
-    margin-right: 40px;
-    border-right: 1px dashed #DDD;
-    padding-right: 40px;
-}
+    html:after { /* thin line on top of document */
+        content: 'proudly with a beauty of css and html';
+        display: block;
+        position: absolute;
+        top: 5px;
+        right: 15px;
+        color: #FFF;
+        font-size: 12px;
+    }
 
-aside {
-    width: 340px;
-    color: #ADADAD;
-    font-size: 14px;
-}
+    body:before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: -1;
+        background-image: url("./indexphoto.jpg");
+        background-size: 100%;
+    }
 
-/* funky effect (can be anytime removed) */
 
-html:before { /* thin line on top of document */
-    content: '';
-    display: block;
-    width: 100%;
-    height: 2px;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
+    /* index styles - define first class  */
 
-html:after { /* thin line on top of document */
-    content: 'proudly with a beauty of css and html';
-    display: block;
-    position: absolute;
-    top: 5px;
-    right: 15px;
-    color: #FFF;
-    font-size: 12px;
-}
 
-body:before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: -84px;
-    left: 0;
-    height: 800px;
-    width: 100%;
-    z-index: -1;
-    background-image: url("./indexphoto.jpg");
-}
+    ._index h1 {
+        margin: 128px 0 0;
+        color: #000;
+        text-align: center;
+    }
 
-a { /* fancy effect on hover with css3 transition */
-    text-shadow: 0 0 2px transparent;
-    -webkit-transition: color 0.2s ease-in-out;
-    -moz-transition: color 0.2s ease-in-out;
-    -o-transition: color 0.2s ease-in-out;
-    transition: color 0.2s ease-in-out;
-}
+    ._index .gvatar {
+        position: absolute;
+        float: left;
+        top: 10px;
+        left: 10px;
+        opacity: 0.6;
+    }
 
-a:hover {
-    text-shadow: 0 0 1px #415191;
-}
+    ._index strong {
+        margin: 15px 0 0;
+        text-align: center;
+        display: block;
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 20px;
+        color: #5F5F5F;
+    }
 
-#disqus_thread {
-    margin-top: 100px;
-    border-top: 1px dashed #DDD;
-    padding-top: 100px;
-}
+    ._index ul {
+        padding: 0;
+        }
 
-/* index */
+    ._index li {
+        list-style-type: none;
+        margin-bottom: 54px;
+        color: #616161;
+    }
 
-._index header {
-    margin: 0 0 200px;
-}
+    ._index h2 {
+        margin-bottom: 21px;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 20px;
+    }
 
-._index header h2 {
-    margin: 0;
-    font-size: 19px;
-    font-weight: 400;
-    line-height: 19px;
-}
+    ._index main {
+        width: 720px;
+        float: left;
+    }
 
-._index section {
-    border-bottom: 1px dashed #DDD;
-    margin-bottom: 40px;
-    padding-bottom: 40px;
-    overflow: hidden;
-}
+    ._index aside {
+        width: 400px;
+        float: right;
+        border-left: 1px solid #ACACAC;
+        height: 100%;
+        margin-left: 60px;
+        padding-left: 50px;
+    }
 
-._index section img {
-    float: left;
-    margin: 0 30px 0px 0;
-}
-
-._index section p:first-of-type {
-    margin-top: -7px;
-}
-
-._index aside h2 {
-    font-size: 15px;
-}
-
-._index footer a {
-    color: #ACACAC;
-    margin-right: 15px;
-    font-size: 14px;
-}
+    ._index main div {
+        margin-top: 29px;
+        font-size: 15px;
+        line-height: 15px;
+        text-align: right;
+    }
