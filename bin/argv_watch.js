@@ -14,8 +14,8 @@
 
         // watch this folder with options, every 5s, for every change
         require("chokidar").watch("./", options).on("all", function(event, path){
-            require("../lib/echo2")("event: "+event+": "+path);
-            require("../lib/generate");
+            require("../lib/echo")("event: "+event+": "+path);
+            require("../lib/plugins");
         });
 
     };
@@ -23,7 +23,7 @@
 
     module.exports.localhostInit = function() {
 
-        require("../lib/echo2")("browse your website on localhost:3008");
+        require("../lib/echo")("browse your website on localhost:3008");
 
         // yes, nodejs is so awesome, that you need only this for server
         // cool right?
@@ -37,7 +37,7 @@
     function errorHandling(e){
 
         if (e.code==="EADDRINUSE") {
-            require("../lib/echo2")("port 3008 is already used", true);
+            require("../lib/echo")("port 3008 is already used", true);
         }
 
     }

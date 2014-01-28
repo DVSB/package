@@ -1,8 +1,0 @@
-{
-    "templates" : {
-        "index" : "index.html",
-        "page" : "page.html",
-        "bloglayout" : "bloglayout.html",
-        "diary" : "diary.html"
-    }
-}
