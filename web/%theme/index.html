@@ -1,4 +1,4 @@
-{{ theme._header }}
+{{ files.theme._header }}
 
     <title>{{ local.title }}</title>
     <meta name="keywords" content="{{ local.tags }}" />
@@ -7,14 +7,14 @@
 
     {{#
 
-        var onlyblogs = _.filter(markdowns, function(file){
+        var onlyblogs = _.filter(files.markdowns, function(file){
             return file._fullpath.indexOf("/blog/")>-1;
         });
 
     }}
 
-    <a href="http://twitter.com/{{ settings.author.twitter }}">
-        <img class="gvatar" src="http://www.gravatar.com/avatar/{{ settings.author.gvatar }}?s=60" />
+    <a href="http://twitter.com/a">
+        <img class="gvatar" src="http://www.gravatar.com/avatar/a?s=60" />
     </a>
 
     <h1>

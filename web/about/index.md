@@ -1,5 +1,5 @@
 ---
-title : Hello World : with dot something  cool!!
+title : This is About
 date : 2013-09-10
 template : post
 category : Javascript
@@ -11,7 +11,7 @@ tags : samaako, ondrek, pepek, namornik, javascript
 Vestibulum quis pharetra tortor.
 Vestibulum bibendum lorem in ante hendrerit, quis dictum orci rhoncus. Morbi blandit erat libero,
 non porttitor odio bibendum quis. Morbi rutrum aliquam nulla in facilisis. Sed in nisi eu purus
-tincidunt mollis vel ut augue. Ut enim odio, lacinia ut nisi in, ultrices egestas metus. Nam
+tincidunt mollis vel ut augue. Ut enim odio, laci nia ut nisi in, ultrices egestas metus. Nam
 iaculis sapien in velit varius, ac vestibulum leo semper. Cras id lectus cursus mi tincidunt
 convallis eget sit amet nisl. Nullam quis sollicitudin nulla. Curabitur pulvinar vitae tortor
 vel dictum. Nam mauris nulla, facilisis a augue eget, vulputate tempor tellus. Aliquam luctus

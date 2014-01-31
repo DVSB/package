@@ -13,8 +13,7 @@
         return {
             theme : getThemeFiles(),
             folders : getFilteredFolders(),
-            files : getFilteredFiles(),
-            markdowns : getAllMarkdowns()
+            files : getFilteredFiles()
         };
 
     };
@@ -78,47 +77,6 @@
         });
 
         return newThemeObj;
-
-    };
-
-
-    var getAllMarkdowns = function(){
-
-        var allMarkdowns = [];
-        var allFiles = getFilteredFiles();
-
-        // filter to only files which are markdowns
-        allFiles.forEach(function(ele){
-
-            if (ele.indexOf(".md")>-1) {
-                allMarkdowns.push(ele);
-            }
-
-        });
-
-        // create massive object
-        allMarkdowns.forEach(function(currentMd, i){
-
-            allMarkdowns[i] = {};
-
-            // get file name like index.html
-            var lastSlashPos = currentMd.substr(1).lastIndexOf("/");
-            allMarkdowns[i]._filename = currentMd.substr(lastSlashPos+2);
-            allMarkdowns[i]._filename = allMarkdowns[i]._filename.replace(".md", ".html");
-
-            // add new path of html file
-            allMarkdowns[i]._fullpath = currentMd.substr(0, lastSlashPos+2);
-            if (allMarkdowns[i]._fullpath==="") allMarkdowns[i]._fullpath = "/";
-
-            // add content from real md file with user content
-            // underscore.extend(allMarkdowns[i], require("./__md-read")(currentMd));
-
-            // compile content of user
-            // allMarkdowns[i]._content = require("./md-compile")(allMarkdowns[i]._content);
-
-        });
-
-        return allMarkdowns;
 
     };
 

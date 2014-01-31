@@ -1,5 +1,5 @@
 ---
-title : Changed Index !!!
+title : Is this Index?
 date : 2013-09-10
 template : index
 category : null
@@ -20,7 +20,7 @@ est felis, ut blandit nulla gestas ac.
 ## Mauris nec orci id erat vehicula vehicula.
 
 Quisque mollis, turpis non volutpat dictum, lacus tellus laoreet magna, sed venenatis nulla nisl
-at ipsum. Suspendisse consequat magna id nisi ornare feugiata.
+at ipsum. Suspendisse consequat magna id nisi ornare feug iata.
 
 ## Sed vel odio a elita sulputate ullamcossrper.
 
@@ -31,4 +31,4 @@ tempus. Nulla tristiq ue mollis sapien, eget euismod nunc dictum nec. Suspendiss
 Aliquam quis pl acerata diam. Etiam neque lacus, suscipit sed bibeandum a, aliquet eget sapien. Quisque
 nibh mauris, da pibus fringilla mi euismod, scelerisque tincidunt arcu. Lorem ipsum dolor sit amet,
 consectetur adipiscing t. Nunc vita e ligula in nibh condimentum tincidunt. Maecenas mollis pretium
-diam, id iaculis mas sa lobortis eu. Vestibulum sollicitudin auctor fecugiat.
+diam, id iaculis mas sa lobortis eu. Vestibulum sollicitudin auct or fecugi at.

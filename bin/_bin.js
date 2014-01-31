@@ -12,6 +12,7 @@
             require("../lib/echo")("watching folder "+process.env.PWD);
             require("./argv_watch").localhostInit();
             require("./argv_watch").initialization();
+            require("./argv_watch").dashboardInit();
             break;
 
         default :

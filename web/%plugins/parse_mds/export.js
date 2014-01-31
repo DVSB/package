@@ -25,8 +25,6 @@
 
         createEmptyFolders();
         parseMarkdowns();
-        return;
-        copyStaticAssets();
 
     };
 
@@ -64,7 +62,7 @@
 
     var createEmptyFolders = function() {
 
-        var sortedFolders = plugins.all_files.folders.sort();
+        var sortedFolders = plugins.files.folders.sort();
 
         // TODO interesting bug
         // if remove / add folder first item in sortedFolders is "blog"
@@ -85,19 +83,19 @@
 
     var parseMarkdowns = function() {
 
-        var allFiles = plugins.all_files;
+        var localPluginsCopy = plugins;
 
         // just compile all of them
-        allFiles.markdowns.forEach(function(scopeMdObj){
-
-            // everytime should be "local" different
-            allFiles.local = scopeMdObj;
+        localPluginsCopy.markdowns.forEach(function(scopeMdObj){
 
             // content of %THEME/current mustache formatted
-            var currentTemplate = allFiles.theme[allFiles.local.template];
+            var currentTemplate = localPluginsCopy.files.theme[scopeMdObj.template];
 
             // add for user also underscore
-            allFiles._ = underscore;
+            localPluginsCopy._ = underscore;
+
+            // local content for access to "this"
+            localPluginsCopy.local = scopeMdObj;
 
             // if user defined nonexisting template, skip file
             if (!currentTemplate) {
@@ -107,44 +105,18 @@
             }
 
             // ready HTML with all necessary parsed objects
-            var html = underscore.template(currentTemplate, allFiles);
+            var html = underscore.template(currentTemplate, localPluginsCopy);
 
             // new path so we know where to save it
-            var newPath = "%build/"+scopeMdObj._fullpath+scopeMdObj._filename;
+            var originalPath = scopeMdObj._originalpath;
+            var htmlPath = "%build"+originalPath.substr(0, originalPath.lastIndexOf(".md")) + ".html";
 
             // save to new position
-            var fd = filesystem.openSync(newPath, 'w');
-            filesystem.writeFileSync(newPath, html);
+            var fd = filesystem.openSync(htmlPath, 'w');
+            filesystem.writeFileSync(htmlPath, html);
             filesystem.closeSync(fd);
 
         });
 
     };
-
-
-    var copyStaticAssets = function() {
-
-        var allFiles = plugins.all_files.files;
-        var staticFiles = [];
-
-        allFiles.forEach(function(ele){
-            if (ele.indexOf(".md")===-1) {
-                staticFiles.push(ele);
-            }
-        });
-
-        staticFiles.forEach(function(path){
-
-            // create a new path for copying assets
-            var newPath = "./%build/"+path.substr(1);
-
-            // copy file from one place to another
-            filesystem.createReadStream("."+path).pipe(
-                filesystem.createWriteStream(newPath)
-            );
-
-        });
-
-    };
-
 

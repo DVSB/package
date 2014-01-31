@@ -34,6 +34,19 @@
     };
 
 
+    module.exports.dashboardInit = function() {
+
+        require("../lib/echo")("browse your website on localhost:3008");
+
+        // yes, nodejs is so awesome, that you need only this for server
+        // cool right?
+        // TODO add optional port setting
+        var options = require("connect")().use(require("connect").static(__dirname+"/../dashboard/"));
+        require("http").createServer(options).listen(3009).on("error", errorHandling);
+
+    };
+
+
     function errorHandling(e){
 
         if (e.code==="EADDRINUSE") {
