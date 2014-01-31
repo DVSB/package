@@ -8,13 +8,13 @@
     var ignoredStrings = ["/%build", "/%theme", "/%plugins"];
 
 
-    module.exports.init = function() {
+    module.exports.init = function(callback) {
 
-        return {
+        callback({
             theme : getThemeFiles(),
             folders : getFilteredFolders(),
             files : getFilteredFiles()
-        };
+        });
 
     };
 

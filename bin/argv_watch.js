@@ -8,7 +8,7 @@
         var options = {
             ignored : /%build/,
             persistent : true,
-            interval : 2000,
+            interval : 300,
             ignoreInitial : true
         };
 
@@ -23,8 +23,6 @@
 
     module.exports.localhostInit = function() {
 
-        require("../lib/echo")("browse localhost:3008 for your website");
-
         // yes, nodejs is so awesome, that you need only this for server
         // cool right?
         // TODO add optional port setting
@@ -35,8 +33,6 @@
 
 
     module.exports.dashboardInit = function() {
-
-        require("../lib/echo")("browse localhost:3009 for dashboard");
 
         // yes, nodejs is so awesome, that you need only this for server
         // cool right?

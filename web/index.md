@@ -1,9 +1,7 @@
 ---
-title : Is this Index?
-date : 2013-09-10
+title : Blog about awesomness
+tags : blog, awesomness, markdown, mdown
 template : index
-category : null
-tags : blog, empty, te mplate, sample
 ---
 
 *Morbi volutpat iaculis libero, eu lacinia lorem luctus id.*

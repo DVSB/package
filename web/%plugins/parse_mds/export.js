@@ -64,15 +64,6 @@
 
         var sortedFolders = plugins.files.folders.sort();
 
-        // TODO interesting bug
-        // if remove / add folder first item in sortedFolders is "blog"
-        // but if run first time app, it's a "./"
-        // find out why instead of this creepy solution
-        if (sortedFolders[0]===".") {
-            sortedFolders.shift();
-            console.log("PICOVINAAAA ---- KEDY SA TOTO DEJE --- VOBEC NIEKEDY?? ------- ");
-        }
-
         sortedFolders.forEach(function(folder){
             // create from "./blog/some" => "./%build/blog/some"
             filesystem.mkdirSync("./%build"+folder.substr(1));
