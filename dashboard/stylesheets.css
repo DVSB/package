@@ -1,11 +1,8 @@
 /* imports, can be links for better performance */
 
-
     @import url("./normalize.min.css");
 
-
 /* typography, load fonts from awesome google fonts */
-
 
     @font-face {
         font-family: 'PT Serif';
@@ -22,9 +19,7 @@
         url(http://themes.googleusercontent.com/static/fonts/ptserif/v6/QABk9IxT-LFTJ_dQzv7xpLrIa-7acMAeDBVuclsi6Gc.woff) format('woff');
     }
 
-
 /* fancy shit and border-box */
-
 
     * {
         box-sizing: border-box;
@@ -40,7 +35,7 @@
     }
 
     a {
-        text-shadow: 0 0 2px transparent;
+        text-shadow: 0 0 2px none;
         -webkit-transition: color 0.2s ease-in-out;
         -moz-transition: color 0.2s ease-in-out;
         -o-transition: color 0.2s ease-in-out;
@@ -59,22 +54,12 @@
 
 
     html {
-        font: normal 400 15px/27px "PT Serif", "Georgia", "serif";
+        font: normal 400 13px/27px "PT Serif", "Georgia", "serif";
         max-width: 1200px;
         color: #282C24;
         margin: 0 auto;
-        padding: 10px;
+        padding: 10px 10px 50px 10px ;
         font-weight: 400;
-    }
-
-    html:before {
-        background: #000;
-    }
-
-    code {
-        font: normal 400 14px/25px "Inconsolata", "monospace", "serif";
-        white-space: pre-wrap;
-        color: #26487C;
     }
 
     a {
@@ -86,30 +71,13 @@
         text-decoration: none;
     }
 
-    hr { /* &NBSP, BR and HR can be used, only if you know how */
-        height: 20px;
-        border: 0;
-    }
-
     h1 {
-        font-size: 46px;
-        font-weight: 600;
-        line-height: 50px;
-        margin: 0;
-    }
-
-    h2 {
-        font-size: 22px;
-        font-weight: 600;
-        line-height: 20px;
-        margin: 0;
-    }
-
-    h3 {
-        font-size: 19px;
+        font-size: 16px;
         font-weight: 400;
-        line-height: 19px;
-        margin: 0;
+        line-height: 50px;
+        text-align: right;
+        color: #DB5D7B;
+        margin-bottom: 30px;
     }
 
     /* funky effect (can be anytime removed) */
@@ -122,5 +90,75 @@
         position: absolute;
         top: 0;
         left: 0;
+        background: #DB5D7B;
     }
+
+/* list */
+
+    input[type="text"] {
+        padding: 14px;
+        width: 300px;
+        border: 1px dashed #636363;
+    }
+
+    ul {
+        padding: 0;
+        border-top: 1px dashed #BDBDBD;
+        padding-top: 10px;
+    }
+
+    ul li {
+        list-style-type: none;
+        border-bottom: 1px dashed #BDBDBD;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+    }
+
+    ul h2 {
+        display: inline-block;
+        margin: 0;
+        font-size: 15px;
+        color: #DB5D7B;
+    }
+
+    ul span {
+        color: #B9B9B9;
+    }
+
+    ul input {
+        margin-right: 10px;
+    }
+
+    ul label {
+        cursor: pointer;
+        margin-right: 30px;
+    }
+
+    ul div {
+        color: #888;
+    }
+
+    ul aside {
+        display: none;
+    }
+
+    footer {
+        text-align: right;
+        margin-top: 30px;
+        color: #AFAFAF;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

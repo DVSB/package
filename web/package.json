@@ -1,0 +1,10 @@
+{
+  "mdown": {
+	  "website-name" : "My Own Blog",
+	  "version" : "1.1.0",
+	  "plugins" : [ "copy_statics", "files", "markdowns", "parse_md" ],
+	  "deploynment" : {
+		  "type" : "github"
+	  }
+  }
+}

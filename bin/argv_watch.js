@@ -23,7 +23,7 @@
 
     module.exports.localhostInit = function() {
 
-        require("../lib/echo")("browse your website on localhost:3008");
+        require("../lib/echo")("browse localhost:3008 for your website");
 
         // yes, nodejs is so awesome, that you need only this for server
         // cool right?
@@ -36,7 +36,7 @@
 
     module.exports.dashboardInit = function() {
 
-        require("../lib/echo")("browse your website on localhost:3008");
+        require("../lib/echo")("browse localhost:3009 for dashboard");
 
         // yes, nodejs is so awesome, that you need only this for server
         // cool right?

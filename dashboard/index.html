@@ -4,26 +4,464 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="stylesheet" href="./stylesheets.css" type="text/css" />
+    <link rel="shortcut icon" href="favicon.ico" />
 
-    <title>mDown Dashboard</title>
+    <link rel="stylesheet" href="./stylesheets.css" type="text/css" />
+    <title>Dashboard mDown</title>
 
 </head><body>
 
-    MDown Dashboard
+    <input type="text" placeholder="Filter Search" />
+
+    <h1>
+        mDown dashboard
+    </h1>
 
     <ul>
 
         <li>
-
-            <h2>SharePoint Browser Plug-in</h2>
-            <span>- Version: 14.0.0</span>
-            <div>Microsoft Office for Mac SharePoint Browser Plug-in</div>
-            <a href="#">Disable</a>
-
+            <h2>Files</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Return a current file structure and create a object of folders, files, markdowns, assets.<br/>
+                In options can be set, which folders and files should be skipped for scanning (performance).
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
         </li>
 
+        <li>
+            <h2>Copy Assets</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Copy defined file types without parsing (CSS, JS, JPG, PNG, GIF, JSON) to the Build folder.<br/>
+                If checked, all defined files are copied without changes 1:1. Can be specified folders or file types.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>Markdowns</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Scan all markdowns and return a markdown object with parsed custom headers.<br/>
+                In Options can be specified the filename extension, custom headers and special syntax.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>Parse Markdowns</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Copy and parse one by one markdown and save to Build.<br/>
+                Can be specified template syntax and markdown can be extended.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+            <aside>
+                Dependeces: Markdown, Underscore
+            </aside>
+        </li>
+
+        <li>
+            <h2>Underscore</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                In Templates can be used underscore functions like map, select, invoke, filder and many others.<br/>
+                Underscore can be extended in Options.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>Underscore String</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Extended Underscore for functions like Capitalize, Clean, Include, EscapeHTML or Reverse.<br/>
+                Underscore String can be extended in Options, or connected to Underscore.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>CMD</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Extending usage of Bash, SH and CMD commands in generating proccess.<br/>
+                Options are not available.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>Coffee Script</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Developer can use in theme Coffee Script instead of pure Javascript.<br/>
+                Can be specified combination of Javascript and Coffeescript in one time.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>HAML</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                In templates can be used HAML instead of pure HTML.<br/>
+                Language and Syntax Specifications are available in Options.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>Stylus</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Expressive, dynamic, robust CSS<br/>
+                Language and Syntax Specifications are available in Options.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>Less</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                LESS extends CSS with dynamic behavior such as variables, mixins, operations and functions.<br/>
+                Language and Syntax Specifications are available in Options.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>SASS</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Sass is the most mature, stable, and powerful professional grade CSS extension language in the world.<br/>
+                Language and Syntax Specifications are available in Options.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>Files</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Return a current file structure and create a object of folders, files, markdowns, assets.<br/>
+                In options can be set, which folders and files should be skipped for scanning (performance).
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>Copy Assets</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Copy defined file types without parsing (CSS, JS, JPG, PNG, GIF, JSON) to the Build folder.<br/>
+                If checked, all defined files are copied without changes 1:1. Can be specified folders or file types.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>Markdowns</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Scan all markdowns and return a markdown object with parsed custom headers.<br/>
+                In Options can be specified the filename extension, custom headers and special syntax.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>Parse Markdowns</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Copy and parse one by one markdown and save to Build.<br/>
+                Can be specified template syntax and markdown can be extended.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+            <aside>
+                Dependeces: Markdown, Underscore
+            </aside>
+        </li>
+
+        <li>
+            <h2>Underscore</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                In Templates can be used underscore functions like map, select, invoke, filder and many others.<br/>
+                Underscore can be extended in Options.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>Underscore String</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Extended Underscore for functions like Capitalize, Clean, Include, EscapeHTML or Reverse.<br/>
+                Underscore String can be extended in Options, or connected to Underscore.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>CMD</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Extending usage of Bash, SH and CMD commands in generating proccess.<br/>
+                Options are not available.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>Coffee Script</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Developer can use in theme Coffee Script instead of pure Javascript.<br/>
+                Can be specified combination of Javascript and Coffeescript in one time.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>HAML</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                In templates can be used HAML instead of pure HTML.<br/>
+                Language and Syntax Specifications are available in Options.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>Stylus</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Expressive, dynamic, robust CSS<br/>
+                Language and Syntax Specifications are available in Options.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>Less</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                LESS extends CSS with dynamic behavior such as variables, mixins, operations and functions.<br/>
+                Language and Syntax Specifications are available in Options.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>SASS</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Sass is the most mature, stable, and powerful professional grade CSS extension language in the world.<br/>
+                Language and Syntax Specifications are available in Options.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>Files</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Return a current file structure and create a object of folders, files, markdowns, assets.<br/>
+                In options can be set, which folders and files should be skipped for scanning (performance).
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>Copy Assets</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Copy defined file types without parsing (CSS, JS, JPG, PNG, GIF, JSON) to the Build folder.<br/>
+                If checked, all defined files are copied without changes 1:1. Can be specified folders or file types.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>Markdowns</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Scan all markdowns and return a markdown object with parsed custom headers.<br/>
+                In Options can be specified the filename extension, custom headers and special syntax.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>Parse Markdowns</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Copy and parse one by one markdown and save to Build.<br/>
+                Can be specified template syntax and markdown can be extended.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+            <aside>
+                Dependeces: Markdown, Underscore
+            </aside>
+        </li>
+
+        <li>
+            <h2>Underscore</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                In Templates can be used underscore functions like map, select, invoke, filder and many others.<br/>
+                Underscore can be extended in Options.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>Underscore String</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Extended Underscore for functions like Capitalize, Clean, Include, EscapeHTML or Reverse.<br/>
+                Underscore String can be extended in Options, or connected to Underscore.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>CMD</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Extending usage of Bash, SH and CMD commands in generating proccess.<br/>
+                Options are not available.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>Coffee Script</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Developer can use in theme Coffee Script instead of pure Javascript.<br/>
+                Can be specified combination of Javascript and Coffeescript in one time.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>HAML</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                In templates can be used HAML instead of pure HTML.<br/>
+                Language and Syntax Specifications are available in Options.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>Stylus</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Expressive, dynamic, robust CSS<br/>
+                Language and Syntax Specifications are available in Options.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>Less</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                LESS extends CSS with dynamic behavior such as variables, mixins, operations and functions.<br/>
+                Language and Syntax Specifications are available in Options.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
+
+        <li>
+            <h2>SASS</h2>
+            <span>- Your version: 1.0.24</span><span>- Last version: 1.0.24</span>
+            <div>
+                Sass is the most mature, stable, and powerful professional grade CSS extension language in the world.<br/>
+                Language and Syntax Specifications are available in Options.
+            </div>
+            <input id="install#samko" type="checkbox" /><label for="install#samko">Installed</label>
+            <input id="disabled#samko" type="checkbox" /><label for="disabled#samko">Allowed</label>
+            <input id="details#samko" type="checkbox" /><label for="details#samko">Details</label>
+        </li>
 
     </ul>
+
+    <footer>Copyright mDown 2014</footer>
 
 </body></html>
