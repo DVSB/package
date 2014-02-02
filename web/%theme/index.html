@@ -1,4 +1,4 @@
-{{ files.theme._header }}
+{{ theme._header }}
 
     <title>{{ local.title }}</title>
     <meta name="keywords" content="{{ local.tags }}" />
@@ -7,8 +7,9 @@
 
     {{#
 
-        var onlyblogs = _.filter(files.markdowns, function(file){
-            return file._fullpath.indexOf("/blog/")>-1;
+
+        var onlyblogs = _.filter(markdowns, function(current){
+            return current.originalpath.indexOf("/blog/")!==-1;
         });
 
     }}
@@ -62,6 +63,8 @@
         <a href="/gallery/">Gallery</a>
         <br />
         <a href="/portfolio/">Portfolio</a>
+        <br />
+        <a href="/about/">About</a>
 
     </aside>
 

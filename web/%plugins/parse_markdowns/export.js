@@ -4,7 +4,7 @@
 
 
     var filesystem = require("fs");
-    var plugins = {};
+
 
     // load underscore with settings for mustaches
     var underscore = require("underscore");
@@ -16,74 +16,65 @@
     };
 
 
-    module.exports.init = function(allPlugins) {
 
-        plugins = allPlugins;
+    module.exports.getVersion = function() {
 
-        removeBuildDir("./%build");
-        createBuildDir();
-
-        createEmptyFolders();
-        parseMarkdowns();
+        return "1.0.1";
 
     };
 
 
-    var removeBuildDir = function(path) {
+    module.exports.getDependeces = function() {
 
-        var files = [];
-
-        if ( filesystem.existsSync(path) ) {
-
-            files = filesystem.readdirSync(path);
-
-            files.forEach(function(file){
-                var curPath = path + "/" + file;
-                if(filesystem.statSync(curPath).isDirectory()) {
-                    removeBuildDir(curPath);
-                } else {
-                    filesystem.unlinkSync(curPath);
-                }
-            });
-
-            filesystem.rmdirSync(path);
-
-        }
+        return {
+            "all_files" : "1.1.0",
+            "markdowns" : "1.1.0"
+        };
 
     };
 
 
-    var createBuildDir = function() {
+    module.exports.init = function() {
 
-        filesystem.mkdirSync("./%build");
+        var _allFiles;
+        var _markdowns;
+        var onReadyCount = 0;
 
-    };
+        var onReady = function(){
+            ++onReadyCount;
+            if (onReadyCount===2) parseMarkdowns(_allFiles, _markdowns);
+        };
 
+        require("../all_files/export").init(function(allFiles){
+            _allFiles = allFiles;
+            onReady();
+        });
 
-    var createEmptyFolders = function() {
-
-        var sortedFolders = plugins.files.folders.sort();
-
-        sortedFolders.forEach(function(folder){
-            // create from "./blog/some" => "./%build/blog/some"
-            filesystem.mkdirSync("./%build"+folder.substr(1));
+        require("../markdowns/export").init(function(markdowns){
+            _markdowns = markdowns;
+            onReady();
         });
 
     };
 
 
-    var parseMarkdowns = function() {
+    var parseMarkdowns = function(allFiles, markdowns) {
 
-        var localPluginsCopy = plugins;
+        var themeFiles = allFiles.theme;
 
-        // just compile all of them
-        localPluginsCopy.markdowns.forEach(function(scopeMdObj){
+        markdowns.forEach(function(scopeMdObj){
 
             // content of %THEME/current mustache formatted
-            var currentTemplate = localPluginsCopy.files.theme[scopeMdObj.template];
+            var currentTemplate = themeFiles[scopeMdObj.template];
+
+            // create a copy and add some staff inside
+            var localPluginsCopy = allFiles;
 
             // add for user also underscore
             localPluginsCopy._ = underscore;
+
+            // send also all markdowns with content
+            localPluginsCopy.markdowns = markdowns;
 
             // local content for access to "this"
             localPluginsCopy.local = scopeMdObj;
@@ -99,13 +90,16 @@
             var html = underscore.template(currentTemplate, localPluginsCopy);
 
             // new path so we know where to save it
-            var originalPath = scopeMdObj._originalpath;
+            var originalPath = scopeMdObj.originalpath;
             var htmlPath = "%build"+originalPath.substr(0, originalPath.lastIndexOf(".md")) + ".html";
 
             // save to new position
             var fd = filesystem.openSync(htmlPath, 'w');
             filesystem.writeFileSync(htmlPath, html);
             filesystem.closeSync(fd);
+
+            console.log(">> ", originalPath, " >> ", htmlPath);
+
 
         });
 

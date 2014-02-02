@@ -13,9 +13,9 @@
 
     {{#
 
-    var gallery = _.filter(files.files, function(file){
-        return (file.indexOf("/gallery/")>-1 && file.indexOf(".jpg")>-1);
-    });
+        var gallery = _.filter(files, function(file){
+            return (file.indexOf("/gallery/")>-1 && file.indexOf(".jpg")>-1);
+        });
 
     }}
 
@@ -25,9 +25,7 @@
 
     <ul>
     {{# gallery.forEach(function(current){ }}
-
         <li><img src=" {{ current }}" alt="nice image from portfolio"/></li>
-
     {{# }); }}
     </ul>
 

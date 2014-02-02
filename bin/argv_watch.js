@@ -15,7 +15,7 @@
         // watch this folder with options, every 5s, for every change
         require("chokidar").watch("./", options).on("all", function(event, path){
             require("../lib/echo")("event: "+event+": "+path);
-            require("../lib/plugins");
+            require("../lib/plugins")();
         });
 
     };

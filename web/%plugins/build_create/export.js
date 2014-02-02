@@ -34,8 +34,15 @@
         createBuildDir("./%build");
 
 	    copyUserFiles(function(){
-		    globalCallback();
+            globalCallback();
 	    });
+
+    };
+
+
+    module.exports.version = function() {
+
+        return "1.0.1";
 
     };
 

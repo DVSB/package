@@ -1,5 +1,5 @@
 ---
-title : Blog about awesomness
+title : Awesome Blog
 tags : blog, awesomness, markdown, mdown
 template : index
 ---

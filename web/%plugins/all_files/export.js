@@ -10,11 +10,20 @@
 
     module.exports.init = function(callback) {
 
+        if (!callback) return;
+
         callback({
             theme : getThemeFiles(),
             folders : getFilteredFolders(),
             files : getFilteredFiles()
         });
+
+    };
+
+
+    module.exports.version = function() {
+
+        return "1.0.1";
 
     };
 
@@ -48,7 +57,8 @@
         allFiles.forEach(function(currentFile){
             ignoredStrings.forEach(function(ignoredString){
                 var shouldBeRemoved = currentFile.indexOf(ignoredString)>-1;
-                if (shouldBeRemoved) toBeRemoved.push(currentFile);
+                var isDsStore = currentFile.indexOf(".DS_Store")!==-1;
+                if (shouldBeRemoved || isDsStore) toBeRemoved.push(currentFile);
             });
         });
 
