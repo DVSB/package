@@ -9,18 +9,37 @@
 
 
 
-    module.exports.init = function(allPlugins) {
+    module.exports.init = function(callback) {
 
-        var metaTags = [];
+        if (!callback) return;
+
+        require("../all_files/export").init(function(allFiles){
+            var parsedMarkdowns = parseMarkdowns(allFiles);
+            callback(parsedMarkdowns);
+        });
+
+    };
+
+
+    module.exports.version = function() {
+
+        return "1.0.1";
+
+    };
+
+
+
+    var parseMarkdowns = function(allFiles){
 
         // get only markdowns, filter by containing of ".md" string
         // TODO should be improved = only if .md is on the end
         // TODO not it detects also if md is in middle
 
-        var allFiles = allPlugins.files.files;
+        var metaTags = [];
         var allMarkdowns = [];
+        var files = allFiles.files;
 
-        allFiles.forEach(function(file){
+        files.forEach(function(file){
 
             if (file.indexOf(".md")>-1) allMarkdowns.push(file);
 
@@ -34,53 +53,14 @@
             var markdownBody = _getBody(markdownArticle);
             var markdownHeaderObj = _getHeaderObj(markdownArticle);
 
-            markdownHeaderObj._content = markdownBody;
-            markdownHeaderObj._originalpath = markdownPath;
+            markdownHeaderObj.content = markdownBody;
+            markdownHeaderObj.originalpath = markdownPath;
 
             metaTags.push(markdownHeaderObj);
 
         });
 
         return metaTags;
-
-    };
-
-
-    var getAllMarkdowns = function(){
-
-        var allMarkdowns = [];
-        var allFiles = getFilteredFiles();
-
-        // filter to only files which are markdowns
-        allFiles.forEach(function(ele){
-
-
-
-        });
-
-        // create massive object
-        allMarkdowns.forEach(function(currentMd, i){
-
-            allMarkdowns[i] = {};
-
-            // get file name like index.html
-            var lastSlashPos = currentMd.substr(1).lastIndexOf("/");
-            allMarkdowns[i]._filename = currentMd.substr(lastSlashPos+2);
-            allMarkdowns[i]._filename = allMarkdowns[i]._filename.replace(".md", ".html");
-
-            // add new path of html file
-            allMarkdowns[i]._fullpath = currentMd.substr(0, lastSlashPos+2);
-            if (allMarkdowns[i]._fullpath==="") allMarkdowns[i]._fullpath = "/";
-
-            // add content from real md file with user content
-            // underscore.extend(allMarkdowns[i], require("./__md-read")(currentMd));
-
-            // compile content of user
-            // allMarkdowns[i]._content = require("./md-compile")(allMarkdowns[i]._content);
-
-        });
-
-        return allMarkdowns;
 
     };
 
@@ -134,3 +114,5 @@
         return markdownBody;
 
     };
+
+

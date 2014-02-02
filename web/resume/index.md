@@ -1,4 +1,3 @@
 ---
 template : resume
-category : Javascript
 ---

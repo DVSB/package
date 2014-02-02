@@ -11,22 +11,25 @@
 
 </head><body>
 
+    <h1>{{ local.title }}</h1>
+    <a href="../">&ldca; back to blog</a>
+
+    <ul>
     {{#
 
         var gallery = _.filter(files, function(file){
             return (file.indexOf("/gallery/")>-1 && file.indexOf(".jpg")>-1);
         });
 
+        gallery.forEach(function(current){
+
     }}
-
-    <a href="../">&ldca; back to blog</a>
-
-    <h1>{{ local.title }}</h1>
-
-    <ul>
-    {{# gallery.forEach(function(current){ }}
         <li><img src=" {{ current }}" alt="nice image from portfolio"/></li>
-    {{# }); }}
+
+
+    {{#
+        });
+    }}
     </ul>
 
 </body></html>

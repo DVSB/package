@@ -1,0 +1,10 @@
+{
+    "dependencies": {
+	    "fs-extra" : "0.8.1"
+    },
+	"mdown" : {
+		"build-folder" : "%build",
+		"plugin-version" : "13.1.4",
+		"plugin-url" : "https://plugin.mdown.co/build_create/"
+	}
+}
