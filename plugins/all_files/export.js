@@ -5,7 +5,7 @@
 
     var underscore = require("underscore");
     var filesystem = require("fs");
-    var ignoredStrings = ["/%build", "/%theme", "/%plugins"];
+    var ignoredStrings = ["/%", "/."];
 
 
     module.exports.init = function(callback) {

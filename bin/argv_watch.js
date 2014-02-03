@@ -7,10 +7,13 @@
 
         var options = {
             ignored : /%build/,
-            persistent : true,
-            interval : 300,
+            persistent : false,
+            interval : 100,
             ignoreInitial : true
         };
+
+	    // initial build
+	    require("../lib/plugins")();
 
         // watch this folder with options, every 5s, for every change
         require("chokidar").watch("./", options).on("all", function(event, path){
@@ -34,11 +37,26 @@
 
     module.exports.dashboardInit = function() {
 
-        // yes, nodejs is so awesome, that you need only this for server
-        // cool right?
-        // TODO add optional port setting
-        var options = require("connect")().use(require("connect").static(__dirname+"/../dashboard/"));
-        require("http").createServer(options).listen(3009).on("error", errorHandling);
+	    var express = require("express");
+	    var app = express();
+	    var allPlugins = require("../lib/plugins").plugins();
+
+	    app.configure(function(){
+		    var dashboardFolder =  __dirname+"/../dashboard/";
+		    app.use("/s/", express.static(dashboardFolder));
+		    app.set("views", dashboardFolder);
+		    app.engine("html", require("ejs").renderFile);
+		    app.use(express.json());
+		    app.use(express.urlencoded());
+		    app.use(express.methodOverride());
+		    app.use(app.router);
+	    });
+
+	    app.all("/", function(req, res) {
+		    res.render("index.html", { allPlugins : allPlugins });
+	    });
+
+		app.use(express.logger("dev")).listen(3009);
 
     };
 

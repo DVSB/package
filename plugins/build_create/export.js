@@ -3,29 +3,8 @@
     "use strict";
 
 
-    /*
-
-    plugin functionality:
-
-	    1 > read package.json for options
-	    2 > recursively remove folder %build
-	    3 > create folder structure
-	    4 > copy all files except of ignored files
-
-    plugin credits:
-
-        samuel ondrek, @ondrek, ondrek.com
-
-    warning:
-
-        this plugin should be called as first
-        you never should touch user's files (out of the build folder) because you can destroy them
-
-     */
-
-
     var filesystem = require("fs");
-    var ignoredFolders = ["%build", "%plugins", "%settings", "%theme"];
+    var ignoredFolders = ["%build", "%plugins", "%settings", "%theme", ".git", ".svn"];
 
 
     module.exports.init = function(globalCallback) {
