@@ -8,7 +8,7 @@
         case "watch" :
 	        console.log();
             require("../lib/echo")("welcome in mdown 0.0.20 ~ watching "+process.env.PWD);
-	        require("../lib/echo")("website (localhost:3008) and dashboard (localhost:3009)".bold);
+	        require("../lib/echo")("build (localhost:3008) and dashboard (localhost:3009)".bold);
             require("./argv_watch").localhostInit();
             require("./argv_watch").initialization();
             require("./argv_watch").dashboardInit();

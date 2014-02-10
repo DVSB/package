@@ -28,7 +28,8 @@ options and save all new files like HTML files into the build folder.
 		files : [] // list of all files
 		folders : [] // list of all folders
 		theme : content of theme folder
-	)
+		local : {} // local parsed file object
+	}
 
 ## Functionality
 

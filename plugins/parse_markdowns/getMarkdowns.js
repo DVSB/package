@@ -39,10 +39,12 @@
 		    var markdownBody = _getBody(markdownArticle);
 		    var markdownHeaderObj = _getHeaderObj(markdownArticle);
 
-		    markdownHeaderObj.content = markdownBody;
-		    markdownHeaderObj.originalpath = markdownPath;
+		    markdownHeaderObj.mdpath = markdownPath;
+		    markdownHeaderObj.htmlpath = markdownPath.replace(".md", ".html");
+		    markdownHeaderObj.path = markdownPath.substr(0, markdownPath.lastIndexOf("/")+1);
 
-		    metaTags.push(markdownHeaderObj);
+            markdownHeaderObj.content = require('marked')(markdownBody);
+            metaTags.push(markdownHeaderObj);
 
 	    });
 

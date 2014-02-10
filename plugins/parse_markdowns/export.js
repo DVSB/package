@@ -20,6 +20,7 @@
 
 	    require("./getMarkdowns")(function(allfiles, markdowns){
 		    parseMarkdowns(allfiles, markdowns);
+		    require("./removeMdFiles")(markdowns);
 	    });
 
     };
@@ -35,32 +36,30 @@
             var currentTemplate = themeFiles[scopeMdObj.template];
 
             // create a copy and add some staff inside
-            var localPluginsCopy = allFiles;
+            var userCanUseInScreen = allFiles;
 
             // add for user also underscore
-            localPluginsCopy._ = underscore;
+	        userCanUseInScreen._ = underscore;
+	        userCanUseInScreen.underscore = underscore;
 
             // send also all markdowns with content
-            localPluginsCopy.markdowns = markdowns;
+	        userCanUseInScreen.markdowns = markdowns;
 
             // local content for access to "this"
-            localPluginsCopy.local = scopeMdObj;
-
-	        // send also all markdowns with content
-	        localPluginsCopy.markdowns = localPluginsCopy;
+	        userCanUseInScreen.local = scopeMdObj;
 
             // if user defined nonexisting template, skip file
             if (!currentTemplate) {
-	            var message = "> WARNING: file " +  scopeMdObj.originalpath + " has no definition of template! ";
+	            var message = "> WARNING: file " +  scopeMdObj.mdpath + " has no definition of template! ";
 	            message += "This file is proceeded without parsing.";
 	            console.log(message); return;
             }
 
             // ready HTML with all necessary parsed objects
-            var html = underscore.template(currentTemplate, localPluginsCopy);
+            var html = underscore.template(currentTemplate, userCanUseInScreen);
 
             // new path so we know where to save it
-            var originalPath = scopeMdObj.originalpath;
+            var originalPath = scopeMdObj.mdpath;
             var htmlPath = "%build"+originalPath.substr(0, originalPath.lastIndexOf(".md")) + ".html";
 
             // save to new position
