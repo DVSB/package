@@ -1,35 +1,29 @@
-**Warning:** This version is very-alpha version and we recommend to use if from **march 2014** and not before because has many known bugs. Thank you for support.
+# WARNING: This version is very-alpha version and we recommend to use if from march 2014 and not before because has many known bugs. Thank you for support.
 
 # mDown
-## Simple, lightweight and powerful website generator
+## Lightweight and powerful website generator
+
+.
 
 ![NPM image 1](https://nodei.co/npm/mdown.png)
 
+.
+
 ### How to Install
 
-    > sudo npm install -g mdown && cd path/to/your/folder
-    install mdown, after go inside your folder
+.
 
-    > mdown watch
-    watch current folder on changes and create localhost
+**Install mDown**
 
-    > mdown deploy (not implemented yet)
-    deploy to github, s3, ftp or your own hosting
-
-### How to clone MDown Boilerplate
-
-    > git clone https://github.com/mdownco/boilerplate-blog.git boilerplate
-    > cd boilerplate
     > sudo npm install -g mdown
-    > mdown watch
 
-### Author, Bug, Issues, Credits
+**Watch current folder on changes and create localhost**
 
-    > Samuel Ondrek
+    > mdown preview
+
+.
+
+### Author
+
+    > Samuel Ondrek, @ondrek
     author, contributor
-
-    > http://github.com/ondrek/mdown
-    global repo of npm package
-
-    > http://github.com/ondrek/mdown/issues
-    issues, bugs, report area
