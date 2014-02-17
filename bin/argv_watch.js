@@ -39,7 +39,6 @@
 
 	    var express = require("express");
 	    var app = express();
-	    var allPlugins = require("../lib/plugins").plugins();
 
 	    app.configure(function(){
 		    var dashboardFolder =  __dirname+"/../dashboard/";
@@ -53,7 +52,7 @@
 	    });
 
 	    app.all("/", function(req, res) {
-		    res.render("index.html", { allPlugins : allPlugins });
+		    res.render("index.html", {});
 	    });
 
 		app.use(express.logger("dev")).listen(3009);
