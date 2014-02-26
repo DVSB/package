@@ -4,7 +4,7 @@
 
 
     var filesystem = require("fs");
-    var ignoredFolders = ["%build", "%plugins", "%settings", "%theme", ".git", ".svn"];
+    var ignoredFolders = ["%build", "%plugins", "%settings", "%templates", ".git", ".svn"];
 
 
     module.exports = function(globalCallback) {

@@ -68,7 +68,7 @@
 
     var getThemeFiles = function(){
 
-        var themeFiles = _getAllFilesFromFolder("./%theme/");
+        var themeFiles = _getAllFilesFromFolder("./%templates/");
         var filesystem = require("fs");
         var newThemeObj = {};
 

@@ -12,7 +12,7 @@
             i++; if (i===5) onEndCallback();
         });
 
-        require("../mdls/create-build/export")(function(){
+        require("../mdls/create_build/export")(function(){
             i++; if (i===5) onEndCallback();
         });
 
@@ -39,7 +39,7 @@
                 //console.log("sitemap");
             });
 
-            require("../mdls/offline-manifest/export")(function(){
+            require("../mdls/offline_manifest/export")(function(){
                 //console.log("offline manifest");
             });
 

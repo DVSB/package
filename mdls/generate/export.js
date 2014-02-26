@@ -57,8 +57,6 @@
     var _removeMdFilesInBuild = function(markdowns){
 
         markdowns.forEach(function(file){
-
-            console.log(file._origin);
             filesystem.unlinkSync("./%build/"+file._origin);
         });
 

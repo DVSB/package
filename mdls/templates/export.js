@@ -42,7 +42,7 @@
     var _keepOnlyThemeFolder = function(arr) {
 
         function isNotIgnored(fileName){
-            var isThemeFolder = fileName.indexOf("./%theme/")!==-1;
+            var isThemeFolder = fileName.indexOf("./%templates/")!==-1;
             return isThemeFolder;
         }
 
