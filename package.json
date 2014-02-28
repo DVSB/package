@@ -3,7 +3,7 @@
   "subdomain": "downpress",
   "main": "./bin/_bin.js",
   "bin": {
-    "mdown": "./bin/_bin.js"
+    "downpress": "./bin/_bin.js"
   },
   "homepage": "http://downpress.org/",
   "author": {
