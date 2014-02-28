@@ -83,7 +83,7 @@
 
         case "preview" :
             require("./echo")("welcome in mdown 0.0.20 ~ watching "+process.env.PWD);
-            require("./echo")("build (localhost:3008) and dashboard (localhost:3009)".bold);
+            require("./echo")("build (localhost:3008)".bold);
             _watchLocalhost();
             _watchInitialization();
             break;
