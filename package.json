@@ -1,11 +1,11 @@
 {
-  "name": "mdown",
-  "subdomain": "mdown",
-  "main": "./bin/_mdown.js",
+  "name": "downpress",
+  "subdomain": "downpress",
+  "main": "./bin/_bin.js",
   "bin": {
     "mdown": "./bin/_bin.js"
   },
-  "homepage": "https://github.com/ondrek/mdown/",
+  "homepage": "https://github.com/downpress/package/",
   "author": {
     "name": "Samuel Ondrek",
     "url": "http://github.com/ondrek/",
@@ -14,13 +14,13 @@
     "twitter": "@ondrek"
   },
   "bugs": {
-    "url": "https://github.com/ondrek/mdown/issues"
+    "url": "https://github.com/downpress/package/issues"
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/ondrek/mdown.git"
+    "url": "http://github.com/downpress/package.git"
   },
-  "description": "**Warning:** This version is very-alpha version and we recommend to use if from **march 2014** and not before because has many known bugs. Thank you for support.",
+  "description": "Available from 2014/03/14",
   "keywords": [
     "markdown",
     "mdown",
@@ -32,8 +32,8 @@
   "version": "0.0.32",
   "license": "Apache License, Version 2.0",
   "domains": [
-    "mdown.co",
-    "www.mdown.co"
+    "downpress.org",
+    "www.downpress.org"
   ],
   "dependencies": {
     "markdown": "0.5.0",
