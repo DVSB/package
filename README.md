@@ -14,7 +14,7 @@
 
 **Documentation and Website**
 
-[http://downpress.org](http://downpress.org)
+[http://downpress.org/](http://downpress.org)
 
 **Repository and Code**
 
@@ -22,8 +22,8 @@
 
 **Versions**
 
-[https://github.com/downpress/package/wiki/Versions](https://github.com/downpress/package/wiki/Versions)
+[https://github.com/downpress/package/wiki/Versions/](https://github.com/downpress/package/wiki/Versions)
 
 **Milestones**
 
-[https://github.com/downpress/package/wiki/Milestones](https://github.com/downpress/package/wiki/Milestones)
+[https://github.com/downpress/package/wiki/Milestones/](https://github.com/downpress/package/wiki/Milestones)
