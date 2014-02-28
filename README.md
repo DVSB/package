@@ -12,10 +12,18 @@
     > sudo npm install -g downpress
     > downpress
 
-**Documentation**
+**Documentation and Website**
 
 [http://downpress.org](http://downpress.org)
 
-**Repository**
+**Repository and Code**
 
 [http://github.com/downpress/](http://github.com/downpress/)
+
+**Versions**
+
+[https://github.com/downpress/package/wiki/Versions](https://github.com/downpress/package/wiki/Versions)
+
+**Milestones**
+
+[https://github.com/downpress/package/wiki/Milestones](https://github.com/downpress/package/wiki/Milestones)
