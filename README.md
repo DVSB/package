@@ -1,5 +1,5 @@
 # Downpress
-## lightweight and powerful website generator
+## simple, fast and lightweight generator of static websites
 
 ![NPM image 1](https://nodei.co/npm/downpress.png)
 
