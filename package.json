@@ -20,7 +20,7 @@
     "type": "git",
     "url": "http://github.com/downpress/package.git"
   },
-  "description": "Downpress is simple, fast and lightweight generator of static websites",
+  "description": "Downpress is simple, fast and lightweight generator of static websites.",
   "keywords": [
     "markdown",
     "static",
