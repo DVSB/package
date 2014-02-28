@@ -34,7 +34,7 @@
     "performance"
   ],
   "preferGlobal": true,
-  "version": "0.0.35",
+  "version": "0.0.36",
   "license": "Apache License, Version 2.0",
   "domains": [
     "downpress.org",
