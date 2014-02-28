@@ -4,13 +4,13 @@
 ![NPM image 1](https://nodei.co/npm/downpress.png)
 
 
-**Quick Install**
+**Download blog boilerplate and Install Downpress**
 
     > git clone https://github.com/downpress/2014-blog.git
     > cd 2014-blog
 
     > sudo npm install -g downpress
-    > downpress
+    > downpress preview
 
 **Documentation and Website**
 
