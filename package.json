@@ -16,10 +16,10 @@
   "bugs": {
     "url": "https://github.com/downpress/package/issues"
   },
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/downpress/package.git"
-  },
+  "repository": [
+      { "type": "git", "url": "http://github.com/downpress/package.git" },
+      { "type": "svn", "url": "https://github.com/downpress/package" }
+    ],
   "description": "Downpress is simple, fast and lightweight generator of static websites",
   "keywords": [
     "markdown",
