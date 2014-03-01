@@ -36,4 +36,3 @@
     log("  version openssl: " + process.versions.openssl);
 
     console.log("");
-    log("------------------------------------ ");

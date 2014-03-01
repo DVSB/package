@@ -23,12 +23,7 @@
             var scopeTemplate = templates[scopeMetaTemplate];
 
             // if user defined non-existing template or no header, skip file
-            if (!scopeTemplate) {
-                var message = "> WARNING: file " +  scopeMarkdown._origin;
-                message += " has no definition of template! ";
-                console.log(message += "This file is proceeded without parsing.");
-                return;
-            }
+            if (!scopeTemplate) return;
 
             var html = underscore.template(scopeTemplate, {
                 _ : underscore,
