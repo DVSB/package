@@ -11,10 +11,14 @@
         var log;
 
         log = new Date().toLocaleTimeString().grey;
-        log += " [mdown] - ".grey;
+        log += ": ".grey;
 
-        if (isError) { log += "error: ".red.bold }
-        log += message.blue;
+        if (isError) {
+            log += message.red.bold
+        } else {
+            log += message.blue.bold;
+        }
+
 
         console.log(log);
 

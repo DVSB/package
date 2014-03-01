@@ -3,7 +3,7 @@
 
 ![NPM image 1](https://nodei.co/npm/downpress.png)
 
-BETA VERSION!!!  
+BETA VERSION!!!
 REAL VERSION WILL BE DEPLOYED 2014/03/09 (in few days)
 PLEASE DONT DOWNLOAD AND WAIT
 THANKY YOU!!!
