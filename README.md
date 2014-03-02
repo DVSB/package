@@ -1,12 +1,17 @@
 # Downpress
 ## simple, fast and lightweight generator of static websites
 
+<br><br><br>
+
+BETA VERSION!!!<br>
+For better version - wait until 2014/03<br>
+Please wait, API is unstable now<br>
+Thank you!!!<br>
+
+<br><br>
+
 ![NPM image 1](https://nodei.co/npm/downpress.png)
 
-BETA VERSION!!!
-REAL VERSION WILL BE DEPLOYED 2014/03/09 (in few days)
-PLEASE DONT DOWNLOAD AND WAIT
-THANKY YOU!!!
 
 **Download blog boilerplate and Install Downpress**
 

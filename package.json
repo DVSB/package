@@ -31,7 +31,17 @@
     "javascript",
     "fast",
     "speed",
-    "performance"
+    "performance",
+    "semantical",
+    "blog",
+    "free",
+    "open",
+    "mdown",
+    "documentation",
+    "documentation-generator",
+    "docs",
+    "tool",
+    "project"
   ],
   "preferGlobal": true,
   "version": "0.1.10",
