@@ -4,6 +4,9 @@
     "use strict";
 
 
+    global.downpress = {};
+
+
     // second CMD argument set by user
 
     switch (process.argv[2]) {

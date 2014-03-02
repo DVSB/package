@@ -4,6 +4,7 @@
 
 
     var filesystem = require("fs");
+    var log = require("./../../bin/echo.js");
 
 
     module.exports = function(statics, markdowns, templates, underscore){
@@ -23,17 +24,28 @@
             var scopeTemplate = templates[scopeMetaTemplate];
 
             // if user defined non-existing template or no header, skip file
-            if (!scopeTemplate) return;
+            if (!scopeTemplate) {
+                return;
+            }
 
-            var html = underscore.template(scopeTemplate, {
-                _ : underscore,
-                underscore : underscore,
-                local : scopeMarkdown,
-                markdowns : markdowns,
-                statics : statics,
-                templates : templates,
-                theme : templates
-            });
+            try {
+
+                var html = underscore.template(scopeTemplate, {
+                    _ : underscore,
+                    underscore : underscore,
+                    local : scopeMarkdown,
+                    markdowns : markdowns,
+                    statics : statics,
+                    templates : templates,
+                    theme : templates
+                });
+
+            } catch(err) {
+
+                log(err, true);
+
+            }
+
 
             // FS SAVE to new position to %build folder
 
@@ -46,13 +58,15 @@
 
         });
 
+        global.downpress.isGenerating = false;
+
     };
 
 
     var _removeMdFilesInBuild = function(markdowns){
 
         markdowns.forEach(function(file){
-            filesystem.unlinkSync("./%build/"+file._origin);
+            // filesystem.unlinkSync("./%build/"+file._origin);
         });
 
     };

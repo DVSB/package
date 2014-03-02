@@ -5,6 +5,9 @@
 
     module.exports = function(){
 
+        // if it's generating, watching of files is disabled
+        global.downpress.isGenerating = true;
+
         var statics, underscore, markdowns, templates, i=0;
 
         require("../mdls/underscore/export")(function(_underscore){

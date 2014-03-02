@@ -16,8 +16,8 @@
 
         var options = {
             ignored : /%build/,
-            persistent : false,
-            interval : 100,
+            persistent : true,
+            interval : 200,
             ignoreInitial : true
         };
 
@@ -26,8 +26,10 @@
 
         // watch this folder with options, every 5s, for every change
         require("chokidar").watch("./", options).on("all", function(event, path){
+
             log("regenerated on "+event+": "+path);
-            require("./plugins")();
+            if (!global.downpress.isGenerating) require("./plugins")();
+
         });
 
     };
