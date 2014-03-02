@@ -13,7 +13,7 @@ Thank you!!!<br>
 ![NPM image 1](https://nodei.co/npm/downpress.png)
 
 
-**Download blog boilerplate and Install Downpress**
+**Download boilerplate and Install**
 
     > git clone "https://github.com/downpress/2014-blog.git"
     > cd "2014-blog"
@@ -34,7 +34,3 @@ Thank you!!!<br>
 **Versions**
 
 [https://github.com/downpress/package/wiki/Versions/](https://github.com/downpress/package/wiki/Versions)
-
-**Milestones**
-
-[https://github.com/downpress/package/wiki/Milestones/](https://github.com/downpress/package/wiki/Milestones)
