@@ -19,7 +19,9 @@ Thank you!!!<br>
     > cd "2014-blog"
 
     > sudo npm install -g downpress
-    > downpress preview
+    > downpress run
+
+<br>
 
 **Documentation and Website**
 
