@@ -15,8 +15,8 @@ Thank you!!!<br>
 
 **Download blog boilerplate and Install Downpress**
 
-    > git clone https://github.com/downpress/2014-blog.git
-    > cd 2014-blog
+    > git clone "https://github.com/downpress/2014-blog.git"
+    > cd "2014-blog"
 
     > sudo npm install -g downpress
     > downpress preview
