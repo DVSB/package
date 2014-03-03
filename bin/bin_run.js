@@ -7,7 +7,7 @@
 
 
     console.log();
-    log("browse url http://localhost:3000 for a build");
+    log("browse http://localhost:3008 (or :8088) for a build");
     log("watching "+process.env.PWD);
     console.log();
 
@@ -46,6 +46,7 @@
 
         var options = require("connect")().use(require("connect").static("./%build"));
         require("http").createServer(options).listen(3008).on("error", errorHandling);
+	    require("http").createServer(options).listen(8088).on("error", errorHandling);
 
     };
 
