@@ -46,16 +46,29 @@
             }
         }
 
-        var msg1 = "<!-- in this file use classic html -->\n{{ console.log('and templated variables') }}";
-        var msg2 = "--\ntemplate : article\n---\n\n**use markdown syntax  in here**";
-        var msg7 = "--\ntemplate : index\n---\n\n**use markdown syntax in here**";
+        var msg = {};
+
+        var msg1 = "<!-- in this file use classic html -->\n{{ local._content }}";
+        var msg2 = "--\ntemplate : article\n---\n\n**hello, this is article!**";
+        var msg7 = "--\ntemplate : index\n---\n\n**hello world!**";
         var msg6 = "--\ntemplate : page\n---\n\n**use markdown syntax  in here**";
         var msg4 = "if you will not use '---' meta tags in header,\nmd file is only copied and not parsed";
         var msg3 = "/* put your custom content in here */";
         var msg5 = "all content in this folder will be removed!! and replaced with build";
 
+        msg.index = "\n\t{{ local._content }}<br>\n";
+        msg.index += "\t{{ local._path }}<br>\n";
+        msg.index += "\t{{ local._origin }}<br>\n";
+        msg.index += "\t{{ local._target }}<br>\n";
+        msg.index += "\t{{ local._uniqID }}<br>\n";
+        msg.index += "\n\t<br><br>\n\n";
+        msg.index += "\t<a href=\"/articles/1st/\">1st blog</a>\n";
+        msg.index += "\t<a href=\"/articles/2nd/\">2nd blog</a>\n";
+        msg.index += "\t<a href=\"/articles/3rd/\">3rd blog</a>\n";
+        msg.index += "\t<a href=\"/articles/4th/\">4th blog</a>\n";
+
         filesystem.appendFile("./readme.md", msg4, handleFolderErrors);
-        filesystem.appendFile("./%templates/index.html", msg1, handleFolderErrors);
+        filesystem.appendFile("./%templates/index.html", msg.index, handleFolderErrors);
         filesystem.appendFile("./%templates/page.html", msg1, handleFolderErrors);
         filesystem.appendFile("./%templates/article.html", msg1, handleFolderErrors);
         filesystem.appendFile("./%build/build-folder.md", msg5, handleFolderErrors);
