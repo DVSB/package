@@ -49,12 +49,6 @@
             var markdownBody = _getBody(markdownArticle);
             var markdownHeaderObj = _getHeaderObj(markdownArticle);
 
-            markdownHeaderObj.mdpath = markdownPath;
-            markdownHeaderObj.htmlpath = markdownPath.replace(".md", ".html");
-            markdownHeaderObj.path = markdownPath.substr(0, markdownPath.lastIndexOf("/")+1);
-            markdownHeaderObj.content = require('marked')(markdownBody);
-
-
             // new API
             var getRandom = function(){
                 var random1 = Math.floor((Math.random()*800000)+100000);
@@ -62,11 +56,12 @@
                 var random3 = Math.floor((Math.random()*800000)+100000);
                 return(random1+random2+random3).toString(36);
             };
-            markdownHeaderObj._path = markdownHeaderObj.path;
-            markdownHeaderObj._origin = markdownHeaderObj.mdpath;
-            markdownHeaderObj._target = markdownHeaderObj.htmlpath;
+
+            markdownHeaderObj._path = markdownPath.substr(0, markdownPath.lastIndexOf("/")+1);
+            markdownHeaderObj._origin = markdownPath;
+            markdownHeaderObj._target = markdownPath.replace(".md", ".html");
             markdownHeaderObj._uniqid = getRandom();
-            markdownHeaderObj._content = markdownHeaderObj.content;
+            markdownHeaderObj._content = require('marked')(markdownBody);
 
             metaTags.push(markdownHeaderObj);
 

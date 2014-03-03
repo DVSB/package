@@ -42,7 +42,7 @@
 
             } catch(err) {
 
-                log(err, true);
+                log(scopeMarkdown._origin + " " + err, true);
 
             }
 
