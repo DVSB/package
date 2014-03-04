@@ -11,6 +11,23 @@
     log("watching "+process.env.PWD);
     console.log();
 
+    var _checkIfDownpressDirectories = function(){
+
+        var filesystem = require("fs");
+
+        var isExistsTemplates = filesystem.existsSync('./%templates/');
+
+        if (!isExistsTemplates) {
+            log("error -- missing `%templates` folder!", true);
+            log("or download boilerplate from github.com/donwpress/boilerplate", true);
+            log("or generate boilerplate `downpress init`", true);
+            log("(.. find more on downpress.org/start/)", true);
+            console.log();
+            process.kill();
+        }
+
+    };
+
 
     var _watchInitialization = function(){
 
@@ -34,14 +51,13 @@
 
     };
 
+
     var _watchLocalhost = function(){
 
         // TODO add optional port setting
 
         function errorHandling(e){
-            if (e.code==="EADDRINUSE") {
-                log("port 3008 is already used", true);
-            }
+            if (e.code==="EADDRINUSE") log("port 3008 or 8088 can be already used", true);
         }
 
         var options = require("connect")().use(require("connect").static("./%build"));
@@ -50,6 +66,6 @@
 
     };
 
-
+    _checkIfDownpressDirectories();
     _watchLocalhost();
     _watchInitialization();
