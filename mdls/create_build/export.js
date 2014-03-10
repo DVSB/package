@@ -1,130 +1,66 @@
 
 
-    "use strict";
+	"use strict";
 
 
-    var filesystem = require("fs");
-    var ignoredFolders = ["%build", "%plugins", "%settings", "%templates", ".git", ".svn"];
+	var fse = require("fs-extra");
+	var events = require("events");
 
 
-    module.exports = function(globalCallback) {
+	var CreateBuildDirectory = function() {
 
-        removeBuildDir("./%build");
-        createBuildDir("./%build");
+	    events.EventEmitter.call(this);
 
-        copyUserFiles(function(){
-            globalCallback();
-        });
+	    this.on("error", function(error){
+		    throw error;
+	    });
 
-    };
+		this.on("removed", function(){
+			this.copyDirectory();
+		});
 
+		// call synch functions later
+		this.removeFolder("./%build");
 
-    var removeBuildDir = function(path) {
-
-        // recursively remove whole build folder with all sub-folders
-
-        // TODO add asych and faster version
-        // TODO test on windows and linux if removing works well
-
-        var files = [];
-
-        if ( filesystem.existsSync(path) ) {
-
-            files = filesystem.readdirSync(path);
-
-            files.forEach(function(file){
-                var curPath = path + "/" + file;
-                if(filesystem.statSync(curPath).isDirectory()) {
-                    removeBuildDir(curPath);
-                } else {
-                    filesystem.unlinkSync(curPath);
-                }
-            });
-
-            filesystem.rmdirSync(path);
-
-        }
-
-    };
+	};
 
 
-    var createBuildDir = function(folder) {
-
-        // create a new empty build folder to user website root
-
-        filesystem.mkdirSync(folder);
-
-    };
+	require("util").inherits(CreateBuildDirectory, events.EventEmitter);
 
 
-    var copyUserFiles = function(callback) {
+	CreateBuildDirectory.prototype.removeFolder = function(directory){
 
-        // grab every file and copy to destination folder
+		var that = this;
 
-        var allFiles = _getAllFilesFromFolder(".");
-        var filteredFiles = _removeIgnoredFolders(allFiles);
-        var fse = require('fs-extra');
-        var callbackReady = 0;
+		fse.remove(directory, function(err){
+			if (err) that.emit("error", err);
+			that.emit("removed");
+		});
 
-        var smallCallback = function(){
-            if (callbackReady===filteredFiles.length-1) { callback();
-            } else { callbackReady++; }
-        };
-
-        filteredFiles.forEach(function(actualPath){
-            var targetPath = "./%build" + actualPath.substr(1, actualPath.length);
-            fse.copy(actualPath, targetPath, smallCallback);
-        });
-
-    };
+	};
 
 
-    var _getAllFilesFromFolder = function(dir) {
+	CreateBuildDirectory.prototype.copyDirectory = function(){
 
-        // scan recursively a whole folder for all files and return array
+		var allFiles = downpress.scan.files;
+		var i = 0;
+		var that = this;
 
-        var allFiles = [];
+		function callback(){
+			i++;
+			if (i===allFiles.length) that.emit("ready");
+		}
 
-        filesystem.readdirSync(dir).forEach(function(file) {
+		allFiles.forEach(function(file){
 
-            file = dir + '/' + file;
-            var stat = filesystem.statSync(file);
+			fse.copy(file, "%build/"+file, function(err){
+				if (err) that.emit("error", err);
+				callback();
+			});
 
-            if (stat && stat.isDirectory()) {
-                allFiles = allFiles.concat(_getAllFilesFromFolder(file));
-            } else allFiles.push(file);
+		});
 
-        });
-
-        return allFiles;
-
-    };
+	};
 
 
-    var _removeIgnoredFolders = function(allFiles) {
-
-        // filter all unnecessary folders and files from array
-
-        // TODO check also others system files, not just .DS_store
-        // add option of ignored staff to config file
-
-        var filesQuantity = allFiles.length;
-
-        while (filesQuantity>0) {
-
-            --filesQuantity;
-
-            var current = allFiles[filesQuantity];
-            var currentTopFolder = current.split("./")[1].split("/")[0];
-
-            var shouldBeIgnored = ignoredFolders.indexOf(currentTopFolder)!==-1;
-            var isDsStore = current.indexOf(".DS_Store")!==-1;
-
-            if (shouldBeIgnored || isDsStore) allFiles.splice(filesQuantity, 1);
-
-        }
-
-        return allFiles;
-
-    };
-
+	module.exports = new CreateBuildDirectory();

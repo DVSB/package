@@ -7,7 +7,7 @@
     global.downpress = {};
 
 
-    // second CMD argument set by user
+    // a second argument is set by user in terminal
 
     switch (process.argv[2]) {
 
@@ -15,9 +15,9 @@
             require("./bin_report");
             break;
 
-        case "preview" :
-            require("./bin_run");
-            break;
+	    case "help" :
+		    require("./bin_help");
+		    break;
 
         case "run" :
             require("./bin_run");

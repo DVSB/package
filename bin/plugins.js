@@ -3,58 +3,74 @@
     "use strict";
 
 
+    var scan = require("../mdls/scan/export");
+
+
     module.exports = function(){
 
-        // if it's generating, watching of files is disabled
-        global.downpress.isGenerating = true;
+	    scan.on("ready", function(){
 
-        var statics, underscore, markdowns, templates, i=0;
+		    downpress.scan = {};
+		    downpress.scan.folders = this.folders;
+		    downpress.scan.files = this.files;
 
-        require("../mdls/underscore/export")(function(_underscore){
-            underscore = _underscore;
-            i++; if (i===5) onEndCallback();
-        });
+			scannedProject();
 
-        require("../mdls/create_build/export")(function(){
-            i++; if (i===5) onEndCallback();
-        });
+	    });
 
-        require("../mdls/statics/export")(function(_statics){
-            statics = _statics;
-            i++; if (i===5) onEndCallback();
-        });
+	    scan.on("error", function(error){
 
-        require("../mdls/markdowns/export")(function(_markdowns){
-            markdowns = _markdowns;
-            i++; if (i===5) onEndCallback();
-        });
+		    throw error;
 
-        require("../mdls/templates/export")(function(_templates){
-            templates = _templates;
-            i++; if (i===5) onEndCallback();
-        });
-
-        function onEndCallback(){
-
-            require("../mdls/generate/export")(statics, markdowns, templates, underscore);
-
-            require("../mdls/sitemaps/export")(function(){
-                //console.log("sitemap");
-            });
-
-            require("../mdls/offline_manifest/export")(function(){
-                //console.log("offline manifest");
-            });
-
-        }
+	    });
 
     };
 
-    // TODO check this for avoiding to callbacks and inheritance
-    // http://bit.ly/1a7cYEc
 
+    function scannedProject(){
 
-    // TODO convert all these modules to async instead of sync
+	    // if it's generating, watching of files is disabled
+	    downpress.isGenerating = true;
 
+	    var statics, buildFolder, markdowns, templates, i=0;
 
+	    buildFolder = require("../mdls/create_build/export");
+	    buildFolder.on("ready", function(){ console.log("copied") });
+
+	    return;
+
+	    require("../mdls/create_build/export").CreateBuildDirectory(function(){
+		    i++; if (i===5) onEndCallback();
+	    });
+
+	    require("../mdls/statics/export")(function(_statics){
+		    statics = _statics;
+		    i++; if (i===5) onEndCallback();
+	    });
+
+	    require("../mdls/markdowns/export")(function(_markdowns){
+		    markdowns = _markdowns;
+		    i++; if (i===5) onEndCallback();
+	    });
+
+	    require("../mdls/templates/export")(function(_templates){
+		    templates = _templates;
+		    i++; if (i===5) onEndCallback();
+	    });
+
+	    function onEndCallback(){
+
+		    require("../mdls/generate/export")(statics, markdowns, templates, underscore);
+
+		    require("../mdls/sitemaps/export")(function(){
+			    //console.log("sitemap");
+		    });
+
+		    require("../mdls/offline_manifest/export")(function(){
+			    //console.log("offline manifest");
+		    });
+
+	    }
+
+    }
 
