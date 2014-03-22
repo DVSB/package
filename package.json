@@ -1,9 +1,9 @@
 {
   "name": "downpress",
   "subdomain": "downpress",
-  "main": "./bin/_bin.js",
+  "main": "./bin/_binary.js",
   "bin": {
-    "downpress": "./bin/_bin.js"
+    "downpress": "./bin/_binary.js"
   },
   "homepage": "http://downpress.org/",
   "author": {

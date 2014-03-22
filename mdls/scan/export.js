@@ -3,25 +3,31 @@
 	"use strict";
 
 
-	var events = require("events");
-	var walker = require("walk").walk(".");
-
-
 	var Scanner = function() {
 
-		events.EventEmitter.call(this);
+        require("../../library/boilerplate/class").call(this);
 
 		this.updateAllFiles();
+
+        var that = this;
+        var i = 0;
+
+        this.on("callback", function(){
+            i++;
+            if (i===2) that.emit("ready");
+        });
 
 	};
 
 
-	require("util").inherits(Scanner, events.EventEmitter);
+    require("util").inherits(Scanner, require("../../library/boilerplate/class"));
 
 
 	Scanner.prototype.updateAllFiles = function(){
 
-		this.files = [];
+        var walker = require("walk").walk(".");
+
+        this.files = [];
 		this.folders = [];
 
 		var that = this;
@@ -39,7 +45,7 @@
 		});
 
 		walker.on("end", function () {
-			that.emit("ready", this);
+			that.emit("callback");
 		});
 
 	};
