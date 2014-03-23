@@ -3,24 +3,31 @@
     "use strict";
 
 
-    module.exports = function(callback) {
+    var Statics = function() {
+
+        require("./_Boilerplate").call(this);
 
         var SCANNED_FOLDER = ".";
 
-        var allFiles = _getAllFilesFromFolder(SCANNED_FOLDER);
-        var filteredFiles = _removeIgnoredFiles(allFiles);
-        var parsedFiles = _parseToFileObjects(filteredFiles);
+        var allFiles = this.getAllFilesFromFolder(SCANNED_FOLDER);
+        var filteredFiles = this.removeIgnoredFiles(allFiles);
+        var parsedFiles = this.parseToFileObjects(filteredFiles);
 
-        callback(parsedFiles);
+        // TODO callback("dick");
 
     };
 
-    var _getAllFilesFromFolder = function(dir) {
+
+    require("util").inherits(Statics, require("./_Boilerplate"));
+
+
+    Statics.prototype.getAllFilesFromFolder = function(dir) {
 
         // TODO this needs to be async
 
         var filesystem = require("fs");
         var results = [];
+        var that = this;
 
         filesystem.readdirSync(dir).forEach(function(file) {
 
@@ -28,7 +35,7 @@
             var stat = filesystem.statSync(file);
 
             if (stat && stat.isDirectory()) {
-                results = results.concat(_getAllFilesFromFolder(file))
+                results = results.concat(that.getAllFilesFromFolder(file))
             } else results.push(file);
 
         });
@@ -37,7 +44,8 @@
 
     };
 
-    var _removeIgnoredFiles = function(arr) {
+
+    Statics.prototype.removeIgnoredFiles = function(arr) {
 
         function isNotIgnored(fileName){
             var isNotSystemFile = fileName.indexOf("/.")<=-1;
@@ -50,7 +58,7 @@
     };
 
 
-    var _parseToFileObjects = function(files) {
+    Statics.prototype.parseToFileObjects = function(files) {
 
         var filesystem = require("fs");
         var newObj = [];
@@ -78,3 +86,7 @@
         return newObj;
 
     };
+
+
+    module.exports = new Statics();
+

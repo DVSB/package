@@ -127,8 +127,6 @@
         filesystem.mkdir("./articles/3rd", handleFolderErrors);
         filesystem.mkdir("./articles/4th", handleFolderErrors);
 
-
-
     };
 
 
