@@ -19,9 +19,8 @@
     Plugins.prototype.scannedProject = function(){
 
         // if it's generating, watching of files is disabled
-        downpress.isGenerating = true;
-
-        var statics, buildFolder, markdowns, templates, i=0;
+        global.downpress.isGenerating = true;
+        this.generatingTime = +new Date();
 
         require("../mdls/Build_Create").on("ready", (function(){
             this.buildCopied();
@@ -29,42 +28,61 @@
 
     };
 
+
     Plugins.prototype.buildCopied = function(){
 
-        var statics = require("../mdls/Statics");
+        var that = this;
+        var i = 0;
 
-        statics.ready("tess", function(ss){
-            console.log("hello samko tess");
-            console.log(ss);
+        this.on("built", function(){
+            i++;
+            if (i===3) that.exportToFileSystem();
         });
 
-        /*
+        require("../mdls/Statics").on("ready", function(){
+            that.emit("built");
+        });
 
-         require("../mdls/markdowns/export")(function(_markdowns){
-            markdowns = _markdowns;
-            i++; if (i===5) onEndCallback();
-         });
+        require("../mdls/Markdowns").on("ready", function(){
+            that.emit("built");
+        });
 
-         require("../mdls/templates/export")(function(_templates){
-            templates = _templates;
-            i++; if (i===5) onEndCallback();
-         });
+        require("../mdls/Templates").on("ready", function(){
+            that.emit("built");
+        });
 
-         function onEndCallback(){
+    };
 
-         require("../mdls/generate/export")(statics, markdowns, templates, underscore);
 
-         require("../mdls/sitemaps/export")(function(){
-            //console.log("sitemap");
-         });
+    Plugins.prototype.exportToFileSystem = function(){
 
-         require("../mdls/offline_manifest/export")(function(){
-            //console.log("offline manifest");
-         });
+        var that = this;
+        var i = 0;
 
-         }
+        this.on("exporting", function(){
+            i++;
+            if (i===3) that.finishedGenerating();
+        });
 
-         */
+        require("../mdls/Generate").on("ready", function(){
+            that.emit("exporting");
+        });
+
+        require("../mdls/Sitemap").on("ready", function(){
+            that.emit("exporting");
+        });
+
+        require("../mdls/OfflineManifest").on("ready", function(){
+            that.emit("exporting");
+        });
+
+    };
+
+
+    Plugins.prototype.finishedGenerating = function(){
+
+        var generatingTime = (+new Date()) - this.generatingTime;
+        this.log("regenerated in " + generatingTime + "ms");
 
     };
 

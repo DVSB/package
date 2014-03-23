@@ -23,7 +23,9 @@
         var that = this;
 
         require("../mdls/underscore/export")((function(underscore){
+
             this.underscore = underscore;
+
         }).bind(this));
 
 	};

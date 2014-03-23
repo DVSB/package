@@ -4,18 +4,32 @@
 
 
     var filesystem = require("fs");
-    var log = require("./../../bin/echo.js");
 
 
-    module.exports = function(statics, markdowns, templates, underscore){
+    var Generate = function() {
 
-        _parseMarkdowns(statics, markdowns, templates, underscore);
-        _removeMdFilesInBuild(markdowns);
+        require("./_Boilerplate").call(this);
+
+        this.parseMarkdowns();
+        this.removeMdFilesInBuild();
+
+        setTimeout((function(){
+            this.emit("ready")
+        }).bind(this), 1);
 
     };
 
 
-    var _parseMarkdowns = function(statics, markdowns, templates, underscore){
+    require("util").inherits(Generate, require("./_Boilerplate"));
+
+
+    Generate.prototype.parseMarkdowns = function(){
+
+        var statics = global.downpress.statics;
+        var markdowns = global.downpress.markdowns;
+        var templates = global.downpress.templates;
+
+        var that = this;
 
         markdowns.forEach(function(scopeMarkdown){
 
@@ -30,9 +44,9 @@
 
             try {
 
-                var html = underscore.template(scopeTemplate, {
-                    _ : underscore,
-                    underscore : underscore,
+                var html = that.underscore.template(scopeTemplate, {
+                    _ : that.underscore,
+                    underscore : that.underscore,
                     local : scopeMarkdown,
                     markdowns : markdowns,
                     statics : statics,
@@ -63,10 +77,17 @@
     };
 
 
-    var _removeMdFilesInBuild = function(markdowns){
+    Generate.prototype.removeMdFilesInBuild = function(){
+
+        var markdowns = global.downpress.markdowns;
 
         markdowns.forEach(function(file){
             // filesystem.unlinkSync("./%build/"+file._origin);
         });
 
     };
+
+
+
+    module.exports = new Generate();
+

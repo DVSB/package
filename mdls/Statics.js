@@ -13,7 +13,12 @@
         var filteredFiles = this.removeIgnoredFiles(allFiles);
         var parsedFiles = this.parseToFileObjects(filteredFiles);
 
-        // TODO callback("dick");
+        global.downpress.statics = parsedFiles;
+
+        // plugins API needs to by asynchronous
+        setTimeout((function(){
+            this.emit("ready");
+        }).bind(this), 0);
 
     };
 

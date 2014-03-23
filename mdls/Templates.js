@@ -3,25 +3,37 @@
     "use strict";
 
 
-    module.exports = function(callback) {
+    var Templates = function() {
+
+        require("./_Boilerplate").call(this);
 
         var SCANNED_FOLDER = ".";
 
-        var allFiles = _getAllFilesFromFolder(SCANNED_FOLDER);
-        var themeFiles = _keepOnlyThemeFolder(allFiles);
-        var templatesContent = _readContentOfAllThemeFiles(themeFiles);
+        var allFiles = this.getAllFilesFromFolder(SCANNED_FOLDER);
+        var themeFiles = this.keepOnlyThemeFolder(allFiles);
+        var templatesContent = this.readContentOfAllThemeFiles(themeFiles);
 
-        callback(templatesContent);
+        // DONE
+
+        global.downpress.templates = templatesContent;
+
+        setTimeout((function(){
+            this.emit("ready")
+        }).bind(this), 1);
 
     };
 
 
-    var _getAllFilesFromFolder = function(dir) {
+    require("util").inherits(Templates, require("./_Boilerplate"));
+
+
+    Templates.prototype.getAllFilesFromFolder = function(dir) {
 
         // TODO this needs to be async
 
         var filesystem = require("fs");
         var results = [];
+        var that = this;
 
         filesystem.readdirSync(dir).forEach(function(file) {
 
@@ -29,7 +41,7 @@
             var stat = filesystem.statSync(file);
 
             if (stat && stat.isDirectory()) {
-                results = results.concat(_getAllFilesFromFolder(file))
+                results = results.concat(that.getAllFilesFromFolder(file))
             } else results.push(file);
 
         });
@@ -39,7 +51,7 @@
     };
 
 
-    var _keepOnlyThemeFolder = function(arr) {
+    Templates.prototype.keepOnlyThemeFolder = function(arr) {
 
         function isNotIgnored(fileName){
             var isThemeFolder = fileName.indexOf("./%templates/")!==-1;
@@ -51,7 +63,7 @@
     };
 
 
-    var _readContentOfAllThemeFiles = function(themeFiles) {
+    Templates.prototype.readContentOfAllThemeFiles = function(themeFiles) {
 
         var filesystem = require("fs");
         var newThemeObj = {};
@@ -66,3 +78,7 @@
         return newThemeObj;
 
     };
+
+
+    module.exports = new Templates();
+

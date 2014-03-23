@@ -8,8 +8,6 @@
 
         require("../library/boilerplate/class").call(this);
 
-        this.boilerplate = {};
-
         global.downpress = {};
         this.parsePackageJson();
 
@@ -185,7 +183,7 @@
 
     Application.prototype.initWithoutArgument = function(){
 
-        require("./echo")("error -- use only subcommand: `run`, `init` or `report`", true);
+        this.log("error -- use only subcommand: `run`, `init` or `report`", true);
 
     };
 
@@ -248,7 +246,7 @@
         var that = this;
 
         // initial build
-        require("./plugins");
+        require("./Plugins");
 
         // watch this folder with options, every 100ms regenerate whole folder
         require("chokidar").watch("./", options).on("all", function(event, path){
@@ -258,7 +256,7 @@
             // what if next change is faster than folder is regenerated?
             if (!global.downpress.isGenerating) {
                 that.log("on `"+event+"` in `"+path +"`");
-                require("./plugins");
+                require("./Plugins");
             }
 
         });
