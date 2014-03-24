@@ -50,30 +50,25 @@
     };
 
 
-    Boilerplate.prototype.scan = function(callback){
+    /**
+     *  Gets list of all files from directory
+     */
+    Boilerplate.prototype.walkFiles = function(directory, callback){
 
-        var walker = require("walk").walk(".", { filters: [".git", ".svn"] });
-
+        var walker = require("walk").walk(directory, { filters: [".git", ".svn", ".DS_Store"] });
         var files = [];
-        var folders = [];
 
-        walker.on("file", function (root, fileStats, next) {
+        walker.on("file", function(root, fileStats, next) {
             files.push(root + "/" + fileStats.name);
             next();
         });
 
-        walker.on("directories", function (root, dirStatsArray, next) {
-            dirStatsArray.forEach(function(each){
-                folders.push(root + "/" + each.name);
-            });
-            next();
+        walker.on("end", function() {
+            callback(files);
         });
 
-        walker.on("end", (function () {
-            callback({ files : files, folders : folders });
-        }).bind(this));
-
     };
+
 
 
 	Boilerplate.prototype.fs = require("fs-extra");

@@ -3,14 +3,9 @@
     "use strict";
 
 
-    var filesystem = require("fs");
-
-
-    // load underscore with settings for mustaches
-
-
-    var ignoredStrings = ["/%", "/."];
-
+    /**
+     *  Creates markdown object with parsed HTML with used layouts
+     */
     var Markdowns = function() {
 
         require("../library/_Boilerplate").call(this);
@@ -18,6 +13,9 @@
         // require("./allFiles").init(function(allFiles){
         //    callback(getAllMarkdownsObjects(allFiles));
         // });
+
+        this.getThemeFiles();
+        return;
 
         this.getAllMarkdownsObjects({
             theme : this.getThemeFiles(),
@@ -31,46 +29,51 @@
     require("util").inherits(Markdowns, require("../library/_Boilerplate"));
 
 
+    /**
+     *
+     */
     Markdowns.prototype.getThemeFiles = function(){
 
-        var themeFiles = this.getAllFilesFromFolder("./%templates/");
-        var filesystem = require("fs");
-        var newThemeObj = {};
+        var i = 0;
+        var templatesFolder = global.downpress.config["dir-templates"];
+        var that = this;
 
+
+        function callbackOnEnd(){
+            var howManyTemplates = that.templates.length;
+            ++i;
+            if (i===howManyTemplates) { console.log("done"); }
+        }
+
+        function readFromFilesystem(currentFile){
+            that.fs.readFile(currentFile, readCurrentFile);
+        }
+
+        function readCurrentFile(error, data){
+            if (error) { throw error }
+            console.log(data);
+            callbackOnEnd();
+        }
+
+        this.walkFiles(templatesFolder, function(files){
+            files.forEach(readFromFilesystem);
+        });
+
+        /*
         themeFiles.forEach(function(ele){
             var themeFile = filesystem.readFileSync(ele)+"";
             var name = ele.slice(ele.lastIndexOf("/")+1).split(".html")[0];
             var isNotFuckingDsStore = name!==".DS_Store";
-            if (isNotFuckingDsStore) newThemeObj[name] = themeFile;
-        });
-
-        return newThemeObj;
-
-    };
-
-
-    Markdowns.prototype.getAllFilesFromFolder = function(dir) {
-
-        var filesystem = require("fs");
-        var results = [];
-        var that = this;
-
-        filesystem.readdirSync(dir).forEach(function(file) {
-
-            file = dir+'/'+file;
-            var stat = filesystem.statSync(file);
-
-            if (stat && stat.isDirectory()) {
-                results = results.concat(that.getAllFilesFromFolder(file))
-            } else results.push(file);
-
-        });
-
-        return results;
+            if (isNotFuckingDsStore) { newThemeObj[name] = themeFile; }
+        })
+        */
 
     };
 
 
+    /**
+     *
+     */
     Markdowns.prototype.getFilteredFolders = function() {
 
         var allFolders = this.getAllFolders(".");
@@ -92,6 +95,9 @@
     };
 
 
+    /**
+     *
+     */
     Markdowns.prototype.getAllFolders = function(dir) {
 
         var results = [];
@@ -114,6 +120,9 @@
     };
 
 
+    /**
+     *
+     */
     Markdowns.prototype.getFilteredFiles = function(){
 
         var allFiles = this.getAllFilesFromFolder(".");
@@ -140,6 +149,9 @@
     };
 
 
+    /**
+     *
+     */
     Markdowns.prototype.getAllMarkdownsObjects = function(allFiles){
 
         // get only markdowns, filter by containing of ".md" string
@@ -194,6 +206,9 @@
     };
 
 
+    /**
+     *
+     */
     Markdowns.prototype.readFileByPath = function(path) {
 
         var filesystem = require("fs");
@@ -207,6 +222,9 @@
     };
 
 
+    /**
+     *
+     */
     Markdowns.prototype.getHeaderObj = function(markdown) {
 
         var croppedByNewLineArr = markdown.split(/\n/);
@@ -232,6 +250,9 @@
     };
 
 
+    /**
+     *
+     */
     Markdowns.prototype.getBody = function(markdown) {
 
         var croppedByNewLineArr = markdown.split(/\n/);

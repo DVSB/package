@@ -3,22 +3,19 @@
     "use strict";
 
 
+    /**
+     *  Create an object with details of all files in your website
+     */
     var Statics = function() {
 
         require("../library/_Boilerplate").call(this);
 
-        var SCANNED_FOLDER = ".";
+        var that = this;
 
-        var allFiles = this.getAllFilesFromFolder(SCANNED_FOLDER);
-        var filteredFiles = this.removeIgnoredFiles(allFiles);
-        var parsedFiles = this.parseToFileObjects(filteredFiles);
-
-        global.downpress.statics = parsedFiles;
-
-        // plugins API needs to by asynchronous
-        setTimeout((function(){
-            this.emit("ready");
-        }).bind(this), 0);
+        this.walkFiles(".", function(files){
+            that.statics = files;
+            that.removeIgnored();
+        });
 
     };
 
@@ -26,72 +23,77 @@
     require("util").inherits(Statics, require("../library/_Boilerplate"));
 
 
-    Statics.prototype.getAllFilesFromFolder = function(dir) {
+    /**
+     *  Create an object with details of all files in your website
+     */
+    Statics.prototype.removeIgnored = function() {
 
-        // TODO this needs to be async
+        var buildDir = "./" + global.downpress.config["dir-build"];
+        var templatesDir = "./" + global.downpress.config["dir-templates"];
 
-        var filesystem = require("fs");
-        var results = [];
-        var that = this;
-
-        filesystem.readdirSync(dir).forEach(function(file) {
-
-            file = dir+'/'+file;
-            var stat = filesystem.statSync(file);
-
-            if (stat && stat.isDirectory()) {
-                results = results.concat(that.getAllFilesFromFolder(file))
-            } else results.push(file);
-
-        });
-
-        return results;
-
-    };
-
-
-    Statics.prototype.removeIgnoredFiles = function(arr) {
-
-        function isNotIgnored(fileName){
-            var isNotSystemFile = fileName.indexOf("/.")<=-1;
-            var isNotLibraryFile = fileName.indexOf("/%")<=-1;
-            return isNotSystemFile && isNotLibraryFile;
+        function isNotDsStore(file){
+            return file.indexOf(".DS_Store") <= -1;
         }
 
-        return arr.filter(isNotIgnored);
+        function isNotBuildDir(file){
+            return file.indexOf(buildDir)<=-1;
+        }
+
+        function isNotTemplatesDir(file){
+            return file.indexOf(templatesDir)<=-1;
+        }
+
+        this.statics = this.statics.filter(isNotDsStore);
+        this.statics = this.statics.filter(isNotTemplatesDir);
+        this.statics = this.statics.filter(isNotBuildDir);
+
+        // go to next function and parse all files to objects
+        this.parseToFileObjects();
 
     };
 
 
-    Statics.prototype.parseToFileObjects = function(files) {
+    /**
+     *  Parse to Statics Object
+     */
+    Statics.prototype.parseToFileObjects = function() {
 
-        var filesystem = require("fs");
+        var that = this;
         var newObj = [];
 
-        var getRandom = function(){
-            var random1 = Math.floor((Math.random()*800000)+100000);
-            var random2 = Math.floor((Math.random()*800000)+100000);
-            var random3 = Math.floor((Math.random()*800000)+100000);
-            return(random1+random2+random3).toString(36);
-        };
+        this.statics.forEach(function(file, i){
 
-        files.forEach(function(file, i){
-
-            var stats = filesystem.statSync(file);
+            var stats = that.fs.statSync(file);
 
             newObj[i] = {};
             newObj[i]._name = file.substr(file.lastIndexOf("/")+1);
             newObj[i]._extension = file.substr(file.lastIndexOf(".")+1);
             newObj[i]._size = stats.size;
             newObj[i]._path = file;
-            newObj[i]._uniqid = getRandom();
+            newObj[i]._uniqid = that.getRandomID();
 
         });
 
-        return newObj;
+        // done, everything is ready
+
+        global.downpress.statics = newObj;
+        this.emit("ready");
+
+    };
+
+
+    /**
+     *  Generate Uniq ID for files, can be used like uniq identifier on screen
+     */
+    Statics.prototype.getRandomID = function() {
+
+        var random1 = Math.floor((Math.random()*800000)+100000);
+        var random2 = Math.floor((Math.random()*800000)+100000);
+        var random3 = Math.floor((Math.random()*800000)+100000);
+
+        return(random1+random2+random3).toString(36);
 
     };
 
 
     module.exports = new Statics();
-

@@ -13,7 +13,8 @@
 
 	global.downpress = {
 		package = {...},
-		config = {...)
+		config = {...),
+		statics = [...]
 	}
 
 ## downpress.statics

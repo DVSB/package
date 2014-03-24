@@ -406,7 +406,7 @@
 		global.downpress.config["dir-templates"] = data.downpress["dir-templates"] || "%templates";
 
 		// check existing name of build folder
-		global.downpress.config["dir-build"] = data.downpress["dir-build"] || "%templates";
+		global.downpress.config["dir-build"] = data.downpress["dir-build"] || "%build";
 
 		// interval of text files polling
 		global.downpress.config["watch-interval"] = data.downpress["watch-interval"] || "50";
