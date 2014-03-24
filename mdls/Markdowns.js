@@ -13,7 +13,7 @@
 
     var Markdowns = function() {
 
-        require("./_Boilerplate").call(this);
+        require("../library/_Boilerplate").call(this);
 
         // require("./allFiles").init(function(allFiles){
         //    callback(getAllMarkdownsObjects(allFiles));
@@ -28,7 +28,7 @@
     };
 
 
-    require("util").inherits(Markdowns, require("./_Boilerplate"));
+    require("util").inherits(Markdowns, require("../library/_Boilerplate"));
 
 
     Markdowns.prototype.getThemeFiles = function(){

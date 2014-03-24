@@ -5,7 +5,7 @@
 
     var Sitemap = function() {
 
-        require("./_Boilerplate").call(this);
+        require("../library/_Boilerplate").call(this);
 
         setTimeout((function(){
             this.emit("ready")
@@ -14,7 +14,7 @@
     };
 
 
-    require("util").inherits(Sitemap, require("./_Boilerplate"));
+    require("util").inherits(Sitemap, require("../library/_Boilerplate"));
 
 
     module.exports = new Sitemap();

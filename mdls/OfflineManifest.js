@@ -5,7 +5,7 @@
 
     var OfflineManifest = function() {
 
-        require("./_Boilerplate").call(this);
+        require("../library/_Boilerplate").call(this);
 
         setTimeout((function(){
             this.emit("ready")
@@ -14,7 +14,7 @@
     };
 
 
-    require("util").inherits(OfflineManifest, require("./_Boilerplate"));
+    require("util").inherits(OfflineManifest, require("../library/_Boilerplate"));
 
 
     module.exports = new OfflineManifest();

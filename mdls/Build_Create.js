@@ -5,7 +5,7 @@
 
 	var CreateBuildDirectory = function() {
 
-        require("./_Boilerplate").call(this);
+        require("../library/_Boilerplate").call(this);
 
 	    this.on("error", function(error){
 		    throw error;
@@ -21,7 +21,7 @@
 	};
 
 
-	require("util").inherits(CreateBuildDirectory, require("./_Boilerplate"));
+	require("util").inherits(CreateBuildDirectory, require("../library/_Boilerplate"));
 
 
 	CreateBuildDirectory.prototype.removeFolder = function(directory){

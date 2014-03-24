@@ -6,14 +6,14 @@
 
     var Plugins = function(){
 
-        require("../library/boilerplate/class").call(this);
+        require("../library/_Boilerplate").call(this);
 
         this.scannedProject();
 
     };
 
 
-    require("util").inherits(Plugins, require("../library/boilerplate/class"));
+    require("util").inherits(Plugins, require("../library/_Boilerplate"));
 
 
     Plugins.prototype.scannedProject = function(){

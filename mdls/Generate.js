@@ -8,7 +8,7 @@
 
     var Generate = function() {
 
-        require("./_Boilerplate").call(this);
+        require("../library/_Boilerplate").call(this);
 
         this.parseMarkdowns();
         this.removeMdFilesInBuild();
@@ -20,7 +20,7 @@
     };
 
 
-    require("util").inherits(Generate, require("./_Boilerplate"));
+    require("util").inherits(Generate, require("../library/_Boilerplate"));
 
 
     Generate.prototype.parseMarkdowns = function(){

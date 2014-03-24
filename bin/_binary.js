@@ -3,46 +3,61 @@
 
     "use strict";
 
+	/**
+	 *  This is constructed always when user types `downpress` to the terminal
+	 */
+    var Downpress = function(){
 
-    var Application = function(){
+	    // inherit "this" from the class boilerplate (underscore, events..)
+        require("../library/_Boilerplate").call(this);
 
-        require("../library/boilerplate/class").call(this);
+		var that = this;
 
-        global.downpress = {};
-        this.parsePackageJson();
+	    // if is not a valid package, break software
+        this.packageJsonParsing();
 
-        var consoleArgument = process.argv[2];
-        switch (consoleArgument) {
-
-            case "report" :
-                this.initReport();
-                break;
-
-            case "help" :
-                this.initHelp();
-                break;
-
-            case "run" :
-                this.initRun();
-                break;
-
-            case "init" :
-                this.initInit(); // well, this is the worst name of the func. TODO
-                break;
-
-            default :
-                this.initWithoutArgument();
-                break;
-
-        }
+		// after package.json is parsed successfully
+		this.on("package-parsed", function(){
+			that.parseSecondConsoleArgument();
+		});
 
     };
 
 
-    require("util").inherits(Application, require("../library/boilerplate/class"));
+    require("util").inherits(Downpress, require("../library/_Boilerplate"));
 
 
-    Application.prototype.initReport = function(){
+	/**
+	 *  Parsing second argument typed to console (like `downpress run`)
+	 */
+	Downpress.prototype.parseSecondConsoleArgument = function(){
+
+		// user types in the console also a second parameter
+		var consoleArgument = process.argv[2];
+
+		switch (consoleArgument) {
+
+			case "report" :
+				this.initReport();  break;
+
+			case "help" :
+				this.initHelp(); break;
+
+			case "run" :
+				this.initRun(); break;
+
+			case "init" :
+				this.initInit(); break;
+
+			default :
+				this.initWithoutArgument(); break;
+
+		}
+
+	}
+
+
+    Downpress.prototype.initReport = function(){
 
         console.log("");
         this.log("report a bug?");
@@ -78,33 +93,34 @@
     };
 
 
-    Application.prototype.initHelp = function(){
+    Downpress.prototype.initHelp = function(){
 
         this.log("help is gonna be implemented in version 0.3, sorry");
 
     };
 
+	/**
+	 *  When user type `downpress run` and package.json does exist in root of project
+	 */
+    Downpress.prototype.initRun = function(){
 
-    Application.prototype.initRun = function(){
+	    var port = global.downpress.config["localhost-port"];
 
         console.log();
-        this.log("browse http://localhost::8088 for a build preview");
+        this.log("browse http://localhost:" + port + " for a build preview");
         this.log("watching "+process.env.PWD);
-        console.log();
 
-        this.checkIfIsDownpressDir();
+        this.createTemplatesFolder();
         this.watchLocalhost();
-        this.watchInitialization();
+        this.watchDirectories();
 
     };
 
 
-    Application.prototype.initInit = function(){
+    Downpress.prototype.initInit = function(){
 
         var that = this;
-
         var filesystem = require("fs");
-
         var i = 0;
 
         function handleFolderErrors(err){
@@ -128,7 +144,7 @@
     };
 
 
-    Application.prototype.initOnReady = function(){
+    Downpress.prototype.initOnReady = function(){
 
         var i = 0;
         var filesystem = require("fs");
@@ -180,32 +196,45 @@
 
     };
 
+	/**
+	 *  When Downpress is run without a valid argument (second - `downpress something`)
+	 */
+    Downpress.prototype.initWithoutArgument = function(){
 
-    Application.prototype.initWithoutArgument = function(){
-
-        this.log("error -- use only subcommand: `run`, `init` or `report`", true);
-
-    };
-
-
-    Application.prototype.checkIfIsDownpressDir = function(){
-
-        var isExistsTemplates = require("fs").existsSync('./%templates/');
-
-        if (!isExistsTemplates) {
-            this.log("ERROR (more on downpress.org/start)", true);
-            this.log("missing `%templates` folder!", true);
-            this.log("you can download a boilerplate, or use `downpress init`", true);
-            console.log();
-            process.kill();
-        }
+	    this.log("ERROR -- use only subcommands: `run`, `init` or `report`", true);
+	    this.log("downpress killed", true);
+	    process.kill();
 
     };
 
 
-    Application.prototype.watchLocalhost = function(){
+	/**
+	 *  Check if %Templates folder does exist, if no - create a new one, if yes - nothing
+	 */
+    Downpress.prototype.createTemplatesFolder = function(){
 
-        // TODO add optional port setting
+	    // todo
+	    // mkdir is synch operation because this is not happening everytime
+	    // the relevant question ~ how to solve callbacks if are optional?
+
+	    var FOLDER = "./" + global.downpress.config["dir-templates"];
+	    var that = this;
+
+	    function doesntExists(){
+		    that.fs.mkdirSync(FOLDER);
+		    that.log(FOLDER + " folder created to root", true);
+	    }
+
+	    this.fs.exists(FOLDER, function(exists){
+		    if (!exists) doesntExists();
+	    });
+
+    };
+
+	/**
+	 *  Create the server on localhost with an optional port (default 8088)
+	 */
+    Downpress.prototype.watchLocalhost = function(){
 
         var connect = require("connect");
 
@@ -225,57 +254,163 @@
 
     };
 
+	/**
+	 *  Chokidar options for watcher of folders, what should be watched, in which interval
+	 */
+    Downpress.prototype.chokidarOptions = function(){
 
-    Application.prototype.chokidarOptions = function(){
+	    return {
+		    ignored : global.downpress.config["watch-ignored"],
+		    persistent : false,
+		    interval : global.downpress.config["watch-interval"],
+		    binaryInterval : global.downpress.config["watch-interval-binaries"],
+		    ignoreInitial : true
+	    };
 
+    }
 
-        return {
-            ignored : /%build/,
-            persistent : true,
-            interval : 300,
-            ignoreInitial : true
-        };
+	/**
+	 *  Choikar watches all folders with settings and on change runs Plugins.js
+	 */
+    Downpress.prototype.watchDirectories = function(){
 
-
-    };
-
-
-    Application.prototype.watchInitialization = function(){
-
-        var options = this.chokidarOptions();
-        var that = this;
-
-        // initial build
+        // initial build without any inital changes, just needs to be build
         require("./Plugins");
 
         // watch this folder with options, every 100ms regenerate whole folder
-        require("chokidar").watch("./", options).on("all", function(event, path){
-
-            downpress.lastChanged = { event : event, path : path };
-
-            // what if next change is faster than folder is regenerated?
-            if (!global.downpress.isGenerating) {
-                that.log("on `"+event+"` in `"+path +"`");
-                require("./Plugins");
-            }
-
-        });
+	    var options = this.chokidarOptions();
+	    var that = this;
+        require("chokidar").watch("./", options).on("all", that.onWatchingChangeChoikar);
 
     };
 
 
-    Application.prototype.parsePackageJson = function(){
+	/**
+	 *  Run on every change of Choikar in all directories
+	 */
+	Downpress.prototype.onWatchingChangeChoikar = function(event, path){
 
-        global.downpress.config = require("fs").readFileSync("./package.json");
-        global.downpress.config = JSON.parse(global.downpress.config);
+		// TODO why the hell are on first time run "unlinkkDir ." 2x ?
+		// shouldn't be even once
 
-        if (!global.downpress.config.version) {
-            global.downpress.config.version = "0.0.3";
-        }
+		// TODO
+		// this can be used later for detection, what actually should be regenerated
+		// if is changed something in templates - only markdowns should be replaced
+		// if is changed something in binary, only that binary should be replaced
+		// if is changed something inside file, only this file should be regenerated
+		global.downpress.lastChanged = { event : event, path : path };
+
+		var that = this;
+
+		// what if next change is faster than folder is regenerated?
+		if (!global.downpress.isGenerating) {
+			that.log("on `"+event+"` in `"+path +"`");
+			require("./Plugins");
+		}
+
+	};
+
+
+	/**
+	 *  Read package.json file from filesystem, this file is mandatory
+	 */
+    Downpress.prototype.packageJsonParsing = function(){
+
+	    // this is global object valid everywhere in application
+	    global.downpress = {};
+
+	    // package.json is a convention used in nodejs/grunt prjts
+	    var FILE_NAME = "./package.json";
+	    var that = this;
+
+	    // read package from filesystem, check if is there
+	    var rawPackage = this.fs.readFile(FILE_NAME, function(error, data){
+		    if (error) that.errorOnPackageJsonRead(error);
+			var parsedJsonFile = JSON.parse(data);
+		    // TODO, add catching errors for unvalid JSON
+		    that.successOnPackageJsonRead(parsedJsonFile);
+	    });
 
     };
+
+
+	/**
+	 *  When file package.json does exist
+	 */
+	Downpress.prototype.successOnPackageJsonRead = function(data){
+
+		// if package.json file doens't contain downpress object, throw error
+		var isDownpressPackage = data.downpress;
+		if (!isDownpressPackage) this.errorOnMissingDownpressInPackage();
+
+		// we can access to whole package.json file via package object
+		global.downpress.package = data;
+
+		// or we can access to downpress object directly and edit it)
+		global.downpress.config = data.downpress;
+
+		// if port is not defined, set default to 8088
+		global.downpress.config["localhost-port"] = data.downpress["localhost-port"] || "8088";
+		global.downpress.config["localhost-port"] += ""; // sanitate in case of a number
+
+		// check existing name of templates folder
+		global.downpress.config["dir-templates"] = data.downpress["dir-templates"] || "%templates";
+
+		// check existing name of build folder
+		global.downpress.config["dir-build"] = data.downpress["dir-build"] || "%templates";
+
+		// interval of text files polling
+		global.downpress.config["watch-interval"] = data.downpress["watch-interval"] || "50";
+		global.downpress.config["watch-interval"] += "";
+
+		// interval of text files polling
+		global.downpress.config["watch-interval-binaries"] = data.downpress["watch-interval-binaries"] || "300";
+		global.downpress.config["watch-interval-binaries"] += "";
+
+		// interval of text files polling
+		// TODO, this needs to be implemented, as regexp or function or array
+		global.downpress.config["watch-ignored"] = /%build/;
+
+		// package.json exists and is parsed successfully
+		this.emit("package-parsed");
+
+	};
+
+	/**
+	 *  When file package.json doesn't exists in root of project (when DP is run)
+	 */
+	Downpress.prototype.errorOnPackageJsonRead = function(error){
+
+		var isNotExists = error.code = "ENOENT";
+		if (!isNotExists) return;
+
+		// log error message
+		this.log("= ERROR", true);
+		this.log("REASON: file package.json doesn't exists in project", true);
+		this.log("SOLUTION: create file package.json in your root", true);
+
+		// kill process and finish the package run
+		process.kill();
+
+	};
+
+
+	/**
+	 *  When we have a package.json file, but inside is missing required "downpress" object
+	 */
+	Downpress.prototype.errorOnMissingDownpressInPackage = function(error){
+
+		// log error message
+		this.log("= ERROR", true);
+		this.log("REASON: file package.json has no object downpress", true);
+		this.log("SOLUTION: create in package.json 'downpress : {}' object", true);
+
+		// kill process and finish the package run
+		process.kill();
+
+	};
 
 
     // run application
 
-    new Application();
+    new Downpress();

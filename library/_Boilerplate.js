@@ -76,4 +76,7 @@
     };
 
 
+	Boilerplate.prototype.fs = require("fs-extra");
+
+
 	module.exports = Boilerplate;

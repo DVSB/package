@@ -1,5 +1,21 @@
 # DOCS
 
+## package.json
+
+	"localhost-port" : "8088"
+	"dir-templates" : "%templates"
+	"dir-build" : "%build"
+	"watch-interval" : "50",
+    "watch-interval-binaries" : "300",
+    "watch-ignored" : /%build/
+
+## global object
+
+	global.downpress = {
+		package = {...},
+		config = {...)
+	}
+
 ## downpress.statics
 
     [
