@@ -3,15 +3,16 @@
 
     "use strict";
 
+
 	/**
 	 *  This is constructed always when user types `downpress` to the terminal
 	 */
     var Downpress = function(){
 
+		var that = this;
+
 	    // inherit "this" from the class boilerplate (underscore, events..)
         require("../library/_Boilerplate").call(this);
-
-		var that = this;
 
 	    // if is not a valid package, break software
         this.packageJsonParsing();
@@ -34,11 +35,10 @@
 
 		// user types in the console also a second parameter
 		var consoleArgument = process.argv[2];
-
 		switch (consoleArgument) {
 
 			case "report" :
-				this.initReport();  break;
+				this.initReport(); break;
 
 			case "help" :
 				this.initHelp(); break;
@@ -54,9 +54,12 @@
 
 		}
 
-	}
+	};
 
 
+	/**
+	 *  Attach on website this, user can send also the personal data about his computer and OS and Node
+	 */
     Downpress.prototype.initReport = function(){
 
         console.log("");
@@ -89,15 +92,21 @@
         this.log("  version openssl: " + process.versions.openssl);
 
         console.log("");
+	    process.kill();
 
     };
 
 
+	/**
+	 *  When user type `downpress help`, TODO should be implemented in next version for every command
+	 */
     Downpress.prototype.initHelp = function(){
 
-        this.log("help is gonna be implemented in version 0.3, sorry");
+        this.log("help is gonna be implemented in version 0.3, sorry", true);
+	    process.kill();
 
     };
+
 
 	/**
 	 *  When user type `downpress run` and package.json does exist in root of project
@@ -117,47 +126,60 @@
     };
 
 
+	/**
+	 *  When user type `downpress init` and wants to create a new project boilerplate
+	 */
     Downpress.prototype.initInit = function(){
 
         var that = this;
-        var filesystem = require("fs");
         var i = 0;
 
         function handleFolderErrors(err){
+
             if (err) {
-                console.log("error -- folder already exists: "+ err.path, true);
+                that.log("ERROR: folder "+ err.path + "already does exist!", true);
                 process.kill();
+            } else if (++i===9) {
+	            that.whenAllInitFoldersAreCreated();
             }
-            if (++i===9) that.initOnReady();
+
         }
 
-        filesystem.mkdir("./articles", handleFolderErrors);
-        filesystem.mkdir("./%templates", handleFolderErrors);
-        filesystem.mkdir("./%build", handleFolderErrors);
-        filesystem.mkdir("./page", handleFolderErrors);
-        filesystem.mkdir("./statics", handleFolderErrors);
-        filesystem.mkdir("./articles/1st", handleFolderErrors);
-        filesystem.mkdir("./articles/2nd", handleFolderErrors);
-        filesystem.mkdir("./articles/3rd", handleFolderErrors);
-        filesystem.mkdir("./articles/4th", handleFolderErrors);
+        this.fs.mkdir("./articles", handleFolderErrors);
+	    this.fs.mkdir("./%templates", handleFolderErrors);
+	    this.fs.mkdir("./%build", handleFolderErrors);
+	    this.fs.mkdir("./page", handleFolderErrors);
+	    this.fs.mkdir("./statics", handleFolderErrors);
+	    this.fs.mkdir("./articles/1st", handleFolderErrors);
+	    this.fs.mkdir("./articles/2nd", handleFolderErrors);
+	    this.fs.mkdir("./articles/3rd", handleFolderErrors);
+	    this.fs.mkdir("./articles/4th", handleFolderErrors);
+
+	    // TODO
+	    // maybe this can be created without files, just with some inteligent parameter
+	    // something like ~ i want create this file also if the root directory doesn't exist
 
     };
 
 
-    Downpress.prototype.initOnReady = function(){
+	/**
+	 *  On command `init` create also files, after directories are already created
+	 */
+    Downpress.prototype.whenAllInitFoldersAreCreated = function(){
 
         var i = 0;
-        var filesystem = require("fs");
+	    var that = this;
 
         function handleFolderErrors(err){
+
             if (err) {
-                log("file already exists: "+ err.path, true);
+                that.log("file already exists: "+ err.path, true);
                 process.kill();
+            } else if (++i===13) {
+	            that.log("success —- all files created successfully");
+                that.log("type `downpress run` and open browser");
             }
-            if (++i===13) {
-                log("success —- all files created successfully");
-                log("type \"downpress run\" and open browser");
-            }
+
         }
 
         var msg = {};
@@ -180,21 +202,22 @@
         msg.index += "\t<a href=\"/articles/4th/\">4th blog</a><br/>\n";
         msg.index += "\t<a href=\"/page/\">page</a><br/>\n";
 
-        filesystem.appendFile("./readme.md", msg4, handleFolderErrors);
-        filesystem.appendFile("./%templates/index.html", msg.index, handleFolderErrors);
-        filesystem.appendFile("./%templates/page.html", msg1, handleFolderErrors);
-        filesystem.appendFile("./%templates/article.html", msg1, handleFolderErrors);
-        filesystem.appendFile("./%build/build-folder.md", msg5, handleFolderErrors);
-        filesystem.appendFile("./page/index.md", msg6, handleFolderErrors);
-        filesystem.appendFile("./articles/1st/index.md", msg2, handleFolderErrors);
-        filesystem.appendFile("./articles/2nd/index.md", msg2, handleFolderErrors);
-        filesystem.appendFile("./articles/3rd/index.md", msg2, handleFolderErrors);
-        filesystem.appendFile("./articles/4th/index.md", msg2, handleFolderErrors);
-        filesystem.appendFile("./statics/stylesheet.css", msg3, handleFolderErrors);
-        filesystem.appendFile("./statics/client.js", msg8, handleFolderErrors);
-        filesystem.appendFile("./index.md", msg7, handleFolderErrors);
+	    this.fs.appendFile("./readme.md", msg4, handleFolderErrors);
+	    this.fs.appendFile("./%templates/index.html", msg.index, handleFolderErrors);
+	    this.fs.appendFile("./%templates/page.html", msg1, handleFolderErrors);
+	    this.fs.appendFile("./%templates/article.html", msg1, handleFolderErrors);
+	    this.fs.appendFile("./%build/build-folder.md", msg5, handleFolderErrors);
+	    this.fs.appendFile("./page/index.md", msg6, handleFolderErrors);
+	    this.fs.appendFile("./articles/1st/index.md", msg2, handleFolderErrors);
+	    this.fs.appendFile("./articles/2nd/index.md", msg2, handleFolderErrors);
+	    this.fs.appendFile("./articles/3rd/index.md", msg2, handleFolderErrors);
+	    this.fs.appendFile("./articles/4th/index.md", msg2, handleFolderErrors);
+	    this.fs.appendFile("./statics/stylesheet.css", msg3, handleFolderErrors);
+	    this.fs.appendFile("./statics/client.js", msg8, handleFolderErrors);
+        this.fs.appendFile("./index.md", msg7, handleFolderErrors);
 
     };
+
 
 	/**
 	 *  When Downpress is run without a valid argument (second - `downpress something`)
@@ -213,8 +236,7 @@
 	 */
     Downpress.prototype.createTemplatesFolder = function(){
 
-	    // todo
-	    // mkdir is synch operation because this is not happening everytime
+	    // TODO mkdir is synch operation because this is not happening everytime
 	    // the relevant question ~ how to solve callbacks if are optional?
 
 	    var FOLDER = "./" + global.downpress.config["dir-templates"];
@@ -226,10 +248,11 @@
 	    }
 
 	    this.fs.exists(FOLDER, function(exists){
-		    if (!exists) doesntExists();
+		    if (!exists) { doesntExists(); }
 	    });
 
     };
+
 
 	/**
 	 *  Create the server on localhost with an optional port (default 8088)
@@ -237,22 +260,46 @@
     Downpress.prototype.watchLocalhost = function(){
 
         var connect = require("connect");
+	    var buildFolder = "./" + global.downpress.config["dir-build"];
+        var options = connect().use(connect.static(buildFolder));
 
-        function errorHandling(e){
-            if (e.code==="EADDRINUSE") {
-                this.log("error -- port 8088 is already used by other process", true);
-                console.log();
-                process.kill();
-            } else {
-                console.log("TODO");
-                console.log(e);
-            }
-        }
+	    var server = require("http").createServer(options);
 
-        var options = connect().use(connect.static("./%build"));
-        require("http").createServer(options).listen(8088).on("error", errorHandling);
+	    server.listen(8088);
+	    server.on("error", (function(error){
+		    this.portAlreadyExists(error);
+	    }).bind(this));
 
     };
+
+
+	/**
+	 *  If port is already listening on something, report error to console
+	 */
+	Downpress.prototype.portAlreadyExists = function(error){
+
+		var isAlreadyUsed = ("EADDRINUSE"===error.code);
+		var usedPort = global.downpress.config["localhost-port"];
+
+		if (isAlreadyUsed) {
+
+			this.log("ERROR: port "+usedPort+" is already used by other process (maybe with downpress)", true);
+			this.log("maybe your have downpress already run somewhere (??)", true);
+			this.log("if you want to use more downpress ins. in one moment, change port in package.json", true);
+			console.log();
+
+		} else {
+
+			this.log("TODO: this is unknown error of server creating", true);
+			this.log("please report this, so we can handle this error", true);
+			console.log(error);
+
+		}
+
+		process.kill();
+
+	};
+
 
 	/**
 	 *  Chokidar options for watcher of folders, what should be watched, in which interval
@@ -267,19 +314,21 @@
 		    ignoreInitial : true
 	    };
 
-    }
+    };
+
 
 	/**
 	 *  Choikar watches all folders with settings and on change runs Plugins.js
 	 */
     Downpress.prototype.watchDirectories = function(){
 
+	    var options = this.chokidarOptions();
+	    var that = this;
+
         // initial build without any inital changes, just needs to be build
         require("./Plugins");
 
         // watch this folder with options, every 100ms regenerate whole folder
-	    var options = this.chokidarOptions();
-	    var that = this;
         require("chokidar").watch("./", options).on("all", that.onWatchingChangeChoikar);
 
     };
@@ -290,6 +339,8 @@
 	 */
 	Downpress.prototype.onWatchingChangeChoikar = function(event, path){
 
+		var that = this;
+
 		// TODO why the hell are on first time run "unlinkkDir ." 2x ?
 		// shouldn't be even once
 
@@ -299,8 +350,6 @@
 		// if is changed something in binary, only that binary should be replaced
 		// if is changed something inside file, only this file should be regenerated
 		global.downpress.lastChanged = { event : event, path : path };
-
-		var that = this;
 
 		// what if next change is faster than folder is regenerated?
 		if (!global.downpress.isGenerating) {
@@ -316,20 +365,20 @@
 	 */
     Downpress.prototype.packageJsonParsing = function(){
 
-	    // this is global object valid everywhere in application
-	    global.downpress = {};
-
 	    // package.json is a convention used in nodejs/grunt prjts
 	    var FILE_NAME = "./package.json";
 	    var that = this;
 
 	    // read package from filesystem, check if is there
-	    var rawPackage = this.fs.readFile(FILE_NAME, function(error, data){
-		    if (error) that.errorOnPackageJsonRead(error);
-			var parsedJsonFile = JSON.parse(data);
+	    this.fs.readFile(FILE_NAME, function(error, data){
+		    var parsedJsonFile = JSON.parse(data);
+		    if (error) { that.errorOnPackageJsonRead(error); }
 		    // TODO, add catching errors for unvalid JSON
 		    that.successOnPackageJsonRead(parsedJsonFile);
 	    });
+
+	    // this is global object valid everywhere in application
+	    global.downpress = {};
 
     };
 
@@ -341,7 +390,7 @@
 
 		// if package.json file doens't contain downpress object, throw error
 		var isDownpressPackage = data.downpress;
-		if (!isDownpressPackage) this.errorOnMissingDownpressInPackage();
+		if (!isDownpressPackage) { this.errorOnMissingDownpressInPackage(); }
 
 		// we can access to whole package.json file via package object
 		global.downpress.package = data;
@@ -376,13 +425,14 @@
 
 	};
 
+
 	/**
 	 *  When file package.json doesn't exists in root of project (when DP is run)
 	 */
 	Downpress.prototype.errorOnPackageJsonRead = function(error){
 
 		var isNotExists = error.code = "ENOENT";
-		if (!isNotExists) return;
+		if (!isNotExists) { return; }
 
 		// log error message
 		this.log("= ERROR", true);
@@ -398,7 +448,7 @@
 	/**
 	 *  When we have a package.json file, but inside is missing required "downpress" object
 	 */
-	Downpress.prototype.errorOnMissingDownpressInPackage = function(error){
+	Downpress.prototype.errorOnMissingDownpressInPackage = function(){
 
 		// log error message
 		this.log("= ERROR", true);
