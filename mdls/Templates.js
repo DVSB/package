@@ -3,23 +3,14 @@
     "use strict";
 
 
+    /**
+     * Creates an object with all templates in %templates folder just like raw text
+     */
     var Templates = function() {
 
         require("../library/_Boilerplate").call(this);
 
-        var SCANNED_FOLDER = ".";
-
-        var allFiles = this.getAllFilesFromFolder(SCANNED_FOLDER);
-        var themeFiles = this.keepOnlyThemeFolder(allFiles);
-        var templatesContent = this.readContentOfAllThemeFiles(themeFiles);
-
-        // DONE
-
-        global.downpress.templates = templatesContent;
-
-        setTimeout((function(){
-            this.emit("ready")
-        }).bind(this), 1);
+	    this.getAllTemplateFiles();
 
     };
 
@@ -27,58 +18,75 @@
     require("util").inherits(Templates, require("../library/_Boilerplate"));
 
 
-    Templates.prototype.getAllFilesFromFolder = function(dir) {
+    /**
+     * Get all files in templates folder, also with weird non-html files
+     */
+    Templates.prototype.getAllTemplateFiles = function() {
 
-        // TODO this needs to be async
+	    var that = this;
+	    var templatesDir = "./" + global.downpress.config["dir-templates"];
 
-        var filesystem = require("fs");
-        var results = [];
-        var that = this;
-
-        filesystem.readdirSync(dir).forEach(function(file) {
-
-            file = dir+'/'+file;
-            var stat = filesystem.statSync(file);
-
-            if (stat && stat.isDirectory()) {
-                results = results.concat(that.getAllFilesFromFolder(file))
-            } else results.push(file);
-
-        });
-
-        return results;
+	    this.walkFiles(templatesDir, function(files){
+		    that.files = files;
+		    that.removeNonHtmlFiles();
+	    });
 
     };
 
 
-    Templates.prototype.keepOnlyThemeFolder = function(arr) {
+    /**
+     * Remove all files which are not really templates and are don't HTML/HTM
+     */
+    Templates.prototype.removeNonHtmlFiles = function() {
 
-        function isNotIgnored(fileName){
-            var isThemeFolder = fileName.indexOf("./%templates/")!==-1;
-            return isThemeFolder;
-        }
-
-        return arr.filter(isNotIgnored);
+	    this.parseAllTemplateFiles();
 
     };
 
 
-    Templates.prototype.readContentOfAllThemeFiles = function(themeFiles) {
+    /**
+     * Read content of theme files and put into smart object downpress.templates
+     */
+    Templates.prototype.parseAllTemplateFiles = function() {
 
-        var filesystem = require("fs");
-        var newThemeObj = {};
+	    var that = this;
 
-        themeFiles.forEach(function(ele){
-            var themeFile = filesystem.readFileSync(ele)+"";
-            var name = ele.slice(ele.lastIndexOf("/")+1).split(".html")[0];
-            var isNotFuckingDsStore = name!==".DS_Store";
-            if (isNotFuckingDsStore) newThemeObj[name] = themeFile;
-        });
+	    function forEverySingle(templatePath, i){
+		    that.readFile(templatePath, i, that);
+	    }
 
-        return newThemeObj;
+        this.files.forEach(forEverySingle);
+
+    };
+
+
+    /**
+     * When file is read or with error or correctly
+     */
+    Templates.prototype.readFile = function(templatePath, i, that) {
+
+	    this.templatesObj = {};
+
+	    function allDone(){
+		    global.downpress.templates = that.templatesObj;
+		    that.emit("ready");
+	    }
+
+	    function onFileReaded(err, rawContent){
+		    if (err) { throw err; }
+		    that.templatesObj[templateName] = rawContent+"";
+		    var howManyTemplates = that.files.length-1;
+		    if (howManyTemplates===i) { allDone(); }
+	    }
+
+	    // convert path to the clear file name
+	    var lastSlash = templatePath.lastIndexOf("/")+1;
+	    var fileName = templatePath.slice(lastSlash);
+	    var templateName = fileName.split(".html")[0];
+
+	    that.fs.readFile(templatePath, onFileReaded);
 
     };
 
 
     module.exports = new Templates();
-

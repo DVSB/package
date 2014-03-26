@@ -14,7 +14,8 @@
 	global.downpress = {
 		package = {...},
 		config = {...),
-		statics = [...]
+		statics = [...],
+		templates = {...}
 	}
 
 ## downpress.statics

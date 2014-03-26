@@ -28,8 +28,8 @@
      */
     Statics.prototype.removeIgnored = function() {
 
+	    var templatesDir = "./" + global.downpress.config["dir-templates"];
         var buildDir = "./" + global.downpress.config["dir-build"];
-        var templatesDir = "./" + global.downpress.config["dir-templates"];
 
         function isNotDsStore(file){
             return file.indexOf(".DS_Store") <= -1;
@@ -63,19 +63,16 @@
 
         this.statics.forEach(function(file, i){
 
-            var stats = that.fs.statSync(file);
-
             newObj[i] = {};
             newObj[i]._name = file.substr(file.lastIndexOf("/")+1);
             newObj[i]._extension = file.substr(file.lastIndexOf(".")+1);
-            newObj[i]._size = stats.size;
+            newObj[i]._size = that.fs.statSync(file).size;
             newObj[i]._path = file;
             newObj[i]._uniqid = that.getRandomID();
 
         });
 
         // done, everything is ready
-
         global.downpress.statics = newObj;
         this.emit("ready");
 

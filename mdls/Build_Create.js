@@ -31,20 +31,24 @@
      */
 	CreateBuildDirectory.prototype.removeFolder = function(){
 
-		var that = this;
         var BUILD_FOLDER = "./" + global.downpress.config["dir-build"];
+		this.fs.remove(BUILD_FOLDER, (this.removedBuildFolder).bind(this));
 
-        function removed(error){
+	};
 
-            if (error) {
-                that.emit("error", error); return;
-            }
 
-            that.copyBuildFolder();
+	/**
+	 *  After the build folder is removed or when removing of folder cause an error
+	 */
+	CreateBuildDirectory.prototype.removedBuildFolder = function(error){
 
-        }
+		if (error) {
+			this.emit("error", error);
+			return;
+		}
 
-		this.fs.remove(BUILD_FOLDER, removed);
+		// if everything was without error, run next function
+		this.copyBuildFolder();
 
 	};
 
@@ -68,22 +72,19 @@
      */
     CreateBuildDirectory.prototype.copyFiles = function(allFiles){
 
-        var BUILD_FOLDER = "./" + global.downpress.config["dir-build"];
+	    var that = this;
         var i = 0;
-        var that = this;
 
-        function callback(){
-            i++;
-            if (i===allFiles.length) { that.emit("ready"); }
-        }
+	    function onFileCopied(error){
+		    if (error) { that.emit("error", error); }
+		    i++;
+		    if (i===allFiles.length) { that.emit("ready"); }
+	    }
+
+	    var BUILD_FOLDER = "./" + global.downpress.config["dir-build"];
 
         allFiles.forEach(function(file){
-
-            that.fs.copy(file, BUILD_FOLDER+"/"+file, function(err){
-                if (err) { that.emit("error", err); }
-                callback();
-            });
-
+	        that.fs.copy(file, BUILD_FOLDER+"/"+file, onFileCopied);
         });
 
     };

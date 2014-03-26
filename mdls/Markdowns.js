@@ -35,12 +35,12 @@
     Markdowns.prototype.getThemeFiles = function(){
 
         var i = 0;
-        var templatesFolder = global.downpress.config["dir-templates"];
+        var templatesFolder = "./"+global.downpress.config["dir-templates"];
         var that = this;
 
-
         function callbackOnEnd(){
-            var howManyTemplates = that.templates.length;
+	        console.log(global.downpress.templates);
+	        var howManyTemplates = global.downpress.templates.length;
             ++i;
             if (i===howManyTemplates) { console.log("done"); }
         }
@@ -51,12 +51,11 @@
 
         function readCurrentFile(error, data){
             if (error) { throw error }
-            console.log(data);
             callbackOnEnd();
         }
 
-        this.walkFiles(templatesFolder, function(files){
-            files.forEach(readFromFilesystem);
+	    this.walkFiles(templatesFolder, function(files){
+		    files.forEach(readFromFilesystem);
         });
 
         /*
@@ -69,7 +68,6 @@
         */
 
     };
-
 
     /**
      *
@@ -84,7 +82,7 @@
         allFolders.forEach(function(currentFolder){
             ignoredStrings.forEach(function(ignoredString){
                 var shouldBeRemoved = currentFolder.indexOf(ignoredString)>-1;
-                if (shouldBeRemoved) toBeRemoved.push(currentFolder);
+                if (shouldBeRemoved) { toBeRemoved.push(currentFolder); }
             });
         });
 

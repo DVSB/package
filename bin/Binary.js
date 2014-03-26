@@ -244,7 +244,7 @@
 
 	    function doesntExists(){
 		    that.fs.mkdirSync(FOLDER);
-		    that.log(FOLDER + " folder created to root", true);
+		    that.log(FOLDER + " folder created to the root of a website", true);
 	    }
 
 	    this.fs.exists(FOLDER, function(exists){

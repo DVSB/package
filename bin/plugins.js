@@ -10,7 +10,7 @@
 
         require("../library/_Boilerplate").call(this);
 
-        this.scannedProject();
+        this.createTempFolder();
 
     };
 
@@ -21,7 +21,7 @@
     /**
      *  Create the build folder with all files as is in normal folders
      */
-    Plugins.prototype.scannedProject = function(){
+    Plugins.prototype.createTempFolder = function(){
 
         var that = this;
 
@@ -29,6 +29,7 @@
         this.generatingTime = +new Date();
         global.downpress.isGenerating = true;
 
+	    // creates a build folder and copy all files there
         require("../mdls/Build_Create").on("ready", function(){
             that.buildCopied();
         });
@@ -49,17 +50,22 @@
             if (i===3) { that.exportToFileSystem(); }
         });
 
+	    // global.downpress.statics
         require("../mdls/Statics").on("ready", function(){
             that.emit("built");
         });
 
-        require("../mdls/Markdowns").on("ready", function(){
-            that.emit("built");
-        });
+	    // global.downpress.templates
+	    require("../mdls/Templates").on("ready", function(){
+		    that.emit("built");
+	    });
 
-        require("../mdls/Templates").on("ready", function(){
-            that.emit("built");
-        });
+	    // global.downpress.markdowns
+        require("../mdls/Markdowns").on("ready", function(){
+		    that.emit("built");
+	    });
+
+
 
     };
 
