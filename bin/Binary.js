@@ -416,6 +416,9 @@
 		global.downpress.config["watch-interval-binaries"] = data.downpress["watch-interval-binaries"] || "300";
 		global.downpress.config["watch-interval-binaries"] += "";
 
+		// delimiter of header in markdown files for meta data
+		global.downpress.config["markdown-delimiter"] = data.downpress["markdown-delimiter"] || "---";
+
 		// interval of text files polling
 		// TODO, this needs to be implemented, as regexp or function or array
 		global.downpress.config["watch-ignored"] = /%build/;

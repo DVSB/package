@@ -8,6 +8,7 @@
 	"watch-interval" : "50",
     "watch-interval-binaries" : "300",
     "watch-ignored" : /%build/
+    "markdown-delimiter" : "---"
 
 ## global object
 

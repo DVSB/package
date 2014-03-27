@@ -67,24 +67,26 @@
 
 	    this.templatesObj = {};
 
-	    function allDone(){
-		    global.downpress.templates = that.templatesObj;
-		    that.emit("ready");
-	    }
-
-	    function onFileReaded(err, rawContent){
-		    if (err) { throw err; }
-		    that.templatesObj[templateName] = rawContent+"";
-		    var howManyTemplates = that.files.length-1;
-		    if (howManyTemplates===i) { allDone(); }
-	    }
-
 	    // convert path to the clear file name
 	    var lastSlash = templatePath.lastIndexOf("/")+1;
 	    var fileName = templatePath.slice(lastSlash);
 	    var templateName = fileName.split(".html")[0];
 
 	    that.fs.readFile(templatePath, onFileReaded);
+
+	    // when all files are already read and saved
+	    function allDone(){
+		    global.downpress.templates = that.templatesObj;
+		    that.emit("ready");
+	    }
+
+	    // when one specific file is read from filesystem
+	    function onFileReaded(err, rawContent){
+		    if (err) { throw err; }
+		    that.templatesObj[templateName] = rawContent+"";
+		    var howManyTemplates = that.files.length-1;
+		    if (howManyTemplates===i) { allDone(); }
+	    }
 
     };
 

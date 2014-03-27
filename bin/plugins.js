@@ -4,6 +4,15 @@
 
 
     /**
+     *   All generating should have just three steps
+     *      1; copy all files to BUILD folder
+     *      2; find markdowns, statics, templates, anything ..
+     *      3; generating
+     *      4; after generating
+     */
+
+
+    /**
      *  Plugins is run on every change in a website folder
      */
     var Plugins = function(){
@@ -45,8 +54,9 @@
         var that = this;
         var i = 0;
 
-        this.on("built", function(){
+	    this.on("built", function(){
             i++;
+	        return; // TODO
             if (i===3) { that.exportToFileSystem(); }
         });
 
@@ -77,7 +87,7 @@
 
         this.on("exporting", function(){
             i++;
-            if (i===3) { that.finishedGenerating(); }
+            if (i===3) { that.finishedGenerating(); }
         });
 
         require("../mdls/Generate").on("ready", function(){
