@@ -31,24 +31,13 @@
      */
 	CreateBuildDirectory.prototype.removeFolder = function(){
 
+		var that = this;
         var BUILD_FOLDER = "./" + global.downpress.config["dir-build"];
-		this.fs.remove(BUILD_FOLDER, (this.removedBuildFolder).bind(this));
 
-	};
-
-
-	/**
-	 *  After the build folder is removed or when removing of folder cause an error
-	 */
-	CreateBuildDirectory.prototype.removedBuildFolder = function(error){
-
-		if (error) {
-			this.emit("error", error);
-			return;
-		}
-
-		// if everything was without error, run next function
-		this.copyBuildFolder();
+		this.fs.remove(BUILD_FOLDER, function(error){
+			if (error) { throw error; }
+			that.copyBuildFolder();
+		});
 
 	};
 
@@ -61,10 +50,28 @@
         var that = this;
 
         this.walkFiles(".", function(files){
-            that.copyFiles(files);
+            that.removeTemplatesFolder(files);
         });
 
 	};
+
+
+    /**
+     *  Remove %templates folder from files
+     */
+    CreateBuildDirectory.prototype.removeTemplatesFolder = function(files){
+
+        var TEMPLATES_DIR = "./" + global.downpress.config["dir-templates"];
+
+        function removeTemplatesDir(file){
+            return file.indexOf(TEMPLATES_DIR)<=-1;
+        }
+
+        files = files.filter(removeTemplatesDir);
+
+        this.copyFiles(files);
+
+    };
 
 
     /**
@@ -73,21 +80,18 @@
     CreateBuildDirectory.prototype.copyFiles = function(allFiles){
 
 	    var that = this;
-        var i = 0;
-
-	    function onFileCopied(error){
-		    if (error) { that.emit("error", error); }
-		    i++;
-		    if (i===allFiles.length) { that.emit("ready"); }
-	    }
-
 	    var BUILD_FOLDER = "./" + global.downpress.config["dir-build"];
 
         allFiles.forEach(function(file){
-	        that.fs.copy(file, BUILD_FOLDER+"/"+file, onFileCopied);
+	        that.fs.copySync(file, BUILD_FOLDER+"/"+file);
         });
+
+        this.emit("ready");
 
     };
 
 
-	module.exports = new CreateBuildDirectory();
+
+    module.exports = function(){
+        return new CreateBuildDirectory();
+    };

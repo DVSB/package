@@ -326,10 +326,13 @@
 	    var that = this;
 
         // initial build without any inital changes, just needs to be build
-        require("./Plugins");
+        require("./Plugins")();
+        global.downpress.isGenerating = false;
 
         // watch this folder with options, every 100ms regenerate whole folder
-        require("chokidar").watch("./", options).on("all", that.onWatchingChangeChoikar);
+        require("chokidar").watch(".", options).on("all", function(event, path){
+            that.onWatchingChangeChoikar(event, path);
+        });
 
     };
 
@@ -344,17 +347,15 @@
 		// TODO why the hell are on first time run "unlinkkDir ." 2x ?
 		// shouldn't be even once
 
-		// TODO
-		// this can be used later for detection, what actually should be regenerated
-		// if is changed something in templates - only markdowns should be replaced
-		// if is changed something in binary, only that binary should be replaced
-		// if is changed something inside file, only this file should be regenerated
 		global.downpress.lastChanged = { event : event, path : path };
 
-		// what if next change is faster than folder is regenerated?
+        console.log("s", global.downpress.isGenerating);
+
+        // what if next change is faster than folder is regenerated?
 		if (!global.downpress.isGenerating) {
-			that.log("on `"+event+"` in `"+path +"`");
-			require("./Plugins");
+			that.log("`"+event+"` in `"+path +"`");
+			var plugins = require("./Plugins");
+            plugins();
 		}
 
 	};

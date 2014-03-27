@@ -55,8 +55,7 @@
 
 	    function isOnlyMarkdown(file){
 		    var extension = file.substr(file.lastIndexOf("."));
-		    var isMarkdown = (extension===".md");
-		    return isMarkdown;
+		    return (extension===".md");
 	    }
 
 	    this.markdowns = this.markdowns.filter(isNotDsStore);
@@ -64,7 +63,7 @@
 	    this.markdowns = this.markdowns.filter(isNotBuildDir);
 	    this.markdowns = this.markdowns.filter(isOnlyMarkdown);
 
-	    // go to next function and parse all files to objects
+        // go to next function and parse all files to objects
 	    this.readMarkdownsOneByOne();
 
     };
@@ -81,12 +80,12 @@
 	    var i=0;
 	    function callbackOnFileRead(){
 			i++;
-		    if (that.markdowns.length-1===i) { everythingReady(); }
+            if (that.markdowns.length===i) { everythingReady(); }
 	    }
 
 	    function readMarkdown(filePath){
-		    that.fs.readFile(filePath, function(error, rawData){
-			    fileReadDone(error, rawData, i);
+            that.fs.readFile(filePath, function(error, rawData){
+                fileReadDone(error, rawData, i);
 		    });
 	    }
 
@@ -94,11 +93,11 @@
 		    if (error) { throw error }
 		    var content = { data : rawData+"", path : that.markdowns[i] };
 		    newMarkdowns.push(content);
-		    callbackOnFileRead();
+            callbackOnFileRead();
 	    }
 
 	    function everythingReady(){
-		    that.markdowns = newMarkdowns;
+            that.markdowns = newMarkdowns;
 		    that.parseAllMarkdowns();
 	    }
 

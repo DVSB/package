@@ -4,22 +4,11 @@
 
 
     /**
-     *   All generating should have just three steps
-     *      1; copy all files to BUILD folder
-     *      2; find markdowns, statics, templates, anything ..
-     *      3; generating
-     *      4; after generating
-     */
-
-
-    /**
      *  Plugins is run on every change in a website folder
      */
     var Plugins = function(){
 
         require("../library/_Boilerplate").call(this);
-
-        this.createTempFolder();
 
     };
 
@@ -30,16 +19,30 @@
     /**
      *  Create the build folder with all files as is in normal folders
      */
+    Plugins.prototype.regenerate = function(){
+
+        this.createTempFolder();
+
+    };
+
+
+    /**
+     *  Create the build folder with all files as is in normal folders
+     */
     Plugins.prototype.createTempFolder = function(){
 
         var that = this;
+        var module;
 
         // if it's generating, watching of files is disabled
         this.generatingTime = +new Date();
         global.downpress.isGenerating = true;
 
-	    // creates a build folder and copy all files there
-        require("../mdls/Build_Create").on("ready", function(){
+
+        // creates a build folder and copy all files there
+        module = require("../mdls/Build_Create")();
+        module.on("ready", function(){
+
             that.buildCopied();
         });
 
@@ -53,24 +56,30 @@
 
         var that = this;
         var i = 0;
+        var module;
 
-	    this.on("built", function(){
+        this.on("built", function(){
             i++;
             if (i===3) { that.exportToFileSystem(); }
         });
 
-	    // global.downpress.statics
-        require("../mdls/Statics").on("ready", function(){
+        // global.downpress.statics
+        module = require("../mdls/Statics")();
+        module.on("ready", function(){
             that.emit("built");
-        });
+	    });
+
+        return;
 
 	    // global.downpress.templates
-	    require("../mdls/Templates").on("ready", function(){
+        module = require("../mdls/Templates")();
+        module.on("ready", function(){
 		    that.emit("built");
 	    });
 
 	    // global.downpress.markdowns
-        require("../mdls/Markdowns").on("ready", function(){
+        module = require("../mdls/Markdowns")();
+        module.on("ready", function(){
 		    that.emit("built");
 	    });
 
@@ -85,7 +94,6 @@
         var that = this;
         var i = 0;
 
-	    this.finishedGenerating();
 
         this.on("exporting", function(){
             i++;
@@ -107,12 +115,26 @@
     };
 
 
+    /**
+     *
+     */
     Plugins.prototype.finishedGenerating = function(){
 
         var generatingTime = (+new Date()) - this.generatingTime;
         this.log("regenerated in " + generatingTime + "ms");
 
+	    // generating is finished
+	    global.downpress.isGenerating = false;
+
     };
 
 
-    module.exports = new Plugins();
+    module.exports = function(){
+        console.error("!!!!!! sss");
+
+
+        var plugins = new Plugins();
+
+        plugins.regenerate();
+
+    };
