@@ -119,11 +119,12 @@
 		    var resultObj = that.getHeaderMetaTags(markdownObj.data);
 		    resultObj._content = that.getContentBody(markdownObj);
 		    resultObj._path = markdownObj.path;
-		    allMarkdowns.push(resultObj);
+		    if (resultObj.template) { allMarkdowns.push(resultObj); }
 	    }
 
 	    this.markdowns.forEach(getDependencies);
 
+	    // continue
 	    this.markdowns = allMarkdowns;
 	    this.addAllMetaTags();
 

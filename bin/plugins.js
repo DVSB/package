@@ -56,7 +56,6 @@
 
 	    this.on("built", function(){
             i++;
-	        return; // TODO
             if (i===3) { that.exportToFileSystem(); }
         });
 
@@ -75,15 +74,18 @@
 		    that.emit("built");
 	    });
 
-
-
     };
 
 
+    /**
+     *  Create all necessary objects which are accessible also on the screen
+     */
     Plugins.prototype.exportToFileSystem = function(){
 
         var that = this;
         var i = 0;
+
+	    this.finishedGenerating();
 
         this.on("exporting", function(){
             i++;
