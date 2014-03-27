@@ -263,5 +263,7 @@
     };
 
 
-    module.exports = new Markdowns();
+    module.exports = function(){
+        return new Markdowns();
+    };
 

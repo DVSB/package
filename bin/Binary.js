@@ -324,10 +324,11 @@
 
 	    var options = this.chokidarOptions();
 	    var that = this;
+        global.downpress.isGenerating = false;
 
         // initial build without any inital changes, just needs to be build
+        global.downpress.isInitial = true;
         require("./Plugins")();
-        global.downpress.isGenerating = false;
 
         // watch this folder with options, every 100ms regenerate whole folder
         require("chokidar").watch(".", options).on("all", function(event, path){
@@ -349,13 +350,10 @@
 
 		global.downpress.lastChanged = { event : event, path : path };
 
-        console.log("s", global.downpress.isGenerating);
-
         // what if next change is faster than folder is regenerated?
 		if (!global.downpress.isGenerating) {
 			that.log("`"+event+"` in `"+path +"`");
-			var plugins = require("./Plugins");
-            plugins();
+			require("./Plugins")();
 		}
 
 	};

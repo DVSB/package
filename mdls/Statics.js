@@ -93,4 +93,6 @@
     };
 
 
-    module.exports = new Statics();
+    module.exports = function(){
+        return new Statics();
+    };

@@ -42,7 +42,6 @@
         // creates a build folder and copy all files there
         module = require("../mdls/Build_Create")();
         module.on("ready", function(){
-
             that.buildCopied();
         });
 
@@ -69,8 +68,6 @@
             that.emit("built");
 	    });
 
-        return;
-
 	    // global.downpress.templates
         module = require("../mdls/Templates")();
         module.on("ready", function(){
@@ -93,22 +90,26 @@
 
         var that = this;
         var i = 0;
+        var module;
 
 
         this.on("exporting", function(){
             i++;
-            if (i===3) { that.finishedGenerating(); }
+            if (i===3) { that.finishedGenerating();  }
         });
 
-        require("../mdls/Generate").on("ready", function(){
+        module = require("../mdls/Generate")();
+        module.on("ready", function(){
             that.emit("exporting");
         });
 
-        require("../mdls/Sitemap").on("ready", function(){
+        module = require("../mdls/Sitemap")();
+        module.on("ready", function(){
             that.emit("exporting");
         });
 
-        require("../mdls/OfflineManifest").on("ready", function(){
+        module = require("../mdls/OfflineManifest")();
+        module.on("ready", function(){
             that.emit("exporting");
         });
 
@@ -116,25 +117,25 @@
 
 
     /**
-     *
+     *  This should be run just first time on downpress.isInit
      */
     Plugins.prototype.finishedGenerating = function(){
 
-        var generatingTime = (+new Date()) - this.generatingTime;
-        this.log("regenerated in " + generatingTime + "ms");
+        if (global.downpress.isInitial) {
+            var generatingTime = (+new Date()) - this.generatingTime;
+            this.log("regenerated in " + generatingTime + "ms");
+        }
 
 	    // generating is finished
 	    global.downpress.isGenerating = false;
+        global.downpress.isInitial = false;
 
     };
 
 
     module.exports = function(){
-        console.error("!!!!!! sss");
-
 
         var plugins = new Plugins();
-
         plugins.regenerate();
 
     };

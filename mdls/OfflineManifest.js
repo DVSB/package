@@ -17,4 +17,6 @@
     require("util").inherits(OfflineManifest, require("../library/_Boilerplate"));
 
 
-    module.exports = new OfflineManifest();
+    module.exports = function(){
+        return new OfflineManifest();
+    };

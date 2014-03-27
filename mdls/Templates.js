@@ -91,4 +91,6 @@
     };
 
 
-    module.exports = new Templates();
+    module.exports = function(){
+        return new Templates();
+    };

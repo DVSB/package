@@ -17,4 +17,6 @@
     require("util").inherits(Sitemap, require("../library/_Boilerplate"));
 
 
-    module.exports = new Sitemap();
+    module.exports = function(){
+        return new Sitemap();
+    };

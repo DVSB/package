@@ -118,5 +118,7 @@
 
 
 
-    module.exports = new Generate();
+    module.exports = function(){
+        return new Generate();
+    };
 
