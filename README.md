@@ -2,8 +2,11 @@
 
 is simple, fast and lightweight static websites generator.
 
-![Dependency Status](https://david-dm.org/downpress/package.png) 
+Downpress is curently on version
 ![NPM version](https://badge.fury.io/js/downpress.png)
+and all dependecies are
+![Dependency Status](https://david-dm.org/downpress/package.png).
+
 
 **Documentation and Website**
 
