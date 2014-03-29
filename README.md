@@ -1,21 +1,23 @@
 # Downpress
-## simple, fast and lightweight generator of static websites
 
-![Dependency Status](https://david-dm.org/downpress/package.png) : 
+is simple, fast and lightweight static websites generator.
+
+![Dependency Status](https://david-dm.org/downpress/package.png) :
 ![NPM version](https://badge.fury.io/js/downpress.png)
-
 
 **Documentation and Website**
 
 [http://downpress.org/](http://downpress.org)
 
-**Download boilerplate and Install**
-
-    > git clone "https://github.com/downpress/2014-blog.git"
-    > cd "2014-blog"
+**Install Downpress**
 
     > sudo npm install -g downpress
     > downpress run
+
+**Download Boilerplate**
+
+    > git clone "https://github.com/downpress/2014-blog.git"
+    > cd "2014-blog" && downpress run
 
 **Repository and Code**
 
