@@ -2,7 +2,7 @@
 
 is simple, fast and lightweight static websites generator.
 
-![Dependency Status](https://david-dm.org/downpress/package.png) :
+![Dependency Status](https://david-dm.org/downpress/package.png) 
 ![NPM version](https://badge.fury.io/js/downpress.png)
 
 **Documentation and Website**
