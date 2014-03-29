@@ -1,7 +1,6 @@
 # Downpress
 ## simple, fast and lightweight generator of static websites
 
-[![Dependency Status](https://david-dm.org/srod/downpress.png?theme=shields.io)](https://david-dm.org/srod/downpress)
 [![NPM version](https://badge.fury.io/js/downpress.png)](http://badge.fury.io/js/downpress)
 
 
