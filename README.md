@@ -1,12 +1,9 @@
 # Downpress
 
-is simple, fast and lightweight static websites generator.
-
-Downpress is curently on version
-![NPM version](https://badge.fury.io/js/downpress.png)
-and all dependecies are
-![Dependency Status](https://david-dm.org/downpress/package.png).
-
+**is simple, fast and lightweight static websites generator.** Downpress is curently on version
+![NPM version](https://badge.fury.io/js/downpress.png) and all dependecies are
+![Dependency Status](https://david-dm.org/downpress/package.png). With Downpress you can generate
+clean, fast, offline-friendly and semantic beautiful websites.
 
 **Documentation and Website**
 
