@@ -1,6 +1,11 @@
 # Downpress
 ## simple, fast and lightweight generator of static websites
 
+![NPM version](https://badge.fury.io/js/downpress.png)](http://badge.fury.io/js/downpress)
+![Dependencies](https://david-dm.org/downpress/repo.png)
+
+
+
 **Documentation and Website**
 
 [http://downpress.org/](http://downpress.org)
@@ -23,4 +28,4 @@
 
 **Status**
 
-![NPM image 1](https://nodei.co/npm/downpress.png)
+![NPM Info Image](https://nodei.co/npm/downpress.png)

@@ -92,7 +92,6 @@
         var i = 0;
         var module;
 
-
         this.on("exporting", function(){
             i++;
             if (i===3) { that.finishedGenerating();  }
