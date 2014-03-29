@@ -1,7 +1,8 @@
 # Downpress
 ## simple, fast and lightweight generator of static websites
 
-[![NPM version](https://badge.fury.io/js/downpress.png)](http://badge.fury.io/js/downpress)
+![Dependency Status](https://david-dm.org/downpress/package.png)
+![NPM version](https://badge.fury.io/js/downpress.png)
 
 
 **Documentation and Website**
