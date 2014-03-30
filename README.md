@@ -1,3 +1,6 @@
+**DOWNPRESS IS UPDATING CORE, PLEASE WAIT UNTIL VERSION 0.2.
+THIS VERSION IS BETA AND CAN BE BROKEN!**
+
 # Downpress
 
 **is simple, fast and lightweight static websites generator.** Downpress is curently on version
