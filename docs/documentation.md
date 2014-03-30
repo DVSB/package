@@ -1,6 +1,7 @@
 # DOCS
 
-## package.json
+## package.json configurations
+
 
 	"localhost-port" : "8088"
 	"dir-templates" : "%templates"
@@ -10,16 +11,31 @@
     "watch-ignored" : /%build/
     "markdown-delimiter" : "---"
 
+
 ## global object
 
-	global.downpress = {
-		package = {...},
-		config = {...),
-		statics = [...],
-		templates = {...}
+
+	{
+		package : {...},
+		config : {...),
+		statics : [...],
+		templates : {...}
 	}
 
-## downpress.statics
+
+## template > templates
+
+
+	{
+		blog : "<DOCTYPE..",
+		blogs : "<DOCTYPE..",
+		category : "<DOCTYPE..",
+		index : "<DOCTYPE.."
+	}
+
+
+## template > statics
+
 
     [
         {
@@ -49,24 +65,12 @@
             _size: 25,
             _path: './index.md',
             _uniqid: 'k45d'
-        },
-        {
-            _name: 'package.json',
-            _extension: 'json',
-            _size: 25,
-            _path: './package.json',
-            _uniqid: 'byq0'
-        },
-        {
-            _name: 'sample.md',
-            _extension: 'md',
-            _size: 329,
-            _path: './sample.md',
-            _uniqid: 's58u'
         }
     ]
 
-## downpress.markdowns
+
+## template > markdowns
+
 
     [
         {
@@ -88,22 +92,6 @@
             _target: '/blog/trip-in-europe/index.html',
             _uniqid: 'rq8n',
             _content: '<p>Duis ultricies ...'
-        },
-        {
-            template: 'page',
-            _path: '/contact/',
-            _origin: '/contact/index.md',
-            _target: '/contact/index.html',
-            _uniqid: 'zkxv',
-            _content: '<h2 id="page-samp ...'
-        },
-        {
-            template: 'index',
-            _path: '/',
-            _origin: '/index.md',
-            _target: '/index.html',
-            _uniqid: 'r6qb',
-            _content: ''
         },
         {
             template: 'page',

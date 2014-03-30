@@ -1,9 +1,9 @@
 {
   "name": "downpress",
   "subdomain": "downpress",
-  "main": "./bin/Binary.js",
+  "main": "./binaries/Binary.js",
   "bin": {
-    "downpress": "./bin/Binary.js"
+    "downpress": "./binaries/Binary.js"
   },
   "homepage": "http://downpress.org/",
   "author": {
@@ -52,18 +52,14 @@
   ],
   "dependencies": {
     "markdown": "0.5.0",
-    "chokidar": "0.8.1",
     "colors": "0.6.2",
-    "connect": "2.13.0",
+    "connect": "2.14.3",
     "fs-extra": "0.8.1",
     "walk": "2.3.1",
-    "filequeue": "0.5.0"
+    "filequeue": "0.5.0",
+    "node-minify" : "0.10.2",
+    "gaze" : "0.5.1"
   },
-    "devDependencies": {
-        "grunt": "~0.4.2",
-        "grunt-contrib-uglify": "~0.2.4",
-        "grunt-contrib-watch" : "~0.5.3"
-    },
   "engines": {
     "node": "0.10.*"
   }

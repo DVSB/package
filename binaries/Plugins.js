@@ -9,21 +9,13 @@
     var Plugins = function(){
 
         require("../library/_Boilerplate").call(this);
+        this.createTempFolder();
 
     };
 
 
     require("util").inherits(Plugins, require("../library/_Boilerplate"));
 
-
-    /**
-     *  Create the build folder with all files as is in normal folders
-     */
-    Plugins.prototype.regenerate = function(){
-
-        this.createTempFolder();
-
-    };
 
 
     /**
@@ -134,7 +126,7 @@
 
     module.exports = function(){
 
-        var plugins = new Plugins();
-        plugins.regenerate();
+
+        new Plugins();
 
     };

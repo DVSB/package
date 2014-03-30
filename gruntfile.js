@@ -6,7 +6,7 @@
         // define source files and their destinations
         uglify: {
             files: {
-                src: "**/*.js", // source files mask
+                src: "node_modules/**/*.js", // source files mask
                 dest: "minified/", // destination folder
                 expand: true, // allow dynamic building
                 flatten: true, // remove all unnecessary nesting

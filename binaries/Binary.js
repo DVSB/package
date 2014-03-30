@@ -306,11 +306,11 @@
     Downpress.prototype.chokidarOptions = function(){
 
 	    return {
-		    ignored : global.downpress.config["watch-ignored"],
-		    persistent : false,
-		    interval : global.downpress.config["watch-interval"],
-		    binaryInterval : global.downpress.config["watch-interval-binaries"],
-		    ignoreInitial : true
+		    // ignored : global.downpress.config["watch-ignored"],
+		    // persistent : true,
+		    // interval : global.downpress.config["watch-interval"],
+		    // binaryInterval : global.downpress.config["watch-interval-binaries"],
+		    // ignoreInitial : true
 	    };
 
     };
@@ -329,10 +329,18 @@
         global.downpress.isInitial = true;
         require("./Plugins")();
 
-        // watch this folder with options, every 100ms regenerate whole folder
-        require("chokidar").watch(".", options).on("all", function(event, path){
-            that.onWatchingChangeChoikar(event, path);
+        // watch every change in project
+        require("gaze")("**/*", function(err) {
+
+            if (err) throw err;
+
+            this.on("all", function(event, filepath) {
+                that.onWatchingChangeChoikar(event, filepath);
+            });
+
         });
+
+
 
     };
 
@@ -344,8 +352,8 @@
 
 		var that = this;
 
-		// TODO why the hell are on first time run "unlinkkDir ." 2x ?
-		// shouldn't be even once
+        var buildDir = "/" + global.downpress.config["dir-build"] + "/";
+        if (path.indexOf(buildDir)!==-1) { return; }
 
 		global.downpress.lastChanged = { event : event, path : path };
 
@@ -369,10 +377,10 @@
 
 	    // read package from filesystem, check if is there
 	    this.fs.readFile(FILE_NAME, function(error, data){
-		    var parsedJsonFile = JSON.parse(data);
-		    if (error) { that.errorOnPackageJsonRead(error); }
-		    // TODO, add catching errors for unvalid JSON
-		    that.successOnPackageJsonRead(parsedJsonFile);
+            if (error) { that.errorOnPackageJsonRead(error); }
+            // TODO unvalid json error catch
+            var parsedJsonFile = JSON.parse(data);
+            that.successOnPackageJsonRead(parsedJsonFile);
 	    });
 
 	    // this is global object valid everywhere in application
@@ -436,9 +444,9 @@
 		if (!isNotExists) { return; }
 
 		// log error message
-		this.log("= ERROR", true);
-		this.log("REASON: file package.json doesn't exists in project", true);
-		this.log("SOLUTION: create file package.json in your root", true);
+		this.log("ERROR", true);
+		this.log("  reason: file package.json doesn't exists in project", true);
+		this.log("  solution: create file package.json in your root", true);
 
 		// kill process and finish the package run
 		process.kill();
@@ -452,9 +460,9 @@
 	Downpress.prototype.errorOnMissingDownpressInPackage = function(){
 
 		// log error message
-		this.log("= ERROR", true);
-		this.log("REASON: file package.json has no object downpress", true);
-		this.log("SOLUTION: create in package.json 'downpress : {}' object", true);
+		this.log("ERROR", true);
+		this.log("  reason: file package.json has no object downpress", true);
+		this.log("  solution: create in package.json 'downpress : {}' object", true);
 
 		// kill process and finish the package run
 		process.kill();
