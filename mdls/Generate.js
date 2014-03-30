@@ -54,7 +54,10 @@
 	    try {
 		    var html = this.createTemplateObject(scopeTemplate, scopeMarkdown);
 	    } catch(err) {
-		    this.log(scopeMarkdown._origin + " " + err, true);
+            console.log(metaTagTemplate);
+            this.log("error --", true);
+		    this.log("  reason: in '" + metaTagTemplate + "' template: " + err, true);
+            this.log("  solution: fix in specific template syntax or logical error", true);
 	    }
 
         // FS SAVE to new position to %build folder
