@@ -5,13 +5,16 @@
 
 
 	/**
-	 *  This is constructed always when user types `downpress` to the terminal
+	 *  constructor of application; should contains all listeners "ON" from the whole file
 	 */
     var Downpress = function(){
 
 		var that = this;
 
-	    // inherit "this" from the class boilerplate (underscore, events..)
+		// this is global object valid everywhere in application
+		global.downpress = {};
+
+	    // inherit "this" from the class boilerplate (underscore, events, filesystem..)
         require("../library/_Boilerplate").call(this);
 
 	    // if is not a valid package, break software
@@ -26,6 +29,38 @@
 
 
     require("util").inherits(Downpress, require("../library/_Boilerplate"));
+
+
+	/**
+	 *  Read and parse package.json file from the file system; this file is mandatory for Downpress
+	 */
+	Downpress.prototype.packageJsonParsing = function(){
+
+		// package.json is a convention used in nodejs/grunt prjts
+		var FILE_NAME = "./package.json";
+		var that = this;
+
+		// read package from filesystem, check if is there
+		this.fs.readFile(FILE_NAME, function(error, data){
+
+			// handling all kind of errors
+			if (error) {
+				that.errorOnPackageRead(error);
+			}
+
+			// on wrong syntax in package.json
+			try {
+				var parsedJsonFile = JSON.parse(data);
+			} catch(error) {
+				that.errorOnPackageSyntaxError(error);
+			}
+
+			// if everythingk was ok, go here
+			that.successOnPackageJsonRead(parsedJsonFile);
+
+		});
+
+	};
 
 
 	/**
@@ -302,27 +337,11 @@
 
 
 	/**
-	 *  Chokidar options for watcher of folders, what should be watched, in which interval
-	 */
-    Downpress.prototype.chokidarOptions = function(){
-
-	    return {
-		    // ignored : global.downpress.config["watch-ignored"],
-		    // persistent : true,
-		    // interval : global.downpress.config["watch-interval"],
-		    // binaryInterval : global.downpress.config["watch-interval-binaries"],
-		    // ignoreInitial : true
-	    };
-
-    };
-
-
-	/**
 	 *  Choikar watches all folders with settings and on change runs Plugins.js
 	 */
     Downpress.prototype.watchDirectories = function(){
 
-	    var options = this.chokidarOptions();
+	    var gazeWatchingPlugin = require("gaze");
 	    var that = this;
         global.downpress.isGenerating = false;
 
@@ -330,64 +349,178 @@
         global.downpress.isInitial = true;
         require("./Plugins")();
 
-        // watch every change in project
-        require("gaze")("**/*", function(err) {
+	    // when changed package.json should be refreshed all downpress
+	    gazeWatchingPlugin("**/package.json", function(err) {
+		    if (err) { throw err; }
+		    this.on("all", (that.onChanged._packagejson).bind(that));
+	    });
 
-            if (err) throw err;
+	    //
+	    gazeWatchingPlugin("%templates/*.html", function(err) {
+		    if (err) { throw err; }
+		    this.on("all", (that.onChanged._templatefile).bind(that));
+	    });
 
-            this.on("all", function(event, filepath) {
-                that.onWatchingChangeChoikar(event, filepath);
-            });
+	    //
+	    gazeWatchingPlugin("**/*.md", function(err) {
+		    if (err) { throw err; }
+		    this.on("all", (that.onChanged._markdownfile).bind(that));
+	    });
 
-        });
+	    //
+	    var extensionsOfImages = that.getStaticFilesExtensions();
+	    gazeWatchingPlugin(extensionsOfImages, function(err) {
+		    if (err) { throw err; }
+		    this.on("all", (that.onChanged._staticfile).bind(that));
+	    });
 
-
+	    // TODO
+	    // if any other file, just do everything and copy 1:1 -- the slowest way
 
     };
 
 
+
 	/**
-	 *  Run on every change of Choikar in all directories
+	 * If external plugin GAZE will find any change in website, regenerate specific part of the project
 	 */
-	Downpress.prototype.onWatchingChangeChoikar = function(event, path){
+	Downpress.prototype.onChanged = {
 
-		var that = this;
 
-        var buildDir = "/" + global.downpress.config["dir-build"] + "/";
-        if (path.indexOf(buildDir)!==-1) { return; }
+		/**
+		 *  Return if given path is in the build directory of our website
+		 */
+		"_isInBuildFolder" : function(path){
 
-		global.downpress.lastChanged = { event : event, path : path };
+			var BUILD_DIR = "/" + global.downpress.config["dir-build"] + "/";
 
-        // what if next change is faster than folder is regenerated?
-		if (!global.downpress.isGenerating) {
-			that.log("`"+event+"` in `"+path +"`");
+			if (path.indexOf(BUILD_DIR)!==-1) { 
+				return;
+			}
+
+		},
+
+
+		/**
+		 *  Is just now regenerating already? (prevent the start of next generating before first was finished so far)
+		 */
+		"_isGeneratingJustNow" : function(){
+
+			return 	global.downpress.isGenerating;
+
+		},
+
+
+		/**
+		 *  Log a change to the console so user knows, if Downpress detected the change on the file system
+		 */
+		"_logDetectedChanged" : function(event, path){
+
+			this.log("regenerated on " + event + " in " + path);
+
+		},
+
+
+		/**
+		 *  If in package.json was detected any change by GAZE
+		 */
+		"_packagejson" : function(event, path){
+
+			// generating takes some time; if is already generating, ignore the event
+			var isGeneratingAlready = this.onChanged._isGeneratingJustNow();
+			if (isGeneratingAlready) { return; }
+
+			// log change
+			this.log("package.json was changed; whole website was regenerated");
+
+			// regenerate everything
+			// TODO later regenerated only relevant part of the website
 			require("./Plugins")();
+
+		},
+
+
+		/**
+		 *  If in any markdown was detected any change by GAZE
+		 */
+		"_markdownfile" : function(event, path){
+
+			// generating takes some time; if is already generating, ignore the event
+			var isGeneratingAlready = this.onChanged._isGeneratingJustNow();
+			if (isGeneratingAlready) { return; }
+
+			// log change
+			this.onChanged._logDetectedChanged(event, path);
+
+			// regenerate everything
+			// TODO later regenerated only relevant part of the website
+			require("./Plugins")();
+
+		},
+
+
+		/**
+		 *  If in any static file (png, jpg, mp3..) was detected any change by GAZE
+		 */
+		"_staticfile" : function(event, path){
+
+			// generating takes some time; if is already generating, ignore the event
+			var isGeneratingAlready = this.onChanged._isGeneratingJustNow();
+			if (isGeneratingAlready) { return; }
+
+			// log change
+			this.onChanged._logDetectedChanged(event, path);
+
+			// regenerate everything
+			// TODO later regenerated only relevant part of the website
+			require("./Plugins")();
+
+		},
+
+
+		/**
+		 *  If in any template file (%template/*.html) was detected any change by GAZE
+		 */
+		"_templatefile" : function(event, path){
+
+			// generating takes some time; if is already generating, ignore the event
+			var isGeneratingAlready = this.onChanged._isGeneratingJustNow();
+			if (isGeneratingAlready) { return; }
+
+			// log change
+			this.onChanged._logDetectedChanged(event, path);
+
+			// regenerate everything
+			// TODO later regenerated only relevant part of the website
+			require("./Plugins")();
+
 		}
+
 
 	};
 
 
 	/**
-	 *  Read package.json file from filesystem, this file is mandatory
+	 *  Return all extensions of "static files"
 	 */
-    Downpress.prototype.packageJsonParsing = function(){
+	Downpress.prototype.getStaticFilesExtensions = function(){
 
-	    // package.json is a convention used in nodejs/grunt prjts
-	    var FILE_NAME = "./package.json";
-	    var that = this;
+		return [
+			"**/*.jpeg",
+			"**/*.jpg",
+			"**/*.exif",
+			"**/*.raw",
+			"**/*.gif",
+			"**/*.png",
+			"**/*.bmp",
+			"**/*.webp",
+			"**/*.psd",
+			"**/*.mp3",
+			"**/*.mpeg",
+			"**/*.avi"
+		];
 
-	    // read package from filesystem, check if is there
-	    this.fs.readFile(FILE_NAME, function(error, data){
-            if (error) { that.errorOnPackageJsonRead(error); }
-            // TODO unvalid json error catch
-            var parsedJsonFile = JSON.parse(data);
-            that.successOnPackageJsonRead(parsedJsonFile);
-	    });
-
-	    // this is global object valid everywhere in application
-	    global.downpress = {};
-
-    };
+	};
 
 
 	/**
@@ -437,19 +570,36 @@
 
 
 	/**
-	 *  When file package.json doesn't exists in root of project (when DP is run)
+	 *  When file `package.json` doesn't exists in a root of the project (when Downpress is run)
 	 */
-	Downpress.prototype.errorOnPackageJsonRead = function(error){
+	Downpress.prototype.errorOnPackageRead = function(error){
 
-		var isNotExists = error.code = "ENOENT";
-		if (!isNotExists) { return; }
+		var isNotExists = (error.code === "ENOENT");
 
-		// log error message
-		this.log("ERROR", true);
-		this.log("  reason: file package.json doesn't exists in project", true);
-		this.log("  solution: create file package.json in your root", true);
+		// unhandled and unknown error; TODO maybe some permissions errors?
+		if (!isNotExists) {
+			this.log("Unknown error while reading of package.json, please report this", true);
+			process.kill();
+		}
 
-		// kill process and finish the package run
+		this.log("Error:", true);
+		this.log("  Reason: File `package.json` doesn't exist in the project!", true);
+		this.log("  Solution: Create file `package.json` in the root. Or read Docs.", true);
+
+		process.kill();
+
+	};
+
+
+	/**
+	 *  When file `package.json` exists, but has wrong syntax inside and isn't possible to parse it
+	 */
+	Downpress.prototype.errorOnPackageSyntaxError = function(error){
+
+		this.log("Error:", true);
+		this.log("  Reason: File `package.json` has wrong unvalid syntax", true);
+		this.log("  Solution: Check if syntax in `package.json` in project is really valid", true);
+
 		process.kill();
 
 	};
@@ -471,6 +621,7 @@
 	};
 
 
-    // run application
-
+	/**
+	 *  The application Downpress is constructed on typed `downpress` to the console
+	 */
     new Downpress();

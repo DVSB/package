@@ -10,6 +10,7 @@
 
         events.EventEmitter.call(this);
 
+		// add this.underscore to the this scope
         this.initUnderscore();
 
     };
@@ -20,13 +21,18 @@
 
     Boilerplate.prototype.initUnderscore = function(){
 
-        var that = this;
+	    // normal require of underscore for nodejs
+	    this.underscore = require("underscore");
 
-        require("../mdls/underscore/export")((function(underscore){
+	    // connect underscore string into
+	    this.underscore.mixin(require("underscore.string").exports());
 
-            this.underscore = underscore;
-
-        }).bind(this));
+	    // change teamplate settings for mustache
+	    this.underscore.templateSettings = {
+		    evaluate:    /\{\{#([\s\S]+?)\}\}/g, // {{# console.log("blah") }}
+		    interpolate: /\{\{[^#\{]([\s\S]+?)[^\}]\}\}/g, // {{ title }}
+		    escape:      /\{\{\{([\s\S]+?)\}\}\}/g // {{{ <script> }}}
+	    };
 
 	};
 

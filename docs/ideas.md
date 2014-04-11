@@ -8,3 +8,6 @@
  - if is changed folder, only this folder
  - this can radically improve a speed of regenerating
 
+## real times paramaters typed in console
+
+ - user can type in downpress "rs" for restart

@@ -3,9 +3,6 @@
     "use strict";
 
 
-    var filesystem = require("fs");
-
-
     /**
      *  Create all necessary objects which are accessible also on the screen
      */
@@ -89,7 +86,9 @@
 		    local : content,
 		    markdowns : global.downpress.markdowns,
 		    statics : global.downpress.statics,
-		    templates : global.downpress.templates
+		    templates : global.downpress.templates,
+		    package : global.downpress.package,
+		    data : global.downpress.package.downpress.data
 	    });
 
     };
